@@ -2490,13 +2490,12 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 #define SWIGTYPE_p_p_PyObject swig_types[7]
 #define SWIGTYPE_p_size_type swig_types[8]
 #define SWIGTYPE_p_std__invalid_argument swig_types[9]
-#define SWIGTYPE_p_std__string swig_types[10]
-#define SWIGTYPE_p_std__vectorTstd__string_std__allocatorTstd__string_t_t swig_types[11]
-#define SWIGTYPE_p_std__vectorTstd__string_std__allocatorTstd__string_t_t__allocator_type swig_types[12]
-#define SWIGTYPE_p_swig__PySwigIterator swig_types[13]
-#define SWIGTYPE_p_value_type swig_types[14]
-static swig_type_info *swig_types[16];
-static swig_module_info swig_module = {swig_types, 15, 0, 0, 0, 0};
+#define SWIGTYPE_p_std__vectorTstd__string_std__allocatorTstd__string_t_t swig_types[10]
+#define SWIGTYPE_p_std__vectorTstd__string_std__allocatorTstd__string_t_t__allocator_type swig_types[11]
+#define SWIGTYPE_p_swig__PySwigIterator swig_types[12]
+#define SWIGTYPE_p_value_type swig_types[13]
+static swig_type_info *swig_types[15];
+static swig_module_info swig_module = {swig_types, 14, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -8159,7 +8158,6 @@ static swig_type_info _swigt__p_difference_type = {"_p_difference_type", "differ
 static swig_type_info _swigt__p_p_PyObject = {"_p_p_PyObject", "PyObject **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_size_type = {"_p_size_type", "size_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__invalid_argument = {"_p_std__invalid_argument", "std::invalid_argument *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__string = {"_p_std__string", "std::string *|String *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorTstd__string_std__allocatorTstd__string_t_t = {"_p_std__vectorTstd__string_std__allocatorTstd__string_t_t", "std::vector<std::string > *|std::vector<std::string,std::allocator<std::string > > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorTstd__string_std__allocatorTstd__string_t_t__allocator_type = {"_p_std__vectorTstd__string_std__allocatorTstd__string_t_t__allocator_type", "std::vector<std::string >::allocator_type *|std::allocator<std::string > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_swig__PySwigIterator = {"_p_swig__PySwigIterator", "swig::PySwigIterator *", 0, 0, (void*)0, 0};
@@ -8176,7 +8174,6 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_p_PyObject,
   &_swigt__p_size_type,
   &_swigt__p_std__invalid_argument,
-  &_swigt__p_std__string,
   &_swigt__p_std__vectorTstd__string_std__allocatorTstd__string_t_t,
   &_swigt__p_std__vectorTstd__string_std__allocatorTstd__string_t_t__allocator_type,
   &_swigt__p_swig__PySwigIterator,
@@ -8193,7 +8190,6 @@ static swig_cast_info _swigc__p_difference_type[] = {  {&_swigt__p_difference_ty
 static swig_cast_info _swigc__p_p_PyObject[] = {  {&_swigt__p_p_PyObject, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_size_type[] = {  {&_swigt__p_size_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__invalid_argument[] = {  {&_swigt__p_std__invalid_argument, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__string[] = {  {&_swigt__p_std__string, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorTstd__string_std__allocatorTstd__string_t_t[] = {  {&_swigt__p_std__vectorTstd__string_std__allocatorTstd__string_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorTstd__string_std__allocatorTstd__string_t_t__allocator_type[] = {  {&_swigt__p_std__vectorTstd__string_std__allocatorTstd__string_t_t__allocator_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_swig__PySwigIterator[] = {  {&_swigt__p_swig__PySwigIterator, 0, 0, 0},{0, 0, 0, 0}};
@@ -8210,7 +8206,6 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_p_PyObject,
   _swigc__p_size_type,
   _swigc__p_std__invalid_argument,
-  _swigc__p_std__string,
   _swigc__p_std__vectorTstd__string_std__allocatorTstd__string_t_t,
   _swigc__p_std__vectorTstd__string_std__allocatorTstd__string_t_t__allocator_type,
   _swigc__p_swig__PySwigIterator,
