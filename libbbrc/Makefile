@@ -21,6 +21,7 @@ INCLUDE_GSL  =
 LDFLAGS_OB  =  -L/usr/local/lib  
 LDFLAGS_GSL  =   
 INCLUDE_RB  = -I/usr/lib/ruby/1.8/i486-linux
+INCLUDE_PY = -I/usr/include/python2.5
 RUBY = ruby1.8
 
 # ADJUST COMPILER PATH TO OPENBABEL INCLUDE FILES:
@@ -56,6 +57,7 @@ LIB1_SONAME   = $(LIB1).2
 LIB1_REALNAME = $(LIB1_SONAME).0
 LIB2          = $(NAME).so
 LIB3          = lib$(NAME).so
+LIB4          = _$(NAME).so
 
 # FILES
 $(LIB1_REALNAME): $(OBJ)
@@ -72,6 +74,10 @@ $(LIB2): $(OBJ) r$(NAME)_wrap.cxx
 $(LIB3): $(OBJ) j$(NAME)_wrap.cxx
 	$(CC) -c $(CXXFLAGS) $(INCLUDE_JAVA) j$(NAME)_wrap.cxx -o $(NAME)_wrap.o
 	$(CC) $(LDFLAGS) -shared $(CXXFLAGS) $(OBJ) $(NAME)_wrap.o $(LIBS_LIB2) -o $@
+#swig -c++ -python -o pbbrc_wrap.cxx pbbrc_wrap.i
+$(LIB4): $(OBJ) p$(NAME)_wrap.cxx
+	$(CC) -c $(CXXFLAGS) $(INCLUDE_PY) p$(NAME)_wrap.cxx -o $(NAME)_wrap.o
+	$(CC) $(LDFLAGS) -shared $(CXXFLAGS) $(OBJ) $(NAME)_wrap.o $(LIBS) -o $@
 
 
 .o: .cpp.h
@@ -93,6 +99,8 @@ ruby: $(LIB2)
 java: $(LIB3)
 # LD_LIBRARY_PATH=. and LD_PRELOAD=/path/to/libopenbabel.so must be set to run the JAVA library.
 
+.PHONY:
+python: $(LIB4)
 
 # TESTS + HELPERS
 .PHONY:
