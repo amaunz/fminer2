@@ -109,7 +109,7 @@
  *  - Cd to <code>fminer</code> subdirectory. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.
  *  - To create this documentation with doxygen, type 'make doc'. The documentation explains API, constructor usage and options.
  *  @subsection ssec23 Language Portability
- *  The API can be made available to other languages. Follow the installation instructions above. A config file for Swig to automagically create languages bindings exists (<code>rbbrc_wrap.i</code>). 
+ *  The API can be made available to other languages. Follow the installation instructions above. Config files different languages bindings exist (<code>*bbrc_wrap.i</code>). 
  *
  *  The Makefile features a target that creates <b>ruby</b> bindings using this file. On Ubuntu, you can e.g. do this:
  *  - Use <code>./configure <version></code> to configure the Makefile automatically or, adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_RB = ...</code> so that the directory contains file <code>ruby.h</code>. Also, let <code>RUBY = ...</code> point to the right ruby executable.
@@ -118,7 +118,6 @@
  *  The Makefile features a target that creates <b>python</b> bindings using this file. On Ubuntu, you can e.g. do this:
  *  - Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_PY = ...</code> so that the directory contains file <code>Python.h</code>. Also, let <code>PYTHON = ...</code> point to the right ruby executable.
  *  - Run <code>make python</code>.
- 
  *
  *  <a name="Guidance">
  * @section Guidance Guidance on Using (Lib)Bbrc
