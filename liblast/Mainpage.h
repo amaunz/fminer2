@@ -178,6 +178,7 @@
  *    result = MyFminer.MineRoot(j);
  *    for i in range(0, result.size()-1):
  *        print result[i];
+ * \endcode
  *
  * \subsubsection Ruby Ruby
  *
