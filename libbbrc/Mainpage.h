@@ -115,6 +115,11 @@
  *  - Use <code>./configure <version></code> to configure the Makefile automatically or, adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_RB = ...</code> so that the directory contains file <code>ruby.h</code>. Also, let <code>RUBY = ...</code> point to the right ruby executable.
  *  - Run <code>make ruby</code>.
  *
+ *  The Makefile features a target that creates <b>python</b> bindings using this file. On Ubuntu, you can e.g. do this:
+ *  - Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_PY = ...</code> so that the directory contains file <code>Python.h</code>. Also, let <code>PYTHON = ...</code> point to the right ruby executable.
+ *  - Run <code>make python</code>.
+ 
+ *
  *  <a name="Guidance">
  * @section Guidance Guidance on Using (Lib)Bbrc
  *
@@ -138,7 +143,7 @@
  *  @subsection sec3 Examples using the LibBbrc API
  *  LibBbrc uses the 'singleton' design pattern known from software engineering, i.e., class instantiation is restricted to one object. To empty the database after a run to feed new compounds, use the Bbrc::Reset() routine. 
  *
- *  The following code demonstrate the use of the Bbrc API from C++ and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a vector of fragments along with statistical relevance and occurrences and prints them out. Every root node corresponds to a single chemical element. The output consists of gSpan graphs.
+ *  The following code demonstrate the use of the Bbrc API from C++, python and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a vector of fragments along with statistical relevance and occurrences and prints them out. Every root node corresponds to a single chemical element. The output consists of gSpan graphs.
  *
  *
  * \subsubsection CPP C++
@@ -175,14 +180,12 @@
  *   }
  *   delete MyFminer;
  * }
- *
  *  \endcode
  *
  * \subsubsection Python Python
  *
  * This example assumes that you have created python bindings using <code>make python</code>.
  * \code
- *
  * import bbrc
  * MyFminer = bbrc.Bbrc()
  * MyFminer.AddCompound("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4" , 1)
@@ -199,17 +202,16 @@
  * MyFminer.SetRefineSingles(1) 
  * # gather results for every root node in vector instead of immediate output
  * MyFminer.SetConsoleOut(0)
- *  
  * for j in range(0, MyFminer.GetNoRootNodes()-1):
  *      result = MyFminer.MineRoot(j);
  *      for i in range(0, result.size()-1):
  *                  print result[i];
  * \endcode
+ *
  * \subsubsection Ruby Ruby
  *
  * This example assumes that you have created ruby bindings using <code>make ruby</code>.
  * \code
- *
  * require 'bbrc'
  * MyFminer = Bbrc::Bbrc.new()
  * MyFminer.AddCompound("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4" , 1)
@@ -234,7 +236,6 @@
  *        puts res
  *   end
  * end
- *
  *  \endcode
  *
  * \subsubsection Const Description of Constructors and Options

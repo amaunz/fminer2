@@ -73,6 +73,10 @@
  *  - Use <code>./configure <version></code> to configure the Makefile automatically or, adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_RB = ...</code> so that the directory contains file <code>ruby.h</code>. Also, let <code>RUBY = ...</code> point to the right ruby executable.
  *  - Run <code>make ruby</code>.
  *
+ *  The Makefile features a target that creates <b>python</b> bindings using this file. On Ubuntu, you can e.g. do this:
+ *  - Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_PY = ...</code> so that the directory contains file <code>Python.h</code>. Also, let <code>RUBY = ...</code> point to the right ruby executable.
+ *  - Run <code>make python</code>.
+ *
  *  <a name="Guidance">
  * @section Guidance Guidance on Using (Lib)Last
  *
@@ -84,7 +88,7 @@
  *  @subsection sec3 Examples using the LibLast API
  *  LibLast uses the 'singleton' design pattern known from software engineering, i.e., class instantiation is restricted to one object. To empty the database after a run to feed new compounds, use the Last::Reset() routine. 
  *
- *  The following code demonstrate the use of the Last API from C++ and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a set of latent fragments and prints them out. Every root node corresponds to a single chemical element. The output consists of <a href="http://graphml.graphdrawing.org">GraphML</a> which can be postprocessed to SMARTS patterns using the <a href="http://github.com/amaunz/last-utils" target="_blank">LAST-UTILS</a>.
+ *  The following code demonstrate the use of the Last API from C++, python and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a set of latent fragments and prints them out. Every root node corresponds to a single chemical element. The output consists of <a href="http://graphml.graphdrawing.org">GraphML</a> which can be postprocessed to SMARTS patterns using the <a href="http://github.com/amaunz/last-utils" target="_blank">LAST-UTILS</a>.
  *
  * \subsubsection CPP C++
  *
@@ -142,7 +146,7 @@
  *
  * \subsubsection Python Python
  *
- * This example assumes that you have created ruby bindings using <code>make python</code>.
+ * This example assumes that you have created python bindings using <code>make python</code>.
  *
  * \code
  * import liblast
@@ -173,7 +177,6 @@
  * MyFminer.SetMaxHops(25)
  * # gather results for every root node in vector instead of immediate output
  * MyFminer.SetConsoleOut(0)
- * 
  * for j in range(0, MyFminer.GetNoRootNodes()-1):
  *    result = MyFminer.MineRoot(j);
  *    for i in range(0, result.size()-1):
