@@ -88,7 +88,7 @@ Compiling from source</a></h3>
 </pre></div></li><li><a href="http://github.com/amaunz/fminer2/tree" target="_blank">Download the library source code</a> by clicking on "Download Source" (with git: <code>git clone git://github.com/amaunz/fminer2.git</code>) and cd to <code>libbbrc</code> subdirectory. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.</li><li>Cd to <code>fminer</code> subdirectory. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.</li><li>To create this documentation with doxygen, type 'make doc'. The documentation explains API, constructor usage and options. </li></ul>
 <h3><a class="anchor" name="ssec23">
 Language Portability</a></h3>
-The API can be made available to other languages. Follow the installation instructions above. Config files different languages bindings exist (<code>*bbrc_wrap.i</code>).<p>
+The API can be made available to other languages. Follow the installation instructions above. Config files for different languages bindings exist (<code>*bbrc_wrap.i</code>).<p>
 The Makefile features a target that creates <b>ruby</b> bindings using this file. On Ubuntu, you can e.g. do this:<ul>
 <li>Use <code>./configure &lt;version&gt;</code> to configure the Makefile automatically or, adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_RB = ...</code> so that the directory contains file <code>ruby.h</code>. Also, let <code>RUBY = ...</code> point to the right ruby executable.</li><li>Run <code>make ruby</code>. Use <code>make rbtest</code> to test.</li></ul>
 <p>
@@ -98,7 +98,7 @@ The Makefile features a target that creates <b>python</b> bindings using this fi
 <a class="anchor" name="Guidance"></a> <h2><a class="anchor" name="Guidance">
 Guidance on Using (Lib)Bbrc</a></h2>
 Most setting are sensible by default, see description of constructors and objects below.<p>
-I would suggest to manipulate the minimum frequency only at first. The number of fragments output should not be more than a multitude of the number of input graphs. For most chemical databases, a minimum frequency threshold of 2-3% will deliver good results. LibBbrc does not support percentage values, you will have to calculate absolute numbers.<h3><a class="anchor" name="sec33">
+I would suggest to manipulate the minimum frequency only at first. The number of fragments output should not be more than a multitude of the number of input graphs. For minimum frequency, LibBbrc does not support percentage values. You will have to calculate absolute numbers.<h3><a class="anchor" name="sec33">
 Environment Variables</a></h3>
 <b>FMINER_SMARTS</b>: Produce output in SMARTS format. In this case, each line is a YAML sequence, containing SMARTS fragment, <em>p</em>-value, and two sequences denoting positive and negative class occurrences (line numbers in Smiles file):<p>
 <div class="fragment"><pre class="fragment">  - [ smarts,    p_chisq,    occ_list_active,    occ_list_inactive ]
@@ -234,7 +234,7 @@ Dipl.-Inf. Andreas Maunz<br>
  Web: <a href="http://cs.maunz.de">http://cs.maunz.de</a><p>
 <dl class="author" compact><dt><b>Author:</b></dt><dd>(c) 2010 by Andreas Maunz, 2010 </dd></dl>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jan 1 07:06:08 2002 for libbbrc by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jan 1 19:33:43 2002 for libbbrc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>

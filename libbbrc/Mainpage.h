@@ -109,7 +109,7 @@
  *  - Cd to <code>fminer</code> subdirectory. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.
  *  - To create this documentation with doxygen, type 'make doc'. The documentation explains API, constructor usage and options.
  *  @subsection ssec23 Language Portability
- *  The API can be made available to other languages. Follow the installation instructions above. Config files different languages bindings exist (<code>*bbrc_wrap.i</code>). 
+ *  The API can be made available to other languages. Follow the installation instructions above. Config files for different languages bindings exist (<code>*bbrc_wrap.i</code>). 
  *
  *  The Makefile features a target that creates <b>ruby</b> bindings using this file. On Ubuntu, you can e.g. do this:
  *  - Use <code>./configure <version></code> to configure the Makefile automatically or, adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_RB = ...</code> so that the directory contains file <code>ruby.h</code>. Also, let <code>RUBY = ...</code> point to the right ruby executable.
@@ -125,7 +125,7 @@
  * Most setting are sensible by default, see description of constructors and objects below. 
  *
  * I would suggest to manipulate the minimum frequency only at first. The number of fragments output should not be more than a multitude of the number of input graphs.
- * For most chemical databases, a minimum frequency threshold of 2%-3% will deliver good results. LibBbrc does not support percentage values, you will have to calculate absolute numbers.
+ * For minimum frequency, LibBbrc does not support percentage values. You will have to calculate absolute numbers.
  *
  *  @subsection sec33 Environment Variables
  *  <b>FMINER_SMARTS</b>: Produce output in SMARTS format. In this case, each line is a YAML sequence, containing SMARTS fragment, <i>p</i>-value, and two sequences denoting positive and negative class occurrences (line numbers in Smiles file): 

@@ -79,7 +79,7 @@
  * Most setting are sensible by default, see description of constructors and objects below. 
  *
  * I would suggest to manipulate the minimum frequency only at first. The number of fragments output should not be more than a multitude of the number of input graphs.
- * For most chemical databases, a minimum frequency threshold of 4%-6% will deliver good results. LibLast does not support percentage values, you will have to calculate absolute numbers.
+ * For minimum frequency, LibLast does not support percentage values. You will have to calculate absolute numbers.
  *
  *  @subsection sec3 Examples using the LibLast API
  *  LibLast uses the 'singleton' design pattern known from software engineering, i.e., class instantiation is restricted to one object. To empty the database after a run to feed new compounds, use the Last::Reset() routine. 
