@@ -23,6 +23,7 @@ LDFLAGS_GSL  =
 INCLUDE_RB  = -I/usr/lib/ruby/1.8/i486-linux
 INCLUDE_PY = -I/usr/include/python2.5
 RUBY = ruby1.8
+PYTHON = python
 
 # ADJUST COMPILER PATH TO OPENBABEL INCLUDE FILES:
 #INCLUDE_OB    = -I/usr/local/include/openbabel-2.0
@@ -108,6 +109,9 @@ python: $(LIB4)
 .PHONY:
 cpptest: ctest
 	./$<
+.PHONY:
+pytest: test.py
+	$(PYTHON) $<
 .PHONY:
 rbtest: test.rb
 	$(RUBY) $<
