@@ -67,10 +67,12 @@ Compiling from source</a></h3>
 </pre></div></li><li><a href="http://github.com/amaunz/fminer2/tree" target="_blank">Download the library source code</a> by clicking on "Download Source". (with git: <code>git clone git://github.com/amaunz/fminer2.git</code>) and cd to <code>liblast</code> subdirectory. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.</li><li>Cd to <code>fminer</code> subdirectory. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.</li><li>To create this documentation with doxygen, type 'make doc'. The documentation explains API, constructor usage and options. </li></ul>
 <h3><a class="anchor" name="ssec23">
 Language Portability</a></h3>
-The API can be made available to other languages. Follow the installation instructions above. A config file for Swig to automagically create languages bindings exists (<code>rlast_wrap.i</code>). Make sure to install the ruby development libraries (here 1.8): <div class="fragment"><pre class="fragment"> aptitude install ruby1.8-dev
-</pre></div><p>
+The API can be made available to other languages. Follow the installation instructions above. Config files for language bindings exist (<code>*last_wrap.i</code>).<p>
 The Makefile features a target that creates <b>ruby</b> bindings using this file. On Ubuntu, you can e.g. do this:<ul>
 <li>Use <code>./configure &lt;version&gt;</code> to configure the Makefile automatically or, adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_RB = ...</code> so that the directory contains file <code>ruby.h</code>. Also, let <code>RUBY = ...</code> point to the right ruby executable.</li><li>Run <code>make ruby</code>.</li></ul>
+<p>
+The Makefile features a target that creates <b>python</b> bindings using this file. On Ubuntu, you can e.g. do this:<ul>
+<li>Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_PY = ...</code> so that the directory contains file <code>Python.h</code>. Also, let <code>PYTHON = ...</code> point to the right ruby executable.</li><li>Run <code>make python</code>.</li></ul>
 <p>
 <a class="anchor" name="Guidance"></a> <h2><a class="anchor" name="Guidance">
 Guidance on Using (Lib)Last</a></h2>
@@ -78,7 +80,7 @@ Most setting are sensible by default, see description of constructors and object
 I would suggest to manipulate the minimum frequency only at first. The number of fragments output should not be more than a multitude of the number of input graphs. For most chemical databases, a minimum frequency threshold of 4-6% will deliver good results. LibLast does not support percentage values, you will have to calculate absolute numbers.<h3><a class="anchor" name="sec3">
 Examples using the LibLast API</a></h3>
 LibLast uses the 'singleton' design pattern known from software engineering, i.e., class instantiation is restricted to one object. To empty the database after a run to feed new compounds, use the <a class="el" href="classLast.html#372de693ad40b3f42839c8ec6ac845f4" title="Use this to clear the database before feeding new compounds and activities.">Last::Reset()</a> routine.<p>
-The following code demonstrate the use of the <a class="el" href="classLast.html">Last</a> API from C++ and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a set of latent fragments and prints them out. Every root node corresponds to a single chemical element. The output consists of <a href="http://graphml.graphdrawing.org">GraphML</a> which can be postprocessed to SMARTS patterns using the <a href="http://github.com/amaunz/last-utils" target="_blank">LAST-UTILS</a>.<h4><a class="anchor" name="CPP">
+The following code demonstrate the use of the <a class="el" href="classLast.html">Last</a> API from C++, python and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a set of latent fragments and prints them out. Every root node corresponds to a single chemical element. The output consists of <a href="http://graphml.graphdrawing.org">GraphML</a> which can be postprocessed to SMARTS patterns using the <a href="http://github.com/amaunz/last-utils" target="_blank">LAST-UTILS</a>.<h4><a class="anchor" name="CPP">
 C++</a></h4>
 This example uses libLast in a C++ program. The example assumes that you have created the C++ library using <code>make</code>.<p>
 <div class="fragment"><pre class="fragment"><span class="preprocessor"> #include "<a class="code" href="last_8h.html">last.h</a>"</span>
@@ -126,7 +128,7 @@ This example uses libLast in a C++ program. The example assumes that you have cr
  }
 </pre></div><h4><a class="anchor" name="Python">
 Python</a></h4>
-This example assumes that you have created ruby bindings using <code>make python</code>.<p>
+This example assumes that you have created python bindings using <code>make python</code>.<p>
 <div class="fragment"><pre class="fragment"> <span class="keyword">import</span> liblast
  MyFminer = liblast.<a class="code" href="classLast.html#0c3fef1f249450ef678cdd46bd88e3a7" title="Constructor for standard settings: 95% significance level, minimum frequency 2, type...">Last</a>()
  MyFminer.AddCompound(<span class="stringliteral">"O=C(C(C(C=C3)=CC=C3O)=CO2)C1=C2C=C(O)C=C1O"</span> , 1)
@@ -155,7 +157,6 @@ This example assumes that you have created ruby bindings using <code>make python
  MyFminer.SetMaxHops(25)
 <span class="preprocessor"> # gather results for every root node in vector instead of immediate output</span>
 <span class="preprocessor"></span> MyFminer.SetConsoleOut(0)
- 
  <span class="keywordflow">for</span> j in range(0, MyFminer.GetNoRootNodes()-1):
     result = MyFminer.MineRoot(j);
     <span class="keywordflow">for</span> i in range(0, result.size()-1):
@@ -237,7 +238,7 @@ Dipl.-Inf. Andreas Maunz<br>
  Web: <a href="http://cs.maunz.de">http://cs.maunz.de</a><p>
 <dl class="author" compact><dt><b>Author:</b></dt><dd>(c) 2010 by Andreas Maunz, 2010 </dd></dl>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jan 1 06:28:10 2002 for liblast by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jan 1 06:48:12 2002 for liblast by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>
