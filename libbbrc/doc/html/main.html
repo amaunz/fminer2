@@ -90,10 +90,10 @@ Compiling from source</a></h3>
 Language Portability</a></h3>
 The API can be made available to other languages. Follow the installation instructions above. Config files different languages bindings exist (<code>*bbrc_wrap.i</code>).<p>
 The Makefile features a target that creates <b>ruby</b> bindings using this file. On Ubuntu, you can e.g. do this:<ul>
-<li>Use <code>./configure &lt;version&gt;</code> to configure the Makefile automatically or, adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_RB = ...</code> so that the directory contains file <code>ruby.h</code>. Also, let <code>RUBY = ...</code> point to the right ruby executable.</li><li>Run <code>make ruby</code>.</li></ul>
+<li>Use <code>./configure &lt;version&gt;</code> to configure the Makefile automatically or, adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_RB = ...</code> so that the directory contains file <code>ruby.h</code>. Also, let <code>RUBY = ...</code> point to the right ruby executable.</li><li>Run <code>make ruby</code>. Use <code>make rbtest</code> to test.</li></ul>
 <p>
 The Makefile features a target that creates <b>python</b> bindings using this file. On Ubuntu, you can e.g. do this:<ul>
-<li>Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_PY = ...</code> so that the directory contains file <code>Python.h</code>. Also, let <code>PYTHON = ...</code> point to the right ruby executable.</li><li>Run <code>make python</code>.</li></ul>
+<li>Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_PY = ...</code> so that the directory contains file <code>Python.h</code>. Also, let <code>PYTHON = ...</code> point to the right ruby executable.</li><li>Run <code>make python</code>. Use <code>make pytest</code> to test.</li></ul>
 <p>
 <a class="anchor" name="Guidance"></a> <h2><a class="anchor" name="Guidance">
 Guidance on Using (Lib)Bbrc</a></h2>
@@ -234,7 +234,7 @@ Dipl.-Inf. Andreas Maunz<br>
  Web: <a href="http://cs.maunz.de">http://cs.maunz.de</a><p>
 <dl class="author" compact><dt><b>Author:</b></dt><dd>(c) 2010 by Andreas Maunz, 2010 </dd></dl>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jan 1 06:41:19 2002 for libbbrc by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jan 1 07:06:08 2002 for libbbrc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>
