@@ -28,6 +28,7 @@ RUBY = ruby1.8
 #INCLUDE_OB    = -I/usr/local/include/openbabel-2.0
 # ADJUST COMPILER PATH TO GSL INCLUDE FILES:
 #INCLUDE_GSL   = -I/usr/include
+#INCLUDE_PY  = -I/usr/include/python2.5
 
 # ADJUST LINKER PATH TO OPENBABEL LIBRARY FILES:
 #LDFLAGS_OB    = -L/usr/local/lib
@@ -101,6 +102,7 @@ java: $(LIB3)
 
 .PHONY:
 python: $(LIB4)
+# PYTHON library does not need special variables.
 
 # TESTS + HELPERS
 .PHONY:
@@ -117,4 +119,4 @@ doc: Doxyfile Mainpage.h *.h
 	-doxygen $<
 .PHONY:
 clean:
-	-rm -rf *.o $(LIB1) $(LIB1_SONAME) $(LIB1_REALNAME) $(LIB2) $(LIB3) *.class ctest
+	-rm -rf *.o $(LIB1) $(LIB1_SONAME) $(LIB1_REALNAME) $(LIB2) $(LIB3) $(LIB4) *.class ctest
