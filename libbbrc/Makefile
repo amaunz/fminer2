@@ -39,9 +39,10 @@ PYTHON = python
 # FOR RUBY TARGET: ADJUST COMPILER PATH TO RUBY HEADERS (LINUX)
 #INCLUDE_RB    = -I/usr/lib/ruby/1.8/i486-linux/
 #RUBY          = ruby1.8
+#PYTHON = python
 
 # FOR JAVA TARGET: ADJUST COMPILER PATH TO JAVA HEADERS (LINUX)
-INCLUDE_JAVA  = -I /usr/lib/jvm/jdk1.6.0_20/include/ -I /usr/lib/jvm/jdk1.6.0_20/include/linux/
+#INCLUDE_JAVA  = -I /usr/lib/jvm/jdk1.6.0_20/include/ -I /usr/lib/jvm/jdk1.6.0_20/include/linux/
 
 # NORMALLY NO ADJUSTMENT NECESSARY BELOW THIS LINE. Exit and try 'make' now.
 # WHAT

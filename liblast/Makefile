@@ -23,6 +23,7 @@ LDFLAGS_GSL  =
 INCLUDE_RB  = -I/usr/lib/ruby/1.8/i486-linux
 INCLUDE_PY = -I/usr/include/python2.5
 RUBY = ruby1.8
+PYTHON = python
 
 # ADJUST COMPILER PATH TO OPENBABEL INCLUDE FILES:
 #INCLUDE_OB    = -I/usr/local/include/openbabel-2.0
@@ -38,9 +39,10 @@ RUBY = ruby1.8
 # FOR RUBY TARGET: ADJUST COMPILER PATH TO RUBY HEADERS (LINUX)
 #INCLUDE_RB    = -I/usr/lib/ruby/1.8/i486-linux/
 #RUBY          = ruby1.8
+#PYTHON = python
 
 # FOR JAVA TARGET: ADJUST COMPILER PATH TO JAVA HEADERS (LINUX)
-INCLUDE_JAVA  = -I /usr/lib/jvm/jdk1.6.0_20/include/ -I /usr/lib/jvm/jdk1.6.0_20/include/linux/
+#INCLUDE_JAVA  = -I /usr/lib/jvm/jdk1.6.0_20/include/ -I /usr/lib/jvm/jdk1.6.0_20/include/linux/
 
 # NORMALLY NO ADJUSTMENT NECESSARY BELOW THIS LINE. Exit and try 'make' now.
 # WHAT
@@ -107,6 +109,12 @@ python: $(LIB4)
 .PHONY:
 cpptest: ctest
 	./$<
+.PHONY:
+pytest: test.py
+	$(PYTHON) $<
+.PHONY:
+rbtest: test.rb
+	$(RUBY) $<
 .PHONY:
 doc: Doxyfile Mainpage.h *.h
 	-doxygen $<
