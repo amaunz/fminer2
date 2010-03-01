@@ -1,9 +1,9 @@
-/** @mainpage LibBbrc (libbbrc)
+/** @mainpage LibLast (liblast)
  *
- * LibBbrc
+ * LibLast
  *
- * This is the Bbrc library, available at http://github.com/amaunz/fminer2/tree/master, subdirectory 'bbrc' .<br>
- * The Fminer frontend application is available from http://github.com/amaunz/fminer2/tree/master, subdirectory 'fminer' .<br>
+ * This is the Last library, available at http://github.com/amaunz/fminer2/tree/master, subdirectory <code>liblast</code>.<br>
+ * The Fminer frontend application is available from http://github.com/amaunz/fminer2/tree/master, subdirectory <code>fminer</code>.<br>
  * You may download the scientific documentation from http://cs.maunz.de . The paper is entitled "Large Scale Graph Mining using Backbone Refinement Classes".<br>
  *
  *  @section Contents
@@ -11,7 +11,7 @@
  *      <li><a href="#News">News</a></li>
  *      <li><a href="#Abstract">Abstract</a></li>
  *      <li><a href="#Installation">Installation</a></li>
- *      <li><a href="#Guidance">Guidance on Using (Lib)Bbrc</a></li>
+ *      <li><a href="#Guidance">Guidance on Using (Lib)Last</a></li>
  *  </ul>
  * Contact details are located at the end of this page.
  *
@@ -73,22 +73,22 @@
  *
  *  \subsection ssec1 License
  *
- *   LibBbrc is licensed under the terms of the GNU General Public License (GPL, see LICENSE). LibBbrc is derived from (i.e. includes code from) the following project, licensed under GPL:
+ *   LibLast is licensed under the terms of the GNU General Public License (GPL, see LICENSE). LibLast is derived from (i.e. includes code from) the following project, licensed under GPL:
  * - <a href="http://doi.acm.org/10.1145/1014052.1014134" target="_blank">Siegfried Nijssen and Joost Kok. A Quickstart in Frequent Structure Mining Can Make a Difference. Proceedings of the SIGKDD, 2004</a> (http://www.liacs.nl/home/snijssen/gaston/)
  *
- *   LibBbrc uses (i.e. links to) the following projects, also licensed under GPL:
+ *   LibLast uses (i.e. links to) the following projects, also licensed under GPL:
  * - <a href="http://openbabel.sourceforge.net/" target="_blank">OpenBabel</a>: The Open Babel Package, version 2.1.1.
  * - <a href="http://www.gnu.org/software/gsl/" target="_blank">GSL: GNU Scientific Library</a>, version 0.1.
  *
- *   These licensing conditions mean essentially that your published program may only use (i.e., link to) and/or derive code from LibBbrc under the condition that your source code is also freely available. This is to secure public availability and freedom of use.
+ *   These licensing conditions mean essentially that your published program may only use (i.e., link to) and/or derive code from LibLast under the condition that your source code is also freely available. This is to secure public availability and freedom of use.
  *
  * <br><br>
  *  <a name="Installation">
  *  @section sec2 Installation
- *  LibBbrc is a library, written in C++. It dynamically links to OpenBabel and GSL libraries.
+ *  LibLast is a library, written in C++. It dynamically links to OpenBabel and GSL libraries.
  *  This section describes the installation of both the library and the frontend application for Linux.
  *  @subsection ssec22 Compiling from source
- *  <b>Linux SO</b>: install development tools (gcc, g++, GNU make) and GSL as well as OpenBabel development package, then compile LibBbrc. On Ubuntu, you can e.g. do it like this:
+ *  <b>Linux SO</b>: install development tools (gcc, g++, GNU make) and GSL as well as OpenBabel development package, then compile LibLast. On Ubuntu, you can e.g. do it like this:
  *  - Install build tools and GSL:
  *    \code
  *    apt-get install build-essential             # development tools
@@ -103,23 +103,23 @@
  *    \code
  *    apt-get install libopenbabel-dev            # OB binary lib and headers
  *    \endcode
- *  - <a href="http://github.com/amaunz/libfminer/tree" target="_blank">Download the library source code</a> (with git: <code>git clone git://github.com/amaunz/fminer2.git</code>) and cd to <code>libbbrc</code> subdirectory. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.
+ *  - <a href="http://github.com/amaunz/libfminer/tree" target="_blank">Download the library source code</a> (with git: <code>git clone git://github.com/amaunz/fminer2.git</code>) and cd to <code>liblast</code> subdirectory. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.
  *  - <a href="http://github.com/amaunz/fminer/tree" target="_blank">Download the frontend code</a> (with git: <code>git clone git://github.com/amaunz/fminer2.git</code>) and cd to <code>fminer</code> subdirectory.. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.
  *  - To create this documentation with doxygen, type 'make doc'. The documentation explains API, constructor usage and options.
  *  @subsection ssec23 Language Portability
- *  The API can be made available to other languages. Follow the installation instructions above. A config file for Swig to automagically create languages bindings exists (<code>rbbrc_wrap.i</code>). 
+ *  The API can be made available to other languages. Follow the installation instructions above. A config file for Swig to automagically create languages bindings exists (<code>rlast_wrap.i</code>). 
  *
  *  The Makefile features a target that creates <b>ruby</b> bindings using this file. On Ubuntu, you can e.g. do this:
  *  - Use <code>./configure <version></code> to configure the Makefile automatically or, adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_RB = ...</code> so that the directory contains file <code>ruby.h</code>. Also, let <code>RUBY = ...</code> point to the right ruby executable.
  *  - Run <code>make ruby</code>.
  *
  *  <a name="Guidance">
- * @section Guidance Guidance on Using (Lib)Bbrc
+ * @section Guidance Guidance on Using (Lib)Last
  *
  * Most setting are sensible by default, see description of constructors and objects below. 
  *
  * I would suggest to manipulate the minimum frequency only at first. The number of fragments output should not be more than a multitude of the number of input graphs.
- * For most chemical databases, a minimum frequency threshold of 2%-3% will deliver good results. LibBbrc does not support percentage values, you will have to calculate absolute numbers to the <code>-f</code> switch first.
+ * For most chemical databases, a minimum frequency threshold of 2%-3% will deliver good results. LibLast does not support percentage values, you will have to calculate absolute numbers to the <code>-f</code> switch first.
  *
  * @subsection Examples Examples for the frontend application
  *
@@ -151,7 +151,7 @@
  * \endcode
  * There are two modes of operation, with activity information and without. BBRC mining is switched on by default. To disable it (-b), you also have to disable dynamic upper bound adjustment (-d).
  *
- * @subsection sExamples1 Use BBRC mining (default): 
+ * @subsection sExamples1 Use Last mining (default): 
  * \code
  * # BBRC representatives (min frequency 2, min significance 95%), using dynamic UB pruning
  * ./fminer <graphs> <activities> 
@@ -171,10 +171,10 @@
  * \endcode
  *
  * <br><br>
- *  @subsection sec3 Examples using the LibBbrc API
- *  LibBbrc uses the 'singleton' design pattern known from software engineering, i.e., class instantiation is restricted to one object. To empty the database after a run to feed new compounds, use the Bbrc::Reset() routine. 
+ *  @subsection sec3 Examples using the LibLast API
+ *  LibLast uses the 'singleton' design pattern known from software engineering, i.e., class instantiation is restricted to one object. To empty the database after a run to feed new compounds, use the Last::Reset() routine. 
  *
- *  The following code demonstrate the use of the Bbrc API from C++ and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a vector of fragments along with statistical relevance and occurrences and prints them out. Every root node corresponds to a single chemical element. The output consists of gSpan graphs. Define the FMINER_SMARTS environment variable to produce output in SMARTS format. In this case, each line is a YAML sequence, containing SMARTS fragment, <i>p</i>-value, and two sequences denoting positive and negative class occurrences (line numbers in Smiles file): 
+ *  The following code demonstrate the use of the Last API from C++ and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a vector of fragments along with statistical relevance and occurrences and prints them out. Every root node corresponds to a single chemical element. The output consists of gSpan graphs. Define the FMINER_SMARTS environment variable to produce output in SMARTS format. In this case, each line is a YAML sequence, containing SMARTS fragment, <i>p</i>-value, and two sequences denoting positive and negative class occurrences (line numbers in Smiles file): 
  *
  *  \code
  *  - [ smarts,    p_chisq,    occ_list_active,    occ_list_inactive ]
@@ -185,18 +185,18 @@
  *
  * \subsubsection CPP C++
  *
- * This example uses libBbrc in a C++ program.
+ * This example uses libLast in a C++ program.
  * The example assumes that you have created the C++ library using <code>make</code>.
  *
  * \code
- * #include "bbrc.h"
+ * #include "last.h"
  * #include <iostream>
  * #include <string.h>
  * using namespace std;
  *
- * Bbrc* MyFminer;
+ * Last* MyFminer;
  * int main(int argc, char *argv[], char *envp) {
- *   MyFminer= new Bbrc();
+ *   MyFminer= new Last();
  *   MyFminer->AddCompound ("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4" , 1);
  *   MyFminer->AddCompound ("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2);
  *      // ... continue adding compounds
@@ -225,8 +225,8 @@
  * This example assumes that you have created ruby bindings using <code>make ruby</code>.
  * \code
  *
- * require 'bbrc'
- * MyFminer = Bbrc::Bbrc.new()
+ * require 'last'
+ * MyFminer = Last::Last.new()
  * MyFminer.AddCompound("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4" , 1)
  * MyFminer.AddCompound("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2)
  *    # ... continue adding compounds
@@ -273,15 +273,15 @@
  *
  * \code
  *  //! Constructor for standard settings: 95% significance level, minimum frequency 2, type trees, dynamic upper bound, BBRC
- *  Bbrc ();
+ *  Last ();
  *  \endcode
 
  * There also exist more flexible constructors:
  * \code
  * //! Like standard constructor, but type and minimum frequency configurable
- * Bbrc (int type, unsigned int minfreq);
+ * Last (int type, unsigned int minfreq);
  * //! Like standard constructor, but type, minimum frequency, significance level and BBRC configurable
- * Bbrc (int type, unsigned int minfreq, float chisq_val, bool do_backbone);
+ * Last (int type, unsigned int minfreq, float chisq_val, bool do_backbone);
  * \endcode
  * It is recommended to increase minimum frequency as a first step when too many features are generated. 
  *
