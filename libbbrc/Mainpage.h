@@ -1,8 +1,8 @@
-/** @mainpage LibFminer (libfminer)
+/** @mainpage LibBbrc (libbbrc)
  *
- * LibFminer
+ * LibBbrc
  *
- * This is the Fminer library, available at http://github.com/amaunz/libfminer/tree/master .<br>
+ * This is the Fminer library, available at http://github.com/amaunz/libbbrc/tree/master .<br>
  * The Fminer frontend application is available from http://github.com/amaunz/fminer/tree/master .<br>
  * You may download the scientific documentation from http://cs.maunz.de . The paper is entitled "Large Scale Graph Mining using Backbone Refinement Classes".<br>
  *

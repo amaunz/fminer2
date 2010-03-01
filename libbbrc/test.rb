@@ -1,10 +1,10 @@
-require 'fminer'
- MyFminer = Fminer::Fminer.new()
+require 'bbrc'
+ MyFminer = Bbrc::Bbrc.new()
  MyFminer.AddCompound("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4" , 1)
  MyFminer.AddCompound("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2)
     # ... continue adding compounds
- MyFminer.AddActivity(true, 1)
- MyFminer.AddActivity(false, 2)
+ MyFminer.AddActivity(1.0, 1)
+ MyFminer.AddActivity(0.0, 2)
     # ... continue adding activities (true for active, false for inactive)
  print MyFminer.GetNoCompounds()  
  puts " compounds"

@@ -1,7 +1,7 @@
-Welcome to LibFminer.
+Welcome to LibBbrc.
 
 Please choose:
-a) Refer to http://www.maunz.de/libfminer-doc/ for installation instructions on various OS and language platforms. 
+a) Refer to http://www.maunz.de/libbbrc-doc/ for installation instructions on various platforms. 
 b) Build the documentation yourself with doxygen: type 'make doc'.
 
 Contents of the above documentation:
@@ -11,4 +11,9 @@ Contents of the above documentation:
 - Description of Constructors and Options
 - Official contact information
 
-Andreas Maunz, 2008
+For a quickstart try:
+$ ./configure
+$ make
+$ make test
+
+Andreas Maunz, 2010

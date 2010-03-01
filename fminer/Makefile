@@ -27,23 +27,17 @@ INCLUDE_RB  = -I/usr/lib/ruby/1.8/i486-linux
 # EXAMPLES:
 # ADJUST COMPILER PATH TO OPENBABEL INCLUDE FILES (1st line Linux, 2nd line Windows):
 #INCLUDE_OB    = -I/usr/local/include/openbabel-2.0
-INCLUDE_OB  =  -I/usr/local/include/openbabel-2.0  
+#INCLUDE_OB  =  -I/usr/local/include/openbabel-2.0  
 # ADJUST COMPILER PATH TO GSL INCLUDE FILES (1st line Linux, 2nd line Windows):
 #INCLUDE_GSL   = -I/usr/include
-INCLUDE_GSL  =   
+#INCLUDE_GSL  =   
 
 # ADJUST LINKER PATH TO OPENBABEL LIBRARY FILES (1st line Linux, 2nd line Windows):
 #LDFLAGS_OB    = -L/usr/local/lib
-LDFLAGS_OB  =  -L/usr/local/lib  
+#LDFLAGS_OB  =  -L/usr/local/lib  
 # ADJUST LINKER PATH TO GSL LIBRARY FILES (1st line Linux, 2nd line Windows):
 #LDFLAGS_GSL   =
-LDFLAGS_GSL  =   
-
-
-
-# FOR LINUX: INSTALL TARGET DIRECTORY
-DESTDIR       = /usr/local/bin
-
+#LDFLAGS_GSL  =   
 
 # NORMALLY NO ADJUSTMENT NECESSARY BELOW THIS LINE. Exit and try 'make' now.
 # WHAT
@@ -53,11 +47,7 @@ CC            = g++
 INCLUDE       = $(INCLUDE_OB) $(INCLUDE_GSL)
 LDFLAGS       = $(LDFLAGS_OB) $(LDFLAGS_GSL)
 CXXFLAGS      = -Wall -O3 -g
-ifeq ($(OS), Windows_NT) # assume MinGW/Windows
-LIBS	      = -lm -llibopenbabel-3 -llibgsl -llibgslcblas 
-else
 LIBS	      = -lopenbabel -lgsl -lgslcblas
-endif
 
 # TARGETS
 all: $(PROGRAM) 
@@ -67,9 +57,6 @@ $(PROGRAM): main.cpp
 	      $(LDFLAGS) \
 	      -o $@ $<
 
-install: $(PROGRAM)
-	cp -P fminer $(DESTDIR)
-
 .PHONY:
 clean:
-	-rm -rf $(PROGRAM) $(PROGRAM).exe
+	-rm -rf $(PROGRAM)
