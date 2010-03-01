@@ -23,19 +23,15 @@ LDFLAGS_GSL  =
 INCLUDE_RB  = -I/usr/lib/ruby/1.8/i486-linux
 RUBY = ruby1.8
 
-# ADJUST COMPILER PATH TO OPENBABEL INCLUDE FILES (1st line Linux, 2nd line Windows):
+# ADJUST COMPILER PATH TO OPENBABEL INCLUDE FILES:
 #INCLUDE_OB    = -I/usr/local/include/openbabel-2.0
-#INCLUDE_OB   += -I/home/openbabel-2.2.1/include
-# ADJUST COMPILER PATH TO GSL INCLUDE FILES (1st line Linux, 2nd line Windows):
+# ADJUST COMPILER PATH TO GSL INCLUDE FILES:
 #INCLUDE_GSL   = -I/usr/include
-#INCLUDE_GSL  += -I/c/Program\ Files/GnuWin32/include/
 
-# ADJUST LINKER PATH TO OPENBABEL LIBRARY FILES (1st line Linux, 2nd line Windows):
+# ADJUST LINKER PATH TO OPENBABEL LIBRARY FILES:
 #LDFLAGS_OB    = -L/usr/local/lib
-#LDFLAGS_OB   += -L/c/Users/am/Desktop/fminer
-# ADJUST LINKER PATH TO GSL LIBRARY FILES (1st line Linux, 2nd line Windows):
+# ADJUST LINKER PATH TO GSL LIBRARY FILES:
 #LDFLAGS_GSL   =
-#LDFLAGS_GSL  += -L/c/Program\ Files/GnuWin32/bin/
 
 # FOR RUBY TARGET: ADJUST COMPILER PATH TO RUBY HEADERS (LINUX)
 #INCLUDE_RB    = -I/usr/lib/ruby/1.8/i486-linux/
@@ -49,8 +45,6 @@ CC            = g++
 INCLUDE       = $(INCLUDE_OB) $(INCLUDE_GSL) 
 LDFLAGS       = $(LDFLAGS_OB) $(LDFLAGS_GSL)
 OBJ           = closeleg.o constraints.o database.o graphstate.o legoccurrence.o path.o patterntree.o bbrc.o
-SWIG          = swig
-SWIGFLAGS     = -c++
 CXXFLAGS      = -O3 -g $(INCLUDE) -fPIC
 LIBS_LIB2     = -lopenbabel -lgsl
 LIBS          = $(LIBS_LIB2) -ldl -lm -lgslcblas
