@@ -1,6 +1,6 @@
 // bbrc.h
 // modified 2010
-// © 2008 by Andreas Maunz, andreas@maunz.de, oct 2008
+// (c) 2010 by Andreas Maunz, andreas@maunz.de, feb 2010
 
 /*
     This file is part of LibBbrc (libbbrc).

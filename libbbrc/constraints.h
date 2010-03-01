@@ -1,5 +1,5 @@
 // constraints.h
-// © 2008 by Andreas Maunz, andreas@maunz.de, jun 2008
+// (c) 2010 by Andreas Maunz, andreas@maunz.de, feb 2010
 
 /*
     This file is part of LibBbrc (libbbrc).

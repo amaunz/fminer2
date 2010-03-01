@@ -7,7 +7,7 @@ b) Build the documentation yourself with doxygen: type 'make doc'.
 Contents of the above documentation:
 - Links to scientific paper and abstract
 - Installation (several OS and languages)
-- Example program using the LibBbrc API (C++, Ruby, Java)
+- Example program using the LibBbrc API (C++, Ruby)
 - Description of Constructors and Options
 - Official contact information
 

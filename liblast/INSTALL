@@ -1,5 +1,19 @@
-Welcome to LAST.
+Welcome to LibLast.
 
 Please choose:
+a) Refer to http://www.maunz.de/libbbrc-last-doc/ for installation instructions on various platforms. 
+b) Build the documentation yourself with doxygen: type 'make doc'.
 
-Andreas Maunz, 2008
+Contents of the above documentation:
+- Links to scientific paper and abstract
+- Installation (several OS and languages)
+- Example program using the LibBbrc API (C++, Ruby)
+- Description of Constructors and Options
+- Official contact information
+
+For a quickstart try:
+$ ./configure
+$ make
+$ make test
+
+Andreas Maunz, 2010

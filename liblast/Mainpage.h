@@ -19,57 +19,12 @@
  *  <a name="News">
  *  @section sec0 News
  *
- * <i>29 Nov 2009</i>: Added configure script and bugfixes.<p />
- * <i>29 Apr 2009</i>: The Backbone Refinement Class paper (co-authored by Christoph Helma and Stefan Kramer) has been accepted for the <b><a href="http://www.sigkdd.org/kdd/2009/papers.html">KDD 2009</a></b> conference on Data Mining and Knowledge Discovery (Jun 28 - Jul 1 2009 in Paris) for a presentation at the conference and inclusion in the conference proceedings.<p />
- * <i>30 Apr 2009</i>: The paper has been selected for oral presentation at <b><a href="http://www.cs.kuleuven.be/~dtai/ilp-mlg-srl/index.php?CONF=mlg&CONT=accepted">MLG 2009</a></b>.<p />
- * <i>10 Jul 2009</i>: <a href="http://doi.acm.org/10.1145/1557019.1557089" target="_blank">KDD conference proceedings are online</a>.
- *
  * <br><br>
  *  <a name="Abstract">
  *  @section sec1 Abstract
  *
- *  We present a new approach to large-scale graph mining
- *  based on so-called backbone refinement classes. The method
- *  efficiently mines tree-shaped subgraph descriptors under minimum
- *  frequency and significance constraints, using classes
- *  of fragments to reduce feature set size and running times.
- *  The classes are defined in terms of fragments sharing a common
- *  backbone. The method is able to optimize structural
- *  inter-feature entropy as opposed to occurrences, which is
- *  characteristic for open or closed fragment mining. In the
- *  experiments, the proposed method reduces feature set sizes
- *  by >90 % and >30 % compared to complete tree mining and
- *  open tree mining, respectively. Evaluation using crossvalidation
- *  runs shows that their classification accuracy is similar
- *  to the complete set of trees but significantly better than
- *  that of open trees. Compared to open or closed fragment
- *  mining, a large part of the search space can be pruned due
- *  to an improved statistical constraint (dynamic upper bound
- *  adjustment), which is also confirmed in the experiments in
- *  lower running times compared to ordinary (static) upper
- *  bound pruning. Further analysis using large-scale datasets
- *  yields insight into important properties of the proposed descriptors,
- *  such as the dataset coverage and the class size
- *  represented by each descriptor. A final cross-validation run
- *  confirms that the novel descriptors render large training sets
- *  feasible which previously might have been intractable.
- *
- * \htmlonly
- *  <table align="center" border="0" width="610">
- *     <tr align="center">
- *         <td>
- *     <a href="http://www.maunz.de/salm.jpg">
- *     <img src="/salm.jpg" width="300" alt="Euclidean embedding of a Backbone Refinement Class Descriptors and Salmonella Mutagenicity data" title="Euclidean embedding of a Backbone Refinement Class Descriptors and Salmonella Mutagenicity data" />
- *      </a>
- *         </td>
- *     </tr>
- *     <tr>
- *         <td align="center">
- *     <small>Co-occurrence-based 2D embedding of molecules and backbone refinement class features showing close to perfect separation of target classes along top left to bottom right. (De)activating features are (red) green, (In)active instances (salmon) blue. Data: <a href="http://github.com/amaunz/cpdbdata/tree/master">CPDB salmonella mutagenicity</a>; Euclidean embedding: <a href="http://www.cs.kuleuven.be/~dtai/ilp-mlg-srl/index.php?CONF=ims&amp;CONT=wiki&amp;id=paper:ilp:33" target="_blank">Schulz <i>et. al,</i></a>.<br /> <b> <a href="/abstree.html" target="_blank" alt="Co-occurrence-based 2D embedding of molecules and backbone refinement class features">Click here</a> for a flash-animated version, indicating occurrences.</b></small>
- *         </td>
- *     </tr>
- *  </table>
- *  \endhtmlonly
+ * Pattern mining methods for graph data have largely been restricted to ground features, such as frequent or correlated subgraphs. Kazius et al. have demonstrated the use of elaborate patterns in the biochemical domain, summarizing several ground features at once. Such patterns bear the potential to reveal latent information not present in any individual ground feature. However, those patterns were handcrafted by chemical experts. 
+ * In this paper, we present a data-driven bottom-up method for pattern generation that takes advantage of the embedding relationships among individual ground features. The method works fully automatically and does not require data preprocessing (e.g., to introduce abstract node or edge labels). Controlling the process of generating ground features, it is possible to align them canonically and merge (stack) them, yielding a weighted edge graph. In a subsequent step, the subgraph features are compressed by singular value decomposition (SVD). Our experiments show that the resulting features are chemically meaningful and that they can enable substantial performance improvements on chemical datasets that have been problematic so far for graph mining approaches.
  *
  *  \subsection ssec1 License
  *
@@ -119,69 +74,12 @@
  * Most setting are sensible by default, see description of constructors and objects below. 
  *
  * I would suggest to manipulate the minimum frequency only at first. The number of fragments output should not be more than a multitude of the number of input graphs.
- * For most chemical databases, a minimum frequency threshold of 2%-3% will deliver good results. LibLast does not support percentage values, you will have to calculate absolute numbers to the <code>-f</code> switch first.
+ * For most chemical databases, a minimum frequency threshold of 4%-6% will deliver good results. LibLast does not support percentage values, you will have to calculate absolute numbers.
  *
- * @subsection Examples Examples for the frontend application
- *
- * In any case, 1-frequent patterns are not refined further, unless you use the -s switch.
- * Usage: 
- * \code
- *        ./fminer [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r] [-d [-b [-m] | -u]] [-p p_value] <graphs> <activities>
- *        ./fminer [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r] <graphs>
- *
- *          File formats:
- *               <graphs> File must either have suffix .smi or .gsp, indicating SMILES or gSpan format.
- *               <activities> File must be in Activity format (suffix not relevant).
- *
- *         General options:
- *               -f  --minfreq _minfreq_      Set minimum frequency. Allowable values for _minfreq_: 1, 2, ... (default: 2).
- *               -l  --level _level_          Set fragment type. Allowable values for _type_: 1 (paths) and 2 (trees) (default: 2).
- *               -s  --refine-singles         Switch on refinement of fragments with frequency 1 (default: off).
- *               -o  --no-output              Switch off output (default: on).
- *               -n  --line-nrs               Switch on line numbers in output file (default: off).
- *               -r  --bbrc-sep               Switch on BBRC separator in result vector (default: off).
- *
- *         Upper bound pruning options:
- *               -a  --aromaticity            Switch on aromatic ring perception when using smiles input format (default: off).
- *               -d  --no-dynamic-ub          Switch off dynamic adjustment of upper bound for backbone mining (default: on).
- *               -b  --no-bbr-classes         Switch off mining for backbone refinement classes (default: on).
- *               -m  --max-trees              Switch on mining for maximal trees, aka the positive border (default: off).
- *               -u  --no-upper-bound-pruning Switch off upper bound pruning (default: on).
- *               -p  --p-value _p_value_      Set significance type. Allowable values for _p_value_: 0 <= _p_value_ <= 1.0 (default: 0.95).
- * \endcode
- * There are two modes of operation, with activity information and without. BBRC mining is switched on by default. To disable it (-b), you also have to disable dynamic upper bound adjustment (-d).
- *
- * @subsection sExamples1 Use Last mining (default): 
- * \code
- * # BBRC representatives (min frequency 2, min significance 95%), using dynamic UB pruning
- * ./fminer <graphs> <activities> 
- *
- * # same as above, but much slower (explicitly no dynamic UB pruning)
- * ./fminer -d <graphs> <activities>                                        
- * \endcode
- *
- * @subsection sExamples2 Switch off BBRC mining:
- * \code
- * # all 2-frequent and 95%-significant features
- * # Note, that the -d is mandatory (no dynamic UB pruning possible here)!
- * ./fminer -d -b <graphs> <activities>
- *
- * # All 20-frequent patterns (standard frequent pattern mining)
- * ./fminer -f 20 <graphs>
- * \endcode
- *
- * <br><br>
  *  @subsection sec3 Examples using the LibLast API
  *  LibLast uses the 'singleton' design pattern known from software engineering, i.e., class instantiation is restricted to one object. To empty the database after a run to feed new compounds, use the Last::Reset() routine. 
  *
- *  The following code demonstrate the use of the Last API from C++ and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a vector of fragments along with statistical relevance and occurrences and prints them out. Every root node corresponds to a single chemical element. The output consists of gSpan graphs. Define the FMINER_SMARTS environment variable to produce output in SMARTS format. In this case, each line is a YAML sequence, containing SMARTS fragment, <i>p</i>-value, and two sequences denoting positive and negative class occurrences (line numbers in Smiles file): 
- *
- *  \code
- *  - [ smarts,    p_chisq,    occ_list_active,    occ_list_inactive ]
- *  \endcode
- *
- * Documentation for YAML can be found at: http://yaml.org/spec/cvs/current.html# Additionally define the FMINER_LAZAR environment variable to produce output in linfrag format which can be used as input to <code><a href="http://lazar.in-silico.de" target="_blank">Lazar</a></code>. 
- *
+ *  The following code demonstrate the use of the Last API from C++ and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a vector of fragments along with statistical relevance and occurrences and prints them out. Every root node corresponds to a single chemical element. The output consists of <a href="http://graphml.graphdrawing.org">GraphML</a> which can be postprocessed to SMARTS patterns using the <a href="http://github.com/amaunz/last-utils" target="_blank">LAST-UTILS</a>.
  *
  * \subsubsection CPP C++
  *
@@ -295,20 +193,5 @@
  * Email: maunza@fdm.uni-freiburg.de<br>
  * Web: http://cs.maunz.de
  *
- *  \author © 2008 by Andreas Maunz, 2008
- *
- * \htmlonly
- * <a href="http://www2.clustrmaps.com/counter/maps.php?url=http://www.maunz.de/libfminer-doc/main.html" id="clustrMapsLink"><img src="http://www2.clustrmaps.com/counter/index2.php?url=http://www.maunz.de/libfminer-doc/main.html" style="border:0px;visibility:hidden" alt="Locations of visitors to this page" title="Locations of visitors to this page" id="clustrMapsImg" />
- * </a>
- * <script type="text/javascript">
- * function cantload() {
- * img = document.getElementById("clustrMapsImg");
- * img.onerror = null;
- * img.src = "http://clustrmaps.com/images/clustrmaps-back-soon.jpg";
- * document.getElementById("clustrMapsLink").href = "http://clustrmaps.com";
- * }
- * img = document.getElementById("clustrMapsImg");
- * img.onerror = cantload;
- * </script>
- * \endhtmlonly
+ *  \author (c) 2010 by Andreas Maunz, 2010
  **/

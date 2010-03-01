@@ -1,5 +1,5 @@
 // legoccurrence.h
-// © 2008 by Andreas Maunz, andreas@maunz.de, jul 2008
+// (c) 2010 by Andreas Maunz, andreas@maunz.de, feb 2010
 // Siegfried Nijssen, snijssen@liacs.nl, jan 2004.
 
 /*

@@ -119,58 +119,8 @@
  * Most setting are sensible by default, see description of constructors and objects below. 
  *
  * I would suggest to manipulate the minimum frequency only at first. The number of fragments output should not be more than a multitude of the number of input graphs.
- * For most chemical databases, a minimum frequency threshold of 2%-3% will deliver good results. LibBbrc does not support percentage values, you will have to calculate absolute numbers to the <code>-f</code> switch first.
+ * For most chemical databases, a minimum frequency threshold of 2%-3% will deliver good results. LibBbrc does not support percentage values, you will have to calculate absolute numbers.
  *
- * @subsection Examples Examples for the frontend application
- *
- * In any case, 1-frequent patterns are not refined further, unless you use the -s switch.
- * Usage: 
- * \code
- *        ./fminer [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r] [-d [-b [-m] | -u]] [-p p_value] <graphs> <activities>
- *        ./fminer [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r] <graphs>
- *
- *          File formats:
- *               <graphs> File must either have suffix .smi or .gsp, indicating SMILES or gSpan format.
- *               <activities> File must be in Activity format (suffix not relevant).
- *
- *         General options:
- *               -f  --minfreq _minfreq_      Set minimum frequency. Allowable values for _minfreq_: 1, 2, ... (default: 2).
- *               -l  --level _level_          Set fragment type. Allowable values for _type_: 1 (paths) and 2 (trees) (default: 2).
- *               -s  --refine-singles         Switch on refinement of fragments with frequency 1 (default: off).
- *               -o  --no-output              Switch off output (default: on).
- *               -n  --line-nrs               Switch on line numbers in output file (default: off).
- *               -r  --bbrc-sep               Switch on BBRC separator in result vector (default: off).
- *
- *         Upper bound pruning options:
- *               -a  --aromaticity            Switch on aromatic ring perception when using smiles input format (default: off).
- *               -d  --no-dynamic-ub          Switch off dynamic adjustment of upper bound for backbone mining (default: on).
- *               -b  --no-bbr-classes         Switch off mining for backbone refinement classes (default: on).
- *               -m  --max-trees              Switch on mining for maximal trees, aka the positive border (default: off).
- *               -u  --no-upper-bound-pruning Switch off upper bound pruning (default: on).
- *               -p  --p-value _p_value_      Set significance type. Allowable values for _p_value_: 0 <= _p_value_ <= 1.0 (default: 0.95).
- * \endcode
- * There are two modes of operation, with activity information and without. BBRC mining is switched on by default. To disable it (-b), you also have to disable dynamic upper bound adjustment (-d).
- *
- * @subsection sExamples1 Use BBRC mining (default): 
- * \code
- * # BBRC representatives (min frequency 2, min significance 95%), using dynamic UB pruning
- * ./fminer <graphs> <activities> 
- *
- * # same as above, but much slower (explicitly no dynamic UB pruning)
- * ./fminer -d <graphs> <activities>                                        
- * \endcode
- *
- * @subsection sExamples2 Switch off BBRC mining:
- * \code
- * # all 2-frequent and 95%-significant features
- * # Note, that the -d is mandatory (no dynamic UB pruning possible here)!
- * ./fminer -d -b <graphs> <activities>
- *
- * # All 20-frequent patterns (standard frequent pattern mining)
- * ./fminer -f 20 <graphs>
- * \endcode
- *
- * <br><br>
  *  @subsection sec3 Examples using the LibBbrc API
  *  LibBbrc uses the 'singleton' design pattern known from software engineering, i.e., class instantiation is restricted to one object. To empty the database after a run to feed new compounds, use the Bbrc::Reset() routine. 
  *
@@ -295,20 +245,6 @@
  * Email: maunza@fdm.uni-freiburg.de<br>
  * Web: http://cs.maunz.de
  *
- *  \author © 2008 by Andreas Maunz, 2008
+ *  \author (c) 2010 by Andreas Maunz, 2010
  *
- * \htmlonly
- * <a href="http://www2.clustrmaps.com/counter/maps.php?url=http://www.maunz.de/libfminer-doc/main.html" id="clustrMapsLink"><img src="http://www2.clustrmaps.com/counter/index2.php?url=http://www.maunz.de/libfminer-doc/main.html" style="border:0px;visibility:hidden" alt="Locations of visitors to this page" title="Locations of visitors to this page" id="clustrMapsImg" />
- * </a>
- * <script type="text/javascript">
- * function cantload() {
- * img = document.getElementById("clustrMapsImg");
- * img.onerror = null;
- * img.src = "http://clustrmaps.com/images/clustrmaps-back-soon.jpg";
- * document.getElementById("clustrMapsLink").href = "http://clustrmaps.com";
- * }
- * img = document.getElementById("clustrMapsImg");
- * img.onerror = cantload;
- * </script>
- * \endhtmlonly
  **/
