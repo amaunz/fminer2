@@ -1,7 +1,8 @@
-Usage: ./fminer [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r] [-d [-b [-m] | -u]] [-p p_value] <graphs> <activities>
-       ./fminer [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r] <graphs>
+Usage: ./fminer <library> [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r] [-d [-b [-m] | -u]] [-p p_value] <graphs> <activities>
+       ./fminer <library> [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r] <graphs>
 
   File formats:
+       <library> Select a library (e.g. LAST or BBRC). File must either have suffix .so or .dll.
        <graphs> File must either have suffix .smi or .gsp, indicating SMILES or gSpan format.
        <activities> File must be in Activity format (suffix not relevant).
 

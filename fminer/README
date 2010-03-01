@@ -1,7 +1,6 @@
  Welcome to Fminer.
 
- This is Fminer (application), available from http://github.com/amaunz/fminer/tree/master .
- It depends on LibFminer, available from http://github.com/amaunz/libfminer/tree/master . 
+ This is Fminer (application), available from http://github.com/amaunz/fminer2/tree/master .
  The official website with documentation is http://www.maunz.de/libfminer-doc .
 
  For installation and documentation see INSTALL.
@@ -71,17 +70,17 @@
  Use BBRC mining (default):
 
  # BBRC representatives (min frequency 2, min significance 95%), using dynamic UB pruning
- ./fminer <graphs> <activities> 
+ ./fminer ../libbbrc/libbbrc.so <graphs> <activities> 
  # same as above, but much slower (explicitly no dynamic UB pruning)
- ./fminer -d <graphs> <activities>                                        
+ ./fminer ../libbbrc/libbbrc.so -d <graphs> <activities>                                        
 
  Switch off BBRC mining:
 
  # all 2-frequent and 95%-significant features
  # Note, that the -d is mandatory (no dynamic UB pruning possible here)!
- ./fminer -d -b <graphs> <activities>
+ ./fminer ../libbbrc/libbbrc.so -d -b <graphs> <activities>
  # All 20-frequent patterns (standard frequent pattern mining)
- ./fminer -f 20 <graphs>
+ ./fminer ../libbbrc/libbbrc.so -f 20 <graphs>
 
  
-Andreas Maunz, 2008.
+Andreas Maunz, 2010.
