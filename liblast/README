@@ -1,0 +1,24 @@
+Welcome to LAST (LAtent STructure Pattern Mining).
+
+This is the LAST library, available from http://github.com/amaunz/last/tree/master.
+The Fminer application that uses this library is available from http://github.com/amaunz/fminer/tree/master.
+Utilities for chemical application of LAST are available from http://github.com/amaunz/last-utils/tree/master.
+The official website with documentation is .
+
+INSTALLATION:
+Refer to http://www.maunz.de/libfminer-doc for usage information until a complete manual for LAST is available.
+Installation is completely the same. Set the LD_LIBRARY_PATH variable to the directory where LAST is installed, e.g.:
+$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/last
+Note: for LAST, the switches -d -b -r are defunct.
+
+EXAMPLE:
+Mine LAST descriptors and convert output to SMARTS (see LAST README file how to use the fminer frontend binary for LAST):
+./fminer -f14 ../cpdbdata/salmonella_mutagenicity/salmonella_mutagenicity_alt.smi ../cpdbdata/salmonella_mutagenicity/salmonella_mutagenicity_alt.class > salm-last.graphml
+
+The output format is GraphML (see http://graphml.graphdrawing.org/), an XML-based file format for graphs. use last-utils to convert it to SMARTS patterns (see above).
+For installation and documentation see INSTALL.
+For license information see LICENSE.
+
+Abstract:
+
+Andreas Maunz, 2009

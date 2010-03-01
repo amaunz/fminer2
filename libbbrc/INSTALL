@@ -1,0 +1,14 @@
+Welcome to LibFminer.
+
+Please choose:
+a) Refer to http://www.maunz.de/libfminer-doc/ for installation instructions on various OS and language platforms. 
+b) Build the documentation yourself with doxygen: type 'make doc'.
+
+Contents of the above documentation:
+- Links to scientific paper and abstract
+- Installation (several OS and languages)
+- Example program using the LibFminer API (C++, Ruby, Java)
+- Description of Constructors and Options
+- Official contact information
+
+Andreas Maunz, 2008
