@@ -408,3 +408,9 @@ extern "C" void destroy(Fminer* f) {
     delete f;
 }
 
+extern "C" void usage() {
+    cerr << "Options 1 (BBRC Mining): " << endl;
+    cerr << "[-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r] [-d [-b | -u]] [-p p_value] <graphs> <activities>" << endl;
+    cerr << "[-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r] <graphs>" << endl;
+    cerr << endl;
+}

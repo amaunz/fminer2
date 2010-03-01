@@ -234,49 +234,51 @@ int main(int argc, char *argv[], char *envp[]) {
     bool do_backbone = true;
     bool line_nrs = false;
     bool bbrc_sep = false;
-    bool most_specific_trees_only = false;
     bool do_regression = false;
     
     // FILE ARGUMENT READ
-	if ((argc>1) && (argv[1][0]!='-')) {
-		lib_path = argv[1]; //set lib path
-		if (argc>3) {
-	       if (argv[argc-2][0]!='-') {
-	           graph_file = argv[argc-2]; status=0;
-	           if (argv[argc-1][0]=='-') {
-	               status=1;
-	           }
-	           else {
-	               act_file = argv[argc-1]; //chisq.active=1;
-	           }
-	       }
-	       else {
-	           if (argv[argc-1][0]=='-') {
-	               status=1;
-	           }
-	           else {
-	              graph_file = argv[argc-1]; //chisq.active=0;
-	              status = 0;
-	           }
-	       }
-	    }
-	    else if (argc==3){
-	       if (argv[argc-1][0]=='-') {
-	           status=1;
-	       }
-	       else {
-	           graph_file = argv[argc-1]; //chisq.active=0;
-	           status = 0;
-	       }
-	    }
-	    else status=1;
+	if (argc>1) {
+	    if (argv[1][0]!='-') {
+            lib_path = argv[1]; //set lib path
+            if (argc>3) {
+               if (argv[argc-2][0]!='-') {
+                   graph_file = argv[argc-2]; status=0;
+                   if (argv[argc-1][0]=='-') {
+                       status=1;
+                   }
+                   else {
+                       act_file = argv[argc-1]; //chisq.active=1;
+                   }
+               }
+               else {
+                   if (argv[argc-1][0]=='-') {
+                       status=1;
+                   }
+                   else {
+                      graph_file = argv[argc-1]; //chisq.active=0;
+                      status = 0;
+                   }
+               }
+            }
+            else if (argc==3){
+               if (argv[argc-1][0]=='-') {
+                   status=1;
+               }
+               else {
+                   graph_file = argv[argc-1]; //chisq.active=0;
+                   status = 0;
+               }
+            }
+            else status=1;
+        }
+        else status=1;
 	}
 	else status=1;
 
 
     // OPTIONS ARGUMENT READ
     char c;
-    const char* const short_options = "f:l:p:saubmdonrgh";
+    const char* const short_options = "f:l:p:saubdonrgh";
     const struct option long_options[] = {
         {"minfreq",                1, NULL, 'f'},
         {"level",                  1, NULL, 'l'},
@@ -285,7 +287,6 @@ int main(int argc, char *argv[], char *envp[]) {
         {"no-aromaticity",         0, NULL, 'a'},
         {"no-upper-bound-pruning", 0, NULL, 'u'},
         {"no-bbr-classes",         0, NULL, 'b'},
-        {"max-trees",              0, NULL, 'm'},
         {"no-dynamic-ub",          0, NULL, 'd'},
         {"no-output",              0, NULL, 'o'},
         {"line-nrs",               0, NULL, 'n'},
@@ -321,8 +322,6 @@ int main(int argc, char *argv[], char *envp[]) {
             do_backbone = false;
             if (!act_file) status = 1;
             break;
-        case 'm':
-            most_specific_trees_only = true;
         case 'd':
             adjust_ub = false;
             if (!act_file) status = 1;
@@ -340,10 +339,10 @@ int main(int argc, char *argv[], char *envp[]) {
             do_regression = true;
             break;
         case 'h':
-            status=2;
+            if ((argc>1) && (argv[1][0]!='-')) status=2;
             break;
         case '?':
-            status=2;
+            status=1;
             break;
         default: 
             abort();
@@ -352,8 +351,8 @@ int main(int argc, char *argv[], char *envp[]) {
 
 
     // INTEGRITY CONSTRAINTS AND HELP OUTPUT
-    if ((adjust_ub && !do_pruning) || (!do_backbone && adjust_ub) || (do_backbone && most_specific_trees_only)) status = 1;
-    if (do_regression && (!adjust_ub || !do_backbone || most_specific_trees_only || !do_pruning) ) status = 1; // KS: enforce d,b,m,u flags not set
+    if ((adjust_ub && !do_pruning) || (!do_backbone && adjust_ub)) status = 1;
+    if (do_regression && (!adjust_ub || !do_backbone || !do_pruning) ) status = 1; // KS: enforce d,b,u flags not set
              
 
     bool input_smi = false, input_gsp = false;
@@ -367,19 +366,81 @@ int main(int argc, char *argv[], char *envp[]) {
     }
 
     if (status > 0) {
-        cerr << "Usage: " << program_name << " <library> [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r] [-d [-b [-m] | -u]] [-p p_value] <graphs> <activities>" << endl;
-        cerr << "       " << program_name << " <library> [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r] <graphs>" << endl;
         cerr << endl;
+        cerr << "Usage: " << program_name << " <Library> <Options> <Graphs> [<Activities>]" << endl;
     }
     if (status==1) {
-        cerr << "               use '-h' for additional information." << endl;
+        cerr << "Use '<Library> -h' for additional information." << endl;
+        cerr << endl;
         return 1;
     }
+
+   // Check which library
+   Lib = dlopen(lib_path, RTLD_LAZY);
+   if (!Lib) {
+        cerr << "Cannot load library: " << dlerror() << '\n';
+        return 1;
+   }
+
+   if (status>1) {
+        usage_f* print_usage = (usage_f*) dlsym(Lib, "usage");
+        print_usage();
+        return 1;
+   }
+
+   if (graph_file && act_file) {
+        create4_t* create_lib = (create4_t*) dlsym(Lib, "create4");
+        const char* dlsym_error = dlerror();
+        if (dlsym_error) {
+            cerr << "Cannot load symbol create: " << dlsym_error << '\n';
+            return 1;
+        }
+        destroy_lib = (destroy_t*) dlsym(Lib, "destroy");
+        dlsym_error = dlerror();
+        if (dlsym_error) {
+            cerr << "Cannot load symbol destroy: " << dlsym_error << '\n';
+            return 1;
+        }    
+
+        //fminer = new Fminer(type, minfreq, chisq_sig, do_backbone);
+        fminer = create_lib(type, minfreq, chisq_sig, do_backbone);
+
+        fminer->SetDynamicUpperBound(adjust_ub);
+        fminer->SetPruning(do_pruning);
+
+    }
+
+    else if (graph_file) {
+        create2_t* create_lib = (create2_t*) dlsym(Lib, "create2");
+        const char* dlsym_error = dlerror();
+        if (dlsym_error) {
+            cerr << "Cannot load symbol create: " << dlsym_error << '\n';
+            return 1;
+        }
+        destroy_lib = (destroy_t*) dlsym(Lib, "destroy");
+        dlsym_error = dlerror();
+        if (dlsym_error) {
+            cerr << "Cannot load symbol destroy: " << dlsym_error << '\n';
+            return 1;
+        }    
+
+        //fminer = new Fminer(type, minfreq);
+        fminer = create_lib(type, minfreq);
+
+        fminer->SetChisqActive(false);
+
+    }
+
+    else {
+        status=1;
+    }
+
+    // PRINT FORMAT AND SWITCHES
     if (status > 1) {
         cerr << "  File formats:" << endl;
-        cerr << "       <library> Select a library (e.g. LAST or BBRC). File must either have suffix .so or .dll." << endl;
-        cerr << "       <graphs> File must either have suffix .smi or .gsp, indicating SMILES or gSpan format." << endl;
-        cerr << "       <activities> File must be in Activity format (suffix not relevant)." << endl;
+        cerr << "       <Library> plug-in library to use (e.g. ../libbbrc/libbbrc.so or ../liblast/liblast.so). File must have suffix .so." << endl;
+        cerr << "       <Graphs> File must either have suffix .smi or .gsp, indicating SMILES or gSpan format." << endl;
+        cerr << "       <Activities> File must be in Activity format (suffix not relevant)." << endl;
         cerr << endl;
         cerr << "  General options:" << endl;
         cerr << "       -f  --minfreq _minfreq_      Set minimum frequency. Allowable values for _minfreq_: 1, 2, ... (default: " << def_minfreq<< ")." << endl;
@@ -393,76 +454,18 @@ int main(int argc, char *argv[], char *envp[]) {
         cerr << "       -a  --aromaticity            Switch on aromatic ring perception when using smiles input format (default: off)." << endl;
         cerr << "       -d  --no-dynamic-ub          Switch off dynamic adjustment of upper bound for backbone mining (default: on)." << endl;
         cerr << "       -b  --no-bbr-classes         Switch off mining for backbone refinement classes (default: on)." << endl;
-        cerr << "       -m  --max-trees              Switch on mining for maximal trees, aka the positive border (default: off)." << endl;
         cerr << "       -u  --no-upper-bound-pruning Switch off upper bound pruning (default: on)." << endl;
         cerr << "       -p  --p-value _p_value_      Set significance type. Allowable values for _p_value_: 0 <= _p_value_ <= 1.0 (default: " << def_chisq << ")." << endl;
         cerr << endl;
         cerr << "See README for additional information." << endl;
         cerr << endl;
-        return 1;
     }  
 
-   // Check which library
-   
-	
-   // DEFAULT SETTINGS FOR THIS HOST APP
-   if (graph_file && act_file) {
-
-        Lib = dlopen(lib_path, RTLD_LAZY);
-        if (!Lib) {
-            cerr << "Cannot load library: " << dlerror() << '\n';
-            return 1;
-        }
-        dlerror();
-        create4_t* create_lib = (create4_t*) dlsym(Lib, "create4");
-        const char* dlsym_error = dlerror();
-        if (dlsym_error) {
-            cerr << "Cannot load symbol create: " << dlsym_error << '\n';
-            return 1;
-        }
-        destroy_lib = (destroy_t*) dlsym(Lib, "destroy");
-        dlsym_error = dlerror();
-        if (dlsym_error) {
-            cerr << "Cannot load symbol destroy: " << dlsym_error << '\n';
-            return 1;
-        }    
-        fminer = create_lib(type, minfreq, chisq_sig, do_backbone);
-
-        //fminer = new Fminer(type, minfreq, chisq_sig, do_backbone);
-        fminer->SetDynamicUpperBound(adjust_ub);
-        fminer->SetPruning(do_pruning);
-
-    }
-
-    else if (graph_file) {
-
-        Lib = dlopen(lib_path, RTLD_LAZY);
-        if (!Lib) {
-            cerr << "Cannot load library: " << dlerror() << '\n';
-            return 1;
-        }
-        dlerror();
-        create2_t* create_lib = (create2_t*) dlsym(Lib, "create2");
-        const char* dlsym_error = dlerror();
-        if (dlsym_error) {
-            cerr << "Cannot load symbol create: " << dlsym_error << '\n';
-            return 1;
-        }
-        destroy_lib = (destroy_t*) dlsym(Lib, "destroy");
-        dlsym_error = dlerror();
-        if (dlsym_error) {
-            cerr << "Cannot load symbol destroy: " << dlsym_error << '\n';
-            return 1;
-        }    
-        fminer = create_lib(type, minfreq);
-
-        //fminer = new Fminer(type, minfreq);
-        fminer->SetChisqActive(false);
-
-    }
-
-    else {
-        exit(1);
+    // CHECK STATUS AND EXIT
+    if (status>=1) {
+        destroy_lib(fminer);
+        dlclose(Lib);
+        return 1;
     }
 
     fminer->SetAromatic(aromatic);
@@ -471,7 +474,6 @@ int main(int argc, char *argv[], char *envp[]) {
     fminer->SetDoOutput(do_output);
     fminer->SetLineNrs(line_nrs);
     fminer->SetBbrcSep(bbrc_sep);
-    fminer->SetMostSpecTreesOnly(most_specific_trees_only);
     fminer->SetRegression(do_regression); // KS: set flag to activate KS test at fixed 95%
 
     
@@ -511,15 +513,10 @@ int main(int argc, char *argv[], char *envp[]) {
         }
     }
     clock_t t2 = clock ();
-//    if (!fminer->GetBackbone()) statistics->print();
+//  statistics->print();
     cerr << "Approximate total runtime: " << ( (float) t2 - t1 ) / CLOCKS_PER_SEC << "s" << endl;
     
-
-
-    // destroy the class
     destroy_lib(fminer);
-
-    // unload the library
     dlclose(Lib);
 
 }

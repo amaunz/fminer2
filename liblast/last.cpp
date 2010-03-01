@@ -368,3 +368,6 @@ extern "C" void destroy(Fminer* l) {
     delete l;
 }
 
+extern "C" void usage() {
+    cerr << endl;
+}

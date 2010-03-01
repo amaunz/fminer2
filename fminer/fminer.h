@@ -70,7 +70,6 @@ public:
     virtual void ReadGsp(FILE* gsp) = 0;
     virtual bool AddCompound(std::string smiles, unsigned int comp_id) = 0;
     virtual bool AddActivity(float act, unsigned int comp_id) = 0;
-
     virtual int GetNoRootNodes() = 0;
     virtual int GetNoCompounds() = 0;
 
@@ -81,5 +80,6 @@ typedef Fminer* create0_t();
 typedef Fminer* create2_t(int _type, unsigned int _minfreq);
 typedef Fminer* create4_t(int _type, unsigned int _minfreq, float _chisq_val, bool _do_backbone);
 typedef void destroy_t(Fminer*);
+typedef void usage_f();
 
 #endif
