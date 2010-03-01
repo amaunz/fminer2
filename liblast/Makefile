@@ -16,25 +16,26 @@
 # You should have received a copy of the GNU General Public License
 # along with LibFminer.  If not, see <http://www.gnu.org/licenses/>.
 
-
-
-# ADJUST COMPILER PATH TO OPENBABEL INCLUDE FILES (1st line Linux, 2nd line Windows):
 INCLUDE_OB  =  -I/usr/local/include/openbabel-2.0  
-INCLUDE_OB  =  -I/usr/local/include/openbabel-2.0  
-# ADJUST COMPILER PATH TO GSL INCLUDE FILES (1st line Linux, 2nd line Windows):
 INCLUDE_GSL  =   
-INCLUDE_GSL  =   
+LDFLAGS_OB  =  -L/usr/local/lib  
+LDFLAGS_GSL  =   
+INCLUDE_RB  = -I/usr/lib/ruby/1.8/i486-linux
+RUBY = ruby1.8
 
-# ADJUST LINKER PATH TO OPENBABEL LIBRARY FILES (1st line Linux, 2nd line Windows):
-LDFLAGS_OB  =  -L/usr/local/lib  
-LDFLAGS_OB  =  -L/usr/local/lib  
-# ADJUST LINKER PATH TO GSL LIBRARY FILES (1st line Linux, 2nd line Windows):
-LDFLAGS_GSL  =   
-LDFLAGS_GSL  =   
+# ADJUST COMPILER PATH TO OPENBABEL INCLUDE FILES:
+#INCLUDE_OB    = -I/usr/local/include/openbabel-2.0
+# ADJUST COMPILER PATH TO GSL INCLUDE FILES:
+#INCLUDE_GSL   = -I/usr/include
+
+# ADJUST LINKER PATH TO OPENBABEL LIBRARY FILES:
+#LDFLAGS_OB    = -L/usr/local/lib
+# ADJUST LINKER PATH TO GSL LIBRARY FILES:
+#LDFLAGS_GSL   =
 
 # FOR RUBY TARGET: ADJUST COMPILER PATH TO RUBY HEADERS (LINUX)
-INCLUDE_RB  = -I/usr/lib/ruby/1.8/i486-linux
-RUBY =
+#INCLUDE_RB    = -I/usr/lib/ruby/1.8/i486-linux/
+#RUBY          = ruby1.8
 
 # NORMALLY NO ADJUSTMENT NECESSARY BELOW THIS LINE. Exit and try 'make' now.
 # WHAT
@@ -51,26 +52,38 @@ LIB1          = lib$(NAME).so
 LIB1_SONAME   = $(LIB1).1
 LIB1_REALNAME = $(LIB1_SONAME).0.1
 LIB2          = $(NAME).so
-.PHONY:
-all: $(LIB1_REALNAME) 
-.PHONY:
-ruby: $(LIB2)
+
+# FILES
 $(LIB1_REALNAME): $(OBJ)
 	$(CC) $(LDFLAGS) $(LIBS) -shared -Wl,-soname,$@ -o $@ $^
 	-ln -sf $@ $(LIB1_SONAME)
 	-ln -sf $@ $(LIB1)
-$(LIB2): $(NAME)_wrap.o $(OBJ)
-	$(CC) $(LDFLAGS) -shared $(CXXFLAGS) $^ $(LIBS_LIB2) -o $@
-$(NAME)_wrap.o: $(NAME)_wrap.cxx
-	$(CC) -c $(CXXFLAGS) $(INCLUDE_RB) $^ -o $@
 
-# FILE TARGETS
+$(LIB2): $(OBJ) $(NAME)_wrap.cxx
+	$(CC) -c $(CXXFLAGS) $(INCLUDE_RB) $(NAME)_wrap.cxx -o $(NAME)_wrap.o
+	$(CC) $(LDFLAGS) -shared $(CXXFLAGS) $(OBJ) $(NAME)_wrap.o $(LIBS) -o $@
+
 .o: .cpp.h
 	$(CC) -Wall $(CXXFLAGS) $(LIBS) $@
-# HELPER TARGETS
+
+ctest: test.cpp
+	$(CC) $(CXXFLAGS) $(LDFLAGS) $(OBJ) $(LIBS) $< -o $@
+
+
+# TESTS + HELPERS
+.PHONY:
+all: $(LIB1_REALNAME) 
+.PHONY:
+ruby: $(LIB2)
+.PHONY:
+cpptest: ctest
+	./$<
+.PHONY:
+rbtest: test.rb
+	$(RUBY) $<
 .PHONY:
 doc: Doxyfile Mainpage.h *.h
 	-doxygen $<
 .PHONY:
 clean:
-	-rm -rf *.o $(LIB1) $(LIB1_SONAME) $(LIB1_REALNAME) $(LIB2)
+	-rm -rf *.o $(LIB1) $(LIB1_SONAME) $(LIB1_REALNAME) $(LIB2) ctest
