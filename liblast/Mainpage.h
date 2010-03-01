@@ -1,8 +1,8 @@
-/** @mainpage LibFminer (libfminer)
+/** @mainpage LibLast (liblast)
  *
- * LibFminer
+ * LibLast
  *
- * This is the Fminer library, available at http://github.com/amaunz/libfminer/tree/master .<br>
+ * This is the Fminer library, available at http://github.com/amaunz/liblast/tree/master .<br>
  * The Fminer frontend application is available from http://github.com/amaunz/fminer/tree/master .<br>
  * You may download the scientific documentation from http://cs.maunz.de . The paper is entitled "Large Scale Graph Mining using Backbone Refinement Classes".<br>
  * Contact details are located at the end of this page.
@@ -222,7 +222,7 @@
  * Email: maunza@fdm.uni-freiburg.de<br>
  * Web: http://cs.maunz.de
  *
- *  \author © 2008 by Andreas Maunz, 2008
+ *  \author (c) 2010 by Andreas Maunz, 2008
  *
  * \htmlonly
  * <a href="http://www2.clustrmaps.com/counter/maps.php?url=http://www.maunz.de/libfminer-doc/main.html" id="clustrMapsLink"><img src="http://www2.clustrmaps.com/counter/index2.php?url=http://www.maunz.de/libfminer-doc/main.html" style="border:0px;visibility:hidden" alt="Locations of visitors to this page" title="Locations of visitors to this page" id="clustrMapsImg" />

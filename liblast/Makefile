@@ -34,10 +34,7 @@ LDFLAGS_GSL  =
 
 # FOR RUBY TARGET: ADJUST COMPILER PATH TO RUBY HEADERS (LINUX)
 INCLUDE_RB  = -I/usr/lib/ruby/1.8/i486-linux
-
-# FOR LINUX: INSTALL TARGET DIRECTORY
-DESTDIR       = /usr/local/lib/
-
+RUBY =
 
 # NORMALLY NO ADJUSTMENT NECESSARY BELOW THIS LINE. Exit and try 'make' now.
 # WHAT
@@ -47,17 +44,6 @@ CC            = g++
 INCLUDE       = $(INCLUDE_OB) $(INCLUDE_GSL) 
 LDFLAGS       = $(LDFLAGS_OB) $(LDFLAGS_GSL)
 OBJ           = closeleg.o constraints.o database.o graphstate.o legoccurrence.o path.o patterntree.o last.o
-SWIG          = swig
-SWIGFLAGS     = -c++ -ruby
-ifeq ($(OS), Windows_NT) # assume MinGW/Windows
-CXXFLAGS      = -g $(INCLUDE)
-LIBS	      = -lm -llibopenbabel-3 -llibgsl -llibgslcblas
-LIB1          = lib$(NAME).dll
-.PHONY:
-all: $(LIB1)
-$(LIB1): $(OBJ)
-	$(CC) $(LDFLAGS) $(LIBS) -shared -o $@ $^
-else                     # assume GNU/Linux
 CXXFLAGS      = -g $(INCLUDE) -fPIC 
 LIBS_LIB2     = -lopenbabel -lgsl
 LIBS          = $(LIBS_LIB2) -ldl -lm -lgslcblas
@@ -77,12 +63,6 @@ $(LIB2): $(NAME)_wrap.o $(OBJ)
 	$(CC) $(LDFLAGS) -shared $(CXXFLAGS) $^ $(LIBS_LIB2) -o $@
 $(NAME)_wrap.o: $(NAME)_wrap.cxx
 	$(CC) -c $(CXXFLAGS) $(INCLUDE_RB) $^ -o $@
-%.cxx: %.i
-	$(SWIG) $(SWIGFLAGS) -o $@ $^
-endif
-
-install: $(LIB1_REALNAME)
-	cp -P $(LIB1)* $(DESTDIR)
 
 # FILE TARGETS
 .o: .cpp.h
@@ -93,4 +73,4 @@ doc: Doxyfile Mainpage.h *.h
 	-doxygen $<
 .PHONY:
 clean:
-	-rm -rf *.o *.cxx $(LIB1) $(LIB1_SONAME) $(LIB1_REALNAME) $(LIB2)
+	-rm -rf *.o $(LIB1) $(LIB1_SONAME) $(LIB1_REALNAME) $(LIB2)

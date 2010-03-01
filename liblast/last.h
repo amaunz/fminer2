@@ -1,26 +1,26 @@
 // last.h
 // modified 2010
-// © 2008 by Andreas Maunz, andreas@maunz.de, oct 2008
+// (c) 2010 by Andreas Maunz, andreas@maunz.de, oct 2008
 
 /*
-    This file is part of LibFminer (libfminer).
+    This file is part of LibLast (liblast).
 
-    LibFminer is free software: you can redistribute it and/or modify
+    LibLast is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    LibFminer is distributed in the hope that it will be useful,
+    LibLast is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with LibFminer.  If not, see <http://www.gnu.org/licenses/>.
+    along with LibLast.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-//#ifndef LAST_H
-//#define LAST_H
+#ifndef LAST_H
+#define LAST_H
 
 #include "../fminer/fminer.h"
 #include "misc.h"
@@ -37,6 +37,7 @@ namespace fm {
     extern bool line_nrs;
 
 }
+
 class Last : public Fminer {
 
   public:
@@ -121,4 +122,4 @@ class Last : public Fminer {
 
 };
 
-//#endif
+#endif
