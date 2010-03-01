@@ -1,6 +1,5 @@
 // main.cpp
-// modified 2010
-// © 2008 by Andreas Maunz, andreas@maunz.de, jun 2008
+// © 2010 by Andreas Maunz, andreas@maunz.de, jun 2010
 
 /*
     This program is free software: you can redistribute it and/or modify
@@ -239,7 +238,7 @@ int main(int argc, char *argv[], char *envp[]) {
     bool do_regression = false;
     
     // FILE ARGUMENT READ
-	if (argv[1][0]!='-') {
+	if ((argc>1) && (argv[1][0]!='-')) {
 		lib_path = argv[1]; //set lib path
 		if (argc>3) {
 	       if (argv[argc-2][0]!='-') {
@@ -520,8 +519,7 @@ int main(int argc, char *argv[], char *envp[]) {
     // destroy the class
     destroy_lib(fminer);
 
-    // unload the Bbrc library
+    // unload the library
     dlclose(Lib);
-    //delete fminer;
 
 }
