@@ -346,10 +346,10 @@ int main(int argc, char *argv[], char *envp[]) {
 
     // INTEGRITY CONSTRAINTS AND HELP OUTPUT
     //  ----------- !du ---------      ----------- !db ---------
-    if ((adjust_ub && !do_pruning) || (adjust_ub && !do_backbone)) status = 1; 
+    if ((adjust_ub && !do_pruning) || (adjust_ub && !do_backbone)) status = 2; 
     //  --------- r!b ----------     ----------- ru ---------
-    if ((bbrc_sep && do_backbone) || (bbrc_sep && !do_pruning)) status = 1;
-    if (do_regression && (!adjust_ub || !do_backbone || !do_pruning) ) status = 1; // KS: enforce d,b,u flags not set
+    if ((bbrc_sep && do_backbone) || (bbrc_sep && !do_pruning)) status = 2;
+    if (do_regression && (!adjust_ub || !do_backbone || !do_pruning) ) status = 2; // KS: enforce d,b,u flags not set
              
 
     bool input_smi = false, input_gsp = false;
