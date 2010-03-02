@@ -345,7 +345,10 @@ int main(int argc, char *argv[], char *envp[]) {
 
 
     // INTEGRITY CONSTRAINTS AND HELP OUTPUT
-    if ((adjust_ub && !do_pruning) || (!do_backbone && adjust_ub)) status = 1;
+    //  ----------- !du ---------      ----------- !db ---------
+    if ((adjust_ub && !do_pruning) || (adjust_ub && !do_backbone)) status = 1; 
+    //  --------- r!b ----------     ----------- ru ---------
+    if ((bbrc_sep && do_backbone) || (bbrc_sep && !do_pruning)) status = 1;
     if (do_regression && (!adjust_ub || !do_backbone || !do_pruning) ) status = 1; // KS: enforce d,b,u flags not set
              
 
@@ -392,7 +395,7 @@ int main(int argc, char *argv[], char *envp[]) {
 
    else { 
         if (graph_file && act_file) {
-            create4_t* create_lib = (create4_t*) dlsym(Lib, "create4");
+            create2_t* create_lib = (create2_t*) dlsym(Lib, "create2");
             const char* dlsym_error = dlerror();
             if (dlsym_error) {
                 cerr << "Cannot load symbol create: " << dlsym_error << '\n';
@@ -406,13 +409,15 @@ int main(int argc, char *argv[], char *envp[]) {
             }    
 
             //fminer = new Fminer(type, minfreq, chisq_sig, do_backbone);
-            fminer = create_lib(type, minfreq, chisq_sig, do_backbone);
+            fminer = create_lib(type, minfreq);
+            fminer->SetChisqSig(chisq_sig);
 
             fminer->SetRefineSingles(refine_singles);
             fminer->SetAromatic(aromatic);
 
-            fminer->SetPruning(do_pruning);
             fminer->SetDynamicUpperBound(adjust_ub);
+            fminer->SetPruning(do_pruning);
+            fminer->SetBackbone(do_backbone);
 
             fminer->SetDoOutput(do_output);
             fminer->SetBbrcSep(bbrc_sep);

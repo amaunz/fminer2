@@ -171,36 +171,48 @@ bool Bbrc::GetRegression() {return fm::regression;}
 // 3. Setter methods
 
 void Bbrc::SetMinfreq(int val) {
+    // parameters not regarded in integrity constraints
     if (val < 1) { cerr << "Error! Invalid value '" << val << "' for parameter minfreq." << endl; exit(1); }
     if (val > 1 && GetRefineSingles()) { cerr << "Warning! Minimum frequency of '" << val << "' could not be set due to activated single refinement." << endl;}
     fm::minfreq = val;
 }
 
 void Bbrc::SetType(int val) {
+    // parameters not regarded in integrity constraints
     if ((val != 1) && (val != 2)) { cerr << "Error! Invalid value '" << val << "' for parameter type." << endl; exit(1); }
     fm::type = val;
 }
 
 void Bbrc::SetBackbone(bool val) {
+    // internal: chisq active
     if (val && !GetChisqActive()) {
         cerr << "Warning! BBRC mining could not be enabled due to deactivated significance criterium." << endl;
     }
-    else {  
-        if (!val && GetDynamicUpperBound()) {
-            cerr << "Notice: Disabling dynamic upper bound pruning due to switched-off BBRC mining." << endl;
-            SetDynamicUpperBound(false);
-        }
+    // -------- !db --------
+    else if (!val && GetDynamicUpperBound()) {
+        cerr << "Notice: Disabling dynamic upper bound pruning due to switched-off BBRC mining." << endl;
+        SetDynamicUpperBound(false);
         fm::do_backbone = val;
     }
+    // -------- r!b ---------
+    else if (val && GetBbrcSep()) {
+        cerr << "Notice: Disabling BBRC separator due to enabled BBRC mining." << endl;
+        SetBbrcSep(false);
+        fm::do_backbone = val;
+    }
+    else fm::do_backbone = val;
 }
 
 void Bbrc::SetDynamicUpperBound(bool val) {
+    // -------- !db ---------
     if (val && !GetBackbone()) {
         cerr << "Warning! Dynamic upper bound pruning could not be enabled due to disabled BBRC mining." << endl;
     }
+    // internal: chisq active
     else if (val && !GetChisqActive()) {
         cerr << "Warning! Dynamic upper bound pruning could not be enabled due to deactivated significance criterium." << endl;
     }
+    // -------- !du ---------
     else if (val && !GetPruning()) {
         cerr << "Warning! Dynamic upper bound pruning could not be enabled due to deactivated statistical metric pruning." << endl;
     }
@@ -210,19 +222,27 @@ void Bbrc::SetDynamicUpperBound(bool val) {
 }
 
 void Bbrc::SetPruning(bool val) {
+    // internal: chisq active
     if (val && !GetChisqActive()) {
         cerr << "Warning! Statistical metric pruning could not be enabled due to deactivated significance criterium." << endl;
     }
     else {
+        // ---------- !du -----------
         if (!val && GetDynamicUpperBound()) {
-            cerr << "Notice: Disabling dynamic upper bound pruning." << endl;
+            cerr << "Notice: Disabling dynamic upper bound pruning due to disabled static upper bound pruning." << endl;
             SetDynamicUpperBound(false); 
+        }
+        // --------- ru -------
+        if (!val && GetBbrcSep()) {
+            cerr << "Notice: Disabling BBRC separator due to disabled static upper bound pruning." << endl;
+            SetBbrcSep(false);
         }
         fm::do_pruning=val;
     }
 }
 
 void Bbrc::SetConsoleOut(bool val) {
+    // console out not switched by fminer
     if (val) {
         if (GetBbrcSep()) cerr << "Warning! Console output could not be enabled due to enabled BBRC separator." << endl;
         else fm::console_out=val;
@@ -235,6 +255,7 @@ void Bbrc::SetAromatic(bool val) {
 
 void Bbrc::SetRefineSingles(bool val) {
     fm::refine_singles = val;
+    // parameters not regarded in integrity constraints
     if (GetRefineSingles() && GetMinfreq() > 1) {
         cerr << "Notice: Using minimum frequency of 1 to refine singles." << endl;
         SetMinfreq(1);
@@ -246,17 +267,29 @@ void Bbrc::SetDoOutput(bool val) {
 }
 
 void Bbrc::SetBbrcSep(bool val) {
-    fm::bbrc_sep=val;
-    if (GetBbrcSep()) {
-        if (GetConsoleOut()) {
-             cerr << "Notice: Disabling console output, using result vector." << endl;
-             SetConsoleOut(false);
+    //  ------- r!b ---------
+    if (val && GetBackbone()) { 
+        cerr << "Warning! BBRC separator could not be enabled due to enabled BBRC mining." << endl;
+    }
+    // -------- ru ---------
+    if (val && !GetPruning()) {
+        cerr << "Warning! BBRC separator could not be enabled due to disabled statistical metric pruning." << endl;
+    }
+    else {
+        fm::bbrc_sep=val;
+        if (GetBbrcSep()) {
+            // console out not switched by fminer
+            if (GetConsoleOut()) {
+                 cerr << "Notice: Disabling console output, using result vector." << endl;
+                 SetConsoleOut(false);
+            }
         }
     }
 }
 
 void Bbrc::SetChisqActive(bool val) {
     fm::chisq->active = val;
+    // chisq active not switched by fminer
     if (!GetChisqActive()) {
         cerr << "Notice: Disabling dynamic upper bound pruning due to deactivated significance criterium." << endl;
         SetDynamicUpperBound(false); //order important
@@ -269,6 +302,7 @@ void Bbrc::SetChisqActive(bool val) {
 }
 
 void Bbrc::SetChisqSig(float _chisq_val) {
+    // parameters not regarded in integrity constraints
     if (_chisq_val < 0.0 || _chisq_val > 1.0) { cerr << "Error! Invalid value '" << _chisq_val << "' for parameter chisq." << endl; exit(1); }
     fm::chisq->sig = gsl_cdf_chisq_Pinv(_chisq_val, 1);
 }
@@ -277,7 +311,7 @@ void Bbrc::SetRegression(bool val) {
     fm::regression = val;
     if (fm::regression) {
          if (!GetBackbone()) {
-            cerr << "Notice: Activating Backbone Mining due to activated regression." << endl;
+    
             SetBackbone(true);
          }
          if (GetPruning()) {
@@ -397,7 +431,7 @@ extern "C" void destroy(Fminer* f) {
 extern "C" void usage() {
     cerr << endl;
     cerr << "Options 1 (BBRC mining using dynamic upper bound pruning): " << endl;
-    cerr << "       [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r] [-d [-b | -u]] [-p p_value]" << endl;
+    cerr << "       [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-d [-b [-r] | -b [-u] ] ] [-p p_value]" << endl;
     cerr << endl;
     cerr << "Options 2 (Frequent subgraph mining): " << endl;
     cerr << "       [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r]" << endl;

@@ -55,6 +55,7 @@ public:
     virtual bool GetBackbone() = 0;
     virtual bool GetConsoleOut() = 0;
     virtual bool GetRegression() = 0;
+    virtual void SetBackbone(bool val) = 0;
     virtual void SetDynamicUpperBound(bool val) = 0;
     virtual void SetPruning(bool val) = 0;
     virtual void SetConsoleOut(bool val) = 0;
@@ -63,6 +64,7 @@ public:
     virtual void SetDoOutput(bool val) = 0;
     virtual void SetBbrcSep(bool val) = 0;
     virtual void SetChisqActive(bool val) = 0;
+    virtual void SetChisqSig(float _chisq_val) = 0;
     virtual void SetRegression(bool val) = 0;
     virtual std::vector<std::string>* MineRoot(unsigned int j) = 0;
     virtual void ReadGsp(FILE* gsp) = 0;
