@@ -323,19 +323,6 @@ vector<string>* Bbrc::MineRoot(unsigned int j) {
              << "---" << endl;
     }
 
-    fm::minfreq = 2;
-    fm::type = 2;
-    fm::chisq->sig = 3.84146;
-    fm::do_backbone = true;
-    fm::adjust_ub = true;
-    fm::do_pruning = true;
-    fm::aromatic = false;
-    fm::refine_singles = false;
-    fm::do_output=true;
-    fm::bbrc_sep=false;
-    fm::regression=false;
-
-
 
     if (j >= fm::database->nodelabels.size()) { cerr << "Error! Root node " << j << " does not exist." << endl;  exit(1); }
     if ( fm::database->nodelabels[j].frequency >= fm::minfreq && fm::database->nodelabels[j].frequentedgelabels.size () ) {
