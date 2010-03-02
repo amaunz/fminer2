@@ -132,15 +132,14 @@ void Bbrc::Reset() {
 void Bbrc::Defaults() {
     fm::minfreq = 2;
     fm::type = 2;
+    fm::chisq->sig = 3.84146;
     fm::do_backbone = true;
     fm::adjust_ub = true;
     fm::do_pruning = true;
-    fm::console_out = false;
     fm::aromatic = false;
     fm::refine_singles = false;
     fm::do_output=true;
     fm::bbrc_sep=false;
-    fm::most_specific_trees_only=false;
     fm::line_nrs=false;
     fm::regression=false;
 
@@ -148,6 +147,9 @@ void Bbrc::Defaults() {
     fm::do_yaml=true;
     fm::pvalues=false;
     fm::gsp_out=true;
+
+    fm::most_specific_trees_only=false;
+    fm::console_out = false;
 }
 
 

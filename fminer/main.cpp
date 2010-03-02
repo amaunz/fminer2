@@ -210,31 +210,29 @@ void read_act (char* act_file, bool regr) {
 // main
 int main(int argc, char *argv[], char *envp[]) {
 
-    const char* program_name = argv[0];
-
-    float def_chisq = 0.95;
-    float chisq_sig = def_chisq;
 
     Frequency def_minfreq = 2;
     Frequency minfreq = def_minfreq;
-
     int def_type = 2;
     int type = def_type;
+    float def_chisq = 0.95;
+    float chisq_sig = def_chisq;
+    bool refine_singles = false;
+    bool aromatic = false;
+    bool do_pruning = true;
+    bool do_backbone = true;
+    bool adjust_ub = true;
+    bool do_output = true;
+    bool line_nrs = false;
+    bool bbrc_sep = false;
+    bool do_regression = false;
     
     int status=1;
+    const char* program_name = argv[0];
     char* graph_file = NULL;
     char* act_file = NULL;
     char* lib_path = NULL;
 
-    bool do_output = true;
-    bool refine_singles = false;
-    bool aromatic = false;
-    bool adjust_ub = true;
-    bool do_pruning = true;
-    bool do_backbone = true;
-    bool line_nrs = false;
-    bool bbrc_sep = false;
-    bool do_regression = false;
     
     // FILE ARGUMENT READ
 	if (argc>1) {
@@ -303,16 +301,16 @@ int main(int argc, char *argv[], char *envp[]) {
         case 'l':
             type = atoi (optarg);
             break;
+        case 'p':
+            chisq_sig = atof (optarg);
+            if (!act_file) status = 1;
+            break;
         case 's':
             refine_singles = true;
             break;
         case 'a':
             aromatic = true;
             if (!graph_file) status = 1;
-            break;
-        case 'p':
-            chisq_sig = atof (optarg);
-            if (!act_file) status = 1;
             break;
         case 'u':
             do_pruning = false;
@@ -414,8 +412,14 @@ int main(int argc, char *argv[], char *envp[]) {
             //fminer = new Fminer(type, minfreq, chisq_sig, do_backbone);
             fminer = create_lib(type, minfreq, chisq_sig, do_backbone);
 
-            fminer->SetDynamicUpperBound(adjust_ub);
+            fminer->SetRefineSingles(refine_singles);
+            fminer->SetAromatic(aromatic);
             fminer->SetPruning(do_pruning);
+            fminer->SetDynamicUpperBound(adjust_ub);
+            fminer->SetDoOutput(do_output);
+            fminer->SetLineNrs(line_nrs);
+            fminer->SetBbrcSep(bbrc_sep);
+            fminer->SetRegression(do_regression);
 
         }
 
@@ -436,6 +440,12 @@ int main(int argc, char *argv[], char *envp[]) {
             //fminer = new Fminer(type, minfreq);
             fminer = create_lib(type, minfreq);
 
+            fminer->SetRefineSingles(refine_singles);
+            fminer->SetAromatic(aromatic);
+            fminer->SetDoOutput(do_output);
+            fminer->SetLineNrs(line_nrs);
+            fminer->SetBbrcSep(bbrc_sep);
+
             fminer->SetChisqActive(false);
 
         }
@@ -453,14 +463,7 @@ int main(int argc, char *argv[], char *envp[]) {
         return 1;
     }
 
-    fminer->SetAromatic(aromatic);
-    fminer->SetRefineSingles(refine_singles);
     fminer->SetConsoleOut(true);
-    fminer->SetDoOutput(do_output);
-    fminer->SetLineNrs(line_nrs);
-    fminer->SetBbrcSep(bbrc_sep);
-    fminer->SetRegression(do_regression); // KS: set flag to activate KS test at fixed 95%
-
     
     //////////
     // READ //
