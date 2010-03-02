@@ -247,7 +247,7 @@ int main(int argc, char *argv[], char *envp[]) {
                        status=1;
                    }
                    else {
-                       act_file = argv[argc-1]; //chisq.active=1;
+                       act_file = argv[argc-1];
                    }
                }
                else {
@@ -255,7 +255,7 @@ int main(int argc, char *argv[], char *envp[]) {
                        status=1;
                    }
                    else {
-                      graph_file = argv[argc-1]; //chisq.active=0;
+                      graph_file = argv[argc-1];
                       status = 0;
                    }
                }
@@ -265,7 +265,7 @@ int main(int argc, char *argv[], char *envp[]) {
                    status=1;
                }
                else {
-                   graph_file = argv[argc-1]; //chisq.active=0;
+                   graph_file = argv[argc-1];
                    status = 0;
                }
             }
@@ -362,15 +362,24 @@ int main(int argc, char *argv[], char *envp[]) {
         string graph_file_suffix = graph_file_str.substr(graph_file_str.find_last_of("."));
         if (graph_file_suffix == ".smi") { input_smi=true; }
         else if (graph_file_suffix == ".gsp") { input_gsp=true; }
-        else { cerr << "Suffix " << graph_file_suffix << " unknown!" << endl; status=2;}
+        else { cerr << "Suffix " << graph_file_suffix << " unknown!" << endl; status=1;}
     }
 
     if (status > 0) {
         cerr << endl;
-        cerr << "Usage: " << program_name << " <Library> <Options> <Graphs> [<Activities>]" << endl;
+        cerr << "Fminer v2.0, Andreas Maunz, 2010" << endl;
+        cerr << "General usage:" << endl;
+        cerr << "       " << program_name << " <Library> <Options> <Graphs> <Activities>" << endl;
+        cerr << endl;
+        cerr << "File formats:" << endl;
+        cerr << "       <Library>    Plug-in library to use (../libbbrc/libbbrc.so or ../liblast/liblast.so)." << endl;
+        cerr << "       <Graphs>     File should have suffix .smi or .gsp, indicating SMILES or gSpan format." << endl;
+        cerr << "       <Activities> File must be in Activity format (suffix not relevant)." << endl;
+        cerr << endl;
+
     }
     if (status==1) {
-        cerr << "Use '<Library> -h' for additional information." << endl;
+        cerr << "Use '" << program_name << " <Library> -h' for additional information." << endl;
         cerr << endl;
         return 1;
     }
@@ -385,85 +394,61 @@ int main(int argc, char *argv[], char *envp[]) {
    if (status>1) {
         usage_f* print_usage = (usage_f*) dlsym(Lib, "usage");
         print_usage();
-        return 1;
    }
 
-   if (graph_file && act_file) {
-        create4_t* create_lib = (create4_t*) dlsym(Lib, "create4");
-        const char* dlsym_error = dlerror();
-        if (dlsym_error) {
-            cerr << "Cannot load symbol create: " << dlsym_error << '\n';
-            return 1;
+   else { 
+        if (graph_file && act_file) {
+            create4_t* create_lib = (create4_t*) dlsym(Lib, "create4");
+            const char* dlsym_error = dlerror();
+            if (dlsym_error) {
+                cerr << "Cannot load symbol create: " << dlsym_error << '\n';
+                return 1;
+            }
+            destroy_lib = (destroy_t*) dlsym(Lib, "destroy");
+            dlsym_error = dlerror();
+            if (dlsym_error) {
+                cerr << "Cannot load symbol destroy: " << dlsym_error << '\n';
+                return 1;
+            }    
+
+            //fminer = new Fminer(type, minfreq, chisq_sig, do_backbone);
+            fminer = create_lib(type, minfreq, chisq_sig, do_backbone);
+
+            fminer->SetDynamicUpperBound(adjust_ub);
+            fminer->SetPruning(do_pruning);
+
         }
-        destroy_lib = (destroy_t*) dlsym(Lib, "destroy");
-        dlsym_error = dlerror();
-        if (dlsym_error) {
-            cerr << "Cannot load symbol destroy: " << dlsym_error << '\n';
-            return 1;
-        }    
 
-        //fminer = new Fminer(type, minfreq, chisq_sig, do_backbone);
-        fminer = create_lib(type, minfreq, chisq_sig, do_backbone);
+        else if (graph_file) {
+            create2_t* create_lib = (create2_t*) dlsym(Lib, "create2");
+            const char* dlsym_error = dlerror();
+            if (dlsym_error) {
+                cerr << "Cannot load symbol create: " << dlsym_error << '\n';
+                return 1;
+            }
+            destroy_lib = (destroy_t*) dlsym(Lib, "destroy");
+            dlsym_error = dlerror();
+            if (dlsym_error) {
+                cerr << "Cannot load symbol destroy: " << dlsym_error << '\n';
+                return 1;
+            }    
 
-        fminer->SetDynamicUpperBound(adjust_ub);
-        fminer->SetPruning(do_pruning);
+            //fminer = new Fminer(type, minfreq);
+            fminer = create_lib(type, minfreq);
 
-    }
+            fminer->SetChisqActive(false);
 
-    else if (graph_file) {
-        create2_t* create_lib = (create2_t*) dlsym(Lib, "create2");
-        const char* dlsym_error = dlerror();
-        if (dlsym_error) {
-            cerr << "Cannot load symbol create: " << dlsym_error << '\n';
-            return 1;
         }
-        destroy_lib = (destroy_t*) dlsym(Lib, "destroy");
-        dlsym_error = dlerror();
-        if (dlsym_error) {
-            cerr << "Cannot load symbol destroy: " << dlsym_error << '\n';
-            return 1;
-        }    
-
-        //fminer = new Fminer(type, minfreq);
-        fminer = create_lib(type, minfreq);
-
-        fminer->SetChisqActive(false);
-
-    }
-
-    else {
-        status=1;
     }
 
     // PRINT FORMAT AND SWITCHES
-    if (status > 1) {
-        cerr << "  File formats:" << endl;
-        cerr << "       <Library> plug-in library to use (e.g. ../libbbrc/libbbrc.so or ../liblast/liblast.so). File must have suffix .so." << endl;
-        cerr << "       <Graphs> File must either have suffix .smi or .gsp, indicating SMILES or gSpan format." << endl;
-        cerr << "       <Activities> File must be in Activity format (suffix not relevant)." << endl;
-        cerr << endl;
-        cerr << "  General options:" << endl;
-        cerr << "       -f  --minfreq _minfreq_      Set minimum frequency. Allowable values for _minfreq_: 1, 2, ... (default: " << def_minfreq<< ")." << endl;
-        cerr << "       -l  --level _level_          Set fragment type. Allowable values for _type_: 1 (paths) and 2 (trees) (default: " << def_type << ")." << endl;
-        cerr << "       -s  --refine-singles         Switch on refinement of fragments with frequency 1 (default: off)." << endl;
-        cerr << "       -o  --no-output              Switch off output (default: on)." << endl;
-        cerr << "       -n  --line-nrs               Switch on line numbers in output file (default: off)." << endl;
-        cerr << "       -r  --bbrc-sep               Switch on BBRC separator in result vector (default: off)." << endl;
-        cerr << endl;
-        cerr << "  Upper bound pruning options:" << endl;
-        cerr << "       -a  --aromaticity            Switch on aromatic ring perception when using smiles input format (default: off)." << endl;
-        cerr << "       -d  --no-dynamic-ub          Switch off dynamic adjustment of upper bound for backbone mining (default: on)." << endl;
-        cerr << "       -b  --no-bbr-classes         Switch off mining for backbone refinement classes (default: on)." << endl;
-        cerr << "       -u  --no-upper-bound-pruning Switch off upper bound pruning (default: on)." << endl;
-        cerr << "       -p  --p-value _p_value_      Set significance type. Allowable values for _p_value_: 0 <= _p_value_ <= 1.0 (default: " << def_chisq << ")." << endl;
-        cerr << endl;
+    if (status > 0) {
         cerr << "See README for additional information." << endl;
         cerr << endl;
-    }  
+    }
 
     // CHECK STATUS AND EXIT
-    if (status>=1) {
-        destroy_lib(fminer);
+    if (status == 2) {
         dlclose(Lib);
         return 1;
     }

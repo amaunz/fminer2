@@ -409,8 +409,11 @@ extern "C" void destroy(Fminer* f) {
 }
 
 extern "C" void usage() {
-    cerr << "Options 1 (BBRC Mining): " << endl;
-    cerr << "[-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r] [-d [-b | -u]] [-p p_value] <graphs> <activities>" << endl;
-    cerr << "[-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r] <graphs>" << endl;
+    cerr << endl;
+    cerr << "Options 1 (BBRC mining using dynamic upper bound pruning): " << endl;
+    cerr << "       [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r] [-d [-b | -u]] [-p p_value]" << endl;
+    cerr << endl;
+    cerr << "Options 2 (Frequent subgraph mining): " << endl;
+    cerr << "       [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r]" << endl;
     cerr << endl;
 }

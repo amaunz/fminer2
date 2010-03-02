@@ -27,25 +27,24 @@
  The set of IDs in a gSpan or SMILES format file must be a subset of the set of activity IDs in the respective activity format file, i.e., not every Activity ID must be matched by a graph id, but vice versa.
 
 
- Switches (run Fminer w/o arguments for allowable parameter ranges, defaults and explanations):
+ Switches:
  ========
- Constraint parameters:
- -f Minimum frequency constraint, used for anti-monotonic pruning.
- -l Subgraph type, choices are paths and trees.
- -p Chi-square significance level, used for statistical upper-bound pruning.
-
- Constraint switches:
- -d Deactivate dynamic adjustment of upper bound (less efficient, use only for performance evaluation). Can only be set when -c is not set.
- -b Switch off mining of only the most significant/most general representative of each backbone.
- -m Switch on mining of maximal trees, as induced by constraints.
- -u Deactivate upper bound pruning for chi-square constraint (less efficient, use only for performance evaluation).
-
  General switches:
- -s Refine fragments with frequency 1.
- -a Enable aromatic ring perception for SMILES input.
- -r Insert empty vectors in result vector to indicate BBRC borders.
- -n Output line numbers from input file instead of IDs in result file.
- -o Switch off output.
+   Refine fragments with frequency 1.
+   Enable aromatic ring perception for SMILES input.
+   Insert empty vectors in result vector to indicate BBRC borders.
+   Output line numbers from input file instead of IDs in result file (only BBRC).
+   Switch off output.
+
+ Constraint parameters:
+   Minimum frequency constraint, used for anti-monotonic pruning.
+   Subgraph type, choices are paths and trees.
+   Significance level for ground patterns.
+
+ Constraint switches for BBRC:
+   Deactivate dynamic adjustment of upper bound (less efficient; only for performance evaluation).
+   Switch off mining of only the most significant/most general representative of each backbone.
+   Deactivate upper bound pruning for chi-square constraint (less efficient, use only for performance evaluation).
 
 
  Environment variables:
@@ -56,9 +55,8 @@
 
  Remarks:
  ========
- Structures are output to STDOUT in the specified format.
  Output consists of blocks of gSpan graphs.
- When using SMARTS output (environment variable FMINER_SMARTS is defined), each line is a YAML sequence, containing SMARTS fragment, p-value, and two sequences denoting positive and negative class occurrences (default compound ids, see also switch -n). 
+ When using SMARTS output (environment variable FMINER_SMARTS), each line is a YAML sequence, containing SMARTS fragment, p-value, and two sequences denoting positive and negative class occurrences (default compound ids, see also switch -n). 
  When also FMINER_LAZAR is set, the linfrag output format is used.
 
 
@@ -67,20 +65,33 @@
 
  In any case, 1-frequent patterns are not refined further, unless you use the -s switch 
 
- Use BBRC mining (default):
+ BBRC mining:
 
  # BBRC representatives (min frequency 2, min significance 95%), using dynamic UB pruning
  ./fminer ../libbbrc/libbbrc.so <graphs> <activities> 
  # same as above, but much slower (explicitly no dynamic UB pruning)
  ./fminer ../libbbrc/libbbrc.so -d <graphs> <activities>                                        
 
- Switch off BBRC mining:
-
- # all 2-frequent and 95%-significant features
- # Note, that the -d is mandatory (no dynamic UB pruning possible here)!
+ # ALL 2-frequent and 95%-significant features
  ./fminer ../libbbrc/libbbrc.so -d -b <graphs> <activities>
- # All 20-frequent patterns (standard frequent pattern mining)
+ # All 20-frequent patterns (frequent subgraph mining)
  ./fminer ../libbbrc/libbbrc.so -f 20 <graphs>
 
- 
-Andreas Maunz, 2010.
+ Switches and Defaults
+ =====================
+
+ -f  --minfreq _minfreq_      Set minimum frequency. Allowable values for _minfreq_: 1, 2, ... (default: 2).
+ -l  --level _level_          Set fragment type. Allowable values for _type_: 1 (paths) and 2 (trees) (default: 2).
+ -s  --refine-singles         Switch on refinement of fragments with frequency 1 (default: off).
+ -o  --no-output              Switch off output (default: on).
+ -n  --line-nrs               Switch on line numbers in output file (default: off).
+ -r  --bbrc-sep               Switch on BBRC separator in result vector (default: off).
+ -g  --regression             Switch on regression (default: off).
+
+  Upper bound pruning options:
+ -a  --aromaticity            Switch on aromatic ring perception when using smiles input format (default: off).
+ -d  --no-dynamic-ub          Switch off dynamic adjustment of upper bound for backbone mining (default: on).
+ -b  --no-bbr-classes         Switch off mining for backbone refinement classes (default: on).
+ -u  --no-upper-bound-pruning Switch off upper bound pruning (default: on).
+       -p  --p-value _p_value_      Set significance type. Allowable values for _p_value_: 0 <= _p_value_ <= 1.0 (default: 0.95).
+
