@@ -32,7 +32,6 @@ namespace fm {
     extern bool refine_singles;
     extern bool do_output;
     extern bool bbrc_sep;
-    extern bool most_specific_trees_only;
     extern bool regression;
 
     extern Database* database;
@@ -868,7 +867,7 @@ void PatternTree::expand (pair<float, string> max) {
     fm::graphstate->insertNode ( legs[i]->tuple.connectingnode, legs[i]->tuple.label, legs[i]->occurrences.maxdegree );
 
     // immediate output for all patterns
-    if (fm::do_output && !fm::most_specific_trees_only && !fm::do_backbone) {
+    if (fm::do_output && !fm::do_backbone) {
        if (!fm::console_out) (*fm::result) << fm::graphstate->to_s(legs[i]->occurrences.frequency);
        else fm::graphstate->print(legs[i]->occurrences.frequency);
     }
@@ -889,12 +888,6 @@ void PatternTree::expand (pair<float, string> max) {
     ) {   // UB-PRUNING
 
         PatternTree p ( *this, i );
-
-        // output most specialized pattern
-        if (fm::most_specific_trees_only && fm::do_output && !fm::do_backbone && p.legs.size() == 0) {
-            if (!fm::console_out) (*fm::result) << fm::graphstate->to_s(legs[i]->occurrences.frequency);
-            else fm::graphstate->print(legs[i]->occurrences.frequency);
-        }
 
         if (!fm::regression) {
             if (fm::chisq->p > max.first) { fm::updated = true; p.expand (pair<float, string>(fm::chisq->p,fm::graphstate->to_s(legs[i]->occurrences.frequency))); }

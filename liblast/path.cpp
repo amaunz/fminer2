@@ -35,7 +35,6 @@ namespace fm {
     extern bool refine_singles;
     extern bool do_output;
     extern bool bbrc_sep;
-    extern bool most_specific_trees_only;
     extern bool gsp_out;
     extern bool die;
     extern bool do_last;

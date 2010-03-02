@@ -31,7 +31,6 @@
 
 namespace fm {
     extern Database* database;
-    extern bool line_nrs;
 }
 
 class Constraint {};
@@ -83,13 +82,11 @@ class ChisqConstraint : public Constraint {
       each (legocc) { 
 
         if (fm::database->trees[legocc[i].tid]->activity == 1) {
-            if (fm::line_nrs) fa_set.insert(fm::database->trees[legocc[i].tid]->line_nr); 
-            else fa_set.insert(fm::database->trees[legocc[i].tid]->orig_tid); 
+            fa_set.insert(fm::database->trees[legocc[i].tid]->orig_tid); 
         }
 
         else if (fm::database->trees[legocc[i].tid]->activity == 0) {
-            if (fm::line_nrs) fi_set.insert(fm::database->trees[legocc[i].tid]->line_nr); 
-            else fi_set.insert(fm::database->trees[legocc[i].tid]->orig_tid); 
+            fi_set.insert(fm::database->trees[legocc[i].tid]->orig_tid); 
         }
 
       }
@@ -128,8 +125,7 @@ class KSConstraint : public Constraint {
       feat.clear();
       each (legocc) {
         feat.push_back(fm::database->trees[legocc[i].tid]->activity);
-        if (fm::line_nrs) fa_set.insert(fm::database->trees[legocc[i].tid]->line_nr); 
-        else fa_set.insert(fm::database->trees[legocc[i].tid]->orig_tid); 
+        fa_set.insert(fm::database->trees[legocc[i].tid]->orig_tid); 
       }
     }
 

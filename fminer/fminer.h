@@ -62,9 +62,7 @@ public:
     virtual void SetRefineSingles(bool val) = 0;
     virtual void SetDoOutput(bool val) = 0;
     virtual void SetBbrcSep(bool val) = 0;
-    virtual void SetMostSpecTreesOnly(bool val) = 0;
     virtual void SetChisqActive(bool val) = 0;
-    virtual void SetLineNrs(bool val) = 0;
     virtual void SetRegression(bool val) = 0;
     virtual std::vector<std::string>* MineRoot(unsigned int j) = 0;
     virtual void ReadGsp(FILE* gsp) = 0;

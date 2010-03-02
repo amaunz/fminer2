@@ -37,7 +37,6 @@ namespace fm {
     extern bool refine_singles;
     extern bool do_output;
     extern bool bbrc_sep;
-    extern bool most_specific_trees_only;
     extern bool regression;
 
     extern Database* database;
@@ -515,7 +514,7 @@ void Path::expand2 (pair<float,string> max) {
 
 
     // immediate output
-    if (fm::do_output && !fm::most_specific_trees_only && !fm::do_backbone) {
+    if (fm::do_output && !fm::do_backbone) {
         if (!fm::console_out) (*fm::result) << fm::graphstate->to_s(legs[index]->occurrences.frequency);
         else fm::graphstate->print(legs[index]->occurrences.frequency);
     }
@@ -577,7 +576,7 @@ void Path::expand2 (pair<float,string> max) {
     fm::graphstate->insertNode ( legs[index]->tuple.connectingnode, legs[index]->tuple.edgelabel, legs[index]->occurrences.maxdegree );
 
     // immediate output
-    if (fm::do_output && !fm::most_specific_trees_only && !fm::do_backbone) {
+    if (fm::do_output && !fm::do_backbone) {
         if (!fm::console_out) (*fm::result) << fm::graphstate->to_s(legs[index]->occurrences.frequency);
         else fm::graphstate->print(legs[index]->occurrences.frequency);
     }
@@ -652,7 +651,7 @@ void Path::expand2 (pair<float,string> max) {
           fm::graphstate->insertNode ( legs[i]->tuple.connectingnode, legs[i]->tuple.edgelabel, legs[i]->occurrences.maxdegree );
 
           // immediate output
-          if (fm::do_output && !fm::most_specific_trees_only && !fm::do_backbone) {
+          if (fm::do_output && !fm::do_backbone) {
              if (!fm::console_out) (*fm::result) << fm::graphstate->to_s(legs[i]->occurrences.frequency);
              else fm::graphstate->print(legs[i]->occurrences.frequency);
           }
@@ -673,12 +672,6 @@ void Path::expand2 (pair<float,string> max) {
           ){   // UB-PRUNING
 
             PatternTree tree ( *this, i );
-
-            // output most specialized pattern
-            if (fm::most_specific_trees_only && fm::do_output && !fm::do_backbone && tree.legs.size() == 0) {
-                if (!fm::console_out) (*fm::result) << fm::graphstate->to_s(legs[i]->occurrences.frequency);
-                else fm::graphstate->print(legs[i]->occurrences.frequency);
-            }
 
             if (!fm::regression) {
                 if (max.first<fm::chisq->p) { fm::updated = true; tree.expand ( pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[i]->occurrences.frequency))); }
@@ -736,8 +729,7 @@ void Path::expand () {
 
       // GRAPHSTATE AND OUTPUT
       fm::graphstate->insertNode ( tuple.connectingnode, tuple.edgelabel, legs[i]->occurrences.maxdegree );
-      //cerr << "MST: " << fm::most_specific_trees_only << " , DO_OUT: " << fm::do_output << " , DO_BBRC: " << fm::do_backbone << " , f: " << legs[i]->occurrences.frequency << "(" << fm::minfreq << ")" << endl;
-      if (!fm::most_specific_trees_only && fm::do_output && !fm::do_backbone && legs[i]->occurrences.frequency>=fm::minfreq) { 
+      if (fm::do_output && !fm::do_backbone && legs[i]->occurrences.frequency>=fm::minfreq) { 
           if (!fm::console_out) (*fm::result) << fm::graphstate->to_s(legs[i]->occurrences.frequency);
           else fm::graphstate->print(legs[i]->occurrences.frequency);
       }

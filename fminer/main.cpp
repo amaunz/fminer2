@@ -223,7 +223,6 @@ int main(int argc, char *argv[], char *envp[]) {
     bool do_backbone = true;
     bool adjust_ub = true;
     bool do_output = true;
-    bool line_nrs = false;
     bool bbrc_sep = false;
     bool do_regression = false;
     
@@ -327,9 +326,6 @@ int main(int argc, char *argv[], char *envp[]) {
         case 'o':
             do_output = false;
             break;
-        case 'n':
-            line_nrs = true;
-            break;
         case 'r':
             bbrc_sep = true;
             break;
@@ -417,7 +413,6 @@ int main(int argc, char *argv[], char *envp[]) {
             fminer->SetPruning(do_pruning);
             fminer->SetDynamicUpperBound(adjust_ub);
             fminer->SetDoOutput(do_output);
-            fminer->SetLineNrs(line_nrs);
             fminer->SetBbrcSep(bbrc_sep);
             fminer->SetRegression(do_regression);
 
@@ -443,7 +438,6 @@ int main(int argc, char *argv[], char *envp[]) {
             fminer->SetRefineSingles(refine_singles);
             fminer->SetAromatic(aromatic);
             fminer->SetDoOutput(do_output);
-            fminer->SetLineNrs(line_nrs);
             fminer->SetBbrcSep(bbrc_sep);
 
             fminer->SetChisqActive(false);

@@ -217,8 +217,6 @@
  *  <li>Refine Singles: <b>false</b></li>
  *  <li>Do Output: <b>true</b></li>
  *  <li>Separate BBRCs in output by blank line/vector: <b>false</b></li>
- *  <li>Most Specific Trees Only (Positive Border): <b>false</b></li>
- *  <li>Use line numbers instead of IDs: <b>false</b></li>
  * </ul>
  *
  * \code

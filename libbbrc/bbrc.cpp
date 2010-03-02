@@ -140,7 +140,6 @@ void Bbrc::Defaults() {
     fm::refine_singles = false;
     fm::do_output=true;
     fm::bbrc_sep=false;
-    fm::line_nrs=false;
     fm::regression=false;
 
     fm::updated = true;
@@ -148,7 +147,6 @@ void Bbrc::Defaults() {
     fm::pvalues=false;
     fm::gsp_out=true;
 
-    fm::most_specific_trees_only=false;
     fm::console_out = false;
 }
 
@@ -165,10 +163,8 @@ bool Bbrc::GetAromatic() {return fm::aromatic;}
 bool Bbrc::GetRefineSingles() {return fm::refine_singles;}
 bool Bbrc::GetDoOutput() {return fm::do_output;}
 bool Bbrc::GetBbrcSep(){return fm::bbrc_sep;}
-bool Bbrc::GetMostSpecTreesOnly(){return fm::most_specific_trees_only;}
 bool Bbrc::GetChisqActive(){return fm::chisq->active;}
 float Bbrc::GetChisqSig(){return fm::chisq->sig;}
-bool Bbrc::GetLineNrs() {return fm::line_nrs;}
 bool Bbrc::GetRegression() {return fm::regression;}
 
 
@@ -260,14 +256,6 @@ void Bbrc::SetBbrcSep(bool val) {
     }
 }
 
-void Bbrc::SetMostSpecTreesOnly(bool val) {
-    fm::most_specific_trees_only=val;
-    if (GetMostSpecTreesOnly() && GetBackbone()) {
-        cerr << "Notice: Disabling BBRC mining, getting most specific tree patterns instead." << endl;
-        SetBackbone(false);
-    }
-}
-
 void Bbrc::SetChisqActive(bool val) {
     fm::chisq->active = val;
     if (!GetChisqActive()) {
@@ -286,20 +274,12 @@ void Bbrc::SetChisqSig(float _chisq_val) {
     fm::chisq->sig = gsl_cdf_chisq_Pinv(_chisq_val, 1);
 }
 
-void Bbrc::SetLineNrs(bool val) {
-    fm::line_nrs = val;
-}
-
 void Bbrc::SetRegression(bool val) {
     fm::regression = val;
     if (fm::regression) {
          if (!GetBackbone()) {
             cerr << "Notice: Activating Backbone Mining due to activated regression." << endl;
             SetBackbone(true);
-         }
-         if (GetMostSpecTreesOnly()) {
-            cerr << "Notice: Deactivating Most Specific Trees due to activated regression." << endl;
-            SetMostSpecTreesOnly(false);
          }
          if (GetPruning()) {
             cerr << "Notice: Disabling statistical metric pruning due to activated regression." << endl;
@@ -330,15 +310,33 @@ vector<string>* Bbrc::MineRoot(unsigned int j) {
         init_mining_done=true; 
         cerr << "Settings:" << endl \
              << "---" << endl \
+             << "Minimum frequency: " << GetMinfreq() << endl \
+             << "Type: " << GetType() << endl \
              << "Chi-square active (chi-square-value): " << GetChisqActive() << " (" << GetChisqSig()<< ")" << endl \
              << "BBRC mining: " << GetBackbone() << endl \
              << "statistical metric (dynamic upper bound) pruning: " << GetPruning() << " (" << GetDynamicUpperBound() << ")" << endl \
              << "---" << endl \
-             << "Minimum frequency: " << GetMinfreq() << endl \
              << "Refine patterns with single support: " << GetRefineSingles() << endl \
-             << "Most specific BBRC members: " << GetMostSpecTreesOnly() << endl \
+             << "Do output: " << GetDoOutput() << endl \
+             << "BBRC sep: " << GetBbrcSep() << endl \
+             << "Regression: " << GetRegression() << endl \
              << "---" << endl;
     }
+
+    fm::minfreq = 2;
+    fm::type = 2;
+    fm::chisq->sig = 3.84146;
+    fm::do_backbone = true;
+    fm::adjust_ub = true;
+    fm::do_pruning = true;
+    fm::aromatic = false;
+    fm::refine_singles = false;
+    fm::do_output=true;
+    fm::bbrc_sep=false;
+    fm::regression=false;
+
+
+
     if (j >= fm::database->nodelabels.size()) { cerr << "Error! Root node " << j << " does not exist." << endl;  exit(1); }
     if ( fm::database->nodelabels[j].frequency >= fm::minfreq && fm::database->nodelabels[j].frequentedgelabels.size () ) {
         Path path(j);

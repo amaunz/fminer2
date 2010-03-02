@@ -33,7 +33,6 @@
    Refine fragments with frequency 1.
    Enable aromatic ring perception for SMILES input.
    Insert empty vectors in result vector to indicate BBRC borders.
-   Output line numbers from input file instead of IDs in result file (only BBRC).
    Switch off output.
 
  Constraint parameters:
@@ -84,7 +83,6 @@
  -l  --level _level_          Set fragment type. Allowable values for _type_: 1 (paths) and 2 (trees) (default: 2).
  -s  --refine-singles         Switch on refinement of fragments with frequency 1 (default: off).
  -o  --no-output              Switch off output (default: on).
- -n  --line-nrs               Switch on line numbers in output file (default: off).
  -r  --bbrc-sep               Switch on BBRC separator in result vector (default: off).
  -g  --regression             Switch on regression (default: off).
 

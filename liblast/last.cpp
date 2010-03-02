@@ -126,8 +126,6 @@ void Last::Defaults() {
     fm::refine_singles = false;
     fm::do_output=true;
     fm::bbrc_sep=false;
-    fm::most_specific_trees_only=false;
-    fm::line_nrs=false;
     // LAST
     fm::do_last=true;
     fm::last_hops=0;
@@ -150,10 +148,8 @@ bool Last::GetAromatic() {return fm::aromatic;}
 bool Last::GetRefineSingles() {return fm::refine_singles;}
 bool Last::GetDoOutput() {return fm::do_output;}
 bool Last::GetBbrcSep(){return fm::bbrc_sep;}
-bool Last::GetMostSpecTreesOnly(){return fm::most_specific_trees_only;}
 bool Last::GetChisqActive(){return fm::chisq->active;}
 float Last::GetChisqSig(){return fm::chisq->sig;}
-bool Last::GetLineNrs() {return fm::line_nrs;}
 bool Last::GetRegression() {return false;}
 
 
@@ -224,14 +220,6 @@ void Last::SetBbrcSep(bool val) {
     }
 }
 
-void Last::SetMostSpecTreesOnly(bool val) {
-    fm::most_specific_trees_only=val;
-    if (GetMostSpecTreesOnly() && GetBackbone()) {
-        cerr << "Notice: Disabling BBRC mining, getting most specific tree patterns instead." << endl;
-        SetBackbone(false);
-    }
-}
-
 void Last::SetChisqActive(bool val) {
     fm::chisq->active = val;
     if (!GetChisqActive()) {
@@ -247,10 +235,6 @@ void Last::SetChisqActive(bool val) {
 void Last::SetChisqSig(float _chisq_val) {
     if (_chisq_val < 0.0 || _chisq_val > 1.0) { cerr << "Error! Invalid value '" << _chisq_val << "' for parameter chisq." << endl; exit(1); }
     fm::chisq->sig = gsl_cdf_chisq_Pinv(_chisq_val, 1);
-}
-
-void Last::SetLineNrs(bool val) {
-    fm::line_nrs = val;
 }
 
 void Last::SetRegression(bool val) {

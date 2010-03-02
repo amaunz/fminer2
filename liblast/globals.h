@@ -37,8 +37,6 @@ namespace fm {
     bool do_output;
     bool gsp_out;
     bool bbrc_sep;
-    bool most_specific_trees_only;
-    bool line_nrs;
     int die;
     bool do_last;
     unsigned int last_hops;

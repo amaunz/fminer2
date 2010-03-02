@@ -34,7 +34,6 @@ namespace fm {
     extern ChisqConstraint* chisq;
     extern bool gsp_out;
     extern bool bbrc_sep;
-    extern bool line_nrs;
 
 }
 
@@ -69,10 +68,8 @@ class Last : public Fminer {
     bool GetRefineSingles(); //!< Get whether fragments with frequency 1 should be refined.
     bool GetDoOutput(); //!< Get whether output is enabled.
     bool GetBbrcSep(); //!< Get whether BBRCs should be separated in the output.
-    bool GetMostSpecTreesOnly(); //!< Get whether most specific trees only should be mined for every BBRC.
     bool GetChisqActive(); //!< Get whether chi-square filter is active.
     float GetChisqSig(); //!< Get significance threshold.
-    bool GetLineNrs(); //!< Get whether line numbers should be used in the output file.
     bool GetRegression(); //!< Dummy method for regression (only used for bbrcs).
 
     //@}
@@ -91,10 +88,8 @@ class Last : public Fminer {
     void SetRefineSingles(bool val); //!< Pass 'true' here to enable refinement of fragments with frequency 1.
     void SetDoOutput(bool val); //!< Pass 'false' here to disable output.
     void SetBbrcSep(bool val); //!< Set this to 'true' to enable BBRC separators in output.
-    void SetMostSpecTreesOnly(bool val); //!< Set this to 'true' to enable mining for the most specific tree patterns only.
     void SetChisqActive(bool val); //!< Set this to 'true' to enable chi-square filter.
     void SetChisqSig(float _chisq_val); //!< Set significance threshold here (between 0 and 1).
-    void SetLineNrs(bool val); //!< Set 'true' here to enable line numbers in the output file.
     void SetRegression(bool val); //!< Dummy method for regression (only used for bbrcs).
     //@}
     
