@@ -146,7 +146,6 @@ void Bbrc::Defaults() {
     fm::do_yaml=true;
     fm::pvalues=false;
     fm::gsp_out=true;
-
     fm::console_out = false;
 }
 

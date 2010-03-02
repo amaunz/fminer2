@@ -25,38 +25,47 @@
 #include "constraints.h"
 
 namespace fm {
+    // switched by fminer binary
+    unsigned int minfreq; // fminer, set
+    int type;             // fminer, set
+    ChisqConstraint* chisq=NULL; // fminer, set (sig).
+    bool do_backbone; // fminer, set
+    bool adjust_ub; // fminer, set
+    bool do_pruning; // fminer, set
+    bool aromatic; // fminer, set
+    bool refine_singles; // fminer, set
+    bool do_output; // fminer, set
+    bool bbrc_sep; // fminer, set
+    bool regression; // fminer, set
 
-    unsigned int minfreq;
-    int type;
-    bool do_backbone;
-    bool updated;
-    bool adjust_ub;
-    bool do_pruning;
+    // internally controlled by Defaults()
+    bool updated; // demand
+    bool do_yaml; // ENV
+    bool pvalues; // ENV
+    bool gsp_out; // ENV
+    bool console_out; // set
+
+    // controlled by constructurs & destructor
     bool instance_present;
-    bool console_out;
-    bool aromatic;
-    bool refine_singles;
-    bool do_output;
-    bool do_yaml;
-    bool gsp_out;
-    bool pvalues;
-    bool bbrc_sep;
-    bool regression;
 
+    // controlled by destructor and Reset()
     Database* database=NULL;
     Statistics* statistics=NULL;
-    ChisqConstraint* chisq=NULL;
-    KSConstraint* ks=NULL;
     GraphState* graphstate=NULL;
-    CloseLegOccurrences* closelegoccurrences=NULL; 
-    LegOccurrences* legoccurrences=NULL;
 
+    // controlled by Reset()
     vector<string>* result=NULL;
+
+    // controlled by destructor & Reset()
+    LegOccurrences* legoccurrences=NULL; 
+    CloseLegOccurrences* closelegoccurrences=NULL; 
     vector<LegOccurrences> candidatelegsoccurrences;
     vector<vector< CloseLegOccurrences> > candidatecloselegsoccs;
     vector<bool> candidatecloselegsoccsused;
+    KSConstraint* ks=NULL;
 
-    bool closelegsoccsused;
+    // controlled externally, set on demand
+    bool closelegsoccsused; // demand
 
 }
 
