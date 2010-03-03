@@ -1,6 +1,6 @@
 Welcome to Fminer2!
 
-This repository includes graph mining software based on Gaston (see http://www.liacs.nl/~snijssen/gaston). The following packages are included:
+This repository includes graph mining software based on Gaston (see http://www.liacs.nl/~snijssen/gaston ). The following packages are included:
 
 1) BBRC: Backbone Refinement Class mining
 Subdirectory libbbrc/

@@ -2,7 +2,7 @@
  *
  * LibLast
  *
- * This is the Last library, available at http://github.com/amaunz/fminer2/tree/master , subdirectory <code>liblast</code>.<br>
+ * This is the Last library, available at http://github.com/amaunz/fminer2/tree/master , subdirectory <code>liblast</code> (see below for download and build instructions).<br>
  * The Fminer frontend application is available from http://github.com/amaunz/fminer2/tree/master , subdirectory <code>fminer</code>.<br>
  * Supporting information is available here: http://last-pm.maunz.de .
  *
@@ -58,7 +58,7 @@
  *    \code
  *    apt-get install libopenbabel-dev            # OB binary lib and headers
  *    \endcode
- *  - <a href="http://github.com/amaunz/fminer2/tree" target="_blank">Download the library source code</a> (with git: <code>git clone git://github.com/amaunz/fminer2.git</code>) and cd to <code>liblast</code> subdirectory. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.
+ *  - <a href="http://github.com/amaunz/fminer2/tree" target="_blank">Download the library source code</a> by clicking on "Download Source". (with git: <code>git clone git://github.com/amaunz/fminer2.git</code>) and cd to <code>liblast</code> subdirectory. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.
  *  - <a href="http://github.com/amaunz/fminer2/tree" target="_blank">Download the frontend code</a> (with git: <code>git clone git://github.com/amaunz/fminer2.git</code>) and cd to <code>fminer</code> subdirectory.. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.
  *  - To create this documentation with doxygen, type 'make doc'. The documentation explains API, constructor usage and options.
  *  @subsection ssec23 Language Portability
