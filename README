@@ -1,0 +1,18 @@
+Welcome to Fminer2!
+
+This repository includes graph mining software based on Gaston (see http://www.liacs.nl/~snijssen/gaston). The following packages are included:
+
+1) BBRC: Backbone Refinement Class mining
+Subdirectory libbbrc/
+Go here: http://www.maunz.de/libfminer2-bbrc-doc/
+
+2) LAST-PM: LAtent STructure Pattern Mining
+Subdirectory liblast/
+Go here: http://www.maunz.de/libfminer2-last-doc/
+
+3) Frontend App for 1) and 2).
+Subdirectory fminer/
+
+http://cs.maunz.de
+Andreas Maunz, 2010.
+
