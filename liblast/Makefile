@@ -59,6 +59,7 @@ $(LIB1_REALNAME): $(OBJ)
 	-ln -sf $@ $(LIB1_SONAME)
 	-ln -sf $@ $(LIB1)
 
+#swig -c++ -ruby -o last_wrap.cxx rlast_wrap.i
 $(LIB2): $(OBJ) $(NAME)_wrap.cxx
 	$(CC) -c $(CXXFLAGS) $(INCLUDE_RB) $(NAME)_wrap.cxx -o $(NAME)_wrap.o
 	$(CC) $(LDFLAGS) -shared $(CXXFLAGS) $(OBJ) $(NAME)_wrap.o $(LIBS) -o $@

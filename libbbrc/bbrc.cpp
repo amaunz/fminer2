@@ -352,19 +352,20 @@ vector<string>* Bbrc::MineRoot(unsigned int j) {
         fm::graphstate->init (); 
         if (fm::bbrc_sep && !fm::do_backbone && fm::do_output && !fm::console_out) (*fm::result) << fm::graphstate->sep();
         init_mining_done=true; 
+
         cerr << "Settings:" << endl \
              << "---" << endl \
-             << "Minimum frequency: " << GetMinfreq() << endl \
-             << "Type: " << GetType() << endl \
+             << "Type:                                 " << GetType() << endl \
+             << "Minimum frequency:                    " << GetMinfreq() << endl \
              << "Chi-square active (chi-square-value): " << GetChisqActive() << " (" << GetChisqSig()<< ")" << endl \
-             << "BBRC mining: " << GetBackbone() << endl \
-             << "statistical metric (dynamic upper bound) pruning: " << GetPruning() << " (" << GetDynamicUpperBound() << ")" << endl \
-             << "---" << endl \
-             << "Refine patterns with single support: " << GetRefineSingles() << endl \
-             << "Do output: " << GetDoOutput() << endl \
-             << "BBRC sep: " << GetBbrcSep() << endl \
-             << "Regression: " << GetRegression() << endl \
+             << "BBRC mining:                          " << GetBackbone() << endl \
+             << "Statistical metric (dynamic) pruning: " << GetPruning() << " (" << GetDynamicUpperBound() << ")" << endl \
+             << "Refine patterns with single support:  " << GetRefineSingles() << endl \
+             << "Do output:                            " << GetDoOutput() << endl \
+             << "BBRC sep:                             " << GetBbrcSep() << endl \
+             << "Regression:                           " << GetRegression() << endl \
              << "---" << endl;
+
     }
 
 

@@ -4429,19 +4429,20 @@ SWIG_AsVal_bool (VALUE obj, bool *val)
 }
 
 
-SWIGINTERN int
-SWIG_AsVal_unsigned_SS_int (VALUE obj, unsigned int *val)
-{
-  unsigned long v;
-  int res = SWIG_AsVal_unsigned_SS_long (obj, &v);
-  if (SWIG_IsOK(res)) {
-    if ((v > UINT_MAX)) {
-      return SWIG_OverflowError;
-    } else {
-      if (val) *val = static_cast< unsigned int >(v);
-    }
-  }  
-  return res;
+SWIGINTERNINLINE VALUE
+SWIG_From_int  (int value)
+{    
+  return SWIG_From_long  (value);
+}
+
+
+  #define SWIG_From_double   rb_float_new 
+
+
+SWIGINTERNINLINE VALUE
+SWIG_From_float  (float value)
+{    
+  return SWIG_From_double  (value);
 }
 
 
@@ -4493,20 +4494,19 @@ SWIG_AsVal_float (VALUE obj, float *val)
 }
 
 
-SWIGINTERNINLINE VALUE
-SWIG_From_int  (int value)
-{    
-  return SWIG_From_long  (value);
-}
-
-
-  #define SWIG_From_double   rb_float_new 
-
-
-SWIGINTERNINLINE VALUE
-SWIG_From_float  (float value)
-{    
-  return SWIG_From_double  (value);
+SWIGINTERN int
+SWIG_AsVal_unsigned_SS_int (VALUE obj, unsigned int *val)
+{
+  unsigned long v;
+  int res = SWIG_AsVal_unsigned_SS_long (obj, &v);
+  if (SWIG_IsOK(res)) {
+    if ((v > UINT_MAX)) {
+      return SWIG_OverflowError;
+    } else {
+      if (val) *val = static_cast< unsigned int >(v);
+    }
+  }  
+  return res;
 }
 
 swig_class cGC_VALUE;
@@ -8142,78 +8142,7 @@ fail:
 }
 
 
-SWIGINTERN VALUE
-_wrap_line_nrs_get(VALUE self) {
-  VALUE _val;
-  
-  _val = SWIG_From_bool(static_cast< bool >(fm::line_nrs));
-  return _val;
-}
-
-
-SWIGINTERN VALUE
-_wrap_line_nrs_set(VALUE self, VALUE _val) {
-  {
-    bool val;
-    int res = SWIG_AsVal_bool(_val, &val);
-    if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::line_nrs""' of type '""bool""'");
-    }
-    fm::line_nrs = static_cast< bool >(val);
-  }
-  return _val;
-fail:
-  return Qnil;
-}
-
-
 swig_class cLast;
-
-SWIGINTERN VALUE
-_wrap_new_Last__SWIG_0(int argc, VALUE *argv, VALUE self) {
-  Last *result = 0 ;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  result = (Last *)new Last();DATA_PTR(self) = result;
-  
-  return self;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_new_Last__SWIG_1(int argc, VALUE *argv, VALUE self) {
-  int arg1 ;
-  unsigned int arg2 ;
-  Last *result = 0 ;
-  int val1 ;
-  int ecode1 = 0 ;
-  unsigned int val2 ;
-  int ecode2 = 0 ;
-  
-  if ((argc < 2) || (argc > 2)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
-  }
-  ecode1 = SWIG_AsVal_int(argv[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "int","Last", 1, argv[0] ));
-  } 
-  arg1 = static_cast< int >(val1);
-  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "unsigned int","Last", 2, argv[1] ));
-  } 
-  arg2 = static_cast< unsigned int >(val2);
-  result = (Last *)new Last(arg1,arg2);DATA_PTR(self) = result;
-  
-  return self;
-fail:
-  return Qnil;
-}
-
 
 #ifdef HAVE_RB_DEFINE_ALLOC_FUNC
 SWIGINTERN VALUE
@@ -8233,116 +8162,16 @@ _wrap_Last_allocate(VALUE self) {
   
 
 SWIGINTERN VALUE
-_wrap_new_Last__SWIG_2(int argc, VALUE *argv, VALUE self) {
-  int arg1 ;
-  unsigned int arg2 ;
-  float arg3 ;
-  bool arg4 ;
+_wrap_new_Last(int argc, VALUE *argv, VALUE self) {
   Last *result = 0 ;
-  int val1 ;
-  int ecode1 = 0 ;
-  unsigned int val2 ;
-  int ecode2 = 0 ;
-  float val3 ;
-  int ecode3 = 0 ;
-  bool val4 ;
-  int ecode4 = 0 ;
   
-  if ((argc < 4) || (argc > 4)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 4)",argc); SWIG_fail;
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
   }
-  ecode1 = SWIG_AsVal_int(argv[0], &val1);
-  if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "int","Last", 1, argv[0] ));
-  } 
-  arg1 = static_cast< int >(val1);
-  ecode2 = SWIG_AsVal_unsigned_SS_int(argv[1], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "unsigned int","Last", 2, argv[1] ));
-  } 
-  arg2 = static_cast< unsigned int >(val2);
-  ecode3 = SWIG_AsVal_float(argv[2], &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), Ruby_Format_TypeError( "", "float","Last", 3, argv[2] ));
-  } 
-  arg3 = static_cast< float >(val3);
-  ecode4 = SWIG_AsVal_bool(argv[3], &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), Ruby_Format_TypeError( "", "bool","Last", 4, argv[3] ));
-  } 
-  arg4 = static_cast< bool >(val4);
-  result = (Last *)new Last(arg1,arg2,arg3,arg4);DATA_PTR(self) = result;
+  result = (Last *)new Last();DATA_PTR(self) = result;
   
   return self;
 fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE _wrap_new_Last(int nargs, VALUE *args, VALUE self) {
-  int argc;
-  VALUE argv[4];
-  int ii;
-  
-  argc = nargs;
-  if (argc > 4) SWIG_fail;
-  for (ii = 0; (ii < argc); ++ii) {
-    argv[ii] = args[ii];
-  }
-  if (argc == 0) {
-    return _wrap_new_Last__SWIG_0(nargs, args, self);
-  }
-  if (argc == 2) {
-    int _v;
-    {
-      int res = SWIG_AsVal_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        return _wrap_new_Last__SWIG_1(nargs, args, self);
-      }
-    }
-  }
-  if (argc == 4) {
-    int _v;
-    {
-      int res = SWIG_AsVal_int(argv[0], NULL);
-      _v = SWIG_CheckState(res);
-    }
-    if (_v) {
-      {
-        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
-        _v = SWIG_CheckState(res);
-      }
-      if (_v) {
-        {
-          int res = SWIG_AsVal_float(argv[2], NULL);
-          _v = SWIG_CheckState(res);
-        }
-        if (_v) {
-          {
-            int res = SWIG_AsVal_bool(argv[3], NULL);
-            _v = SWIG_CheckState(res);
-          }
-          if (_v) {
-            return _wrap_new_Last__SWIG_2(nargs, args, self);
-          }
-        }
-      }
-    }
-  }
-  
-fail:
-  Ruby_Format_OverloadedError( argc, 4, "Last.new", 
-    "    Last.new()\n"
-    "    Last.new(int _type, unsigned int _minfreq)\n"
-    "    Last.new(int _type, unsigned int _minfreq, float chisq_val, bool _do_backbone)\n");
-  
   return Qnil;
 }
 
@@ -8635,30 +8464,6 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_Last_GetMostSpecTreesOnly(int argc, VALUE *argv, VALUE self) {
-  Last *arg1 = (Last *) 0 ;
-  bool result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_Last, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "Last *","GetMostSpecTreesOnly", 1, self )); 
-  }
-  arg1 = reinterpret_cast< Last * >(argp1);
-  result = (bool)(arg1)->GetMostSpecTreesOnly();
-  vresult = SWIG_From_bool(static_cast< bool >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
 _wrap_Last_GetChisqActive(int argc, VALUE *argv, VALUE self) {
   Last *arg1 = (Last *) 0 ;
   bool result;
@@ -8700,30 +8505,6 @@ _wrap_Last_GetChisqSig(int argc, VALUE *argv, VALUE self) {
   arg1 = reinterpret_cast< Last * >(argp1);
   result = (float)(arg1)->GetChisqSig();
   vresult = SWIG_From_float(static_cast< float >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_Last_GetLineNrs(int argc, VALUE *argv, VALUE self) {
-  Last *arg1 = (Last *) 0 ;
-  bool result;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 0) || (argc > 0)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_Last, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "Last *","GetLineNrs", 1, self )); 
-  }
-  arg1 = reinterpret_cast< Last * >(argp1);
-  result = (bool)(arg1)->GetLineNrs();
-  vresult = SWIG_From_bool(static_cast< bool >(result));
   return vresult;
 fail:
   return Qnil;
@@ -8787,10 +8568,12 @@ SWIGINTERN VALUE
 _wrap_Last_SetType(int argc, VALUE *argv, VALUE self) {
   Last *arg1 = (Last *) 0 ;
   int arg2 ;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int val2 ;
   int ecode2 = 0 ;
+  VALUE vresult = Qnil;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
@@ -8805,8 +8588,9 @@ _wrap_Last_SetType(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "int","SetType", 2, argv[0] ));
   } 
   arg2 = static_cast< int >(val2);
-  (arg1)->SetType(arg2);
-  return Qnil;
+  result = (bool)(arg1)->SetType(arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
 fail:
   return Qnil;
 }
@@ -8816,10 +8600,12 @@ SWIGINTERN VALUE
 _wrap_Last_SetBackbone(int argc, VALUE *argv, VALUE self) {
   Last *arg1 = (Last *) 0 ;
   bool arg2 ;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool val2 ;
   int ecode2 = 0 ;
+  VALUE vresult = Qnil;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
@@ -8834,8 +8620,9 @@ _wrap_Last_SetBackbone(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bool","SetBackbone", 2, argv[0] ));
   } 
   arg2 = static_cast< bool >(val2);
-  (arg1)->SetBackbone(arg2);
-  return Qnil;
+  result = (bool)(arg1)->SetBackbone(arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
 fail:
   return Qnil;
 }
@@ -8845,10 +8632,12 @@ SWIGINTERN VALUE
 _wrap_Last_SetDynamicUpperBound(int argc, VALUE *argv, VALUE self) {
   Last *arg1 = (Last *) 0 ;
   bool arg2 ;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool val2 ;
   int ecode2 = 0 ;
+  VALUE vresult = Qnil;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
@@ -8863,8 +8652,9 @@ _wrap_Last_SetDynamicUpperBound(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bool","SetDynamicUpperBound", 2, argv[0] ));
   } 
   arg2 = static_cast< bool >(val2);
-  (arg1)->SetDynamicUpperBound(arg2);
-  return Qnil;
+  result = (bool)(arg1)->SetDynamicUpperBound(arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
 fail:
   return Qnil;
 }
@@ -8874,10 +8664,12 @@ SWIGINTERN VALUE
 _wrap_Last_SetPruning(int argc, VALUE *argv, VALUE self) {
   Last *arg1 = (Last *) 0 ;
   bool arg2 ;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool val2 ;
   int ecode2 = 0 ;
+  VALUE vresult = Qnil;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
@@ -8892,8 +8684,9 @@ _wrap_Last_SetPruning(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bool","SetPruning", 2, argv[0] ));
   } 
   arg2 = static_cast< bool >(val2);
-  (arg1)->SetPruning(arg2);
-  return Qnil;
+  result = (bool)(arg1)->SetPruning(arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
 fail:
   return Qnil;
 }
@@ -8903,10 +8696,12 @@ SWIGINTERN VALUE
 _wrap_Last_SetConsoleOut(int argc, VALUE *argv, VALUE self) {
   Last *arg1 = (Last *) 0 ;
   bool arg2 ;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool val2 ;
   int ecode2 = 0 ;
+  VALUE vresult = Qnil;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
@@ -8921,8 +8716,9 @@ _wrap_Last_SetConsoleOut(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bool","SetConsoleOut", 2, argv[0] ));
   } 
   arg2 = static_cast< bool >(val2);
-  (arg1)->SetConsoleOut(arg2);
-  return Qnil;
+  result = (bool)(arg1)->SetConsoleOut(arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
 fail:
   return Qnil;
 }
@@ -8961,10 +8757,12 @@ SWIGINTERN VALUE
 _wrap_Last_SetRefineSingles(int argc, VALUE *argv, VALUE self) {
   Last *arg1 = (Last *) 0 ;
   bool arg2 ;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool val2 ;
   int ecode2 = 0 ;
+  VALUE vresult = Qnil;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
@@ -8979,8 +8777,9 @@ _wrap_Last_SetRefineSingles(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bool","SetRefineSingles", 2, argv[0] ));
   } 
   arg2 = static_cast< bool >(val2);
-  (arg1)->SetRefineSingles(arg2);
-  return Qnil;
+  result = (bool)(arg1)->SetRefineSingles(arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
 fail:
   return Qnil;
 }
@@ -9019,10 +8818,12 @@ SWIGINTERN VALUE
 _wrap_Last_SetBbrcSep(int argc, VALUE *argv, VALUE self) {
   Last *arg1 = (Last *) 0 ;
   bool arg2 ;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool val2 ;
   int ecode2 = 0 ;
+  VALUE vresult = Qnil;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
@@ -9037,37 +8838,9 @@ _wrap_Last_SetBbrcSep(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bool","SetBbrcSep", 2, argv[0] ));
   } 
   arg2 = static_cast< bool >(val2);
-  (arg1)->SetBbrcSep(arg2);
-  return Qnil;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_Last_SetMostSpecTreesOnly(int argc, VALUE *argv, VALUE self) {
-  Last *arg1 = (Last *) 0 ;
-  bool arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  bool val2 ;
-  int ecode2 = 0 ;
-  
-  if ((argc < 1) || (argc > 1)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_Last, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "Last *","SetMostSpecTreesOnly", 1, self )); 
-  }
-  arg1 = reinterpret_cast< Last * >(argp1);
-  ecode2 = SWIG_AsVal_bool(argv[0], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bool","SetMostSpecTreesOnly", 2, argv[0] ));
-  } 
-  arg2 = static_cast< bool >(val2);
-  (arg1)->SetMostSpecTreesOnly(arg2);
-  return Qnil;
+  result = (bool)(arg1)->SetBbrcSep(arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
 fail:
   return Qnil;
 }
@@ -9077,10 +8850,12 @@ SWIGINTERN VALUE
 _wrap_Last_SetChisqActive(int argc, VALUE *argv, VALUE self) {
   Last *arg1 = (Last *) 0 ;
   bool arg2 ;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool val2 ;
   int ecode2 = 0 ;
+  VALUE vresult = Qnil;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
@@ -9095,8 +8870,9 @@ _wrap_Last_SetChisqActive(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bool","SetChisqActive", 2, argv[0] ));
   } 
   arg2 = static_cast< bool >(val2);
-  (arg1)->SetChisqActive(arg2);
-  return Qnil;
+  result = (bool)(arg1)->SetChisqActive(arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
 fail:
   return Qnil;
 }
@@ -9106,10 +8882,12 @@ SWIGINTERN VALUE
 _wrap_Last_SetChisqSig(int argc, VALUE *argv, VALUE self) {
   Last *arg1 = (Last *) 0 ;
   float arg2 ;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   float val2 ;
   int ecode2 = 0 ;
+  VALUE vresult = Qnil;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
@@ -9124,37 +8902,9 @@ _wrap_Last_SetChisqSig(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "float","SetChisqSig", 2, argv[0] ));
   } 
   arg2 = static_cast< float >(val2);
-  (arg1)->SetChisqSig(arg2);
-  return Qnil;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
-_wrap_Last_SetLineNrs(int argc, VALUE *argv, VALUE self) {
-  Last *arg1 = (Last *) 0 ;
-  bool arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  bool val2 ;
-  int ecode2 = 0 ;
-  
-  if ((argc < 1) || (argc > 1)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_Last, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "Last *","SetLineNrs", 1, self )); 
-  }
-  arg1 = reinterpret_cast< Last * >(argp1);
-  ecode2 = SWIG_AsVal_bool(argv[0], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bool","SetLineNrs", 2, argv[0] ));
-  } 
-  arg2 = static_cast< bool >(val2);
-  (arg1)->SetLineNrs(arg2);
-  return Qnil;
+  result = (bool)(arg1)->SetChisqSig(arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
 fail:
   return Qnil;
 }
@@ -9164,10 +8914,12 @@ SWIGINTERN VALUE
 _wrap_Last_SetRegression(int argc, VALUE *argv, VALUE self) {
   Last *arg1 = (Last *) 0 ;
   bool arg2 ;
+  bool result;
   void *argp1 = 0 ;
   int res1 = 0 ;
   bool val2 ;
   int ecode2 = 0 ;
+  VALUE vresult = Qnil;
   
   if ((argc < 1) || (argc > 1)) {
     rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
@@ -9182,8 +8934,9 @@ _wrap_Last_SetRegression(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "bool","SetRegression", 2, argv[0] ));
   } 
   arg2 = static_cast< bool >(val2);
-  (arg1)->SetRegression(arg2);
-  return Qnil;
+  result = (bool)(arg1)->SetRegression(arg2);
+  vresult = SWIG_From_bool(static_cast< bool >(result));
+  return vresult;
 fail:
   return Qnil;
 }
@@ -9813,8 +9566,6 @@ SWIGEXPORT void Init_last(void) {
   rb_define_singleton_method(mLast, "gsp_out=", VALUEFUNC(_wrap_gsp_out_set), 1);
   rb_define_singleton_method(mLast, "bbrc_sep", VALUEFUNC(_wrap_bbrc_sep_get), 0);
   rb_define_singleton_method(mLast, "bbrc_sep=", VALUEFUNC(_wrap_bbrc_sep_set), 1);
-  rb_define_singleton_method(mLast, "line_nrs", VALUEFUNC(_wrap_line_nrs_get), 0);
-  rb_define_singleton_method(mLast, "line_nrs=", VALUEFUNC(_wrap_line_nrs_set), 1);
   
   cLast.klass = rb_define_class_under(mLast, "Last", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_Last, (void *) &cLast);
@@ -9832,10 +9583,8 @@ SWIGEXPORT void Init_last(void) {
   rb_define_method(cLast.klass, "GetRefineSingles", VALUEFUNC(_wrap_Last_GetRefineSingles), -1);
   rb_define_method(cLast.klass, "GetDoOutput", VALUEFUNC(_wrap_Last_GetDoOutput), -1);
   rb_define_method(cLast.klass, "GetBbrcSep", VALUEFUNC(_wrap_Last_GetBbrcSep), -1);
-  rb_define_method(cLast.klass, "GetMostSpecTreesOnly", VALUEFUNC(_wrap_Last_GetMostSpecTreesOnly), -1);
   rb_define_method(cLast.klass, "GetChisqActive", VALUEFUNC(_wrap_Last_GetChisqActive), -1);
   rb_define_method(cLast.klass, "GetChisqSig", VALUEFUNC(_wrap_Last_GetChisqSig), -1);
-  rb_define_method(cLast.klass, "GetLineNrs", VALUEFUNC(_wrap_Last_GetLineNrs), -1);
   rb_define_method(cLast.klass, "GetRegression", VALUEFUNC(_wrap_Last_GetRegression), -1);
   rb_define_method(cLast.klass, "SetMinfreq", VALUEFUNC(_wrap_Last_SetMinfreq), -1);
   rb_define_method(cLast.klass, "SetType", VALUEFUNC(_wrap_Last_SetType), -1);
@@ -9847,10 +9596,8 @@ SWIGEXPORT void Init_last(void) {
   rb_define_method(cLast.klass, "SetRefineSingles", VALUEFUNC(_wrap_Last_SetRefineSingles), -1);
   rb_define_method(cLast.klass, "SetDoOutput", VALUEFUNC(_wrap_Last_SetDoOutput), -1);
   rb_define_method(cLast.klass, "SetBbrcSep", VALUEFUNC(_wrap_Last_SetBbrcSep), -1);
-  rb_define_method(cLast.klass, "SetMostSpecTreesOnly", VALUEFUNC(_wrap_Last_SetMostSpecTreesOnly), -1);
   rb_define_method(cLast.klass, "SetChisqActive", VALUEFUNC(_wrap_Last_SetChisqActive), -1);
   rb_define_method(cLast.klass, "SetChisqSig", VALUEFUNC(_wrap_Last_SetChisqSig), -1);
-  rb_define_method(cLast.klass, "SetLineNrs", VALUEFUNC(_wrap_Last_SetLineNrs), -1);
   rb_define_method(cLast.klass, "SetRegression", VALUEFUNC(_wrap_Last_SetRegression), -1);
   rb_define_method(cLast.klass, "MineRoot", VALUEFUNC(_wrap_Last_MineRoot), -1);
   rb_define_method(cLast.klass, "ReadGsp", VALUEFUNC(_wrap_Last_ReadGsp), -1);

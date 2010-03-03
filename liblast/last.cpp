@@ -233,24 +233,29 @@ vector<string>* Last::MineRoot(unsigned int j) {
         fm::graphstate->init (); 
         if (fm::bbrc_sep && fm::do_output && !fm::console_out) (*fm::result) << fm::graphstate->sep();
         init_mining_done=true; 
+
         cerr << "Settings:" << endl \
              << "---" << endl \
+             << "Type:                                 " << GetType() << endl \
+             << "Minimum frequency:                    " << GetMinfreq() << endl \
              << "Chi-square active (chi-square-value): " << GetChisqActive() << " (" << GetChisqSig()<< ")" << endl \
-             << "statistical metric pruning: " << GetPruning() << endl \
-             << "Minimum frequency: " << GetMinfreq() << endl \
+             << "Statistical metric pruning:           " << GetPruning() << endl \
+             << "Do output:                            " << GetDoOutput() << endl \
              << "---" << endl;
 
-        cout << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
-        cout << "<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:noNamespaceSchemaLocation=\"graphml.xsd\">" << endl << endl;
 
-        cout << "<!-- LAtent STructure Mining (LAST) descriptors-->" << endl << endl;
-        cout << "<key id=\"act\" for=\"graph\" attr.name=\"activating\" attr.type=\"boolean\" />" << endl;
-        cout << "<key id=\"hops\" for=\"graph\" attr.name=\"hops\" attr.type=\"int\" />" << endl;
-        cout << "<key id=\"lab_n\" for=\"node\" attr.name=\"node_labels\" attr.type=\"string\" />" << endl;
-        cout << "<key id=\"lab_e\" for=\"edge\" attr.name=\"edge_labels\" attr.type=\"string\" />" << endl;
-        cout << "<key id=\"weight\" for=\"edge\" attr.name=\"edge_weight\" attr.type=\"int\" />" << endl;
-        cout << "<key id=\"del\" for=\"edge\" attr.name=\"edge_deleted\" attr.type=\"boolean\" />" << endl;
+        if (fm::do_output) {
+            cout << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
+            cout << "<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:noNamespaceSchemaLocation=\"graphml.xsd\">" << endl << endl;
 
+            cout << "<!-- LAtent STructure Mining (LAST) descriptors-->" << endl << endl;
+            cout << "<key id=\"act\" for=\"graph\" attr.name=\"activating\" attr.type=\"boolean\" />" << endl;
+            cout << "<key id=\"hops\" for=\"graph\" attr.name=\"hops\" attr.type=\"int\" />" << endl;
+            cout << "<key id=\"lab_n\" for=\"node\" attr.name=\"node_labels\" attr.type=\"string\" />" << endl;
+            cout << "<key id=\"lab_e\" for=\"edge\" attr.name=\"edge_labels\" attr.type=\"string\" />" << endl;
+            cout << "<key id=\"weight\" for=\"edge\" attr.name=\"edge_weight\" attr.type=\"int\" />" << endl;
+            cout << "<key id=\"del\" for=\"edge\" attr.name=\"edge_deleted\" attr.type=\"boolean\" />" << endl;
+        }
 
     }
     if (j >= fm::database->nodelabels.size()) { cerr << "Error! Root node " << j << " does not exist." << endl;  exit(1); }
@@ -258,7 +263,7 @@ vector<string>* Last::MineRoot(unsigned int j) {
         Path path(j);
         path.expand(); // mining step
     }
-    if (j==GetNoRootNodes()-1) cout << "</graphml>" << endl;
+    if (j==GetNoRootNodes()-1 && fm::do_output) cout << "</graphml>" << endl;
     return fm::result;
 }
 
