@@ -46,9 +46,10 @@ class Last : public Fminer {
      */
     //@{
     Last (); //!< Constructor for standard settings: 95% significance level, minimum frequency 2, type trees, dynamic upper bound, BBRC.
+    /*
     Last (int _type, unsigned int _minfreq); //!< Like standard constructor, but type and minimum frequency configurable.
     Last (int _type, unsigned int _minfreq, float chisq_val, bool _do_backbone); //!< Like standard constructor, but type, minimum frequency, significance level and BBRC configurable.
-
+    */
     ~Last();
     void Reset(); //!< Use this to clear the database before feeding new compounds and activities.
     void Defaults(); //!< Use this to set default parameters as in default constructor.

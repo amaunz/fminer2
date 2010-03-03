@@ -39,6 +39,7 @@ Last::Last() : init_mining_done(false) {
   }
 }
 
+/*
 Last::Last(int _type, unsigned int _minfreq) : init_mining_done(false) {
   if (!fm::instance_present) {
       fm::database = NULL; fm::statistics = NULL; fm::chisq = NULL; fm::result = NULL;
@@ -53,7 +54,6 @@ Last::Last(int _type, unsigned int _minfreq) : init_mining_done(false) {
     cerr << "Error! Cannot create more than 1 instance." << endl; 
     exit(1);
   }
-
 }
 
 Last::Last(int _type, unsigned int _minfreq, float _chisq_val, bool _do_backbone) : init_mining_done(false) {
@@ -72,8 +72,8 @@ Last::Last(int _type, unsigned int _minfreq, float _chisq_val, bool _do_backbone
     cerr << "Error! Cannot create more than 1 instance." << endl; 
     exit(1);
   }
-
 }
+*/
 
 Last::~Last() {
     if (fm::instance_present) {
@@ -110,7 +110,7 @@ void Last::Reset() {
 
     fm::candidatecloselegsoccsused.clear();
 
-    SetChisqActive(true); 
+    fm::chisq->active=true; 
     fm::result = &r;
     comp_runner=0; 
     comp_no=0; 
@@ -314,12 +314,14 @@ bool Last::AddActivity(float act, unsigned int comp_id) {
 extern "C" Fminer* create0() {
     return new Last();
 }
+/*
 extern "C" Fminer* create2(int _type, unsigned int _minfreq) {
     return new Last(_type, _minfreq);
 }
 extern "C" Fminer* create4(int _type, unsigned int _minfreq, float _chisq_val, bool _do_backbone) {
     return new Last(_type, _minfreq, _chisq_val, _do_backbone);
 }
+*/
 extern "C" void destroy(Fminer* l) {
     delete l;
 }
