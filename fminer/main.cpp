@@ -369,7 +369,7 @@ int main(int argc, char *argv[], char *envp[]) {
         cerr << "       " << program_name << " <Library> <Options> <Graphs> <Activities>" << endl;
         cerr << endl;
         cerr << "File formats:" << endl;
-        cerr << "       <Library>    Plug-in library to use (../libbbrc/libbbrc.so or ../liblast/liblast.so)." << endl;
+        cerr << "       <Library>    Plug-in library to use (/path/to/libbbrc.so or /path/to/liblast.so)." << endl;
         cerr << "       <Graphs>     File should have suffix .smi or .gsp, indicating SMILES or gSpan format." << endl;
         cerr << "       <Activities> File must be in Activity format (suffix not relevant)." << endl;
         cerr << endl;

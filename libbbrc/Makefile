@@ -49,8 +49,8 @@ CXXFLAGS      = -O3 -g $(INCLUDE) -fPIC
 LIBS_LIB2     = -lopenbabel -lgsl
 LIBS          = $(LIBS_LIB2) -ldl -lm -lgslcblas
 LIB1          = lib$(NAME).so
-LIB1_SONAME   = $(LIB1).1
-LIB1_REALNAME = $(LIB1_SONAME).0.1
+LIB1_SONAME   = $(LIB1).2
+LIB1_REALNAME = $(LIB1_SONAME).0
 LIB2          = $(NAME).so
 
 # FILES
