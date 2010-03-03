@@ -59,6 +59,7 @@ $(LIB1_REALNAME): $(OBJ)
 	-ln -sf $@ $(LIB1_SONAME)
 	-ln -sf $@ $(LIB1)
 
+#swig -c++ -ruby -o bbrc_wrap.cxx rbbrc_wrap.i
 $(LIB2): $(OBJ) $(NAME)_wrap.cxx
 	$(CC) -c $(CXXFLAGS) $(INCLUDE_RB) $(NAME)_wrap.cxx -o $(NAME)_wrap.o
 	$(CC) $(LDFLAGS) -shared $(CXXFLAGS) $(OBJ) $(NAME)_wrap.o $(LIBS) -o $@
@@ -75,8 +76,6 @@ ctest: test.cpp
 all: $(LIB1_REALNAME) 
 .PHONY:
 ruby: $(LIB2)
-.PHONY:
-test: cpptest rbtest
 .PHONY:
 cpptest: ctest
 	./$<
