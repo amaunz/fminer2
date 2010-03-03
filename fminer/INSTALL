@@ -1,7 +1,8 @@
 Welcome to Fminer.
 
-You need LibFminer to run this application, see http://github.com/amaunz/libfminer/tree/master. Please refer to the the files README and INSTALL there (include links to scientific information).
+You need LibBbrc or LibLast to run this application, see http://github.com/amaunz/fminer2/tree/master, subdirectories libbbrc and liblast, respectively. Please refer to the the files README and INSTALL there (they include links to scientific information).
 
-Please adjust the Makefile. i.e., add your paths to -L and -I flags.
-Linux: the LIBDIR variable in the Makefile should be set to the directory containing the LibFminer library (.so file) for the library to be found at runtime. You may also use LD_LIBRARY_PATH for that.
-Windows: You need MinGW and Msys to compile. At runtime, make sure that the LibFminer library (.dll file) is in your PATH. 
+Please adjust the Makefile. i.e., add your paths to -L and -I flags, or use the provided configure script. Then run
+$ make
+
+Andreas Maunz, 2010.

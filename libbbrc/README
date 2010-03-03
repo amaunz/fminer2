@@ -1,8 +1,7 @@
 Welcome to LibBbrc.
 
-This is the Bbrc library, available from http://github.com/amaunz/fminer2/tree/master, subdirectory 'libbbrc'.
+This is the Bbrc library, available from http://github.com/amaunz/fminer2/tree/master, subdirectory 'libbbrc'. The official website with API documentation is http://www.maunz.de/libfminer2-bbrc-doc .
 The Fminer application that uses this library is available from http://github.com/amaunz/fminer2/tree/master, subdirectory 'fminer'.
-The official website with documentation is http://www.maunz.de/libfminer2-bbrc-doc .
 
 For installation and documentation see INSTALL.
 For license information see LICENSE.
@@ -18,4 +17,4 @@ Compared to open or closed fragment mining, a large part of the search space can
 Further analysis using large-scale datasets yields insight into important properties of the proposed descriptors, such as the dataset coverage and the class size represented by each descriptor. 
 A final cross-validation run confirms that the novel descriptors render large training sets feasible which previously might have been intractable.
 
-Andreas Maunz, 2010
+(c) 2010 Andreas Maunz, feb 2010.

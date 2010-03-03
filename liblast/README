@@ -1,8 +1,7 @@
 Welcome to LibLast.
 
-This is the Last library, available from http://github.com/amaunz/fminer2/tree/master, subdirectory 'liblast'.
+This is the Last library, available from http://github.com/amaunz/fminer2/tree/master, subdirectory 'liblast'. The official website with API documentation is http://www.maunz.de/libfminer2-last-doc.
 The Fminer application that uses this library is available from http://github.com/amaunz/fminer2/tree/master, subdirectory 'fminer'.
-The official website with documentation is http://www.maunz.de/libfminer2-last-doc.
 Utilities for chemical application of LAST-PM descriptors are available from http://github.com/amaunz/last-utils/tree/master.
 
 For installation and documentation see INSTALL.
@@ -12,4 +11,4 @@ Abstract:
 Pattern mining methods for graph data have largely been restricted to ground features, such as frequent or correlated subgraphs. Kazius et al. have demonstrated the use of elaborate patterns in the biochemical domain, summarizing several ground features at once. Such patterns bear the potential to reveal latent information not present in any individual ground feature. However, those patterns were handcrafted by chemical experts. 
 In this paper, we present a data-driven bottom-up method for pattern generation that takes advantage of the embedding relationships among individual ground features. The method works fully automatically and does not require data preprocessing (e.g., to introduce abstract node or edge labels). Controlling the process of generating ground features, it is possible to align them canonically and merge (stack) them, yielding a weighted edge graph. In a subsequent step, the subgraph features are compressed by singular value decomposition (SVD). Our experiments show that the resulting features are chemically meaningful and that they can enable substantial performance improvements on chemical datasets that have been problematic so far for graph mining approaches.
 
-Andreas Maunz, 2010
+(c) 2010 Andreas Maunz, feb 2010.

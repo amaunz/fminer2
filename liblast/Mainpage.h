@@ -4,7 +4,6 @@
  *
  * This is the Last library, available at http://github.com/amaunz/fminer2/tree/master, subdirectory <code>liblast</code>.<br>
  * The Fminer frontend application is available from http://github.com/amaunz/fminer2/tree/master, subdirectory <code>fminer</code>.<br>
- * You may download the scientific documentation from http://cs.maunz.de . The paper is entitled "Large Scale Graph Mining using Backbone Refinement Classes".<br>
  *
  *  @section Contents
  *  <ul>
@@ -58,8 +57,8 @@
  *    \code
  *    apt-get install libopenbabel-dev            # OB binary lib and headers
  *    \endcode
- *  - <a href="http://github.com/amaunz/libfminer/tree" target="_blank">Download the library source code</a> (with git: <code>git clone git://github.com/amaunz/fminer2.git</code>) and cd to <code>liblast</code> subdirectory. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.
- *  - <a href="http://github.com/amaunz/fminer/tree" target="_blank">Download the frontend code</a> (with git: <code>git clone git://github.com/amaunz/fminer2.git</code>) and cd to <code>fminer</code> subdirectory.. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.
+ *  - <a href="http://github.com/amaunz/fminer2/tree" target="_blank">Download the library source code</a> (with git: <code>git clone git://github.com/amaunz/fminer2.git</code>) and cd to <code>liblast</code> subdirectory. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.
+ *  - <a href="http://github.com/amaunz/fminer2/tree" target="_blank">Download the frontend code</a> (with git: <code>git clone git://github.com/amaunz/fminer2.git</code>) and cd to <code>fminer</code> subdirectory.. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.
  *  - To create this documentation with doxygen, type 'make doc'. The documentation explains API, constructor usage and options.
  *  @subsection ssec23 Language Portability
  *  The API can be made available to other languages. Follow the installation instructions above. A config file for Swig to automagically create languages bindings exists (<code>rlast_wrap.i</code>). 
@@ -79,7 +78,7 @@
  *  @subsection sec3 Examples using the LibLast API
  *  LibLast uses the 'singleton' design pattern known from software engineering, i.e., class instantiation is restricted to one object. To empty the database after a run to feed new compounds, use the Last::Reset() routine. 
  *
- *  The following code demonstrate the use of the Last API from C++ and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a vector of fragments along with statistical relevance and occurrences and prints them out. Every root node corresponds to a single chemical element. The output consists of <a href="http://graphml.graphdrawing.org">GraphML</a> which can be postprocessed to SMARTS patterns using the <a href="http://github.com/amaunz/last-utils" target="_blank">LAST-UTILS</a>.
+ *  The following code demonstrate the use of the Last API from C++ and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a set of latent fragments and prints them out. Every root node corresponds to a single chemical element. The output consists of <a href="http://graphml.graphdrawing.org">GraphML</a> which can be postprocessed to SMARTS patterns using the <a href="http://github.com/amaunz/last-utils" target="_blank">LAST-UTILS</a>.
  *
  * \subsubsection CPP C++
  *
@@ -98,20 +97,12 @@
  *   MyFminer->AddCompound ("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4" , 1);
  *   MyFminer->AddCompound ("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2);
  *      // ... continue adding compounds
- *   MyFminer->AddActivity((bool) true, 1);
- *   MyFminer->AddActivity((bool) false, 2);
- *      // ... continue adding activities (true for active, false for inactive)
+ *   MyFminer->AddActivity(1.0, 1);
+ *   MyFminer->AddActivity(0.0, 2);
+ *      // ... continue adding activities (1.0 for active, 0.0 for inactive)
  *   cerr << MyFminer->GetNoCompounds() << " compounds" << endl;
- *   // Toy example: special settings for mining all fragments
- *   MyFminer->SetChisqSig(0); // use no significance constraint
- *   MyFminer->SetRefineSingles(true); // refine structures with support 1
- *   // gather results for every root node in vector instead of immediate output
- *   MyFminer->SetConsoleOut(false);
  *   for ( int j = 0; j < (int) MyFminer->GetNoRootNodes(); j++ ) {
- *      vector<string>* result = MyFminer->MineRoot(j);
- *      for( int i = 0; i < result->size(); i++) {
- *        cout << (*result)[i] << endl;
- *      }
+ *      MyFminer->MineRoot(j);
  *   }
  *   delete MyFminer;
  * }
@@ -128,24 +119,13 @@
  * MyFminer.AddCompound("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4" , 1)
  * MyFminer.AddCompound("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2)
  *    # ... continue adding compounds
- * MyFminer.AddActivity(true, 1)
- * MyFminer.AddActivity(false, 2)
- *    # ... continue adding activities (true for active, false for inactive)
+ * MyFminer.AddActivity(1.0, 1)
+ * MyFminer.AddActivity(0.0, 2)
+ *    # ... continue adding activities (1.0 for active, 0.0 for inactive)
  * print MyFminer.GetNoCompounds()  
  * puts " compounds"
- * # Toy example: special settings for mining all fragments
- * # use no significance constraint
- * MyFminer.SetChisqSig(0) 
- * # refine structures with support 1
- * MyFminer.SetRefineSingles(true) 
- * # gather results for every root node in vector instead of immediate output
- * MyFminer.SetConsoleOut(false)
  * (0 .. MyFminer.GetNoRootNodes()-1).each do |j|
- *    result = MyFminer.MineRoot(j)
- *    puts "Results"
- *    result.each do |res|
- *        puts res
- *   end
+ *    MyFminer.MineRoot(j)
  * end
  *
  *  \endcode
@@ -157,29 +137,19 @@
  * <ul>
  *  <li>Minimum frequency: <b>2</b></li>
  *  <li>Feature type: <b>Trees</b></li>
- *  <li>Mine BBRCs: <b>true</b></li>
- *  <li>Dynamic upper bound: <b>true</b></li>
- *  <li>Significance level: <b>95%</b></li>
- *  <li>Console output: <b>false</b></li>
- *  <li>Aromatic perception: <b>false</b></li>
+ *  <li>Console output: <b>true</b></li>
+ *  <li>Aromatic perception: <b>true</b></li>
  *  <li>Refine Singles: <b>false</b></li>
  *  <li>Do Output: <b>true</b></li>
  *  <li>Separate BBRCs in output by blank line/vector: <b>false</b></li>
  * </ul>
  *
  * \code
- *  //! Constructor for standard settings: 95% significance level, minimum frequency 2, type trees, dynamic upper bound, BBRC
+ *  //! Constructor for standard settings: 95% significance level, minimum frequency 2, type trees
  *  Last ();
  *  \endcode
 
- * There also exist more flexible constructors:
- * \code
- * //! Like standard constructor, but type and minimum frequency configurable
- * Last (int type, unsigned int minfreq);
- * //! Like standard constructor, but type, minimum frequency, significance level and BBRC configurable
- * Last (int type, unsigned int minfreq, float chisq_val, bool do_backbone);
- * \endcode
- * It is recommended to increase minimum frequency as a first step when too many features are generated. 
+ * It is recommended to increase minimum frequency as a first step when too many features are generated or calculation takes too long.
  *
  * <br><br>
  * @section Contact Contact

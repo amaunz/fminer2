@@ -213,7 +213,7 @@
  *  <li>Dynamic upper bound: <b>true</b></li>
  *  <li>Significance level: <b>95%</b></li>
  *  <li>Console output: <b>false</b></li>
- *  <li>Aromatic perception: <b>false</b></li>
+ *  <li>Aromatic perception: <b>true</b></li>
  *  <li>Refine Singles: <b>false</b></li>
  *  <li>Do Output: <b>true</b></li>
  *  <li>Separate BBRCs in output by blank line/vector: <b>false</b></li>
