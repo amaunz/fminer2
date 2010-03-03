@@ -122,7 +122,7 @@ void Last::Defaults() {
     fm::type = 2;
     fm::do_pruning = true;
     fm::console_out = false;
-    fm::aromatic = false;
+    fm::aromatic = true;
     fm::refine_singles = false;
     fm::do_output=true;
     fm::bbrc_sep=false;
@@ -355,6 +355,6 @@ extern "C" void destroy(Fminer* l) {
 extern "C" void usage() {
     cerr << endl;
     cerr << "Options 1 (LAtent STructure-Pattern Mining): " << endl;
-    cerr << "       [-f minfreq] [-l type] [-s] [-a] [-o] [-p p_value] <graphs> <activities>" << endl;
+    cerr << "       [-f minfreq] [-a] [-o] <graphs> <activities>" << endl;
     cerr << endl;
 }

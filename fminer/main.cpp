@@ -490,8 +490,7 @@ int main(int argc, char *argv[], char *envp[]) {
     // MINE //
     //////////
     
-    if (act_file) cerr << "Mining fragments... (bb: " << do_backbone << ", pr: " << do_pruning << ", adjub: " << adjust_ub << ", chisq sig: " << chisq_sig << ", min freq: " << minfreq << ", type: " << type << ")" << endl;
-    else cerr << "Mining fragments... (min freq: " << minfreq << ", type: " << type << ")" << endl;
+    cerr << "Mining fragments..." << endl;
 
     clock_t t1 = clock ();
     for ( int j = 0; j < (int) fminer->GetNoRootNodes(); j++ ) {
