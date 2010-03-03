@@ -76,6 +76,12 @@
  # All 20-frequent patterns (frequent subgraph mining)
  ./fminer ../libbbrc/libbbrc.so -f 20 <graphs>
 
+ LAST-PM:
+
+ # LAST-PM descriptors (min frequency m):
+ ./fminer ../liblast/liblast.so -f<m> <graphs> <activities>
+
+
  Switches and Defaults
  =====================
 
@@ -87,7 +93,7 @@
  -g  --regression             Switch on regression (default: off).
 
   Upper bound pruning options:
- -a  --aromaticity            Switch on aromatic ring perception when using smiles input format (default: off).
+ -a  --aromaticity            Switch off aromatic ring perception when using smiles input format (default: on).
  -d  --no-dynamic-ub          Switch off dynamic adjustment of upper bound for backbone mining (default: on).
  -b  --no-bbr-classes         Switch off mining for backbone refinement classes (default: on).
  -u  --no-upper-bound-pruning Switch off upper bound pruning (default: on).
