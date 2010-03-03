@@ -213,18 +213,39 @@ int main(int argc, char *argv[], char *envp[]) {
 
     Frequency def_minfreq = 2;
     Frequency minfreq = def_minfreq;
+    bool arg_minfreq = 0;
+
     int def_type = 2;
     int type = def_type;
-    float def_chisq = 0.95;
-    float chisq_sig = def_chisq;
-    bool refine_singles = false;
-    bool aromatic = true;
-    bool do_pruning = true;
-    bool do_backbone = true;
-    bool adjust_ub = true;
-    bool do_output = true;
-    bool bbrc_sep = false;
-    bool do_regression = false;
+    bool arg_type = 0; // arg_* needed to also capture argument with default val
+
+    float def_chisq_sig = 0.95;
+    float chisq_sig = def_chisq_sig;
+    bool arg_chisq_sig = 0;
+
+    bool def_refine_singles = false;
+    bool refine_singles = def_refine_singles;
+
+    bool def_aromatic = true;
+    bool aromatic = def_aromatic;
+
+    bool def_do_pruning = true;
+    bool do_pruning = def_do_pruning;
+
+    bool def_do_backbone = true;
+    bool do_backbone = def_do_backbone;
+
+    bool def_adjust_ub = true;
+    bool adjust_ub = def_adjust_ub;
+
+    bool def_do_output = true;
+    bool do_output = def_do_output;
+
+    bool def_bbrc_sep = false;
+    bool bbrc_sep = def_bbrc_sep;
+    
+    bool def_do_regression = false;
+    bool do_regression = def_do_regression;
     
     int status=1;
     const char* program_name = argv[0];
@@ -233,13 +254,14 @@ int main(int argc, char *argv[], char *envp[]) {
     char* lib_path = NULL;
 
     
-    // FILE ARGUMENT READ
+    // FILE ARGUMENT READ: STATUS 1
 	if (argc>1) {
 	    if (argv[1][0]!='-') {
             lib_path = argv[1]; //set lib path
             if (argc>3) {
                if (argv[argc-2][0]!='-') {
-                   graph_file = argv[argc-2]; status=0;
+                   graph_file = argv[argc-2]; 
+                   status=0;
                    if (argv[argc-1][0]=='-') {
                        status=1;
                    }
@@ -296,12 +318,15 @@ int main(int argc, char *argv[], char *envp[]) {
         switch(c) {
         case 'f':
             minfreq = atoi(optarg);
+            arg_minfreq = 1;
             break;
         case 'l':
             type = atoi (optarg);
+            arg_type = 1;
             break;
         case 'p':
             chisq_sig = atof (optarg);
+            arg_chisq_sig = 1;
             if (!act_file) status = 1;
             break;
         case 's':
@@ -309,7 +334,6 @@ int main(int argc, char *argv[], char *envp[]) {
             break;
         case 'a':
             aromatic = false;
-            if (!graph_file) status = 1;
             break;
         case 'u':
             do_pruning = false;
@@ -328,15 +352,18 @@ int main(int argc, char *argv[], char *envp[]) {
             break;
         case 'r':
             bbrc_sep = true;
+            if (!act_file) status = 1;
             break;
         case 'g':
             do_regression = true;
+            if (!act_file) status = 1;
             break;
         case 'h':
             if ((argc>1) && (argv[1][0]!='-')) status=2;
             break;
         case '?':
             status=1;
+            if ((argc>1) && (argv[1][0]!='-')) status=2;
             break;
         default: 
             abort();
@@ -344,13 +371,14 @@ int main(int argc, char *argv[], char *envp[]) {
     }
 
 
-    // INTEGRITY CONSTRAINTS AND HELP OUTPUT
-    //  ----------- !du ---------      ----------- !db ---------
-    if ((adjust_ub && !do_pruning) || (adjust_ub && !do_backbone)) status = 2; 
-    //  --------- r!b ----------     ----------- ru ---------
-    if ((bbrc_sep && do_backbone) || (bbrc_sep && !do_pruning)) status = 2;
-    if (do_regression && (!adjust_ub || !do_backbone || !do_pruning) ) status = 2; // KS: enforce d,b,u flags not set
-             
+    if (status == 0) {
+        // INTEGRITY CONSTRAINTS AND HELP OUTPUT
+        //  ----------- !du ---------      ----------- !db ---------
+        if ((adjust_ub && !do_pruning) || (adjust_ub && !do_backbone)) status = 2; 
+        //  --------- r!b ----------     ----------- ru ---------
+        if ((bbrc_sep && do_backbone) || (bbrc_sep && !do_pruning)) status = 2;
+        if (do_regression && (!adjust_ub || !do_backbone || !do_pruning) ) status = 2; // KS: enforce d,b,u flags not set
+    }
 
     bool input_smi = false, input_gsp = false;
     string graph_file_str;
@@ -360,6 +388,62 @@ int main(int argc, char *argv[], char *envp[]) {
         if (graph_file_suffix == ".smi") { input_smi=true; }
         else if (graph_file_suffix == ".gsp") { input_gsp=true; }
         else { cerr << "Suffix " << graph_file_suffix << " unknown!" << endl; status=1;}
+    }
+
+    if (status==0 || status == 2) {
+
+       // Check which library
+       Lib = dlopen(lib_path, RTLD_LAZY);
+       if (!Lib) {
+            cerr << "Cannot load library: " << dlerror() << '\n';
+            return 1;
+       }
+
+
+       else { 
+            create0_t* create_lib = (create0_t*) dlsym(Lib, "create0");
+            const char* dlsym_error = dlerror();
+            if (dlsym_error) {
+                cerr << "Cannot load symbol create: " << dlsym_error << '\n';
+                return 1;
+            }
+            destroy_lib = (destroy_t*) dlsym(Lib, "destroy");
+            dlsym_error = dlerror();
+            if (dlsym_error) {
+                cerr << "Cannot load symbol destroy: " << dlsym_error << '\n';
+                return 1;
+            }    
+
+            bool all_args_good = 1; // switched to 0 in case of illegal arguments, as reported by lib.
+
+            if (graph_file && act_file) {
+                fminer = create_lib();
+                if (type != def_type || arg_type) all_args_good *= fminer->SetType(type);
+                if (minfreq != def_minfreq || arg_minfreq) fminer->SetMinfreq(minfreq);
+                if (chisq_sig != def_chisq_sig || arg_chisq_sig) all_args_good *= fminer->SetChisqSig(chisq_sig);
+                if (refine_singles != def_refine_singles) all_args_good *= fminer->SetRefineSingles(refine_singles);
+                if (aromatic != def_aromatic) fminer->SetAromatic(aromatic);
+                if (adjust_ub != def_adjust_ub) all_args_good *= fminer->SetDynamicUpperBound(adjust_ub);
+                if (do_pruning != def_do_pruning) all_args_good *= fminer->SetPruning(do_pruning);
+                if (do_backbone != def_do_backbone) all_args_good *= fminer->SetBackbone(do_backbone);
+                if (do_output != def_do_output) fminer->SetDoOutput(do_output);
+                if (bbrc_sep != def_bbrc_sep) all_args_good *= fminer->SetBbrcSep(bbrc_sep);
+                if (do_regression != def_do_regression) all_args_good *= fminer->SetRegression(do_regression);
+            }
+
+            else if (graph_file) {
+                fminer = create_lib();
+                if (type != def_type || arg_type) all_args_good *= fminer->SetType(type);
+                if (minfreq != def_minfreq || arg_minfreq) fminer->SetMinfreq(minfreq);
+                if (refine_singles != def_refine_singles) all_args_good *= fminer->SetRefineSingles(refine_singles);
+                if (aromatic != def_aromatic) fminer->SetAromatic(aromatic);
+                if (do_output != def_do_output) fminer->SetDoOutput(do_output);
+                if (bbrc_sep != def_bbrc_sep) all_args_good *= fminer->SetBbrcSep(bbrc_sep);
+                fminer->SetChisqActive(false);
+            }
+
+            if (!all_args_good) status = 2;
+        }
     }
 
     if (status > 0) {
@@ -375,96 +459,27 @@ int main(int argc, char *argv[], char *envp[]) {
         cerr << endl;
 
     }
+
     if (status==1) {
         cerr << "Use '" << program_name << " <Library> -h' for additional information." << endl;
         cerr << endl;
-        return 1;
     }
 
-   // Check which library
-   Lib = dlopen(lib_path, RTLD_LAZY);
-   if (!Lib) {
-        cerr << "Cannot load library: " << dlerror() << '\n';
-        return 1;
-   }
-
-   if (status>1) {
+    else if (status==2) {
         usage_f* print_usage = (usage_f*) dlsym(Lib, "usage");
         print_usage();
-   }
-
-   else { 
-        if (graph_file && act_file) {
-            create2_t* create_lib = (create2_t*) dlsym(Lib, "create2");
-            const char* dlsym_error = dlerror();
-            if (dlsym_error) {
-                cerr << "Cannot load symbol create: " << dlsym_error << '\n';
-                return 1;
-            }
-            destroy_lib = (destroy_t*) dlsym(Lib, "destroy");
-            dlsym_error = dlerror();
-            if (dlsym_error) {
-                cerr << "Cannot load symbol destroy: " << dlsym_error << '\n';
-                return 1;
-            }    
-
-            //fminer = new Fminer(type, minfreq, chisq_sig, do_backbone);
-            fminer = create_lib(type, minfreq);
-            fminer->SetChisqSig(chisq_sig);
-
-            fminer->SetRefineSingles(refine_singles);
-            fminer->SetAromatic(aromatic);
-
-            fminer->SetDynamicUpperBound(adjust_ub);
-            fminer->SetPruning(do_pruning);
-            fminer->SetBackbone(do_backbone);
-
-            fminer->SetDoOutput(do_output);
-            fminer->SetBbrcSep(bbrc_sep);
-            fminer->SetRegression(do_regression);
-
-        }
-
-        else if (graph_file) {
-            create2_t* create_lib = (create2_t*) dlsym(Lib, "create2");
-            const char* dlsym_error = dlerror();
-            if (dlsym_error) {
-                cerr << "Cannot load symbol create: " << dlsym_error << '\n';
-                return 1;
-            }
-            destroy_lib = (destroy_t*) dlsym(Lib, "destroy");
-            dlsym_error = dlerror();
-            if (dlsym_error) {
-                cerr << "Cannot load symbol destroy: " << dlsym_error << '\n';
-                return 1;
-            }    
-
-            //fminer = new Fminer(type, minfreq);
-            fminer = create_lib(type, minfreq);
-
-            fminer->SetRefineSingles(refine_singles);
-            fminer->SetAromatic(aromatic);
-
-            fminer->SetChisqActive(false);
-
-            fminer->SetDoOutput(do_output);
-            fminer->SetBbrcSep(bbrc_sep);
-
-        }
-    }
-
-    // PRINT FORMAT AND SWITCHES
-    if (status > 0) {
         cerr << "See README for additional information." << endl;
         cerr << endl;
-    }
-
-    // CHECK STATUS AND EXIT
-    if (status == 2) {
-        dlclose(Lib);
+        destroy_lib(fminer); 
+        dlclose(Lib); 
         return 1;
     }
 
+    if (status > 0) return 1;
+   
+
+ 
+    // status 0 -> go ahead
     fminer->SetConsoleOut(true);
     
     //////////

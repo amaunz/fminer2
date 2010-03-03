@@ -132,21 +132,22 @@ void Bbrc::Reset() {
 void Bbrc::Defaults() {
     fm::minfreq = 2;
     fm::type = 2;
-    fm::chisq->sig = 3.84146;
-    fm::do_backbone = true;
-    fm::adjust_ub = true;
     fm::do_pruning = true;
+    fm::console_out = false;
     fm::aromatic = true;
     fm::refine_singles = false;
     fm::do_output=true;
     fm::bbrc_sep=false;
-    fm::regression=false;
-
     fm::updated = true;
+    fm::gsp_out=true;
+
+    // BBRC
+    fm::chisq->sig = 3.84146;
+    fm::do_backbone = true;
+    fm::adjust_ub = true;
+    fm::regression=false;
     fm::do_yaml=true;
     fm::pvalues=false;
-    fm::gsp_out=true;
-    fm::console_out = false;
 }
 
 
@@ -177,13 +178,14 @@ void Bbrc::SetMinfreq(int val) {
     fm::minfreq = val;
 }
 
-void Bbrc::SetType(int val) {
+bool Bbrc::SetType(int val) {
     // parameters not regarded in integrity constraints
     if ((val != 1) && (val != 2)) { cerr << "Error! Invalid value '" << val << "' for parameter type." << endl; exit(1); }
     fm::type = val;
+    return 1;
 }
 
-void Bbrc::SetBackbone(bool val) {
+bool Bbrc::SetBackbone(bool val) {
     // internal: chisq active
     if (val && !GetChisqActive()) {
         cerr << "Warning! BBRC mining could not be enabled due to deactivated significance criterium." << endl;
@@ -201,9 +203,10 @@ void Bbrc::SetBackbone(bool val) {
         fm::do_backbone = val;
     }
     else fm::do_backbone = val;
+    return 1;
 }
 
-void Bbrc::SetDynamicUpperBound(bool val) {
+bool Bbrc::SetDynamicUpperBound(bool val) {
     // -------- !db ---------
     if (val && !GetBackbone()) {
         cerr << "Warning! Dynamic upper bound pruning could not be enabled due to disabled BBRC mining." << endl;
@@ -219,9 +222,10 @@ void Bbrc::SetDynamicUpperBound(bool val) {
     else {
         fm::adjust_ub=val; 
     }
+    return 1;
 }
 
-void Bbrc::SetPruning(bool val) {
+bool Bbrc::SetPruning(bool val) {
     // internal: chisq active
     if (val && !GetChisqActive()) {
         cerr << "Warning! Statistical metric pruning could not be enabled due to deactivated significance criterium." << endl;
@@ -239,34 +243,37 @@ void Bbrc::SetPruning(bool val) {
         }
         fm::do_pruning=val;
     }
+    return 1;
 }
 
-void Bbrc::SetConsoleOut(bool val) {
+bool Bbrc::SetConsoleOut(bool val) {
     // console out not switched by fminer
     if (val) {
         if (GetBbrcSep()) cerr << "Warning! Console output could not be enabled due to enabled BBRC separator." << endl;
         else fm::console_out=val;
     }
+    return 1;
 }
 
 void Bbrc::SetAromatic(bool val) {
     fm::aromatic = val;
 }
 
-void Bbrc::SetRefineSingles(bool val) {
+bool Bbrc::SetRefineSingles(bool val) {
     fm::refine_singles = val;
     // parameters not regarded in integrity constraints
     if (GetRefineSingles() && GetMinfreq() > 1) {
         cerr << "Notice: Using minimum frequency of 1 to refine singles." << endl;
         SetMinfreq(1);
     }
+    return 1;
 }
 
 void Bbrc::SetDoOutput(bool val) {
     fm::do_output = val;
 }
 
-void Bbrc::SetBbrcSep(bool val) {
+bool Bbrc::SetBbrcSep(bool val) {
     //  ------- r!b ---------
     if (val && GetBackbone()) { 
         cerr << "Warning! BBRC separator could not be enabled due to enabled BBRC mining." << endl;
@@ -285,9 +292,10 @@ void Bbrc::SetBbrcSep(bool val) {
             }
         }
     }
+    return 1;
 }
 
-void Bbrc::SetChisqActive(bool val) {
+bool Bbrc::SetChisqActive(bool val) {
     fm::chisq->active = val;
     // chisq active not switched by fminer
     if (!GetChisqActive()) {
@@ -299,15 +307,17 @@ void Bbrc::SetChisqActive(bool val) {
         SetPruning(false);
         SetRegression(false);
     }
+    return 1;
 }
 
-void Bbrc::SetChisqSig(float _chisq_val) {
+bool Bbrc::SetChisqSig(float _chisq_val) {
     // parameters not regarded in integrity constraints
     if (_chisq_val < 0.0 || _chisq_val > 1.0) { cerr << "Error! Invalid value '" << _chisq_val << "' for parameter chisq." << endl; exit(1); }
     fm::chisq->sig = gsl_cdf_chisq_Pinv(_chisq_val, 1);
+    return 1;
 }
 
-void Bbrc::SetRegression(bool val) {
+bool Bbrc::SetRegression(bool val) {
     fm::regression = val;
     if (fm::regression) {
          if (!GetBackbone()) {
@@ -319,6 +329,7 @@ void Bbrc::SetRegression(bool val) {
             SetPruning(false);
          }
     }
+    return 1;
 }
 
 

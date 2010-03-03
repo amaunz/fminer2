@@ -121,17 +121,17 @@ void Last::Defaults() {
     fm::minfreq = 2;
     fm::type = 2;
     fm::do_pruning = true;
-    fm::console_out = false;
+    fm::console_out = true;
     fm::aromatic = true;
     fm::refine_singles = false;
     fm::do_output=true;
     fm::bbrc_sep=false;
+    fm::updated = true;
+    fm::gsp_out=true;
+
     // LAST
     fm::do_last=true;
     fm::last_hops=0;
-
-    fm::updated = true;
-    fm::gsp_out=true;
     fm::die = 0;
 }
 
@@ -162,83 +162,55 @@ void Last::SetMinfreq(int val) {
     fm::minfreq = val;
 }
 
-void Last::SetType(int val) {
-    if ((val != 1) && (val != 2)) { cerr << "Error! Invalid value '" << val << "' for parameter type." << endl; exit(1); }
-    fm::type = val;
+// These methods report forbidden switches (synopsis) back to main
+// They also report forbidden argument switches (exception: arguments equal defaults)
+bool Last::SetType(int val) {
+    return 0;
 }
 
-void Last::SetBackbone(bool val) {
+bool Last::SetBackbone(bool val) {
+    return 0;
 }
 
-void Last::SetDynamicUpperBound(bool val) {
-      // DO NOT USE Dyn UB IN ANY CASE
+bool Last::SetDynamicUpperBound(bool val) {
+    return 0;
 }
 
-void Last::SetPruning(bool val) {
-    if (val && !GetChisqActive()) {
-        cerr << "Warning! Statistical metric pruning could not be enabled due to deactivated significance criterium." << endl;
-    }
-    else {
-        if (!val && GetDynamicUpperBound()) {
-            cerr << "Notice: Disabling dynamic upper bound pruning." << endl;
-            SetDynamicUpperBound(false); 
-        }
-        fm::do_pruning=val;
-    }
+bool Last::SetPruning(bool val) {
+    return 0;
 }
 
-void Last::SetConsoleOut(bool val) {
-    if (val) {
-        if (GetBbrcSep()) cerr << "Warning! Console output could not be enabled due to enabled BBRC separator." << endl;
-        else fm::console_out=val;
-    }
+bool Last::SetConsoleOut(bool val) {
+    return 0;
 }
 
 void Last::SetAromatic(bool val) {
     fm::aromatic = val;
 }
 
-void Last::SetRefineSingles(bool val) {
-    fm::refine_singles = val;
-    if (GetRefineSingles() && GetMinfreq() > 1) {
-        cerr << "Notice: Using minimum frequency of 1 to refine singles." << endl;
-        SetMinfreq(1);
-    }
+bool Last::SetRefineSingles(bool val) {
+    return 0;
 }
 
 void Last::SetDoOutput(bool val) {
     fm::do_output = val;
 }
 
-void Last::SetBbrcSep(bool val) {
-    fm::bbrc_sep=val;
-    if (GetBbrcSep()) {
-        if (GetConsoleOut()) {
-             cerr << "Notice: Disabling console output, using result vector." << endl;
-             SetConsoleOut(false);
-        }
-    }
+bool Last::SetBbrcSep(bool val) {
+    return 0;
 }
 
-void Last::SetChisqActive(bool val) {
-    fm::chisq->active = val;
-    if (!GetChisqActive()) {
-        cerr << "Notice: Disabling dynamic upper bound pruning due to deactivated significance criterium." << endl;
-        SetDynamicUpperBound(false); //order important
-        cerr << "Notice: Disabling BBRC mining due to deactivated significance criterium." << endl;
-        SetBackbone(false);
-        cerr << "Notice: Disabling statistical metric pruning due to deactivated significance criterium." << endl;
-        SetPruning(false);
-    }
+bool Last::SetChisqActive(bool val) {
+    return 0;
 }
 
-void Last::SetChisqSig(float _chisq_val) {
-    if (_chisq_val < 0.0 || _chisq_val > 1.0) { cerr << "Error! Invalid value '" << _chisq_val << "' for parameter chisq." << endl; exit(1); }
-    fm::chisq->sig = gsl_cdf_chisq_Pinv(_chisq_val, 1);
+bool Last::SetChisqSig(float _chisq_val) {
+    return 0;
 }
 
-void Last::SetRegression(bool val) {
-    // DO NOT USE REGRESSION IN ANY CASE
+bool Last::SetRegression(bool val) {
+    return 0;
+    // TODO: enable regression
 }
 
 
@@ -339,7 +311,7 @@ bool Last::AddActivity(float act, unsigned int comp_id) {
 }
 
 // the class factories
-extern "C" Fminer* create() {
+extern "C" Fminer* create0() {
     return new Last();
 }
 extern "C" Fminer* create2(int _type, unsigned int _minfreq) {
