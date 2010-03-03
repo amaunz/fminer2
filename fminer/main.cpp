@@ -218,7 +218,7 @@ int main(int argc, char *argv[], char *envp[]) {
     float def_chisq = 0.95;
     float chisq_sig = def_chisq;
     bool refine_singles = false;
-    bool aromatic = false;
+    bool aromatic = true;
     bool do_pruning = true;
     bool do_backbone = true;
     bool adjust_ub = true;
@@ -308,7 +308,7 @@ int main(int argc, char *argv[], char *envp[]) {
             refine_singles = true;
             break;
         case 'a':
-            aromatic = true;
+            aromatic = false;
             if (!graph_file) status = 1;
             break;
         case 'u':

@@ -136,7 +136,7 @@ void Bbrc::Defaults() {
     fm::do_backbone = true;
     fm::adjust_ub = true;
     fm::do_pruning = true;
-    fm::aromatic = false;
+    fm::aromatic = true;
     fm::refine_singles = false;
     fm::do_output=true;
     fm::bbrc_sep=false;

@@ -380,13 +380,13 @@ void GraphState::DfsOut(int cur_n, int from_n) {
             iel = fm::database->edgelabels[fm::database->edgelabelsindexes[edge.edgelabel]].inputedgelabel;
             switch (iel) {
             case 1:
-                putchar('-');
+                puts("-,:");
                 break;
             case 2:
-                putchar('=');
+                puts("=,:");
                 break;               
             case 3:
-                putchar('#');
+                puts("#,:");
                 break;
             case 4:
                 putchar(':');
@@ -572,13 +572,13 @@ void GraphState::DfsOut(int cur_n, string& oss, int from_n) {
             iel = fm::database->edgelabels[fm::database->edgelabelsindexes[edge.edgelabel]].inputedgelabel;
             switch (iel) {
             case 1:
-                oss.append("-");
+                oss.append("-,:");
                 break;
             case 2:
-                oss.append("=");
+                oss.append("=,:");
                 break;               
             case 3:
-                oss.append("#");
+                oss.append("#,:");
                 break;
             case 4:
                 oss.append(":");

@@ -31,9 +31,9 @@
  ========
  General switches:
    Refine fragments with frequency 1.
-   Enable aromatic ring perception for SMILES input.
+   Disable aromatic ring perception for SMILES input.
    Insert empty vectors in result vector to indicate BBRC borders.
-   Switch off output.
+   Disable output.
 
  Constraint parameters:
    Minimum frequency constraint, used for anti-monotonic pruning.
@@ -41,15 +41,16 @@
    Significance level for ground patterns.
 
  Constraint switches for BBRC:
-   Deactivate dynamic adjustment of upper bound (less efficient; only for performance evaluation).
-   Switch off mining of only the most significant/most general representative of each backbone.
-   Deactivate upper bound pruning for chi-square constraint (less efficient, use only for performance evaluation).
+   Disable dynamic adjustment of upper bound (less efficient; only for performance evaluation).
+   Disable mining of only the most significant/most general representative of each backbone (equivalent to ordinary frequent and correlated subgraph mining).
+   Disable upper bound pruning for chi-square constraint (less efficient; only for performance evaluation).
 
 
  Environment variables:
  ======================
  Define the FMINER_SMARTS environment variable to produce output in SMARTS format (e.g. export FMINER_SMARTS=1).
  Additionally define the FMINER_LAZAR environment variable to produce output in linfrag format which can be used as input to Lazar (e.g. export FMINER_LAZAR=1).
+ Define the FMINER_PVALUES environment variable to produce p-values instead of chi-square values (slower, only for BBRC).
 
 
  Remarks:
@@ -61,8 +62,7 @@
 
  Examples:
  =========
-
- In any case, 1-frequent patterns are not refined further, unless you use the -s switch 
+ In any case, 1-frequent patterns are not refined further, unless the -s switch is used.
 
  BBRC mining:
 
@@ -71,7 +71,7 @@
  # same as above, but much slower (explicitly no dynamic UB pruning)
  ./fminer ../libbbrc/libbbrc.so -d <graphs> <activities>                                        
 
- # ALL 2-frequent and 95%-significant features
+ # ALL 2-frequent and 95%-significant subgraphs (frequent and correlated subgraph mining)
  ./fminer ../libbbrc/libbbrc.so -d -b <graphs> <activities>
  # All 20-frequent patterns (frequent subgraph mining)
  ./fminer ../libbbrc/libbbrc.so -f 20 <graphs>
@@ -91,5 +91,6 @@
  -d  --no-dynamic-ub          Switch off dynamic adjustment of upper bound for backbone mining (default: on).
  -b  --no-bbr-classes         Switch off mining for backbone refinement classes (default: on).
  -u  --no-upper-bound-pruning Switch off upper bound pruning (default: on).
-       -p  --p-value _p_value_      Set significance type. Allowable values for _p_value_: 0 <= _p_value_ <= 1.0 (default: 0.95).
+ -p  --p-value _p_value_      Set significance type. Allowable values for _p_value_: 0 <= _p_value_ <= 1.0 (default: 0.95).
 
+ (c) 2010 Andreas Maunz, feb 2010
