@@ -5,6 +5,7 @@
  * This is the Bbrc library, available at http://github.com/amaunz/fminer2/tree/master , subdirectory <code>libbbrc</code> .<br>
  * The Fminer frontend application is available from http://github.com/amaunz/fminer2/tree/master , subdirectory <code>fminer</code>.<br>
  * You may download the scientific documentation from http://cs.maunz.de . The paper is entitled "Large Scale Graph Mining using Backbone Refinement Classes".<br>
+ * Supporting information is available here: http://bbrc.maunz.de .
  *
  *  @section Contents
  *  <ul>

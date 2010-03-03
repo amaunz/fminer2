@@ -4,6 +4,7 @@
  *
  * This is the Last library, available at http://github.com/amaunz/fminer2/tree/master , subdirectory <code>liblast</code>.<br>
  * The Fminer frontend application is available from http://github.com/amaunz/fminer2/tree/master , subdirectory <code>fminer</code>.<br>
+ * Supporting information is available here: http://last-pm.maunz.de .
  *
  *  @section Contents
  *  <ul>
