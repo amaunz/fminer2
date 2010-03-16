@@ -449,8 +449,8 @@ int main(int argc, char *argv[], char *envp[]) {
     if (status > 0) {
         cerr << endl;
         cerr << "Fminer v2.0, Andreas Maunz, 2010" << endl;
-        cerr << "General usage:" << endl;
-        cerr << "       " << program_name << " <Library> <Options> <Graphs> <Activities>" << endl;
+        cerr << "Usage 1: " << program_name << " <Library> <Options> <Graphs> <Activities>" << endl;
+        cerr << "Usage 2: " << program_name << " <Library> <Options> <Graphs>" << endl;
         cerr << endl;
         cerr << "File formats:" << endl;
         cerr << "       <Library>    Plug-in library to use (/path/to/libbbrc.so or /path/to/liblast.so)." << endl;
