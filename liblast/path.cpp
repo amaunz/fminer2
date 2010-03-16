@@ -576,8 +576,16 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
          (  fm::refine_singles || (legs[index]->occurrences.frequency>1) )
        ) {   // UB-PRUNING
             Path path ( *this, index );
-            if (max.first<fm::chisq->p) { fm::updated = true; topdown = path.expand2 ( pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[index]->occurrences.frequency)), gsw_size); }
-            else topdown = path.expand2 (max,  gsw_size);
+
+            if (!fm::regression) {
+                if (max.first<fm::chisq->p) { fm::updated = true; topdown = path.expand2 ( pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[index]->occurrences.frequency)), gsw_size); }
+                else topdown = path.expand2 (max,  gsw_size);
+            }
+            else {
+                if (max.first<fm::ks->p) { fm::updated = true; topdown = path.expand2 ( pair<float, string>(fm::ks->p, fm::graphstate->to_s(legs[index]->occurrences.frequency)), gsw_size); }
+                else topdown = path.expand2 (max,  gsw_size);
+            }
+
     }
 
     // merge to siblingwalk
@@ -710,8 +718,15 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
          (  fm::refine_singles || (legs[index]->occurrences.frequency>1) )
        ) {   // UB-PRUNING
             Path path ( *this, index );
-            if (max.first<fm::chisq->p) { fm::updated = true; topdown = path.expand2 ( pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[index]->occurrences.frequency)), gsw_size); }
-            else topdown = path.expand2 (max, gsw_size);
+
+            if (!fm::regression) {
+                if (max.first<fm::chisq->p) { fm::updated = true; topdown = path.expand2 ( pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[index]->occurrences.frequency)), gsw_size); }
+                else topdown = path.expand2 (max,  gsw_size);
+            }
+            else {
+                if (max.first<fm::ks->p) { fm::updated = true; topdown = path.expand2 ( pair<float, string>(fm::ks->p, fm::graphstate->to_s(legs[index]->occurrences.frequency)), gsw_size); }
+                else topdown = path.expand2 (max,  gsw_size);
+            }
     }
 
     // merge to siblingwalk
@@ -855,6 +870,7 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
                (  fm::refine_singles || (legs[i]->occurrences.frequency>1) )
              ) {
               PatternTree tree ( *this, i );
+
               if (max.first<cur_chisq) { fm::updated = true; topdown = tree.expand ( pair<float, string>(cur_chisq, fm::graphstate->to_s(legs[i]->occurrences.frequency)), gsw_size); }
               else topdown = tree.expand (max, gsw_size);
           }
@@ -1016,7 +1032,8 @@ void Path::expand () {
       Path path (*this, i);
       fm::updated = true;
 
-      topdown = path.expand2 (pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[i]->occurrences.frequency)), gsw_size);
+      if (!fm::regression) topdown = path.expand2 (pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[i]->occurrences.frequency)), gsw_size);
+      else topdown = path.expand2 (pair<float, string>(fm::ks->p, fm::graphstate->to_s(legs[i]->occurrences.frequency)), gsw_size);
 
       // merge to siblingwalk
       if (topdown != NULL) {
