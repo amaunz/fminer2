@@ -28,32 +28,52 @@ namespace fm {
 
     unsigned int minfreq;
     int type;
-    bool updated;
+    ChisqConstraint* chisq=NULL;
+    // do_backbone missing
+    // adjust_ub missing
     bool do_pruning;
-    bool instance_present;
-    bool console_out;
     bool aromatic;
     bool refine_singles;
     bool do_output;
-    bool gsp_out;
     bool bbrc_sep;
+    bool regression;
+
+
+    bool updated;
+    // do_yaml missing
+    // pvalues missing
+    bool gsp_out;
+    bool console_out;
+
+
+    bool instance_present;
+
+
+    Database* database=NULL;
+    Statistics* statistics=NULL;
+    GraphState* graphstate=NULL;
+
+
+    vector<string>* result=NULL;
+
+
+    LegOccurrences* legoccurrences=NULL;
+    CloseLegOccurrences* closelegoccurrences=NULL; 
+    vector<LegOccurrences> candidatelegsoccurrences;
+    vector<vector< CloseLegOccurrences> > candidatecloselegsoccs;
+    vector<bool> candidatecloselegsoccsused;
+    // ks missing!
+
+
+    bool closelegsoccsused;
+
+
+    // introduced by LAST
     int die;
     bool do_last;
     unsigned int last_hops;
 
-    Database* database=NULL;
-    Statistics* statistics=NULL;
-    ChisqConstraint* chisq=NULL;
-    GraphState* graphstate=NULL;
-    CloseLegOccurrences* closelegoccurrences=NULL; 
-    LegOccurrences* legoccurrences=NULL;
 
-    vector<string>* result=NULL;
-    vector<LegOccurrences> candidatelegsoccurrences;
-    vector<vector< CloseLegOccurrences> > candidatecloselegsoccs;
-    vector<bool> candidatecloselegsoccsused;
-
-    bool closelegsoccsused;
 
 }
 

@@ -128,6 +128,7 @@ void Last::Defaults() {
     fm::bbrc_sep=false;
     fm::updated = true;
     fm::gsp_out=true;
+    fm::regression=false;
 
     // LAST
     fm::do_last=true;
@@ -211,6 +212,7 @@ bool Last::SetChisqSig(float _chisq_val) {
 bool Last::SetRegression(bool val) {
     return 0;
     // TODO: enable regression
+    // fm::regression=val;
 }
 
 
@@ -304,13 +306,13 @@ bool Last::AddActivity(float act, unsigned int comp_id) {
         cerr << "No structure for ID " << comp_id << ". Ignoring entry!" << endl; return false; 
     }
     else {
-        bool act_b=false; 
-        if (act == 1.0) act_b=true; 
-        else { if (act!=0.0) { cerr << "Error! Unknown activity " << act << "." << endl; exit(1); } }
-
-        if ((fm::database->trees_map[comp_id]->activity = act_b)) AddChiSqNa();
-        else AddChiSqNi();
-
+        if (!fm::regression) {
+            if ((fm::database->trees_map[comp_id]->activity = act) == 1.0) AddChiSqNa();
+            else AddChiSqNi();
+        }
+        else {
+            if ((fm::database->trees_map[comp_id]->activity = act)) AddKS(act);
+        }
         return true;
     }
 }
