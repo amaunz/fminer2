@@ -97,5 +97,41 @@ class ChisqConstraint : public Constraint {
 
 };
 
+class KSConstraint : public Constraint {
+    public:
+    vector<float> all;
+    vector<float> feat;
+    float sig, p;
+    set<Tid> fa_set, fi_set;
+    bool activating; //defaults to deactivating (0)
+
+    KSConstraint (float sig) : sig(sig), p(0.0), activating(0) {}
+
+    template <typename OccurrenceType>
+    void Calc(vector<OccurrenceType>& legocc) {
+        LegActivityOccurrence(legocc);
+        p = KS(all,feat,1);
+    }
+
+    private:
+    //!< Calculates KS values
+    float KS(vector<float> all_activities, vector<float> feat_activities, bool decide_activating);
+
+    //!< Stores activities of occurrences of legs
+    template <typename OccurrenceType>
+    void LegActivityOccurrence(vector<OccurrenceType>& legocc) {
+      fa_set.clear();
+      fi_set.clear();
+
+      feat.clear();
+      each (legocc) {
+        feat.push_back(fm::database->trees[legocc[i].tid]->activity);
+        fa_set.insert(fm::database->trees[legocc[i].tid]->orig_tid); 
+      }
+    }
+
+};
+
+
 
 #endif

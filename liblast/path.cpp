@@ -35,12 +35,14 @@ namespace fm {
     extern bool refine_singles;
     extern bool do_output;
     extern bool bbrc_sep;
+    extern bool regression;
     extern bool gsp_out;
     extern bool die;
     extern bool do_last;
 
     extern Database* database;
     extern ChisqConstraint* chisq;
+    extern KSConstraint* ks;
     extern vector<string>* result;
     extern Statistics* statistics;
     extern GraphState* graphstate;
@@ -505,8 +507,12 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
     #endif
 
     // Calculate chisq
-    if (fm::chisq->active) fm::chisq->Calc(legs[index]->occurrences.elements);
-    float cur_chisq=fm::chisq->p;
+    float cur_chisq;
+    if (fm::chisq->active) { 
+        if (!fm::regression) { fm::chisq->Calc(legs[index]->occurrences.elements); cur_chisq=fm::chisq->p; }
+        else                 {    fm::ks->Calc(legs[index]->occurrences.elements); cur_chisq=   fm::ks->p; }
+    }
+
           
     // GRAPHSTATE AND OUTPUT
     fm::graphstate->insertNode ( legs[index]->tuple.connectingnode, legs[index]->tuple.edgelabel, legs[index]->occurrences.maxdegree );
@@ -527,10 +533,19 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
         map<Tid, int> weightmap_a; each_it(fm::chisq->fa_set, set<Tid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
         map<Tid, int> weightmap_i; each_it(fm::chisq->fi_set, set<Tid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
         fm::graphstate->print(gsw, weightmap_a, weightmap_i);
-        gsw->activating=fm::chisq->activating;
-        if (cur_chisq >= fm::chisq->sig) {
-            nsign=0;
+        if (!fm::regression) {
+            gsw->activating=fm::chisq->activating;
+            if (cur_chisq >= fm::chisq->sig) {
+                nsign=0;
+            }
         }
+        else {
+            gsw->activating=fm::ks->activating;
+            if (cur_chisq >= fm::ks->sig) {
+                nsign=0;
+            }
+        }
+
     }
     const int gsw_size=gsw->nodewalk.size();
 
@@ -635,8 +650,12 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
     bool nsign=1;
 
     // Calculate chisq
-    if (fm::chisq->active) fm::chisq->Calc(legs[index]->occurrences.elements);
-    float cur_chisq = fm::chisq->p;
+    float cur_chisq;
+    if (fm::chisq->active) { 
+        if (!fm::regression) { fm::chisq->Calc(legs[index]->occurrences.elements); cur_chisq=fm::chisq->p; }
+        else                 {    fm::ks->Calc(legs[index]->occurrences.elements); cur_chisq=   fm::ks->p; }
+    }
+
 
     // GRAPHSTATE AND OUTPUT
     fm::graphstate->insertNode ( legs[index]->tuple.connectingnode, legs[index]->tuple.edgelabel, legs[index]->occurrences.maxdegree );
@@ -648,9 +667,17 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
         map<Tid, int> weightmap_a; each_it(fm::chisq->fa_set, set<Tid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
         map<Tid, int> weightmap_i; each_it(fm::chisq->fi_set, set<Tid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
         fm::graphstate->print(gsw, weightmap_a, weightmap_i);
-        gsw->activating=fm::chisq->activating;
-        if (cur_chisq >= fm::chisq->sig) {
-            nsign=0;
+        if (!fm::regression) {
+            gsw->activating=fm::chisq->activating;
+            if (cur_chisq >= fm::chisq->sig) {
+                nsign=0;
+            }
+        }
+        else {
+            gsw->activating=fm::ks->activating;
+            if (cur_chisq >= fm::ks->sig) {
+                nsign=0;
+            }
         }
     }
     const int gsw_size=gsw->nodewalk.size();
@@ -762,8 +789,12 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
 
           bool nsign=1;
 
-          if (fm::chisq->active) fm::chisq->Calc(legs[i]->occurrences.elements);
-          float cur_chisq = fm::chisq->p;
+          float cur_chisq;
+          if (fm::chisq->active) { 
+              if (!fm::regression) { fm::chisq->Calc(legs[i]->occurrences.elements); cur_chisq=fm::chisq->p; }
+              else                 {    fm::ks->Calc(legs[i]->occurrences.elements); cur_chisq=   fm::ks->p; }
+          }
+
 
           fm::graphstate->insertNode ( legs[i]->tuple.connectingnode, legs[i]->tuple.edgelabel, legs[i]->occurrences.maxdegree );
           #ifdef DEBUG
@@ -781,9 +812,18 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
               map<Tid, int> weightmap_a; each_it(fm::chisq->fa_set, set<Tid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
               map<Tid, int> weightmap_i; each_it(fm::chisq->fi_set, set<Tid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
               fm::graphstate->print(gsw, weightmap_a, weightmap_i);
-              gsw->activating=fm::chisq->activating;
-              if (cur_chisq >= fm::chisq->sig) {
-                  nsign=0;
+
+              if (!fm::regression) {
+                  gsw->activating=fm::chisq->activating;
+                  if (cur_chisq >= fm::chisq->sig) {
+                      nsign=0;
+                  }
+              }
+              else {
+                  gsw->activating=fm::ks->activating;
+                  if (cur_chisq >= fm::ks->sig) {
+                      nsign=0;
+                  }
               }
           }
           const int gsw_size=gsw->nodewalk.size();
@@ -916,8 +956,11 @@ void Path::expand () {
     PathTuple &tuple = legs[i]->tuple;
     if ( tuple.nodelabel >= nodelabels[0] ) {
         
-      if (fm::chisq->active) fm::chisq->Calc(legs[i]->occurrences.elements);
-      float cur_chisq = fm::chisq->p;
+      float cur_chisq;
+      if (fm::chisq->active) { 
+          if (!fm::regression) { fm::chisq->Calc(legs[i]->occurrences.elements); cur_chisq=fm::chisq->p; }
+          else                 {    fm::ks->Calc(legs[i]->occurrences.elements); cur_chisq=   fm::ks->p; }
+      }
 
       // GRAPHSTATE AND OUTPUT
       fm::graphstate->insertNode ( tuple.connectingnode, tuple.edgelabel, legs[i]->occurrences.maxdegree );
@@ -929,10 +972,20 @@ void Path::expand () {
           map<Tid, int> weightmap_a; each_it(fm::chisq->fa_set, set<Tid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
           map<Tid, int> weightmap_i; each_it(fm::chisq->fi_set, set<Tid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
           fm::graphstate->print(gsw, weightmap_a, weightmap_i);
-          gsw->activating=fm::chisq->activating;
-          if (cur_chisq >= fm::chisq->sig) {
-              nsign=0;
+
+          if (!fm::regression) {
+              gsw->activating=fm::chisq->activating;
+              if (cur_chisq >= fm::chisq->sig) {
+                  nsign=0;
+              }
           }
+          else {
+              gsw->activating=fm::ks->activating;
+              if (cur_chisq >= fm::ks->sig) {
+                  nsign=0;
+              }
+          }
+
       }
       const int gsw_size=gsw->nodewalk.size();
 

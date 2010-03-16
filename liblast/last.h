@@ -32,6 +32,7 @@ namespace fm {
     extern bool do_pruning;
     extern bool aromatic;
     extern ChisqConstraint* chisq;
+    extern KSConstraint* ks;
     extern bool gsp_out;
     extern bool bbrc_sep;
     extern bool regression;
@@ -111,9 +112,7 @@ class Last : public Fminer {
     void AddChiSqNa(){fm::chisq->na++;fm::chisq->n++;}
     void AddChiSqNi(){fm::chisq->ni++;fm::chisq->n++;}
     // KS: Insert value into set of activities
-    void AddKS(float val) { 
-        //fm::ks->all.push_back(val);
-    }
+    void AddKS(float val){fm::ks->all.push_back(val);}
 
     bool init_mining_done;
     int comp_runner;

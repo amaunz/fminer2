@@ -426,7 +426,12 @@ void GraphState::DfsOut(int cur_n, int from_n) {
 // ENTRY: BRANCH TO GSP (STDOUT) or PRINT YAML/LAZAR TO STDOUT
 
 void GraphState::print ( unsigned int frequency ) {
-    if (!fm::chisq->active || fm::chisq->p >= fm::chisq->sig) {
+    float p, sig;
+    if (fm::chisq->active) {
+        p = fm::chisq->p;
+        sig = fm::chisq->sig;
+    }
+    if (!fm::chisq->active || p >= sig) {
         if (fm::gsp_out) { 
             print(stdout); 
         }

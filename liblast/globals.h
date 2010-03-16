@@ -62,7 +62,7 @@ namespace fm {
     vector<LegOccurrences> candidatelegsoccurrences;
     vector<vector< CloseLegOccurrences> > candidatecloselegsoccs;
     vector<bool> candidatecloselegsoccsused;
-    // ks missing!
+    KSConstraint* ks=NULL;
 
 
     bool closelegsoccsused;
