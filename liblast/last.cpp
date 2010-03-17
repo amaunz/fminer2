@@ -153,8 +153,8 @@ bool Last::GetRefineSingles() {return fm::refine_singles;}
 bool Last::GetDoOutput() {return fm::do_output;}
 bool Last::GetBbrcSep(){return fm::bbrc_sep;}
 bool Last::GetChisqActive(){return fm::chisq->active;}
-float Last::GetChisqSig(){return fm::chisq->sig;}
-bool Last::GetRegression() {return false;}
+float Last::GetChisqSig(){if (!fm::regression) return fm::chisq->sig; else return fm::ks->sig;}
+bool Last::GetRegression() {return fm::regression;}
 
 
 
@@ -240,14 +240,31 @@ vector<string>* Last::MineRoot(unsigned int j) {
         if (fm::bbrc_sep && fm::do_output && !fm::console_out) (*fm::result) << fm::graphstate->sep();
         init_mining_done=true; 
 
-        cerr << "Settings:" << endl \
-             << "---" << endl \
-             << "Type:                                 " << GetType() << endl \
-             << "Minimum frequency:                    " << GetMinfreq() << endl \
-             << "Chi-square active (chi-square-value): " << GetChisqActive() << " (" << GetChisqSig()<< ")" << endl \
-             << "Statistical metric pruning:           " << GetPruning() << endl \
-             << "Do output:                            " << GetDoOutput() << endl \
-             << "---" << endl;
+        if (!fm::regression) {
+            cerr << "Settings:" << endl \
+                 << "---" << endl \
+                 << "Type:                                 " << GetType() << endl \
+                 << "Minimum frequency:                    " << GetMinfreq() << endl \
+                 << "Aromatic:                             " << GetAromatic() << endl \
+                 << "Regression:                           " << GetRegression() << endl \
+                 << "Chi-square active (chi-square-value): " << GetChisqActive() << " (" << GetChisqSig()<< ")" << endl \
+                 << "Statistical metric pruning:           " << GetPruning() << endl \
+                 << "Do output:                            " << GetDoOutput() << endl \
+                 << "---" << endl;
+        }
+        else {
+            cerr << "Settings:" << endl \
+                 << "---" << endl \
+                 << "Type:                                 " << GetType() << endl \
+                 << "Minimum frequency:                    " << GetMinfreq() << endl \
+                 << "Aromatic:                             " << GetAromatic() << endl \
+                 << "Regression:                           " << GetRegression() << endl \
+                 << "KS active (p-value):                  " << GetChisqActive() << " (" << GetChisqSig()<< ")" << endl \
+                 << "Statistical metric pruning:           " << GetPruning() << endl \
+                 << "Do output:                            " << GetDoOutput() << endl \
+                 << "---" << endl;
+        }
+
 
 
         if (fm::do_output) {

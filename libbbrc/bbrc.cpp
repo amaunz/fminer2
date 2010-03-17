@@ -164,7 +164,7 @@ bool Bbrc::GetRefineSingles() {return fm::refine_singles;}
 bool Bbrc::GetDoOutput() {return fm::do_output;}
 bool Bbrc::GetBbrcSep(){return fm::bbrc_sep;}
 bool Bbrc::GetChisqActive(){return fm::chisq->active;}
-float Bbrc::GetChisqSig(){return fm::chisq->sig;}
+float Bbrc::GetChisqSig(){if (!fm::regression) return fm::chisq->sig; else return fm::ks->sig; }
 bool Bbrc::GetRegression() {return fm::regression;}
 
 
@@ -353,10 +353,12 @@ vector<string>* Bbrc::MineRoot(unsigned int j) {
         if (fm::bbrc_sep && !fm::do_backbone && fm::do_output && !fm::console_out) (*fm::result) << fm::graphstate->sep();
         init_mining_done=true; 
 
-        cerr << "Settings:" << endl \
+        if (!fm::regression) {
+             cerr << "Settings:" << endl \
              << "---" << endl \
              << "Type:                                 " << GetType() << endl \
              << "Minimum frequency:                    " << GetMinfreq() << endl \
+             << "Aromatic:                             " << GetAromatic() << endl \
              << "Chi-square active (chi-square-value): " << GetChisqActive() << " (" << GetChisqSig()<< ")" << endl \
              << "BBRC mining:                          " << GetBackbone() << endl \
              << "Statistical metric (dynamic) pruning: " << GetPruning() << " (" << GetDynamicUpperBound() << ")" << endl \
@@ -365,6 +367,22 @@ vector<string>* Bbrc::MineRoot(unsigned int j) {
              << "BBRC sep:                             " << GetBbrcSep() << endl \
              << "Regression:                           " << GetRegression() << endl \
              << "---" << endl;
+        }
+        else {
+             cerr << "Settings:" << endl \
+             << "---" << endl \
+             << "Type:                                 " << GetType() << endl \
+             << "Minimum frequency:                    " << GetMinfreq() << endl \
+             << "Aromatic:                             " << GetAromatic() << endl \
+             << "KS active (p-value):                  " << GetChisqActive() << " (" << GetChisqSig()<< ")" << endl \
+             << "BBRC mining:                          " << GetBackbone() << endl \
+             << "Statistical metric (dynamic) pruning: " << GetPruning() << " (" << GetDynamicUpperBound() << ")" << endl \
+             << "Refine patterns with single support:  " << GetRefineSingles() << endl \
+             << "Do output:                            " << GetDoOutput() << endl \
+             << "BBRC sep:                             " << GetBbrcSep() << endl \
+             << "Regression:                           " << GetRegression() << endl \
+             << "---" << endl;
+        }
 
     }
 
