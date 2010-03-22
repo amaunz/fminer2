@@ -71,7 +71,7 @@ $(LIB2): $(OBJ) r$(NAME)_wrap.cxx
 #swig -c++ -java -o jbbrc_wrap.cxx jbbrc_wrap.i
 $(LIB3): $(OBJ) j$(NAME)_wrap.cxx
 	$(CC) -c $(CXXFLAGS) $(INCLUDE_JAVA) j$(NAME)_wrap.cxx -o $(NAME)_wrap.o
-	$(CC) $(LDFLAGS) -shared $(CXXFLAGS) $(INCLUDE_JAVA) $(OBJ) $(NAME)_wrap.o $(LIBS_LIB2) -o $@
+	$(CC) $(LDFLAGS) -shared $(CXXFLAGS) $(OBJ) $(NAME)_wrap.o $(LIBS_LIB2) -o $@
 
 
 .o: .cpp.h
@@ -81,13 +81,20 @@ ctest: test.cpp
 test.class: test.java
 	javac -cp . test.java
 
-
-# TESTS + HELPERS
+# MAIN TARGETS
 .PHONY:
 all: $(LIB1_REALNAME) 
+
 .PHONY:
 ruby: $(LIB2)
+# RUBY library does not need special variables.
+
+.PHONY:
 java: $(LIB3)
+# LD_LIBRARY_PATH=. and LD_PRELOAD=/path/to/libopenbabel.so must be set to run the JAVA library.
+
+
+# TESTS + HELPERS
 .PHONY:
 cpptest: ctest
 	./$<
@@ -96,11 +103,10 @@ rbtest: test.rb
 	$(RUBY) $<
 .PHONY:
 jtest: test.class
-	LD_LIBRARY_PATH=`pwd` LD_PRELOAD=/usr/local/lib/libopenbabel.so java -cp . test	
+	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):`pwd` LD_PRELOAD=/usr/local/lib/libopenbabel.so java -cp . test	
 .PHONY:
 doc: Doxyfile Mainpage.h *.h
 	-doxygen $<
 .PHONY:
 clean:
 	-rm -rf *.o $(LIB1) $(LIB1_SONAME) $(LIB1_REALNAME) $(LIB2) $(LIB3) *.class ctest
-

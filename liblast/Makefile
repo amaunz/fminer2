@@ -37,6 +37,9 @@ RUBY = ruby1.8
 #INCLUDE_RB    = -I/usr/lib/ruby/1.8/i486-linux/
 #RUBY          = ruby1.8
 
+# FOR JAVA TARGET: ADJUST COMPILER PATH TO JAVA HEADERS (LINUX)
+INCLUDE_JAVA  = -I/usr/lib/jvm/java-6-sun-1.6.0.14/include/ -I/usr/lib/jvm/java-6-sun-1.6.0.14/include/linux/
+
 # NORMALLY NO ADJUSTMENT NECESSARY BELOW THIS LINE. Exit and try 'make' now.
 # WHAT
 NAME          = last
@@ -52,6 +55,7 @@ LIB1          = lib$(NAME).so
 LIB1_SONAME   = $(LIB1).2
 LIB1_REALNAME = $(LIB1_SONAME).0
 LIB2          = $(NAME).so
+LIB3          = lib$(NAME).so
 
 # FILES
 $(LIB1_REALNAME): $(OBJ)
@@ -59,32 +63,37 @@ $(LIB1_REALNAME): $(OBJ)
 	-ln -sf $@ $(LIB1_SONAME)
 	-ln -sf $@ $(LIB1)
 
-#swig -c++ -ruby -o last_wrap.cxx rlast_wrap.i
-$(LIB2): $(OBJ) $(NAME)_wrap.cxx
-	$(CC) -c $(CXXFLAGS) $(INCLUDE_RB) $(NAME)_wrap.cxx -o $(NAME)_wrap.o
+#swig -c++ -ruby -o rlast_wrap.cxx rlast_wrap.i
+$(LIB2): $(OBJ) r$(NAME)_wrap.cxx
+	$(CC) -c $(CXXFLAGS) $(INCLUDE_RB) r$(NAME)_wrap.cxx -o $(NAME)_wrap.o
 	$(CC) $(LDFLAGS) -shared $(CXXFLAGS) $(OBJ) $(NAME)_wrap.o $(LIBS) -o $@
+
+#swig -c++ -java -o jlast_wrap.cxx jlast_wrap.i
+$(LIB3): $(OBJ) j$(NAME)_wrap.cxx
+	$(CC) -c $(CXXFLAGS) $(INCLUDE_JAVA) j$(NAME)_wrap.cxx -o $(NAME)_wrap.o
+	$(CC) $(LDFLAGS) -shared $(CXXFLAGS) $(OBJ) $(NAME)_wrap.o $(LIBS_LIB2) -o $@
+
 
 .o: .cpp.h
 	$(CC) -Wall $(CXXFLAGS) $(LIBS) $@
 
-ctest: test.cpp
-	$(CC) $(CXXFLAGS) $(LDFLAGS) $(OBJ) $(LIBS) $< -o $@
+# MAIN TARGETS
+.PHONY:
+all: $(LIB1_REALNAME) 
+
+.PHONY:
+ruby: $(LIB2)
+# RUBY library does not need special variables.
+
+.PHONY:
+java: $(LIB3)
+# LD_LIBRARY_PATH=. and LD_PRELOAD=/path/to/libopenbabel.so must be set to run the JAVA library.
 
 
 # TESTS + HELPERS
-.PHONY:
-all: $(LIB1_REALNAME) 
-.PHONY:
-ruby: $(LIB2)
-.PHONY:
-cpptest: ctest
-	./$<
-.PHONY:
-rbtest: test.rb
-	$(RUBY) $<
 .PHONY:
 doc: Doxyfile Mainpage.h *.h
 	-doxygen $<
 .PHONY:
 clean:
-	-rm -rf *.o $(LIB1) $(LIB1_SONAME) $(LIB1_REALNAME) $(LIB2) ctest
+	-rm -rf *.o $(LIB1) $(LIB1_SONAME) $(LIB1_REALNAME) $(LIB2) $(LIB3) *.class ctest
