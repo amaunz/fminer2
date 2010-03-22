@@ -17,7 +17,6 @@ require 'bbrc'
  MyFminer.SetConsoleOut(false)
  (0 .. MyFminer.GetNoRootNodes()-1).each do |j|
     result = MyFminer.MineRoot(j)
-    puts "Results"
     result.each do |res|
         puts res
    end
