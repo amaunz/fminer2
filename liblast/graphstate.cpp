@@ -2086,7 +2086,7 @@ void GSWalk::add_edge (int f, GSWEdge e, GSWNode n, bool reorder, vector<int>* c
 }
 
 void GSWalk::svd () {
-    const float CUTOFF = 0.15; // Percentage of information to throw away
+    const float CUTOFF = 0.20; // Percentage of information to throw away
     adj_m_size = nodewalk.size();
     
     gsl_matrix* A = gsl_matrix_calloc (adj_m_size, adj_m_size);
