@@ -14,6 +14,6 @@ Contents of the above documentation:
 For a quickstart try:
 $ ./configure
 $ make
-$ make test
+$ make cpptest
 
 Andreas Maunz, 2010.

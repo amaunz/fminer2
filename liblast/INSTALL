@@ -14,6 +14,5 @@ Contents of the above documentation:
 For a quickstart try:
 $ ./configure
 $ make
-$ make test
 
 Andreas Maunz, 2010.
