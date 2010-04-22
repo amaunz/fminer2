@@ -13,6 +13,8 @@ Go here: http://www.maunz.de/libfminer2-last-doc/
 3) Frontend App for 1) and 2).
 Subdirectory fminer/
 
+Try 'make' or refer to the individual subdirectories for building.
+
 http://cs.maunz.de
 Andreas Maunz, 2010.
 
