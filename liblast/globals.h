@@ -47,6 +47,7 @@ namespace fm {
 
 
     bool instance_present;
+    int max_hops;
 
 
     Database* database=NULL;

@@ -76,6 +76,8 @@ $(LIB3): $(OBJ) j$(NAME)_wrap.cxx
 
 .o: .cpp.h
 	$(CC) -Wall $(CXXFLAGS) $(LIBS) $@
+ctest: test.cpp
+	$(CC) $(CXXFLAGS) $(LDFLAGS) $(OBJ) $(LIBS) $< -o $@
 
 # MAIN TARGETS
 .PHONY:
@@ -91,6 +93,9 @@ java: $(LIB3)
 
 
 # TESTS + HELPERS
+.PHONY:
+cpptest: ctest
+	./$<
 .PHONY:
 doc: Doxyfile Mainpage.h *.h
 	-doxygen $<

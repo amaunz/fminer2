@@ -36,6 +36,7 @@ namespace fm {
     extern bool gsp_out;
     extern bool bbrc_sep;
     extern bool regression;
+    extern int max_hops;
 
 }
 
@@ -74,6 +75,7 @@ class Last : public Fminer {
     bool GetChisqActive(); //!< Get whether chi-square filter is active.
     float GetChisqSig(); //!< Get significance threshold.
     bool GetRegression(); //!< Dummy method for regression (only used for bbrcs).
+    int GetMaxHops(); //!< Get maximum number of hops.
 
     //@}
 
@@ -94,6 +96,7 @@ class Last : public Fminer {
     bool SetChisqActive(bool val); //!< Set this to 'true' to enable chi-square filter.
     bool SetChisqSig(float _chisq_val); //!< Set significance threshold here (between 0 and 1).
     bool SetRegression(bool val); //!< Dummy method for regression (only used for bbrcs).
+    bool SetMaxHops(int val); //!< Set maximum number of hops.
     //@}
     
     /** @name Others

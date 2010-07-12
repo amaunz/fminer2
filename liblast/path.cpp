@@ -48,6 +48,7 @@ namespace fm {
     extern GraphState* graphstate;
 
     extern vector<LegOccurrences> candidatelegsoccurrences; 
+    extern int max_hops;
 }
 
 // for every database node...
@@ -552,7 +553,7 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
     // !STOP: MERGE TO SIBLINGWALK
     if (gsw->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr<<"Error! Already nodes marked as available 2.1. "<<gsw->to_nodes_ex.size()<<" "<<siblingwalk->to_nodes_ex.size()<<endl; exit(1); }
 
-    if (nsign || gsw->activating!=siblingwalk->activating) {
+    if (nsign || gsw->activating!=siblingwalk->activating || siblingwalk->hops > fm::max_hops) {
           if (siblingwalk->hops>0) {
               if (siblingwalk->hops>1) {
                   siblingwalk->svd();
@@ -693,7 +694,7 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
     // !STOP: MERGE TO SIBLINGWALK
     if (gsw->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr<<"Error! Already nodes marked as available 3.1. "<<gsw->to_nodes_ex.size()<<" "<<siblingwalk->to_nodes_ex.size()<<endl; exit(1); }
 
-    if (nsign || gsw->activating!=siblingwalk->activating) {
+    if (nsign || gsw->activating!=siblingwalk->activating || siblingwalk->hops > fm::max_hops) {
           if (siblingwalk->hops>0) {
               if (siblingwalk->hops>1) {
                   siblingwalk->svd();
@@ -846,7 +847,7 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
           // !STOP: MERGE TO SIBLINGWALK
           if (gsw->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr<<"Error! Already nodes marked as available 4.1. "<<gsw->to_nodes_ex.size()<<" "<<siblingwalk->to_nodes_ex.size()<<endl; exit(1); }
 
-          if (nsign || gsw->activating!=siblingwalk->activating) {
+          if (nsign || gsw->activating!=siblingwalk->activating || siblingwalk->hops > fm::max_hops) {
                 if (siblingwalk->hops>0) {
                     if (siblingwalk->hops>1) {
                         siblingwalk->svd();
@@ -1008,7 +1009,7 @@ void Path::expand () {
       // !STOP: MERGE TO SIBLINGWALK
       if (gsw->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr<<"Error! Already nodes marked as available 1.1. "<<gsw->to_nodes_ex.size()<<" "<<siblingwalk->to_nodes_ex.size()<<endl; exit(1); }
 
-      if (nsign || gsw->activating!=siblingwalk->activating) {
+      if (nsign || gsw->activating!=siblingwalk->activating || siblingwalk->hops > fm::max_hops) {
             if (siblingwalk->hops>0) {
                 if (siblingwalk->hops>1) {
                     siblingwalk->svd();

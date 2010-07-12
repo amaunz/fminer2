@@ -44,6 +44,7 @@ namespace fm {
     extern LegOccurrences* legoccurrences;
 
     extern vector<LegOccurrences> candidatelegsoccurrences; 
+    extern int max_hops;
 }
 
 int maxsize = ( 1 << ( sizeof(NodeId)*8 ) ) - 1; // safe default for the largest allowed pattern
@@ -903,7 +904,7 @@ GSWalk* PatternTree::expand (pair<float, string> max, const int parent_size) {
 
     // !STOP: MERGE TO SIBLINGWALK
     if (gsw->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr<<"Error! Already nodes marked as available 5.1. "<<gsw->to_nodes_ex.size()<<" "<<siblingwalk->to_nodes_ex.size()<<endl;exit(1); }
-    if (nsign || gsw->activating!=siblingwalk->activating) { // empty sw needs no checks
+    if (nsign || gsw->activating!=siblingwalk->activating || siblingwalk->hops > fm::max_hops) { // empty sw needs no checks
           if (siblingwalk->hops>0) {
               if (siblingwalk->hops>1) {
                     siblingwalk->svd();

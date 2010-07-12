@@ -137,6 +137,7 @@ void Last::Defaults() {
     fm::do_last=true;
     fm::last_hops=0;
     fm::die = 0;
+    fm::max_hops = 1000;
 }
 
 
@@ -155,7 +156,7 @@ bool Last::GetBbrcSep(){return fm::bbrc_sep;}
 bool Last::GetChisqActive(){return fm::chisq->active;}
 float Last::GetChisqSig(){if (!fm::regression) return fm::chisq->sig; else return fm::ks->sig;}
 bool Last::GetRegression() {return fm::regression;}
-
+int Last::GetMaxHops() {return fm::max_hops;}
 
 
 // 3. Setter methods
@@ -219,6 +220,10 @@ bool Last::SetRegression(bool val) {
     return 1;
 }
 
+bool Last::SetMaxHops(int val) {
+    fm::max_hops=val;
+    return 1;
+}
 
 // 4. Other methods
 
@@ -250,6 +255,7 @@ vector<string>* Last::MineRoot(unsigned int j) {
                  << "Chi-square active (chi-square-value): " << GetChisqActive() << " (" << GetChisqSig()<< ")" << endl \
                  << "Statistical metric pruning:           " << GetPruning() << endl \
                  << "Do output:                            " << GetDoOutput() << endl \
+                 << "Max Hops:                             " << GetMaxHops() << endl \
                  << "---" << endl;
         }
         else {
@@ -262,6 +268,7 @@ vector<string>* Last::MineRoot(unsigned int j) {
                  << "KS active (p-value):                  " << GetChisqActive() << " (" << GetChisqSig()<< ")" << endl \
                  << "Statistical metric pruning:           " << GetPruning() << endl \
                  << "Do output:                            " << GetDoOutput() << endl \
+                 << "Max Hops:                             " << GetMaxHops() << endl \
                  << "---" << endl;
         }
 
