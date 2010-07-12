@@ -133,7 +133,7 @@
  *
  * \subsubsection Const Description of Constructors and Options
  * 
- * For the purpose of demonstration we used a toy database of two compounds and an unusual parameter configuration. Please note, that in general the defaults set by the standard constructor are sensible for most databases. They switch on BBRC mining with upper bound pruning for 95% significance and a minimum frequency of 2. The complete standard settings are:
+ * For the purpose of demonstration we used a toy database of two compounds and an unusual parameter configuration. Please note, that in general the defaults set by the standard constructor are sensible for most databases. They switch on LAST-PM with upper bound pruning for 95% significance and a minimum frequency of 2. The complete standard settings are:
  *
  * <ul>
  *  <li>Minimum frequency: <b>2</b></li>
