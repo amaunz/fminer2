@@ -1,6 +1,6 @@
  Welcome to Fminer.
 
- This is Fminer (application), available from http://github.com/amaunz/fminer2/tree/master .
+ This is Fminer (frontend application), available from http://github.com/amaunz/fminer2/tree/master .
  The official website with documentation is http://www.maunz.de/libfminer2-doc .
 
  For installation and documentation see INSTALL.
@@ -29,35 +29,51 @@
 
  Switches:
  ========
- General switches:
-   Refine fragments with frequency 1.
-   Disable aromatic ring perception for SMILES input.
-   Insert empty vectors in result vector to indicate BBRC borders.
-   Disable output.
+ -f  --minfreq _minfreq_      Set minimum frequency. Allowable values for _minfreq_: 1, 2, ... (default: 2).
+ -l  --level _level_          Set fragment type. Allowable values for _type_: 1 (paths) and 2 (trees) (default: 2).
+ -s  --refine-singles         Switch on refinement of fragments with frequency 1 (default: off).
+ -o  --no-output              Switch off output (default: on).
+ -r  --bbrc-sep               Switch on BBRC separator in result vector (default: off).
+ -g  --regression             Switch on regression (default: off).
 
- Constraint parameters:
-   Minimum frequency constraint, used for anti-monotonic pruning.
-   Subgraph type, choices are paths and trees.
-   Significance level for ground patterns.
-
- Constraint switches for BBRC:
-   Disable dynamic adjustment of upper bound (less efficient; only for performance evaluation).
-   Disable mining of only the most significant/most general representative of each backbone (equivalent to ordinary frequent and correlated subgraph mining).
-   Disable upper bound pruning for chi-square constraint (less efficient; only for performance evaluation).
+  Upper bound pruning options:
+ -a  --aromaticity            Switch off aromatic ring perception when using smiles input format (default: on).
+ -d  --no-dynamic-ub          Switch off dynamic adjustment of upper bound for backbone mining (default: on).
+ -b  --no-bbr-classes         Switch off mining for backbone refinement classes (default: on).
+ -u  --no-upper-bound-pruning Switch off upper bound pruning (default: on).
+ -p  --p-value _p_value_      Set significance type. Allowable values for _p_value_: 0 <= _p_value_ <= 1.0 (default: 0.95).
 
 
- Environment variables:
+ General Usage:
+ ===================
+ Usage 1: fminer <Library> <Options> <Graphs> <Activities>
+ Usage 2: fminer <Library> <Options> <Graphs>
+
+ File formats:
+      <Library>    Plug-in library to use (/path/to/libbbrc.so or /path/to/liblast.so).
+      <Graphs>     File should have suffix .smi or .gsp, indicating SMILES or gSpan format.
+      <Activities> File must be in Activity format (suffix not relevant).
+
+ Usage with LibBBRC:
+ ===================
+ Options for Usage 1 (BBRC mining using dynamic upper bound pruning): 
+      [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-g] [-d [-b [-r] | -b [-u] ] ] [-p p_value]
+
+ Options for Usage 2 (Frequent subgraph mining): 
+      [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r]
+
+ Usage with LibLAST:
+ ===================
+ Options for Usage 1 (LAtent STructure-Pattern Mining): 
+       [-f minfreq] [-a] [-o] [-g] <graphs> <activities> 
+
+
+ Environment Variables:
  ======================
+ Output consists of blocks of gSpan graphs.
  Define the FMINER_SMARTS environment variable to produce output in SMARTS format (e.g. export FMINER_SMARTS=1).
  Additionally define the FMINER_LAZAR environment variable to produce output in linfrag format which can be used as input to Lazar (e.g. export FMINER_LAZAR=1).
  Define the FMINER_PVALUES environment variable to produce p-values instead of chi-square values (slower, only for BBRC).
-
-
- Remarks:
- ========
- Output consists of blocks of gSpan graphs.
- When using SMARTS output (environment variable FMINER_SMARTS), each line is a YAML sequence, containing SMARTS fragment, p-value, and two sequences denoting positive and negative class occurrences (default compound ids, see also switch -n). 
- When also FMINER_LAZAR is set, the linfrag output format is used.
 
 
  Examples:
@@ -81,22 +97,5 @@
  # LAST-PM descriptors (min frequency m):
  ./fminer ../liblast/liblast.so -f<m> <graphs> <activities>
 
-
- Switches and Defaults
- =====================
-
- -f  --minfreq _minfreq_      Set minimum frequency. Allowable values for _minfreq_: 1, 2, ... (default: 2).
- -l  --level _level_          Set fragment type. Allowable values for _type_: 1 (paths) and 2 (trees) (default: 2).
- -s  --refine-singles         Switch on refinement of fragments with frequency 1 (default: off).
- -o  --no-output              Switch off output (default: on).
- -r  --bbrc-sep               Switch on BBRC separator in result vector (default: off).
- -g  --regression             Switch on regression (default: off).
-
-  Upper bound pruning options:
- -a  --aromaticity            Switch off aromatic ring perception when using smiles input format (default: on).
- -d  --no-dynamic-ub          Switch off dynamic adjustment of upper bound for backbone mining (default: on).
- -b  --no-bbr-classes         Switch off mining for backbone refinement classes (default: on).
- -u  --no-upper-bound-pruning Switch off upper bound pruning (default: on).
- -p  --p-value _p_value_      Set significance type. Allowable values for _p_value_: 0 <= _p_value_ <= 1.0 (default: 0.95).
 
  (c) 2010 Andreas Maunz, feb 2010
