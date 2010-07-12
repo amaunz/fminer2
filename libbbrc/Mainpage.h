@@ -22,7 +22,7 @@
  *
  * <i>29 Apr 2009</i>: The Backbone Refinement Class paper (co-authored by Christoph Helma and Stefan Kramer) has been accepted for the <b><a href="http://www.sigkdd.org/kdd/2009/papers.html">KDD 2009</a></b> conference on Data Mining and Knowledge Discovery (Jun 28 - Jul 1 2009 in Paris) for a presentation at the conference and inclusion in the conference proceedings.<p />
  * <i>30 Apr 2009</i>: The paper has been selected for oral presentation at <b><a href="http://www.cs.kuleuven.be/~dtai/ilp-mlg-srl/index.php?CONF=mlg&CONT=accepted">MLG 2009</a></b>.<p />
- * <i>10 Jul 2009</i>: <a href="http://doi.acm.org/10.1145/1557019.1557089" target="_blank">KDD conference proceedings are online</a>.
+ * <i>10 Jul 2009</i>: <a href="http://doi.acm.org/10.1145/1557019.1557089" target="_blank">KDD conference proceedings are online</a>.<p />
  * <i>29 Nov 2009</i>: Added configure script and bugfixes.<p />
  *
  * <br><br>
