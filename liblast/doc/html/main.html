@@ -149,27 +149,27 @@ Ruby</a></h4>
 <p>This example assumes that you have created ruby bindings using <code>make ruby</code>. </p>
 <div class="fragment"><pre class="fragment"> require <span class="stringliteral">&#39;last&#39;</span>
  MyFminer = <a class="code" href="classLast.html#a0c3fef1f249450ef678cdd46bd88e3a7" title="Constructor for standard settings: 95% significance level, minimum frequency 2, type...">Last::Last</a>.new()
- MyFminer-&gt;AddCompound (<span class="stringliteral">&quot;O=C(C(C(C=C3)=CC=C3O)=CO2)C1=C2C=C(O)C=C1O&quot;</span> , 1);
- MyFminer-&gt;AddCompound (<span class="stringliteral">&quot;Oc1ccc(cc1)[C@@H]2Cc3ccc(O)cc3OC2&quot;</span> , 2);
- MyFminer-&gt;AddCompound (<span class="stringliteral">&quot;O=C1C(C3=CC=C(O)C=C3)=COC2=C1C=CC(O)=C2&quot;</span> , 3);
- MyFminer-&gt;AddCompound (<span class="stringliteral">&quot;O=C1C(C3=CC=C(OC)C=C3)=COC2=C1C=CC(O)=C2&quot;</span> , 4);
- MyFminer-&gt;AddCompound (<span class="stringliteral">&quot;OC1=CC=C(CCCCCCCC)C=C1&quot;</span> , 5);
- MyFminer-&gt;AddCompound (<span class="stringliteral">&quot;C1(C=CC=CC=1C(=C(Cl)Cl)C2=CC=C(C=C2)Cl)Cl&quot;</span> , 6);
- MyFminer-&gt;AddCompound (<span class="stringliteral">&quot;O=C(C1=C(C=CC=C1)C(=O)OCC(CCCC)CC)OCC(CCCC)CC&quot;</span> , 7);
- MyFminer-&gt;AddCompound (<span class="stringliteral">&quot;Oc1cc(O)cc2CCCCC[C@@H](O)CCC[C@H](C)OC(=O)c12&quot;</span> , 8);
- MyFminer-&gt;AddCompound (<span class="stringliteral">&quot;O=C1C2=C(C=C(C=C2O)O)OC(=C1O)C3=CC(=C(C=C3)O)O&quot;</span> , 9);
- MyFminer-&gt;AddCompound (<span class="stringliteral">&quot;C1(=C(C(=O)C2=C(O1)C=C(C=C2)O)O)C3=CC(O)=C(C=C3)O&quot;</span> , 10);
+ MyFminer.AddCompound (<span class="stringliteral">&quot;O=C(C(C(C=C3)=CC=C3O)=CO2)C1=C2C=C(O)C=C1O&quot;</span> , 1);
+ MyFminer.AddCompound (<span class="stringliteral">&quot;Oc1ccc(cc1)[C@@H]2Cc3ccc(O)cc3OC2&quot;</span> , 2);
+ MyFminer.AddCompound (<span class="stringliteral">&quot;O=C1C(C3=CC=C(O)C=C3)=COC2=C1C=CC(O)=C2&quot;</span> , 3);
+ MyFminer.AddCompound (<span class="stringliteral">&quot;O=C1C(C3=CC=C(OC)C=C3)=COC2=C1C=CC(O)=C2&quot;</span> , 4);
+ MyFminer.AddCompound (<span class="stringliteral">&quot;OC1=CC=C(CCCCCCCC)C=C1&quot;</span> , 5);
+ MyFminer.AddCompound (<span class="stringliteral">&quot;C1(C=CC=CC=1C(=C(Cl)Cl)C2=CC=C(C=C2)Cl)Cl&quot;</span> , 6);
+ MyFminer.AddCompound (<span class="stringliteral">&quot;O=C(C1=C(C=CC=C1)C(=O)OCC(CCCC)CC)OCC(CCCC)CC&quot;</span> , 7);
+ MyFminer.AddCompound (<span class="stringliteral">&quot;Oc1cc(O)cc2CCCCC[C@@H](O)CCC[C@H](C)OC(=O)c12&quot;</span> , 8);
+ MyFminer.AddCompound (<span class="stringliteral">&quot;O=C1C2=C(C=C(C=C2O)O)OC(=C1O)C3=CC(=C(C=C3)O)O&quot;</span> , 9);
+ MyFminer.AddCompound (<span class="stringliteral">&quot;C1(=C(C(=O)C2=C(O1)C=C(C=C2)O)O)C3=CC(O)=C(C=C3)O&quot;</span> , 10);
 <span class="preprocessor"> # ... continue adding compounds</span>
-<span class="preprocessor"></span> MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 1);
- MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 2);
- MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 3);
- MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 4);
- MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 5);
- MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 6);
- MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 7);
- MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 8);
- MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">false</span>, 9);
- MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">false</span>, 10);
+<span class="preprocessor"></span> MyFminer.AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 1);
+ MyFminer.AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 2);
+ MyFminer.AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 3);
+ MyFminer.AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 4);
+ MyFminer.AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 5);
+ MyFminer.AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 6);
+ MyFminer.AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 7);
+ MyFminer.AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 8);
+ MyFminer.AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">false</span>, 9);
+ MyFminer.AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">false</span>, 10);
 <span class="preprocessor"> # ... continue adding activities (true for active, false for inactive)</span>
 <span class="preprocessor"></span> print MyFminer.GetNoCompounds()  
  puts <span class="stringliteral">&quot; compounds&quot;</span>
@@ -221,7 +221,7 @@ Contact</a></h2>
  Web: <a href="http://cs.maunz.de">http://cs.maunz.de</a></p>
 <dl class="author"><dt><b>Author:</b></dt><dd>(c) 2010 by Andreas Maunz, 2010 </dd></dl>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Jul 12 16:43:53 2010 for liblast by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Jul 12 16:46:59 2010 for liblast by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>
