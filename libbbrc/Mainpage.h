@@ -24,6 +24,7 @@
  * <i>30 Apr 2009</i>: The paper has been selected for oral presentation at <b><a href="http://www.cs.kuleuven.be/~dtai/ilp-mlg-srl/index.php?CONF=mlg&CONT=accepted">MLG 2009</a></b>.<p />
  * <i>10 Jul 2009</i>: <a href="http://doi.acm.org/10.1145/1557019.1557089" target="_blank">KDD conference proceedings are online</a>.<p />
  * <i>29 Nov 2009</i>: Added configure script and bugfixes.<p />
+ * <i>19 Apr 2010</i>: <a href="http://www.springerlink.com/content/c6m4w84794645213/" target="_blank">Machine Learning paper</a> accepted.<p />
  *
  * <br><br>
  *  <a name="Abstract">
