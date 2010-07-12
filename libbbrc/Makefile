@@ -38,7 +38,7 @@ RUBY = ruby1.8
 #RUBY          = ruby1.8
 
 # FOR JAVA TARGET: ADJUST COMPILER PATH TO JAVA HEADERS (LINUX)
-INCLUDE_JAVA  = -I/usr/lib/jvm/java-6-sun-1.6.0.14/include/ -I/usr/lib/jvm/java-6-sun-1.6.0.14/include/linux/
+INCLUDE_JAVA  = -I /usr/lib/jvm/jdk1.6.0_20/include/ -I /usr/lib/jvm/jdk1.6.0_20/include/linux/
 
 # NORMALLY NO ADJUSTMENT NECESSARY BELOW THIS LINE. Exit and try 'make' now.
 # WHAT

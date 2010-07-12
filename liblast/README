@@ -6,6 +6,7 @@ Utilities for chemical application of LAST-PM descriptors are available from htt
 
 For installation and documentation see INSTALL.
 For license information see LICENSE.
+For scientific documentation and citation see http://cs.maunz.de .
 
 Abstract:
 Pattern mining methods for graph data have largely been restricted to ground features, such as frequent or correlated subgraphs. Kazius et al. have demonstrated the use of elaborate patterns in the biochemical domain, summarizing several ground features at once. Such patterns bear the potential to reveal latent information not present in any individual ground feature. However, those patterns were handcrafted by chemical experts. 

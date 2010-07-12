@@ -5,6 +5,7 @@ The Fminer application that uses this library is available from http://github.co
 
 For installation and documentation see INSTALL.
 For license information see LICENSE.
+For scientific documentation and citation see http://cs.maunz.de .
 
 Abstract:
 We present a new approach to large-scale graph mining based on so-called backbone refinement classes.
