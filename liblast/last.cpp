@@ -364,6 +364,6 @@ extern "C" void destroy(Fminer* l) {
 extern "C" void usage() {
     cerr << endl;
     cerr << "Options for Usage 1 (LAtent STructure-Pattern Mining): " << endl;
-    cerr << "       [-f minfreq] [-a] [-o] [-g] <graphs> <activities>" << endl;
+    cerr << "       [-f minfreq] [-m maxhops] [-a] [-o] [-g] <graphs> <activities>" << endl;
     cerr << endl;
 }

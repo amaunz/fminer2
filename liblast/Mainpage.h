@@ -144,6 +144,7 @@
  *  <li>Refine Singles: <b>false</b></li>
  *  <li>Do Output: <b>true</b></li>
  *  <li>Separate BBRCs in output by blank line/vector: <b>false</b></li>
+ *  <li>Maximum hops: <b>1000</b></li>
  * </ul>
  *
  * \code
