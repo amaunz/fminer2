@@ -199,7 +199,7 @@
  *  Last ();
  *  \endcode
 
- * It is recommended to increase minimum frequency as a first step when too many features are generated or calculation takes too long.
+ * It is recommended to set the maximum number of hops as a first step when too many features are generated or calculation takes too long.
  *
  * <br><br>
  * @section Contact Contact
