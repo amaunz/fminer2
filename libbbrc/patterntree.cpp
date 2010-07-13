@@ -919,7 +919,7 @@ void PatternTree::expand (pair<float, string> max) {
   if (fm::bbrc_sep && !fm::do_backbone && (legs.size()==0)) {
       if (fm::do_output) {
           if (!fm::console_out && fm::result->size() && (fm::result->back()!=fm::graphstate->sep())) (*fm::result) << fm::graphstate->sep();
-          else cout << fm::graphstate->sep() << endl;
+          //else cout << fm::graphstate->sep() << endl;
       }
   }
 

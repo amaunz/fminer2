@@ -68,6 +68,7 @@ public:
     virtual bool SetChisqActive(bool val) = 0;
     virtual bool SetChisqSig(float _chisq_val) = 0;
     virtual bool SetRegression(bool val) = 0;
+    virtual bool SetMaxHops(int val) = 0;
     virtual std::vector<std::string>* MineRoot(unsigned int j) = 0;
     virtual void ReadGsp(FILE* gsp) = 0;
     virtual bool AddCompound(std::string smiles, unsigned int comp_id) = 0;

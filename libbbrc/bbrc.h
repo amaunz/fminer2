@@ -94,6 +94,7 @@ class Bbrc : public Fminer {
     bool SetChisqActive(bool val); //!< Set this to 'true' to enable chi-square filter.
     bool SetChisqSig(float _chisq_val); //!< Set significance threshold here (between 0 and 1).
     bool SetRegression(bool val); //!< Set 'true' here to enable continuous activity values.
+    bool SetMaxHops(int val); //!< Dummy method for max hops (only used in LAST-PM).
     //@}
     /** @name Others
      *  Other functions.

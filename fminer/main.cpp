@@ -241,12 +241,13 @@ int main(int argc, char *argv[], char *envp[]) {
     bool def_do_output = true;
     bool do_output = def_do_output;
 
-    bool def_bbrc_sep = false;
-    bool bbrc_sep = def_bbrc_sep;
-    
     bool def_do_regression = false;
     bool do_regression = def_do_regression;
-    
+ 
+    int def_max_hops = 1000;
+    int max_hops = def_max_hops;
+    bool arg_max_hops = 0;
+   
     int status=1;
     const char* program_name = argv[0];
     char* graph_file = NULL;
@@ -297,7 +298,7 @@ int main(int argc, char *argv[], char *envp[]) {
 
     // OPTIONS ARGUMENT READ
     char c;
-    const char* const short_options = "f:l:p:saubdonrgh";
+    const char* const short_options = "f:l:p:saubdogm:h";
     const struct option long_options[] = {
         {"minfreq",                1, NULL, 'f'},
         {"level",                  1, NULL, 'l'},
@@ -308,9 +309,8 @@ int main(int argc, char *argv[], char *envp[]) {
         {"no-bbr-classes",         0, NULL, 'b'},
         {"no-dynamic-ub",          0, NULL, 'd'},
         {"no-output",              0, NULL, 'o'},
-        {"line-nrs",               0, NULL, 'n'},
-        {"bbrc-sep",               0, NULL, 'r'},
         {"regression",             0, NULL, 'g'},
+        {"max-hops",               1, NULL, 'm'},
         {"help",                   0, NULL, 'h'},
         {NULL,                     0, NULL, 0}
     };
@@ -350,13 +350,13 @@ int main(int argc, char *argv[], char *envp[]) {
         case 'o':
             do_output = false;
             break;
-        case 'r':
-            bbrc_sep = true;
-            if (!act_file) status = 1;
-            break;
         case 'g':
             do_regression = true;
             if (!act_file) status = 1;
+            break;
+        case 'm':
+            max_hops = atoi(optarg);
+            arg_max_hops = 1;
             break;
         case 'h':
             if ((argc>1) && (argv[1][0]!='-')) status=2;
@@ -375,8 +375,6 @@ int main(int argc, char *argv[], char *envp[]) {
         // INTEGRITY CONSTRAINTS AND HELP OUTPUT
         //  ----------- !du ---------      ----------- !db ---------
         if ((adjust_ub && !do_pruning) || (adjust_ub && !do_backbone)) status = 2; 
-        //  --------- r!b ----------     ----------- ru ---------
-        if ((bbrc_sep && do_backbone) || (bbrc_sep && !do_pruning)) status = 2;
         if (do_regression && (!adjust_ub || !do_backbone || !do_pruning) ) status = 2; // KS: enforce d,b,u flags not set
     }
 
@@ -427,8 +425,9 @@ int main(int argc, char *argv[], char *envp[]) {
                 if (do_pruning != def_do_pruning) all_args_good *= fminer->SetPruning(do_pruning);
                 if (do_backbone != def_do_backbone) all_args_good *= fminer->SetBackbone(do_backbone);
                 if (do_output != def_do_output) fminer->SetDoOutput(do_output);
-                if (bbrc_sep != def_bbrc_sep) all_args_good *= fminer->SetBbrcSep(bbrc_sep);
+                //if (bbrc_sep != def_bbrc_sep) all_args_good *= fminer->SetBbrcSep(bbrc_sep); // Disabled for console output. Set manually to true and disable console output.
                 if (do_regression != def_do_regression) all_args_good *= fminer->SetRegression(do_regression);
+                if (max_hops != def_max_hops || arg_max_hops)  all_args_good *= fminer->SetMaxHops(max_hops);
             }
 
             else if (graph_file) {
@@ -438,7 +437,6 @@ int main(int argc, char *argv[], char *envp[]) {
                 if (refine_singles != def_refine_singles) all_args_good *= fminer->SetRefineSingles(refine_singles);
                 if (aromatic != def_aromatic) fminer->SetAromatic(aromatic);
                 if (do_output != def_do_output) fminer->SetDoOutput(do_output);
-                if (bbrc_sep != def_bbrc_sep) all_args_good *= fminer->SetBbrcSep(bbrc_sep);
                 fminer->SetChisqActive(false);
             }
 

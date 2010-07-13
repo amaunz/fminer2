@@ -626,7 +626,7 @@ void Path::expand2 (pair<float,string> max) {
 
   if (fm::bbrc_sep && !fm::do_backbone && legs.size() > 0) {
       if (fm::do_output && !fm::console_out && fm::result->size() && (fm::result->back()!=fm::graphstate->sep())) (*fm::result) << fm::graphstate->sep();
-      else cout << fm::graphstate->sep() << endl;
+      //else cout << fm::graphstate->sep() << endl;
   }
 
   for ( unsigned int i = 0; i < legs.size (); i++ ) {

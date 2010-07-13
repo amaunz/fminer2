@@ -1,13 +1,14 @@
  Welcome to Fminer.
 
- This is Fminer (frontend application), available from http://github.com/amaunz/fminer2/tree/master .
+ This is Fminer (frontend application), available with libraries from http://github.com/amaunz/fminer2/tree/master .
 
  For installation and documentation see INSTALL.
  For license information see LICENSE.
 
 
- File Formats:
- =============
+ FILE FORMATS
+ ============
+
  Graphs are allowed in SMILES and gSpan format. This is to support both general graph mining, but to also make life more convenient when mining molecular data. For instance, for SMILES formatted input there is a switch to enable/disable aromatic ring perception, which, in gSpan format, requires re-formatting the input.
   
   SMILES file line format is defined by 
@@ -26,25 +27,35 @@
  The set of IDs in a gSpan or SMILES format file must be a subset of the set of activity IDs in the respective activity format file, i.e., not every Activity ID must be matched by a graph id, but vice versa.
 
 
- Switches:
- ========
+ OPTIONS
+ =======
+
+ General Options:
  -f  --minfreq _minfreq_      Set minimum frequency. Allowable values for _minfreq_: 1, 2, ... (default: 2).
- -l  --level _level_          Set fragment type. Allowable values for _type_: 1 (paths) and 2 (trees) (default: 2).
- -s  --refine-singles         Switch on refinement of fragments with frequency 1 (default: off).
+ -a  --aromaticity            Switch off aromatic ring perception when using smiles input format (default: on).
  -o  --no-output              Switch off output (default: on).
- -r  --bbrc-sep               Switch on BBRC separator in result vector (default: off).
  -g  --regression             Switch on regression (default: off).
 
-  Upper bound pruning options:
- -a  --aromaticity            Switch off aromatic ring perception when using smiles input format (default: on).
+
+ BBRC Mining exclusive options:
+ -l  --level _level_          Set fragment type. Allowable values for _type_: 1 (paths) and 2 (trees) (default: 2).
+ -s  --refine-singles         Switch on refinement of fragments with frequency 1 (default: off).
+ -n  --line-nrs               Switch on output of line numbers as occurrences instead of IDs (default: off).
  -d  --no-dynamic-ub          Switch off dynamic adjustment of upper bound for backbone mining (default: on).
  -b  --no-bbr-classes         Switch off mining for backbone refinement classes (default: on).
+ Upper bound pruning options (for performance benchmarking):
  -u  --no-upper-bound-pruning Switch off upper bound pruning (default: on).
- -p  --p-value _p_value_      Set significance type. Allowable values for _p_value_: 0 <= _p_value_ <= 1.0 (default: 0.95).
+ -p  --p-value _p_value_      Set p-value for chi-square significance. Allowable values for _p_value_: 0 <= _p_value_ <= 1.0 (default: 0.95).
 
+
+ LAST-PM exclusive options:
+ -m  --max-hops               Set maximum nr of hops, i.e. threshold for nr of ground features per patch. Note: There may occur latent structures with more hops.
+
+
+ USAGE
+ =====
 
  General Usage:
- ===================
  Usage 1: fminer <Library> <Options> <Graphs> <Activities>
  Usage 2: fminer <Library> <Options> <Graphs>
 
@@ -53,30 +64,33 @@
       <Graphs>     File should have suffix .smi or .gsp, indicating SMILES or gSpan format.
       <Activities> File must be in Activity format (suffix not relevant).
 
+
  Usage with LibBBRC:
- ===================
  Options for Usage 1 (BBRC mining using dynamic upper bound pruning): 
-      [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-g] [-d [-b [-r] | -b [-u] ] ] [-p p_value]
+      [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-g] [-d [-b [-u]]] [-p p_value]
 
  Options for Usage 2 (Frequent subgraph mining): 
       [-f minfreq] [-l type] [-s] [-a] [-o] [-n] [-r]
 
+
  Usage with LibLAST:
- ===================
  Options for Usage 1 (LAtent STructure-Pattern Mining): 
-       [-f minfreq] [-a] [-o] [-g] <graphs> <activities> 
+       [-f minfreq] [-m maxhops] [-a] [-o] [-g] <graphs> <activities> 
 
 
- Environment Variables:
- ======================
+ ENVIRONMENT VARIABLES (ONLY FOR BBRC MINING)
+ ============================================
+
  Output consists of blocks of gSpan graphs.
- Define the FMINER_SMARTS environment variable to produce output in SMARTS format (e.g. export FMINER_SMARTS=1).
- Additionally define the FMINER_LAZAR environment variable to produce output in linfrag format which can be used as input to Lazar (e.g. export FMINER_LAZAR=1).
- Define the FMINER_PVALUES environment variable to produce p-values instead of chi-square values (slower, only for BBRC).
+
+ - FMINER_SMART   : produce output in SMARTS format (e.g. export FMINER_SMARTS=1).
+ - FMINER_LAZAR   : produce output in linfrag format which can be used as input to Lazar (e.g. export FMINER_LAZAR=1).
+ - FMINER_PVALUES : produce p-values instead of chi-square values (e.g. export FMINER_PVALUES=1).
 
 
- Examples:
- =========
+ EXAMPLES
+ ========
+
  In any case, 1-frequent patterns are not refined further, unless the -s switch is used.
 
  BBRC mining:
@@ -93,8 +107,8 @@
 
  LAST-PM:
 
- # LAST-PM descriptors (min frequency m):
- ./fminer ../liblast/liblast.so -f<m> <graphs> <activities>
+ # LAST-PM descriptors (min frequency 5, max hops 20):
+ ./fminer ../liblast/liblast.so -f 5 -m 20 <graphs> <activities>
 
 
  (c) 2010 Andreas Maunz, feb 2010
