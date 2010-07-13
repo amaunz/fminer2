@@ -123,17 +123,16 @@
  * I would suggest to manipulate the minimum frequency only at first. The number of fragments output should not be more than a multitude of the number of input graphs.
  * For most chemical databases, a minimum frequency threshold of 2%-3% will deliver good results. LibBbrc does not support percentage values, you will have to calculate absolute numbers.
  *
- *  @subsection sec3 Environment Variables
- *  FMINER_SMARTS: Produce output in SMARTS format. In this case, each line is a YAML sequence, containing SMARTS fragment, <i>p</i>-value, and two sequences denoting positive and negative class occurrences (line numbers in Smiles file): 
+ *  @subsection sec33 Environment Variables
+ *  <b>FMINER_SMARTS</b>: Produce output in SMARTS format. In this case, each line is a YAML sequence, containing SMARTS fragment, <i>p</i>-value, and two sequences denoting positive and negative class occurrences (line numbers in Smiles file): 
  *
  *  \code
  *  - [ smarts,    p_chisq,    occ_list_active,    occ_list_inactive ]
  *  \endcode
  *
- * Documentation for YAML can be found at: http://yaml.org/spec/cvs/current.html# (e.g. export FMINER_SMARTS=1).
- * FMINER_LAZAR: Produce output in linfrag format which can be used as input to <code><a href="http://lazar.in-silico.de" target="_blank">Lazar</a></code> (e.g. export FMINER_LAZAR=1).
- * FMINER_PVALUES: Produce p-values instead of chi-square values (e.g. export FMINER_PVALUES=1).
-
+ * Documentation for YAML can be found at: http://yaml.org/spec/cvs/current.html# (e.g. export FMINER_SMARTS=1).<br />
+ * <b>FMINER_LAZAR</b>: Produce output in linfrag format which can be used as input to <code><a href="http://lazar.in-silico.de" target="_blank">Lazar</a></code> (e.g. export FMINER_LAZAR=1).<br />
+ * <b>FMINER_PVALUES</b>: Produce p-values instead of chi-square values (e.g. export FMINER_PVALUES=1).
  *
  *  @subsection sec3 Examples using the LibBbrc API
  *  LibBbrc uses the 'singleton' design pattern known from software engineering, i.e., class instantiation is restricted to one object. To empty the database after a run to feed new compounds, use the Bbrc::Reset() routine. 
