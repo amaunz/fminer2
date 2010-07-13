@@ -103,6 +103,8 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set significance threshold here (between 0 and 1).  <a href="#a2ffe9fadf7a96e7d3f83cbd977004278"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#a7b8900193deba5c64f10fe35d8bc5875">SetRegression</a> (bool val)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set 'true' here to enable continuous activity values.  <a href="#a7b8900193deba5c64f10fe35d8bc5875"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#aa9adc28f882e96fc942e52eaed3db0f6">SetMaxHops</a> (int val)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Dummy method for max hops (only used in LAST-PM).  <a href="#aa9adc28f882e96fc942e52eaed3db0f6"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Others</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="amgrp52ef9633d88a7480b3a938ff9eaa2a25"></a> Other functions. </p>
 </div></td></tr>
@@ -343,21 +345,21 @@
 
 <p>References <a class="el" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00430"></a>00430                                                       {
-<a name="l00431"></a>00431     <span class="keywordflow">if</span> (fm::database-&gt;trees_map[comp_id] == NULL) { 
-<a name="l00432"></a>00432         cerr &lt;&lt; <span class="stringliteral">&quot;No structure for ID &quot;</span> &lt;&lt; comp_id &lt;&lt; <span class="stringliteral">&quot;. Ignoring entry!&quot;</span> &lt;&lt; endl; <span class="keywordflow">return</span> <span class="keyword">false</span>; 
-<a name="l00433"></a>00433     }
-<a name="l00434"></a>00434     <span class="keywordflow">else</span> {
-<a name="l00435"></a>00435         <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>) {
-<a name="l00436"></a>00436             <span class="keywordflow">if</span> ((fm::database-&gt;trees_map[comp_id]-&gt;activity = act) == 1.0) AddChiSqNa();
-<a name="l00437"></a>00437             <span class="keywordflow">else</span> AddChiSqNi();
-<a name="l00438"></a>00438         }
-<a name="l00439"></a>00439         <span class="keywordflow">else</span> {
-<a name="l00440"></a>00440             <span class="keywordflow">if</span> ((fm::database-&gt;trees_map[comp_id]-&gt;activity = act)) AddKS(act);
-<a name="l00441"></a>00441         }
-<a name="l00442"></a>00442         <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00443"></a>00443     }
-<a name="l00444"></a>00444 }
+<p><div class="fragment"><pre class="fragment"><a name="l00434"></a>00434                                                       {
+<a name="l00435"></a>00435     <span class="keywordflow">if</span> (fm::database-&gt;trees_map[comp_id] == NULL) { 
+<a name="l00436"></a>00436         cerr &lt;&lt; <span class="stringliteral">&quot;No structure for ID &quot;</span> &lt;&lt; comp_id &lt;&lt; <span class="stringliteral">&quot;. Ignoring entry!&quot;</span> &lt;&lt; endl; <span class="keywordflow">return</span> <span class="keyword">false</span>; 
+<a name="l00437"></a>00437     }
+<a name="l00438"></a>00438     <span class="keywordflow">else</span> {
+<a name="l00439"></a>00439         <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>) {
+<a name="l00440"></a>00440             <span class="keywordflow">if</span> ((fm::database-&gt;trees_map[comp_id]-&gt;activity = act) == 1.0) AddChiSqNa();
+<a name="l00441"></a>00441             <span class="keywordflow">else</span> AddChiSqNi();
+<a name="l00442"></a>00442         }
+<a name="l00443"></a>00443         <span class="keywordflow">else</span> {
+<a name="l00444"></a>00444             <span class="keywordflow">if</span> ((fm::database-&gt;trees_map[comp_id]-&gt;activity = act)) AddKS(act);
+<a name="l00445"></a>00445         }
+<a name="l00446"></a>00446         <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00447"></a>00447     }
+<a name="l00448"></a>00448 }
 </pre></div></p>
 
 </div>
@@ -389,19 +391,19 @@
 
 <p>Add a compound to the database. </p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00402"></a>00402                                                           {
-<a name="l00403"></a>00403     <span class="keywordtype">bool</span> insert_done=<span class="keyword">false</span>;
-<a name="l00404"></a>00404     <span class="keywordflow">if</span> (comp_id&lt;=0) { cerr &lt;&lt; <span class="stringliteral">&quot;Error! IDs must be of type: Int &gt; 0.&quot;</span> &lt;&lt; endl;}
-<a name="l00405"></a>00405     <span class="keywordflow">else</span> {
-<a name="l00406"></a>00406         <span class="keywordflow">if</span> (fm::database-&gt;readTreeSmi (smiles, comp_no, comp_id, comp_runner)) {
-<a name="l00407"></a>00407             insert_done=<span class="keyword">true</span>;
-<a name="l00408"></a>00408             comp_no++;
-<a name="l00409"></a>00409         }
-<a name="l00410"></a>00410         <span class="keywordflow">else</span> { cerr &lt;&lt; <span class="stringliteral">&quot;Error on compound &quot;</span> &lt;&lt; comp_runner &lt;&lt; <span class="stringliteral">&quot;, id &quot;</span> &lt;&lt; comp_id &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; endl; }
-<a name="l00411"></a>00411         comp_runner++;
-<a name="l00412"></a>00412     }
-<a name="l00413"></a>00413     <span class="keywordflow">return</span> insert_done;
-<a name="l00414"></a>00414 }
+<p><div class="fragment"><pre class="fragment"><a name="l00406"></a>00406                                                           {
+<a name="l00407"></a>00407     <span class="keywordtype">bool</span> insert_done=<span class="keyword">false</span>;
+<a name="l00408"></a>00408     <span class="keywordflow">if</span> (comp_id&lt;=0) { cerr &lt;&lt; <span class="stringliteral">&quot;Error! IDs must be of type: Int &gt; 0.&quot;</span> &lt;&lt; endl;}
+<a name="l00409"></a>00409     <span class="keywordflow">else</span> {
+<a name="l00410"></a>00410         <span class="keywordflow">if</span> (fm::database-&gt;readTreeSmi (smiles, comp_no, comp_id, comp_runner)) {
+<a name="l00411"></a>00411             insert_done=<span class="keyword">true</span>;
+<a name="l00412"></a>00412             comp_no++;
+<a name="l00413"></a>00413         }
+<a name="l00414"></a>00414         <span class="keywordflow">else</span> { cerr &lt;&lt; <span class="stringliteral">&quot;Error on compound &quot;</span> &lt;&lt; comp_runner &lt;&lt; <span class="stringliteral">&quot;, id &quot;</span> &lt;&lt; comp_id &lt;&lt; <span class="stringliteral">&quot;.&quot;</span> &lt;&lt; endl; }
+<a name="l00415"></a>00415         comp_runner++;
+<a name="l00416"></a>00416     }
+<a name="l00417"></a>00417     <span class="keywordflow">return</span> insert_done;
+<a name="l00418"></a>00418 }
 </pre></div></p>
 
 </div>
@@ -470,7 +472,7 @@
 
 <p>References <a class="el" href="namespacefm.html#a5b3dab8ff08516a4daa7bb804b6dd368">fm::aromatic</a>.</p>
 
-<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00338">MineRoot()</a>.</p>
+<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00342">MineRoot()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00162"></a>00162 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a5b3dab8ff08516a4daa7bb804b6dd368">fm::aromatic</a>;}
 </pre></div></p>
@@ -494,7 +496,7 @@
 
 <p>Get whether BBRC representatives should be mined. </p>
 
-<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00338">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00276">SetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00209">SetDynamicUpperBound()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00320">SetRegression()</a>.</p>
+<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00342">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00276">SetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00209">SetDynamicUpperBound()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00320">SetRegression()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00158"></a>00158 {<span class="keywordflow">return</span> fm::do_backbone;}
 </pre></div></p>
@@ -520,7 +522,7 @@
 
 <p>References <a class="el" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a>.</p>
 
-<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00338">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00188">SetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00276">SetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00249">SetConsoleOut()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00228">SetPruning()</a>.</p>
+<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00342">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00188">SetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00276">SetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00249">SetConsoleOut()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00228">SetPruning()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00165"></a>00165 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a>;}
 </pre></div></p>
@@ -546,7 +548,7 @@
 
 <p>References <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>.</p>
 
-<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00338">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00188">SetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00298">SetChisqActive()</a>, <a class="el" href="bbrc_8cpp_source.html#l00209">SetDynamicUpperBound()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00228">SetPruning()</a>.</p>
+<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00342">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00188">SetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00298">SetChisqActive()</a>, <a class="el" href="bbrc_8cpp_source.html#l00209">SetDynamicUpperBound()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00228">SetPruning()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00166"></a>00166 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;active;}
 </pre></div></p>
@@ -572,7 +574,7 @@
 
 <p>References <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>, <a class="el" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>, and <a class="el" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>.</p>
 
-<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00338">MineRoot()</a>.</p>
+<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00342">MineRoot()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00167"></a>00167 {<span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>) <span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;sig; <span class="keywordflow">else</span> <span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>-&gt;sig; }
 </pre></div></p>
@@ -620,7 +622,7 @@
 
 <p>Get whether output is enabled. </p>
 
-<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00338">MineRoot()</a>.</p>
+<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00342">MineRoot()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00164"></a>00164 {<span class="keywordflow">return</span> fm::do_output;}
 </pre></div></p>
@@ -646,7 +648,7 @@
 
 <p>References <a class="el" href="namespacefm.html#ad86ff64e72ff4a9586fcc43187d49b01">fm::adjust_ub</a>.</p>
 
-<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00338">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00188">SetBackbone()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00228">SetPruning()</a>.</p>
+<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00342">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00188">SetBackbone()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00228">SetPruning()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00159"></a>00159 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#ad86ff64e72ff4a9586fcc43187d49b01">fm::adjust_ub</a>;}
 </pre></div></p>
@@ -670,7 +672,7 @@
 
 <p>Get minimum frequency. </p>
 
-<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00338">MineRoot()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00262">SetRefineSingles()</a>.</p>
+<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00342">MineRoot()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00262">SetRefineSingles()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00156"></a>00156 {<span class="keywordflow">return</span> fm::minfreq;}
 </pre></div></p>
@@ -734,7 +736,7 @@
 
 <p>References <a class="el" href="namespacefm.html#ae3778362791642453eccdf44001942c4">fm::do_pruning</a>.</p>
 
-<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00338">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00276">SetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00209">SetDynamicUpperBound()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00320">SetRegression()</a>.</p>
+<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00342">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00276">SetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00209">SetDynamicUpperBound()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00320">SetRegression()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00160"></a>00160 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#ae3778362791642453eccdf44001942c4">fm::do_pruning</a>;}
 </pre></div></p>
@@ -758,7 +760,7 @@
 
 <p>Get whether fragments with frequency 1 should be refined. </p>
 
-<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00338">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00174">SetMinfreq()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00262">SetRefineSingles()</a>.</p>
+<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00342">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00174">SetMinfreq()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00262">SetRefineSingles()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00163"></a>00163 {<span class="keywordflow">return</span> fm::refine_singles;}
 </pre></div></p>
@@ -784,7 +786,7 @@
 
 <p>References <a class="el" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>.</p>
 
-<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00338">MineRoot()</a>.</p>
+<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00342">MineRoot()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00168"></a>00168 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>;}
 </pre></div></p>
@@ -808,7 +810,7 @@
 
 <p>Get type. </p>
 
-<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00338">MineRoot()</a>.</p>
+<p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00342">MineRoot()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00157"></a>00157 {<span class="keywordflow">return</span> fm::type;}
 </pre></div></p>
@@ -835,65 +837,65 @@
 
 <p>References <a class="el" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a>, <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>, <a class="el" href="bbrc_8cpp_source.html#l00162">GetAromatic()</a>, <a class="el" href="bbrc_8cpp_source.html#l00158">GetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00165">GetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00166">GetChisqActive()</a>, <a class="el" href="bbrc_8cpp_source.html#l00167">GetChisqSig()</a>, <a class="el" href="bbrc_8cpp_source.html#l00164">GetDoOutput()</a>, <a class="el" href="bbrc_8cpp_source.html#l00159">GetDynamicUpperBound()</a>, <a class="el" href="bbrc_8cpp_source.html#l00156">GetMinfreq()</a>, <a class="el" href="bbrc_8cpp_source.html#l00160">GetPruning()</a>, <a class="el" href="bbrc_8cpp_source.html#l00163">GetRefineSingles()</a>, <a class="el" href="bbrc_8cpp_source.html#l00168">GetRegression()</a>, <a class="el" href="bbrc_8cpp_source.html#l00157">GetType()</a>, and <a class="el" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00338"></a>00338                                              {
-<a name="l00339"></a>00339     fm::result-&gt;clear();
-<a name="l00340"></a>00340     <span class="keywordflow">if</span> (!init_mining_done) {
-<a name="l00341"></a>00341         <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;active) {
-<a name="l00342"></a>00342             each (fm::database-&gt;trees) {
-<a name="l00343"></a>00343                 <span class="keywordflow">if</span> (fm::database-&gt;trees[i]-&gt;activity == -1) {
-<a name="l00344"></a>00344                     cerr &lt;&lt; <span class="stringliteral">&quot;Error! ID &quot;</span> &lt;&lt; fm::database-&gt;trees[i]-&gt;orig_tid &lt;&lt; <span class="stringliteral">&quot; is missing activity information.&quot;</span> &lt;&lt; endl;
-<a name="l00345"></a>00345                     exit(1);
-<a name="l00346"></a>00346                 }
-<a name="l00347"></a>00347             }
-<a name="l00348"></a>00348         }
-<a name="l00349"></a>00349         fm::database-&gt;edgecount (); 
-<a name="l00350"></a>00350         fm::database-&gt;reorder (); 
-<a name="l00351"></a>00351         initLegStatics (); 
-<a name="l00352"></a>00352         fm::graphstate-&gt;init (); 
-<a name="l00353"></a>00353         <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a> &amp;&amp; !fm::do_backbone &amp;&amp; fm::do_output &amp;&amp; !fm::console_out) (*fm::result) &lt;&lt; fm::graphstate-&gt;sep();
-<a name="l00354"></a>00354         init_mining_done=<span class="keyword">true</span>; 
-<a name="l00355"></a>00355 
-<a name="l00356"></a>00356         <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>) {
-<a name="l00357"></a>00357              cerr &lt;&lt; <span class="stringliteral">&quot;Settings:&quot;</span> &lt;&lt; endl \
-<a name="l00358"></a>00358              &lt;&lt; <span class="stringliteral">&quot;---&quot;</span> &lt;&lt; endl \
-<a name="l00359"></a>00359              &lt;&lt; <span class="stringliteral">&quot;Type:                                 &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a00c83761de7dca2e16d741650b41f1ef" title="Get type.">GetType</a>() &lt;&lt; endl \
-<a name="l00360"></a>00360              &lt;&lt; <span class="stringliteral">&quot;Minimum frequency:                    &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a6b73a9fcdd27d073f4ba6686c9cca02f" title="Get minimum frequency.">GetMinfreq</a>() &lt;&lt; endl \
-<a name="l00361"></a>00361              &lt;&lt; <span class="stringliteral">&quot;Aromatic:                             &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a8c5138a564797432427b6667dd2976b3" title="Get whether aromatic rings should be perceived instead of Kekule notation.">GetAromatic</a>() &lt;&lt; endl \
-<a name="l00362"></a>00362              &lt;&lt; <span class="stringliteral">&quot;Chi-square active (chi-square-value): &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#af23472dda234c80fdc244494cd4f09cc" title="Get whether chi-square filter is active.">GetChisqActive</a>() &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a5b719d86b406c885f898ea332ec8deaf" title="Get significance threshold.">GetChisqSig</a>()&lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; endl \
-<a name="l00363"></a>00363              &lt;&lt; <span class="stringliteral">&quot;BBRC mining:                          &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a4dd6282e6926b0e7a926036127042030" title="Get whether BBRC representatives should be mined.">GetBackbone</a>() &lt;&lt; endl \
-<a name="l00364"></a>00364              &lt;&lt; <span class="stringliteral">&quot;Statistical metric (dynamic) pruning: &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#ae89056d89e3847cce0172baea6a37b26" title="Get whether statistical metric pruning should be used.">GetPruning</a>() &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#ab0cbbc3a50704734e46986234dbc68ce" title="Get whether dynamic upper bound pruning is used.">GetDynamicUpperBound</a>() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; endl \
-<a name="l00365"></a>00365              &lt;&lt; <span class="stringliteral">&quot;Refine patterns with single support:  &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a43b57f5108e2a25ae8b08ab91179dfb5" title="Get whether fragments with frequency 1 should be refined.">GetRefineSingles</a>() &lt;&lt; endl \
-<a name="l00366"></a>00366              &lt;&lt; <span class="stringliteral">&quot;Do output:                            &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a854663daf425c444db86d80cc862ba9c" title="Get whether output is enabled.">GetDoOutput</a>() &lt;&lt; endl \
-<a name="l00367"></a>00367              &lt;&lt; <span class="stringliteral">&quot;BBRC sep:                             &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a84f3001cb532d71e4edce28fc0f83ec2" title="Get whether BBRCs should be separated in the output.">GetBbrcSep</a>() &lt;&lt; endl \
-<a name="l00368"></a>00368              &lt;&lt; <span class="stringliteral">&quot;Regression:                           &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a8471ab39593e52b542e9284a12517f4c" title="Get whether continuous activity values should be used.">GetRegression</a>() &lt;&lt; endl \
-<a name="l00369"></a>00369              &lt;&lt; <span class="stringliteral">&quot;---&quot;</span> &lt;&lt; endl;
-<a name="l00370"></a>00370         }
-<a name="l00371"></a>00371         <span class="keywordflow">else</span> {
-<a name="l00372"></a>00372              cerr &lt;&lt; <span class="stringliteral">&quot;Settings:&quot;</span> &lt;&lt; endl \
-<a name="l00373"></a>00373              &lt;&lt; <span class="stringliteral">&quot;---&quot;</span> &lt;&lt; endl \
-<a name="l00374"></a>00374              &lt;&lt; <span class="stringliteral">&quot;Type:                                 &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a00c83761de7dca2e16d741650b41f1ef" title="Get type.">GetType</a>() &lt;&lt; endl \
-<a name="l00375"></a>00375              &lt;&lt; <span class="stringliteral">&quot;Minimum frequency:                    &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a6b73a9fcdd27d073f4ba6686c9cca02f" title="Get minimum frequency.">GetMinfreq</a>() &lt;&lt; endl \
-<a name="l00376"></a>00376              &lt;&lt; <span class="stringliteral">&quot;Aromatic:                             &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a8c5138a564797432427b6667dd2976b3" title="Get whether aromatic rings should be perceived instead of Kekule notation.">GetAromatic</a>() &lt;&lt; endl \
-<a name="l00377"></a>00377              &lt;&lt; <span class="stringliteral">&quot;KS active (p-value):                  &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#af23472dda234c80fdc244494cd4f09cc" title="Get whether chi-square filter is active.">GetChisqActive</a>() &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a5b719d86b406c885f898ea332ec8deaf" title="Get significance threshold.">GetChisqSig</a>()&lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; endl \
-<a name="l00378"></a>00378              &lt;&lt; <span class="stringliteral">&quot;BBRC mining:                          &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a4dd6282e6926b0e7a926036127042030" title="Get whether BBRC representatives should be mined.">GetBackbone</a>() &lt;&lt; endl \
-<a name="l00379"></a>00379              &lt;&lt; <span class="stringliteral">&quot;Statistical metric (dynamic) pruning: &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#ae89056d89e3847cce0172baea6a37b26" title="Get whether statistical metric pruning should be used.">GetPruning</a>() &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#ab0cbbc3a50704734e46986234dbc68ce" title="Get whether dynamic upper bound pruning is used.">GetDynamicUpperBound</a>() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; endl \
-<a name="l00380"></a>00380              &lt;&lt; <span class="stringliteral">&quot;Refine patterns with single support:  &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a43b57f5108e2a25ae8b08ab91179dfb5" title="Get whether fragments with frequency 1 should be refined.">GetRefineSingles</a>() &lt;&lt; endl \
-<a name="l00381"></a>00381              &lt;&lt; <span class="stringliteral">&quot;Do output:                            &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a854663daf425c444db86d80cc862ba9c" title="Get whether output is enabled.">GetDoOutput</a>() &lt;&lt; endl \
-<a name="l00382"></a>00382              &lt;&lt; <span class="stringliteral">&quot;BBRC sep:                             &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a84f3001cb532d71e4edce28fc0f83ec2" title="Get whether BBRCs should be separated in the output.">GetBbrcSep</a>() &lt;&lt; endl \
-<a name="l00383"></a>00383              &lt;&lt; <span class="stringliteral">&quot;Regression:                           &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a8471ab39593e52b542e9284a12517f4c" title="Get whether continuous activity values should be used.">GetRegression</a>() &lt;&lt; endl \
-<a name="l00384"></a>00384              &lt;&lt; <span class="stringliteral">&quot;---&quot;</span> &lt;&lt; endl;
-<a name="l00385"></a>00385         }
-<a name="l00386"></a>00386 
-<a name="l00387"></a>00387     }
-<a name="l00388"></a>00388 
-<a name="l00389"></a>00389 
-<a name="l00390"></a>00390     <span class="keywordflow">if</span> (j &gt;= fm::database-&gt;nodelabels.size()) { cerr &lt;&lt; <span class="stringliteral">&quot;Error! Root node &quot;</span> &lt;&lt; j &lt;&lt; <span class="stringliteral">&quot; does not exist.&quot;</span> &lt;&lt; endl;  exit(1); }
-<a name="l00391"></a>00391     <span class="keywordflow">if</span> ( fm::database-&gt;nodelabels[j].frequency &gt;= fm::minfreq &amp;&amp; fm::database-&gt;nodelabels[j].frequentedgelabels.size () ) {
-<a name="l00392"></a>00392         Path path(j);
-<a name="l00393"></a>00393         path.expand(); <span class="comment">// mining step</span>
-<a name="l00394"></a>00394     }
-<a name="l00395"></a>00395     <span class="keywordflow">return</span> fm::result;
-<a name="l00396"></a>00396 }
+<p><div class="fragment"><pre class="fragment"><a name="l00342"></a>00342                                              {
+<a name="l00343"></a>00343     fm::result-&gt;clear();
+<a name="l00344"></a>00344     <span class="keywordflow">if</span> (!init_mining_done) {
+<a name="l00345"></a>00345         <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;active) {
+<a name="l00346"></a>00346             each (fm::database-&gt;trees) {
+<a name="l00347"></a>00347                 <span class="keywordflow">if</span> (fm::database-&gt;trees[i]-&gt;activity == -1) {
+<a name="l00348"></a>00348                     cerr &lt;&lt; <span class="stringliteral">&quot;Error! ID &quot;</span> &lt;&lt; fm::database-&gt;trees[i]-&gt;orig_tid &lt;&lt; <span class="stringliteral">&quot; is missing activity information.&quot;</span> &lt;&lt; endl;
+<a name="l00349"></a>00349                     exit(1);
+<a name="l00350"></a>00350                 }
+<a name="l00351"></a>00351             }
+<a name="l00352"></a>00352         }
+<a name="l00353"></a>00353         fm::database-&gt;edgecount (); 
+<a name="l00354"></a>00354         fm::database-&gt;reorder (); 
+<a name="l00355"></a>00355         initLegStatics (); 
+<a name="l00356"></a>00356         fm::graphstate-&gt;init (); 
+<a name="l00357"></a>00357         <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a> &amp;&amp; !fm::do_backbone &amp;&amp; fm::do_output &amp;&amp; !fm::console_out) (*fm::result) &lt;&lt; fm::graphstate-&gt;sep();
+<a name="l00358"></a>00358         init_mining_done=<span class="keyword">true</span>; 
+<a name="l00359"></a>00359 
+<a name="l00360"></a>00360         <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>) {
+<a name="l00361"></a>00361              cerr &lt;&lt; <span class="stringliteral">&quot;Settings:&quot;</span> &lt;&lt; endl \
+<a name="l00362"></a>00362              &lt;&lt; <span class="stringliteral">&quot;---&quot;</span> &lt;&lt; endl \
+<a name="l00363"></a>00363              &lt;&lt; <span class="stringliteral">&quot;Type:                                 &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a00c83761de7dca2e16d741650b41f1ef" title="Get type.">GetType</a>() &lt;&lt; endl \
+<a name="l00364"></a>00364              &lt;&lt; <span class="stringliteral">&quot;Minimum frequency:                    &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a6b73a9fcdd27d073f4ba6686c9cca02f" title="Get minimum frequency.">GetMinfreq</a>() &lt;&lt; endl \
+<a name="l00365"></a>00365              &lt;&lt; <span class="stringliteral">&quot;Aromatic:                             &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a8c5138a564797432427b6667dd2976b3" title="Get whether aromatic rings should be perceived instead of Kekule notation.">GetAromatic</a>() &lt;&lt; endl \
+<a name="l00366"></a>00366              &lt;&lt; <span class="stringliteral">&quot;Chi-square active (chi-square-value): &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#af23472dda234c80fdc244494cd4f09cc" title="Get whether chi-square filter is active.">GetChisqActive</a>() &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a5b719d86b406c885f898ea332ec8deaf" title="Get significance threshold.">GetChisqSig</a>()&lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; endl \
+<a name="l00367"></a>00367              &lt;&lt; <span class="stringliteral">&quot;BBRC mining:                          &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a4dd6282e6926b0e7a926036127042030" title="Get whether BBRC representatives should be mined.">GetBackbone</a>() &lt;&lt; endl \
+<a name="l00368"></a>00368              &lt;&lt; <span class="stringliteral">&quot;Statistical metric (dynamic) pruning: &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#ae89056d89e3847cce0172baea6a37b26" title="Get whether statistical metric pruning should be used.">GetPruning</a>() &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#ab0cbbc3a50704734e46986234dbc68ce" title="Get whether dynamic upper bound pruning is used.">GetDynamicUpperBound</a>() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; endl \
+<a name="l00369"></a>00369              &lt;&lt; <span class="stringliteral">&quot;Refine patterns with single support:  &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a43b57f5108e2a25ae8b08ab91179dfb5" title="Get whether fragments with frequency 1 should be refined.">GetRefineSingles</a>() &lt;&lt; endl \
+<a name="l00370"></a>00370              &lt;&lt; <span class="stringliteral">&quot;Do output:                            &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a854663daf425c444db86d80cc862ba9c" title="Get whether output is enabled.">GetDoOutput</a>() &lt;&lt; endl \
+<a name="l00371"></a>00371              &lt;&lt; <span class="stringliteral">&quot;BBRC sep:                             &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a84f3001cb532d71e4edce28fc0f83ec2" title="Get whether BBRCs should be separated in the output.">GetBbrcSep</a>() &lt;&lt; endl \
+<a name="l00372"></a>00372              &lt;&lt; <span class="stringliteral">&quot;Regression:                           &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a8471ab39593e52b542e9284a12517f4c" title="Get whether continuous activity values should be used.">GetRegression</a>() &lt;&lt; endl \
+<a name="l00373"></a>00373              &lt;&lt; <span class="stringliteral">&quot;---&quot;</span> &lt;&lt; endl;
+<a name="l00374"></a>00374         }
+<a name="l00375"></a>00375         <span class="keywordflow">else</span> {
+<a name="l00376"></a>00376              cerr &lt;&lt; <span class="stringliteral">&quot;Settings:&quot;</span> &lt;&lt; endl \
+<a name="l00377"></a>00377              &lt;&lt; <span class="stringliteral">&quot;---&quot;</span> &lt;&lt; endl \
+<a name="l00378"></a>00378              &lt;&lt; <span class="stringliteral">&quot;Type:                                 &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a00c83761de7dca2e16d741650b41f1ef" title="Get type.">GetType</a>() &lt;&lt; endl \
+<a name="l00379"></a>00379              &lt;&lt; <span class="stringliteral">&quot;Minimum frequency:                    &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a6b73a9fcdd27d073f4ba6686c9cca02f" title="Get minimum frequency.">GetMinfreq</a>() &lt;&lt; endl \
+<a name="l00380"></a>00380              &lt;&lt; <span class="stringliteral">&quot;Aromatic:                             &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a8c5138a564797432427b6667dd2976b3" title="Get whether aromatic rings should be perceived instead of Kekule notation.">GetAromatic</a>() &lt;&lt; endl \
+<a name="l00381"></a>00381              &lt;&lt; <span class="stringliteral">&quot;KS active (p-value):                  &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#af23472dda234c80fdc244494cd4f09cc" title="Get whether chi-square filter is active.">GetChisqActive</a>() &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a5b719d86b406c885f898ea332ec8deaf" title="Get significance threshold.">GetChisqSig</a>()&lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; endl \
+<a name="l00382"></a>00382              &lt;&lt; <span class="stringliteral">&quot;BBRC mining:                          &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a4dd6282e6926b0e7a926036127042030" title="Get whether BBRC representatives should be mined.">GetBackbone</a>() &lt;&lt; endl \
+<a name="l00383"></a>00383              &lt;&lt; <span class="stringliteral">&quot;Statistical metric (dynamic) pruning: &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#ae89056d89e3847cce0172baea6a37b26" title="Get whether statistical metric pruning should be used.">GetPruning</a>() &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#ab0cbbc3a50704734e46986234dbc68ce" title="Get whether dynamic upper bound pruning is used.">GetDynamicUpperBound</a>() &lt;&lt; <span class="stringliteral">&quot;)&quot;</span> &lt;&lt; endl \
+<a name="l00384"></a>00384              &lt;&lt; <span class="stringliteral">&quot;Refine patterns with single support:  &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a43b57f5108e2a25ae8b08ab91179dfb5" title="Get whether fragments with frequency 1 should be refined.">GetRefineSingles</a>() &lt;&lt; endl \
+<a name="l00385"></a>00385              &lt;&lt; <span class="stringliteral">&quot;Do output:                            &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a854663daf425c444db86d80cc862ba9c" title="Get whether output is enabled.">GetDoOutput</a>() &lt;&lt; endl \
+<a name="l00386"></a>00386              &lt;&lt; <span class="stringliteral">&quot;BBRC sep:                             &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a84f3001cb532d71e4edce28fc0f83ec2" title="Get whether BBRCs should be separated in the output.">GetBbrcSep</a>() &lt;&lt; endl \
+<a name="l00387"></a>00387              &lt;&lt; <span class="stringliteral">&quot;Regression:                           &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a8471ab39593e52b542e9284a12517f4c" title="Get whether continuous activity values should be used.">GetRegression</a>() &lt;&lt; endl \
+<a name="l00388"></a>00388              &lt;&lt; <span class="stringliteral">&quot;---&quot;</span> &lt;&lt; endl;
+<a name="l00389"></a>00389         }
+<a name="l00390"></a>00390 
+<a name="l00391"></a>00391     }
+<a name="l00392"></a>00392 
+<a name="l00393"></a>00393 
+<a name="l00394"></a>00394     <span class="keywordflow">if</span> (j &gt;= fm::database-&gt;nodelabels.size()) { cerr &lt;&lt; <span class="stringliteral">&quot;Error! Root node &quot;</span> &lt;&lt; j &lt;&lt; <span class="stringliteral">&quot; does not exist.&quot;</span> &lt;&lt; endl;  exit(1); }
+<a name="l00395"></a>00395     <span class="keywordflow">if</span> ( fm::database-&gt;nodelabels[j].frequency &gt;= fm::minfreq &amp;&amp; fm::database-&gt;nodelabels[j].frequentedgelabels.size () ) {
+<a name="l00396"></a>00396         Path path(j);
+<a name="l00397"></a>00397         path.expand(); <span class="comment">// mining step</span>
+<a name="l00398"></a>00398     }
+<a name="l00399"></a>00399     <span class="keywordflow">return</span> fm::result;
+<a name="l00400"></a>00400 }
 </pre></div></p>
 
 </div>
@@ -916,9 +918,9 @@
 
 <p>Read in a gSpan file. </p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00398"></a>00398                            {
-<a name="l00399"></a>00399     fm::database-&gt;readGsp(gsp);
-<a name="l00400"></a>00400 }
+<p><div class="fragment"><pre class="fragment"><a name="l00402"></a>00402                            {
+<a name="l00403"></a>00403     fm::database-&gt;readGsp(gsp);
+<a name="l00404"></a>00404 }
 </pre></div></p>
 
 </div>
@@ -1271,6 +1273,31 @@
 
 </div>
 </div>
+<a class="anchor" id="aa9adc28f882e96fc942e52eaed3db0f6"></a><!-- doxytag: member="Bbrc::SetMaxHops" ref="aa9adc28f882e96fc942e52eaed3db0f6" args="(int val)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SetMaxHops </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>val</em></td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Dummy method for max hops (only used in LAST-PM). </p>
+
+<p><div class="fragment"><pre class="fragment"><a name="l00336"></a>00336                              {
+<a name="l00337"></a>00337     <span class="keywordflow">return</span> 0;
+<a name="l00338"></a>00338 }
+</pre></div></p>
+
+</div>
+</div>
 <a class="anchor" id="a1943edc900a48af0fc9498f5d0579d80"></a><!-- doxytag: member="Bbrc::SetMinfreq" ref="a1943edc900a48af0fc9498f5d0579d80" args="(int val)" -->
 <div class="memitem">
 <div class="memproto">
@@ -1457,7 +1484,7 @@
 <li><a class="el" href="bbrc_8cpp.html">bbrc.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Jul 12 13:43:18 2010 for libbbrc by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Jul 13 11:42:41 2010 for libbbrc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>
