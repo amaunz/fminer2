@@ -38,6 +38,7 @@ namespace fm {
     extern bool regression;
     extern Database* database;
     extern GraphState* graphstate;
+    extern bool no_aromatic;
 }
 
 GraphState::GraphState () {
@@ -380,13 +381,16 @@ void GraphState::DfsOut(int cur_n, int from_n) {
             iel = fm::database->edgelabels[fm::database->edgelabelsindexes[edge.edgelabel]].inputedgelabel;
             switch (iel) {
             case 1:
-                fputs("-,:",stdout);
+                if (!fm::no_aromatic) fputs("-,:",stdout);
+                else fputs("-",stdout);
                 break;
             case 2:
-                fputs("=,:",stdout);
+                if (!fm::no_aromatic) fputs("=,:",stdout);
+                else fputs("=",stdout);
                 break;               
             case 3:
-                fputs("#,:",stdout);
+                if (!fm::no_aromatic) fputs("#,:",stdout);
+                else fputs("#",stdout);
                 break;
             case 4:
                 putchar(':');
@@ -570,23 +574,29 @@ void GraphState::DfsOut(int cur_n, string& oss, int from_n) {
         if ( edge.tonode != from_n) {
             if (fanout>2) oss.append ("(");
             iel = fm::database->edgelabels[fm::database->edgelabelsindexes[edge.edgelabel]].inputedgelabel;
+
             switch (iel) {
             case 1:
-                oss.append("-,:");
+                if (!fm::no_aromatic) oss.append("-,:");
+                else oss.append("-");
                 break;
             case 2:
-                oss.append("=,:");
+                if (!fm::no_aromatic) oss.append("=,:");
+                else oss.append("=");
                 break;               
             case 3:
-                oss.append("#,:");
+                if (!fm::no_aromatic) oss.append("#,:");
+                else oss.append("#");
                 break;
             case 4:
                 oss.append(":");
                 break;
             default:
-                cerr << "Error! Bond order of " << iel << " is not supported. Aborting." << endl;
+                cerr << "ERROR! Bond order of " << iel << " is not supported!" << endl;
                 exit(1);
             }
+
+
             DfsOut(edge.tonode, oss, cur_n);
             if (fanout>2) oss.append(")");
         }

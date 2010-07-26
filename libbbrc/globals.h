@@ -43,6 +43,7 @@ namespace fm {
     bool do_yaml; // ENV
     bool pvalues; // ENV
     bool gsp_out; // ENV
+    bool no_aromatic; // ENV
     bool console_out; // set
 
     // controlled by constructurs & destructor
