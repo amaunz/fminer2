@@ -1,44 +1,48 @@
 #!/bin/bash
 # Try running this file for a complete build
 
-make -C liblast clean >/dev/null 2>&1
-make -C libbbrc clean >/dev/null 2>&1
-make -C fminer clean >/dev/null 2>&1
+make -C liblast/ clean >/dev/null 2>&1
+make -C libbbrc/ clean >/dev/null 2>&1
+make -C fminer/ clean >/dev/null 2>&1
 
-cd ./liblast/ ; ./configure >/dev/null
+echo "Configuring LibLAST..."
+cd ./liblast/ ; ./configure >> build.log 2>&1
 if [ $? -ne 0 ]; then
-  echo "Configuration failed."
+  echo "Configuration failed. Please examine 'build.log'."
   exit 1
 fi
 cd -
-make -C liblast/ > /dev/null 2>&1
+echo "Building LibLAST..."
+make -C liblast/ >> liblast/build.log 2>&1
 if [ $? -ne 0 ]; then
-  echo "Build failed."
+  echo "Build failed. Please examine 'build.log'."
   exit 1
 fi
 
-
-cd ./libbbrc/ ; ./configure >/dev/null
+echo "Configuring LibBBRC..."
+cd ./libbbrc/ ; ./configure >> build.log 2>&1
 if [ $? -ne 0 ]; then
-  echo "Configuration failed."
-  exit 1
-fi
-cd -
-make -C libbbrc/ > /dev/null 2>&1
-if [ $? -ne 0 ]; then
-  echo "Build failed."
-  exit 1
-fi
-
-
-cd ./fminer/ ; ./configure >/dev/null
-if [ $? -ne 0 ]; then
-  echo "Configuration failed."
+  echo "Configuration failed. Please examine 'build.log'."
   exit 1
 fi
 cd -
-make -C fminer/ > /dev/null 2>&1
+echo "Building LibBBRC..."
+make -C libbbrc/ >> libbbrc/build.log 2>&1
 if [ $? -ne 0 ]; then
-  echo "Build failed."
+  echo "Build failed. Please examine 'build.log'."
+  exit 1
+fi
+
+echo "Configuring Fminer..."
+cd ./fminer/ ; ./configure >> build.log 2>&1
+if [ $? -ne 0 ]; then
+  echo "Configuration failed. Please examine 'build.log'."
+  exit 1
+fi
+cd -
+echo "Building Fminer..."
+make -C fminer/ >> fminer/build.log 2>&1
+if [ $? -ne 0 ]; then
+  echo "Build failed. Please examine 'build.log'."
   exit 1
 fi
