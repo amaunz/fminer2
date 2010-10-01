@@ -112,11 +112,11 @@
  *  The API can be made available to other languages. Follow the installation instructions above. Config files for different languages bindings exist (<code>*bbrc_wrap.i</code>). 
  *
  *  The Makefile features a target that creates <b>ruby</b> bindings using this file. On Ubuntu, you can e.g. do this:
- *  - Use <code>./configure <version></code> to configure the Makefile automatically or, adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_RB = ...</code> so that the directory contains file <code>ruby.h</code>. Also, let <code>RUBY = ...</code> point to the right ruby executable.
+ *  - Use <code>./configure <version></code> to configure the Makefile automatically or, adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_RB = ...</code> so that the directory contains file <code>ruby.h</code>. Also, let <code>RUBY = ...</code> point to the right executable.
  *  - Run <code>make ruby</code>. Use <code>make rbtest</code> to test.
  *
  *  The Makefile features a target that creates <b>python</b> bindings using this file. On Ubuntu, you can e.g. do this:
- *  - Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_PY = ...</code> so that the directory contains file <code>Python.h</code>. Also, let <code>PYTHON = ...</code> point to the right ruby executable.
+ *  - Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_PY = ...</code> so that the directory contains file <code>Python.h</code>. Also, let <code>PYTHON = ...</code> point to the right executable.
  *  - Run <code>make python</code>. Use <code>make pytest</code> to test.
  *
  *  <a name="Guidance">
@@ -142,7 +142,7 @@
  *  @subsection sec3 Examples using the LibBbrc API
  *  LibBbrc uses the 'singleton' design pattern known from software engineering, i.e., class instantiation is restricted to one object. To empty the database after a run to feed new compounds, use the Bbrc::Reset() routine. 
  *
- *  The following code demonstrate the use of the Bbrc API from C++, python and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a vector of fragments along with statistical relevance and occurrences and prints them out. Every root node corresponds to a single chemical element. The output consists of gSpan graphs.
+ *  The following code demonstrate the use of the Bbrc API from C++, python, and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a vector of fragments along with statistical relevance and occurrences and prints them out. Every root node corresponds to a single chemical element. The output consists of gSpan graphs.
  *
  *
  * \subsubsection CPP C++
