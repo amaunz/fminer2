@@ -69,10 +69,10 @@ Compiling from source</a></h3>
 Language Portability</a></h3>
 The API can be made available to other languages. Follow the installation instructions above. Config files for language bindings exist (<code>*last_wrap.i</code>).<p>
 The Makefile features a target that creates <b>ruby</b> bindings using this file. On Ubuntu, you can e.g. do this:<ul>
-<li>Use <code>./configure &lt;version&gt;</code> to configure the Makefile automatically or, adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_RB = ...</code> so that the directory contains file <code>ruby.h</code>. Also, let <code>RUBY = ...</code> point to the right ruby executable.</li><li>Run <code>make ruby</code>. Use <code>make rbtest</code> to test.</li></ul>
+<li>Use <code>./configure &lt;version&gt;</code> to configure the Makefile automatically or, adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_RB = ...</code> so that the directory contains file <code>ruby.h</code>. Also, let <code>RUBY = ...</code> point to the right executable.</li><li>Run <code>make ruby</code>. Use <code>make rbtest</code> to test.</li></ul>
 <p>
 The Makefile features a target that creates <b>python</b> bindings using this file. On Ubuntu, you can e.g. do this:<ul>
-<li>Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_PY = ...</code> so that the directory contains file <code>Python.h</code>. Also, let <code>PYTHON = ...</code> point to the right ruby executable.</li><li>Run <code>make python</code>. Use <code>make pytest</code> to test.</li></ul>
+<li>Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_PY = ...</code> so that the directory contains file <code>Python.h</code>. Also, let <code>PYTHON = ...</code> point to the right executable.</li><li>Run <code>make python</code>. Use <code>make pytest</code> to test.</li></ul>
 <p>
 <a class="anchor" name="Guidance"></a> <h2><a class="anchor" name="Guidance">
 Guidance on Using (Lib)Last</a></h2>
@@ -80,7 +80,7 @@ Most setting are sensible by default, see description of constructors and object
 I would suggest to manipulate the minimum frequency only at first. The number of fragments output should not be more than a multitude of the number of input graphs. For minimum frequency, LibLast does not support percentage values. You will have to calculate absolute numbers.<h3><a class="anchor" name="sec3">
 Examples using the LibLast API</a></h3>
 LibLast uses the 'singleton' design pattern known from software engineering, i.e., class instantiation is restricted to one object. To empty the database after a run to feed new compounds, use the <a class="el" href="classLast.html#372de693ad40b3f42839c8ec6ac845f4" title="Use this to clear the database before feeding new compounds and activities.">Last::Reset()</a> routine.<p>
-The following code demonstrate the use of the <a class="el" href="classLast.html">Last</a> API from C++, python and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a set of latent fragments and prints them out. Every root node corresponds to a single chemical element. The output consists of <a href="http://graphml.graphdrawing.org">GraphML</a> which can be postprocessed to SMARTS patterns using the <a href="http://github.com/amaunz/last-utils" target="_blank">LAST-UTILS</a>.<h4><a class="anchor" name="CPP">
+The following code demonstrate the use of the <a class="el" href="classLast.html">Last</a> API from C++, python, and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a set of latent fragments and prints them out. Every root node corresponds to a single chemical element. The output consists of <a href="http://graphml.graphdrawing.org">GraphML</a> which can be postprocessed to SMARTS patterns using the <a href="http://github.com/amaunz/last-utils" target="_blank">LAST-UTILS</a>.<h4><a class="anchor" name="CPP">
 C++</a></h4>
 This example uses libLast in a C++ program. The example assumes that you have created the C++ library using <code>make</code>.<p>
 <div class="fragment"><pre class="fragment"><span class="preprocessor"> #include "<a class="code" href="last_8h.html">last.h</a>"</span>
@@ -238,7 +238,7 @@ Dipl.-Inf. Andreas Maunz<br>
  Web: <a href="http://cs.maunz.de">http://cs.maunz.de</a><p>
 <dl class="author" compact><dt><b>Author:</b></dt><dd>(c) 2010 by Andreas Maunz, 2010 </dd></dl>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Jan 1 19:33:37 2002 for liblast by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Oct 1 08:52:26 2010 for liblast by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>
