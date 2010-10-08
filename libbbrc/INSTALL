@@ -1,7 +1,7 @@
 Welcome to LibBbrc.
 
 Please choose:
-a) Refer to http://www.maunz.de/libbbrc-doc/ for installation instructions on various platforms. 
+a) Refer to http://www.maunz.de/libfminer2-bbrc-doc/ for installation instructions on various platforms. 
 b) Build the documentation yourself with doxygen: type 'make doc'.
 
 Contents of the above documentation:
