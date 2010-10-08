@@ -31,7 +31,7 @@ echo
 echo "HOW TO CONFIGURE RUBY:"
 echo "Usage:      $0 [RUBY_VER]"
 echo "Default is: $0 1.8"
-echo "If nothing is found, run updatedb as root and try again!"
+echo "If 'ruby.h' is not found, run updatedb as root and try again!"
 echo
 
 # GET VALUES
@@ -59,13 +59,15 @@ if [ $# = 1 ]; then
     ruby_ver=$1
 fi
 
+rb_status=0
 cflags_ruby=`locate -b '\ruby.h' | grep "$ruby_ver" | head -1`
 if [ -z $cflags_ruby ]; then
-    cflags_ruby="$ruby_ver NOT FOUND"
-    status=1
+  cflags_ruby="$ruby_ver NOT FOUND"
+  rb_status=1
+else
+  cflags_ruby="-I`dirname $cflags_ruby`"
 fi
 
-cflags_ruby="-I`dirname $cflags_ruby`"
 sed -i "s,^INCLUDE_RB.*,INCLUDE_RB  = $cflags_ruby,g" Makefile
 sed -i "s,^RUBY.*,RUBY = ruby$ruby_ver,g" Makefile
 echo "INCLUDE_RB  =  $cflags_ruby"
@@ -73,7 +75,12 @@ echo "RUBY = ruby$ruby_ver"
 
 if [ $status == 1 ]; then
     echo
-    echo "WARNING: At least one variable could not be set (see output above). You will not be able to compile."
+    echo "WARNING: At least one variable could not be set. You may encounter problems in the build process."
+fi
+
+if [ $rb_status == 1 ]; then
+    echo
+    echo "WARNING: 'ruby.h' could not be found. You may encounter problems in the build process."
 fi
 
 exit $status
