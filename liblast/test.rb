@@ -1,5 +1,9 @@
  require 'last'
  MyFminer = Last::Last.new()
+ # Adjust settings
+ MyFminer.SetMaxHops(25)
+ MyFminer.SetConsoleOut(false)
+ # Add compounds below. IMPORTANT! DO NOT CHANGE SETTINGS AFTER ADDING COMPOUNDS!
  MyFminer.AddCompound("O=C(C(C(C=C3)=CC=C3O)=CO2)C1=C2C=C(O)C=C1O" , 1)
  MyFminer.AddCompound("Oc1ccc(cc1)[C@@H]2Cc3ccc(O)cc3OC2" , 2)
  MyFminer.AddCompound("O=C1C(C3=CC=C(O)C=C3)=COC2=C1C=CC(O)=C2" , 3)
@@ -24,9 +28,7 @@
  # ... continue adding activities (true for active, false for inactive)
  print MyFminer.GetNoCompounds()  
  puts " compounds"
- MyFminer.SetMaxHops(25)
  # gather results for every root node in vector instead of immediate output
- MyFminer.SetConsoleOut(false)
  (0 .. MyFminer.GetNoRootNodes()-1).each do |j|
     result = MyFminer.MineRoot(j)
     puts "Results"

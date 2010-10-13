@@ -120,6 +120,11 @@ This example uses libBbrc in a C++ program. The example assumes that you have cr
  <a class="code" href="classBbrc.html">Bbrc</a>* MyFminer;
  <span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[], <span class="keywordtype">char</span> *envp) {
    MyFminer= <span class="keyword">new</span> <a class="code" href="classBbrc.html">Bbrc</a>();
+   <span class="comment">// Toy example: special settings for mining all fragments</span>
+   MyFminer-&gt;<a class="code" href="classBbrc.html#2ffe9fadf7a96e7d3f83cbd977004278" title="Set significance threshold here (between 0 and 1).">SetChisqSig</a>(0); <span class="comment">// use no significance constraint</span>
+   MyFminer-&gt;<a class="code" href="classBbrc.html#799653965569b70a7dd88ef16d56f569" title="Pass &amp;#39;true&amp;#39; here to enable refinement of fragments with frequency 1.">SetRefineSingles</a>(<span class="keyword">true</span>); <span class="comment">// refine structures with support 1</span>
+   MyFminer-&gt;<a class="code" href="classBbrc.html#3dfd23b477755e3b2156185b2f73878b" title="Pass &amp;#39;true&amp;#39; here to disable usage of result vector and directly print each...">SetConsoleOut</a>(<span class="keyword">false</span>);
+   <span class="comment">// Add compounds below. IMPORTANT! Do not change settings after adding compounds!</span>
    MyFminer-&gt;<a class="code" href="classBbrc.html#7ae3274987947421c41022918f48378d" title="Add a compound to the database.">AddCompound</a> (<span class="stringliteral">"COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4"</span> , 1);
    MyFminer-&gt;<a class="code" href="classBbrc.html#7ae3274987947421c41022918f48378d" title="Add a compound to the database.">AddCompound</a> (<span class="stringliteral">"O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2"</span> , 2);
       <span class="comment">// ... continue adding compounds</span>
@@ -127,11 +132,7 @@ This example uses libBbrc in a C++ program. The example assumes that you have cr
    MyFminer-&gt;<a class="code" href="classBbrc.html#864483449b0171b7e7c33851471c9087" title="Add an activity to the database.">AddActivity</a>((<span class="keywordtype">bool</span>) <span class="keyword">false</span>, 2);
       <span class="comment">// ... continue adding activities (true for active, false for inactive)</span>
    cerr &lt;&lt; MyFminer-&gt;<a class="code" href="classBbrc.html#9b74deeffd380f1269c906f4178a8ab0" title="Get number of compounds in the database.">GetNoCompounds</a>() &lt;&lt; <span class="stringliteral">" compounds"</span> &lt;&lt; endl;
-   <span class="comment">// Toy example: special settings for mining all fragments</span>
-   MyFminer-&gt;<a class="code" href="classBbrc.html#2ffe9fadf7a96e7d3f83cbd977004278" title="Set significance threshold here (between 0 and 1).">SetChisqSig</a>(0); <span class="comment">// use no significance constraint</span>
-   MyFminer-&gt;<a class="code" href="classBbrc.html#799653965569b70a7dd88ef16d56f569" title="Pass &amp;#39;true&amp;#39; here to enable refinement of fragments with frequency 1.">SetRefineSingles</a>(<span class="keyword">true</span>); <span class="comment">// refine structures with support 1</span>
    <span class="comment">// gather results for every root node in vector instead of immediate output</span>
-   MyFminer-&gt;<a class="code" href="classBbrc.html#3dfd23b477755e3b2156185b2f73878b" title="Pass &amp;#39;true&amp;#39; here to disable usage of result vector and directly print each...">SetConsoleOut</a>(<span class="keyword">false</span>);
    <span class="keywordflow">for</span> ( <span class="keywordtype">int</span> j = 0; j &lt; (int) MyFminer-&gt;<a class="code" href="classBbrc.html#bc7291463c89c905f4371f3d9ba12f47" title="Get number of root nodes (different element types).">GetNoRootNodes</a>(); j++ ) {
       vector&lt;string&gt;* result = MyFminer-&gt;<a class="code" href="classBbrc.html#ca859309dfdec16d1fe7bbca9a31910a" title="Mine fragments rooted at the j-th root node (element type).">MineRoot</a>(j);
       <span class="keywordflow">for</span>( <span class="keywordtype">int</span> i = 0; i &lt; result-&gt;size(); i++) {
@@ -144,20 +145,21 @@ This example uses libBbrc in a C++ program. The example assumes that you have cr
 Python</a></h4>
 This example assumes that you have created python bindings using <code>make python</code>. <div class="fragment"><pre class="fragment"> <span class="keyword">import</span> bbrc
  MyFminer = bbrc.<a class="code" href="classBbrc.html#7dc3a2ad35ff8cff98f5f4fd3a8b58f0" title="Constructor for standard settings: 95% significance level, minimum frequency 2, type...">Bbrc</a>()
- MyFminer.AddCompound(<span class="stringliteral">"COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4"</span> , 1)
+<span class="preprocessor"> # Toy example: special settings for mining all fragments</span>
+<span class="preprocessor"></span><span class="preprocessor"> # use no significance constraint</span>
+<span class="preprocessor"></span> MyFminer.SetChisqSig(0) 
+<span class="preprocessor"> # refine structures with support 1</span>
+<span class="preprocessor"></span> MyFminer.SetRefineSingles(1) 
+ MyFminer.SetConsoleOut(0)
+<span class="preprocessor">   # Add compounds below. IMPORTANT! Do not change settings after adding compounds!</span>
+<span class="preprocessor"></span> MyFminer.AddCompound(<span class="stringliteral">"COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4"</span> , 1)
  MyFminer.AddCompound(<span class="stringliteral">"O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2"</span> , 2)
 <span class="preprocessor"> # ... continue adding compounds</span>
 <span class="preprocessor"></span> MyFminer.AddActivity(1.0, 1)
  MyFminer.AddActivity(0.0, 2)
 <span class="preprocessor"> # ... continue adding activities (true for active, false for inactive)</span>
 <span class="preprocessor"></span> print repr(MyFminer.GetNoCompounds()) + <span class="stringliteral">' compounds.'</span>
- # Toy example: special settings <span class="keywordflow">for</span> mining all fragments
- # use no significance constraint
- MyFminer.SetChisqSig(0) 
-<span class="preprocessor"> # refine structures with support 1</span>
-<span class="preprocessor"></span> MyFminer.SetRefineSingles(1) 
-<span class="preprocessor"> # gather results for every root node in vector instead of immediate output</span>
-<span class="preprocessor"></span> MyFminer.SetConsoleOut(0)
+ # gather results <span class="keywordflow">for</span> every root node in vector instead of immediate output
  <span class="keywordflow">for</span> j in range(0, MyFminer.GetNoRootNodes()-1):
       result = MyFminer.MineRoot(j);
       <span class="keywordflow">for</span> i in range(0, result.size()-1):
@@ -166,14 +168,6 @@ This example assumes that you have created python bindings using <code>make pyth
 Ruby</a></h4>
 This example assumes that you have created ruby bindings using <code>make ruby</code>. <div class="fragment"><pre class="fragment"> require <span class="stringliteral">'bbrc'</span>
  MyFminer = <a class="code" href="classBbrc.html#7dc3a2ad35ff8cff98f5f4fd3a8b58f0" title="Constructor for standard settings: 95% significance level, minimum frequency 2, type...">Bbrc::Bbrc</a>.new()
- MyFminer.AddCompound(<span class="stringliteral">"COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4"</span> , 1)
- MyFminer.AddCompound(<span class="stringliteral">"O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2"</span> , 2)
-<span class="preprocessor">    # ... continue adding compounds</span>
-<span class="preprocessor"></span> MyFminer.AddActivity(<span class="keyword">true</span>, 1)
- MyFminer.AddActivity(<span class="keyword">false</span>, 2)
-<span class="preprocessor">    # ... continue adding activities (true for active, false for inactive)</span>
-<span class="preprocessor"></span> print MyFminer.GetNoCompounds()  
- puts <span class="stringliteral">" compounds"</span>
 <span class="preprocessor"> # Toy example: special settings for mining all fragments</span>
 <span class="preprocessor"></span><span class="preprocessor"> # use no significance constraint</span>
 <span class="preprocessor"></span> MyFminer.SetChisqSig(0) 
@@ -181,6 +175,15 @@ This example assumes that you have created ruby bindings using <code>make ruby</
 <span class="preprocessor"></span> MyFminer.SetRefineSingles(<span class="keyword">true</span>) 
 <span class="preprocessor"> # gather results for every root node in vector instead of immediate output</span>
 <span class="preprocessor"></span> MyFminer.SetConsoleOut(<span class="keyword">false</span>)
+<span class="preprocessor">   # Add compounds below. IMPORTANT! Do not change settings after adding compounds!</span>
+<span class="preprocessor"></span> MyFminer.AddCompound(<span class="stringliteral">"COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4"</span> , 1)
+ MyFminer.AddCompound(<span class="stringliteral">"O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2"</span> , 2)
+<span class="preprocessor">    # ... continue adding compounds</span>
+<span class="preprocessor"></span> MyFminer.AddActivity(<span class="keyword">true</span>, 1)
+ MyFminer.AddActivity(<span class="keyword">false</span>, 2)
+<span class="preprocessor">    # ... continue adding activities (true for active, false for inactive)</span>
+<span class="preprocessor"></span> print MyFminer.GetNoCompounds()  
+ puts <span class="stringliteral">" compounds"</span>
  (0 .. MyFminer.GetNoRootNodes()-1).each <span class="keywordflow">do</span> |j|
     result = MyFminer.MineRoot(j)
     puts <span class="stringliteral">"Results"</span>
@@ -234,7 +237,7 @@ Dipl.-Inf. Andreas Maunz<br>
  Web: <a href="http://cs.maunz.de">http://cs.maunz.de</a><p>
 <dl class="author" compact><dt><b>Author:</b></dt><dd>(c) 2010 by Andreas Maunz, 2010 </dd></dl>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri Oct 1 08:52:54 2010 for libbbrc by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Wed Oct 13 16:40:53 2010 for libbbrc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>
