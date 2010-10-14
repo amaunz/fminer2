@@ -484,7 +484,7 @@ bool Bbrc::AddDataCanonical() {
     // in canonical ordering according to inchis
     for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_map.begin(); it != inchi_compound_map.end(); it++) {
       AddCompoundCanonical(it->second.second, it->second.first); // smiles, comp_id
-      AddActivity(activity_map[it->second.first], it->second.first); // act, comp_id
+      AddActivityCanonical(activity_map[it->second.first], it->second.first); // act, comp_id
     }
     fm::db_built=true;
 }
