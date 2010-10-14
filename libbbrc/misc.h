@@ -24,6 +24,7 @@
 #include <vector>
 #include <stdio.h>
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
