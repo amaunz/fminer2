@@ -363,12 +363,13 @@ void GraphState::DfsOut(int cur_n, int from_n) {
     InputNodeLabel inl = fm::database->nodelabels[nodes[cur_n].label].inputlabel;
     putchar('[');
     putchar('#');
-    if (inl!=254) {
+    if (inl<=150) {
         char s[3]; sprintf (s,"%d", inl);
         cout << s;
     } 
     else {
-        cout << "6"; // output nodelabel
+        char s[3]; sprintf (s,"%d", inl-150);
+        cout << s;
     }
     putchar(']');
 
@@ -557,14 +558,14 @@ void GraphState::to_s ( string& oss ) {
 
 void GraphState::DfsOut(int cur_n, string& oss, int from_n) {
     InputNodeLabel inl = fm::database->nodelabels[nodes[cur_n].label].inputlabel;
-    //(inl!=254) ? oss.append( etab.GetSymbol(inl)) : oss.append("c"); // output nodelabel
     oss.append("[#");
-    if (inl!=254) {
+    if (inl<=150) {
         char s[3]; sprintf (s,"%d", inl);
         oss.append(s);
     } 
     else {
-        oss.append("6"); // output nodelabel
+        char s[3]; sprintf (s,"%d", inl-150);
+        oss.append(s);
     }
     oss.append("]");
     int fanout = (int) nodes[cur_n].edges.size ();
