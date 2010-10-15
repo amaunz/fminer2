@@ -504,8 +504,8 @@ int main(int argc, char *argv[], char *envp[]) {
     
     cerr << "Mining fragments..." << endl;
 
-    clock_t t1 = clock ();
     cerr << fminer->GetNoCompounds() << " compounds" << endl;
+    clock_t t1 = clock ();
     for ( int j = 0; j < (int) fminer->GetNoRootNodes(); j++ ) {
         vector<string>* result = fminer->MineRoot(j);
         if (!fminer->GetConsoleOut()) { 

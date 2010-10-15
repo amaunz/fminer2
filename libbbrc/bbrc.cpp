@@ -479,10 +479,10 @@ extern "C" void usage() {
 }
 
 bool Bbrc::AddDataCanonical() {
-    cerr << "DATAC" << endl;
     // AM: now insert all structures into the database
     // in canonical ordering according to inchis
     for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_map.begin(); it != inchi_compound_map.end(); it++) {
+//      cerr << it->second.first << "\t" << it->second.second << endl;
       AddCompoundCanonical(it->second.second, it->second.first); // smiles, comp_id
       AddActivityCanonical(activity_map[it->second.first], it->second.first); // act, comp_id
     }
