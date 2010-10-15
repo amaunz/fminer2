@@ -9,6 +9,7 @@
  * Note that scientific evaluation was only done for the settings given in the paper. Thus, for other settings no results can be guaranteed. The switches for the leave-one-out crossvalidation in the paper were: 
  * - Minimum frequency of 6 
  * - Disabled aromatic perception
+ *
  * There is a package that you can use to automatically reproduce the KDD 2009 results on BBRC features, see <a href="http://github.com/amaunz/fminer2-transition">http://github.com/amaunz/fminer2-transition</a>.
  *
  *  @section Contents
