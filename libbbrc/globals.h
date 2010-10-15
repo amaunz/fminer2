@@ -45,6 +45,7 @@ namespace fm {
     bool gsp_out; // ENV
     bool no_aromatic; // ENV
     bool console_out; // set
+    bool db_built; // set
 
     // controlled by constructurs & destructor
     bool instance_present;

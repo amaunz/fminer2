@@ -6,6 +6,10 @@ The Fminer application that uses this library is available from http://github.co
 For installation and documentation see INSTALL.
 For license information see LICENSE.
 For scientific documentation and citation see http://cs.maunz.de .
+Note that scientific evaluation was only done for the settings given in the paper. Thus, for other settings no results can be guaranteed. The switches for the leave-one-out crossvalidation in the paper were: 
+- minimum frequency of 6 
+- disabled aromatic perception
+There is a package that you can use to automatically reproduce the KDD 2009 results on BBRC features, see http://github.com/amaunz/fminer2-transition . 
 
 Abstract:
 We present a new approach to large-scale graph mining based on so-called backbone refinement classes.

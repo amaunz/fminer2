@@ -38,6 +38,7 @@ namespace fm {
     extern bool gsp_out;
     extern bool bbrc_sep;
     extern bool regression;
+    extern bool db_built;
 
 }
 
@@ -106,8 +107,8 @@ class Bbrc : public Fminer {
     // KS: bool AddActivity(bool act, unsigned int comp_id); //!< Add an activity to the database.
     // KS: recognize regr field
     bool AddActivity(float act, unsigned int comp_id); //!< Add an activity to the database.
-    int GetNoRootNodes() {return fm::database->nodelabels.size();} //!< Get number of root nodes (different element types).
-    int GetNoCompounds() {return fm::database->trees.size();} //!< Get number of compounds in the database.
+    int GetNoRootNodes() {if (!fm::db_built) AddDataCanonical() ; return fm::database->nodelabels.size();} //!< Get number of root nodes (different element types).
+    int GetNoCompounds() {if (!fm::db_built) AddDataCanonical() ; return fm::database->trees.size();} //!< Get number of compounds in the database.
     //@}
     
   private:
@@ -121,6 +122,12 @@ class Bbrc : public Fminer {
     int comp_no;
 
     vector<string> r;
+    // ONLY FOR INTERNAL USE. DO NOT MAKE PUBLIC!
+    map<string, pair<unsigned int, string> > inchi_compound_map; // AM: structure inchi => (id, smi) for canonical input
+    map<unsigned int, float> activity_map;                       // AM: structure inchi => (id, smi) for canonical input
+    bool AddDataCanonical();                                        //!< Only to be called by MineRoot!
+    bool AddCompoundCanonical(string smiles, unsigned int comp_id); //!< Only to be called by AddDataCanonical!
+    bool AddActivityCanonical(float act, unsigned int comp_id);     //!< Only to be called by AddDataCanonical!
 
 };
 

@@ -22,7 +22,10 @@ LibBbrc<p>
 This is the <a class="el" href="classBbrc.html">Bbrc</a> library, available at <a href="http://github.com/amaunz/fminer2/tree/master">http://github.com/amaunz/fminer2/tree/master</a> , subdirectory <code>libbbrc</code> (see below for download and build instructions).<br>
  The Fminer frontend application is available from <a href="http://github.com/amaunz/fminer2/tree/master">http://github.com/amaunz/fminer2/tree/master</a> , subdirectory <code>fminer</code>.<br>
  You may download the scientific documentation from <a href="http://cs.maunz.de">http://cs.maunz.de</a> . The paper is entitled "Large Scale Graph Mining using Backbone Refinement Classes".<br>
- Supporting information is available here: <a href="http://bbrc.maunz.de">http://bbrc.maunz.de</a> .<h2><a class="anchor" name="Contents">
+ Supporting information is available here: <a href="http://bbrc.maunz.de">http://bbrc.maunz.de</a> .<br>
+ Note that scientific evaluation was only done for the settings given in the paper. Thus, for other settings no results can be guaranteed. The switches for the leave-one-out crossvalidation in the paper were:<ul>
+<li>Minimum frequency of 6</li><li>Disabled aromatic perception There is a package that you can use to automatically reproduce the KDD 2009 results on BBRC features, see <a href="http://github.com/amaunz/fminer2-transition">http://github.com/amaunz/fminer2-transition</a>.</li></ul>
+<h2><a class="anchor" name="Contents">
 Contents</a></h2>
 <ul>
 <li>
@@ -43,7 +46,8 @@ News</a></h2>
 <em>30 Apr 2009</em>: The paper has been selected for oral presentation at <b><a href="http://www.cs.kuleuven.be/~dtai/ilp-mlg-srl/index.php?CONF=mlg&CONT=accepted">MLG 2009</a></b>.<p>
 <em>10 Jul 2009</em>: <a href="http://doi.acm.org/10.1145/1557019.1557089" target="_blank">KDD conference proceedings are online</a>.<p>
 <em>29 Nov 2009</em>: Added configure script and bugfixes.<p>
-<em>19 Apr 2010</em>: <a href="http://www.springerlink.com/content/c6m4w84794645213/" target="_blank">Machine Learning paper</a> accepted.<p>
+<em>05 May 2010</em>: <a href="http://www.springerlink.com/content/c6m4w84794645213/">Machine Learning Journal article</a> is available.<p>
+<em>22 Sep 2010</em>: <a href="http://github.com/amaunz/fminer2-transition">Transition package for fminer2</a> is available. You can use it to reproduce without much effort the crossvalidation results for BBRC descriptors in the paper, using ver 2 of the fminer software.<p>
 <br>
 <br>
  <a class="anchor" name="Abstract"></a> <h2><a class="anchor" name="sec1">
@@ -237,7 +241,7 @@ Dipl.-Inf. Andreas Maunz<br>
  Web: <a href="http://cs.maunz.de">http://cs.maunz.de</a><p>
 <dl class="author" compact><dt><b>Author:</b></dt><dd>(c) 2010 by Andreas Maunz, 2010 </dd></dl>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Wed Oct 13 16:40:53 2010 for libbbrc by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Oct 15 09:50:52 2010 for libbbrc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.5 </small></address>
 </body>
