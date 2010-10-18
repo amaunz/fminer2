@@ -104,6 +104,7 @@ void Last::Reset() {
         delete fm::legoccurrences;
     }
     fm::database = new Database();
+    fm::db_built = false;
     fm::statistics = new Statistics();
     fm::chisq = new ChisqConstraint(3.84146);
     fm::ks = new KSConstraint(0.95);
@@ -137,7 +138,7 @@ void Last::Defaults() {
     fm::do_last=true;
     fm::last_hops=0;
     fm::die = 0;
-    fm::max_hops = 1000;
+    fm::max_hops = 50;
 }
 
 
@@ -230,6 +231,9 @@ bool Last::SetMaxHops(int val) {
 vector<string>* Last::MineRoot(unsigned int j) {
     fm::result->clear();
     if (!init_mining_done) {
+        if (!fm::db_built) {
+          AddDataCanonical();
+        }
         if (fm::chisq->active) {
             each (fm::database->trees) {
                 if (fm::database->trees[i]->activity == -1) {
@@ -302,18 +306,36 @@ void Last::ReadGsp(FILE* gsp){
 }
 
 bool Last::AddCompound(string smiles, unsigned int comp_id) {
-    bool insert_done=false;
-    if (comp_id<=0) { cerr << "Error! IDs must be of type: Int > 0." << endl;}
-    else {
-        if (fm::database->readTreeSmi (smiles, comp_no, comp_id, comp_runner)) {
-            insert_done=true;
-            comp_no++;
-        }
-        else { cerr << "Error on compound " << comp_runner << ", id " << comp_id << "." << endl; }
-        comp_runner++;
-    }
-    return insert_done;
+  if (fm::db_built) {
+    cerr << "Database has been already processed! Please reset() and insert a new dataset." << endl;
+    return false;
+  }
+  stringstream ss(smiles);
+  OBConversion conv(&ss, &cout);
+  if(!conv.SetInAndOutFormats("SMI","INCHI")) {
+    cerr << "Formats not available" << endl;
+    return false;
+  }
+  OBMol mol;
+  if (!conv.Read(&mol)) {
+    cerr << "Could not convert '" << smiles << "' (leaving out)." << endl;
+  }
+  conv.SetOptions("w",OBConversion::OUTOPTIONS);
+  string inchi = conv.WriteString(&mol);
+  // remove newline
+  string::size_type pos = inchi.find_last_not_of("\n");
+  if (pos != string::npos) {
+    inchi = inchi.substr(0, pos+1);
+  }
+  //cerr << "Inchi: '" << inchi << "'" << endl;
+  pair<unsigned int, string> ori = make_pair(comp_id, smiles);
+  pair< map<string,pair<unsigned int, string> >::iterator, bool> res = inchi_compound_map.insert(make_pair(inchi,ori));
+  if (!res.second) {
+    cerr << "Warning: Leaving out compound '" << smiles << "' (already inserted)." << endl;
+  }
+  return true;
 }
+
 
 /* KS:
 bool Last::AddActivity(bool act, unsigned int comp_id) {
@@ -329,21 +351,15 @@ bool Last::AddActivity(bool act, unsigned int comp_id) {
 */
 
 bool Last::AddActivity(float act, unsigned int comp_id) {
-    
-    if (fm::database->trees_map[comp_id] == NULL) { 
-        cerr << "No structure for ID " << comp_id << ". Ignoring entry!" << endl; return false; 
-    }
-    else {
-        if (!fm::regression) {
-            if ((fm::database->trees_map[comp_id]->activity = act) == 1.0) AddChiSqNa();
-            else AddChiSqNi();
-        }
-        else {
-            if ((fm::database->trees_map[comp_id]->activity = act)) AddKS(act);
-        }
-        return true;
-    }
+  if (fm::db_built) {
+    cerr << "Database has been already processed! Please reset() and insert a new dataset." << endl;
+    return false;
+  }
+  activity_map.insert(make_pair(comp_id, act));
+  return true;
 }
+
+
 
 // the class factories
 extern "C" Fminer* create0() {
@@ -367,3 +383,45 @@ extern "C" void usage() {
     cerr << "       [-f minfreq] [-m maxhops] [-a] [-o] [-g] <graphs> <activities>" << endl;
     cerr << endl;
 }
+
+bool Last::AddDataCanonical() {
+    // AM: now insert all structures into the database
+    // in canonical ordering according to inchis
+    for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_map.begin(); it != inchi_compound_map.end(); it++) {
+      //cerr << it->second.first << "\t" << it->second.second << endl;
+      AddCompoundCanonical(it->second.second, it->second.first); // smiles, comp_id
+      AddActivityCanonical(activity_map[it->second.first], it->second.first); // act, comp_id
+    }
+    fm::db_built=true;
+}
+
+bool Last::AddCompoundCanonical(string smiles, unsigned int comp_id) {
+  bool insert_done=false;
+  if (comp_id<=0) { cerr << "Error! IDs must be of type: Int > 0." << endl;}
+  else {
+    if (fm::database->readTreeSmi (smiles, comp_no, comp_id, comp_runner)) {
+      insert_done=true;
+      comp_no++;
+    }
+    else { cerr << "Error on compound " << comp_runner << ", id " << comp_id << "." << endl; }
+    comp_runner++;
+  }
+  return insert_done;
+}
+
+bool Last::AddActivityCanonical(float act, unsigned int comp_id) {
+  if (fm::database->trees_map[comp_id] == NULL) { 
+    cerr << "No structure for ID " << comp_id << ". Ignoring entry!" << endl; return false; 
+  }
+  else {
+    if (!fm::regression) {
+      if ((fm::database->trees_map[comp_id]->activity = act) == 1.0) AddChiSqNa();
+      else AddChiSqNi();
+    }
+    else {
+      if ((fm::database->trees_map[comp_id]->activity = act)) AddKS(act);
+    }
+    return true;
+  }
+}
+

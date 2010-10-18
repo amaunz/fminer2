@@ -37,6 +37,7 @@ namespace fm {
     extern bool bbrc_sep;
     extern bool regression;
     extern int max_hops;
+    extern bool db_built;
 
 }
 
@@ -107,8 +108,8 @@ class Last : public Fminer {
     void ReadGsp(FILE* gsp); //!< Read in a gSpan file
     bool AddCompound(string smiles, unsigned int comp_id); //!< Add a compound to the database.
     bool AddActivity(float act, unsigned int comp_id); //!< Add an activity to the database.
-    int GetNoRootNodes() {return fm::database->nodelabels.size();} //!< Get number of root nodes (different element types).
-    int GetNoCompounds() {return fm::database->trees.size();} //!< Get number of compounds in the database.
+    int GetNoRootNodes() {if (!fm::db_built) AddDataCanonical() ; return fm::database->nodelabels.size();} //!< Get number of root nodes (different element types).
+    int GetNoCompounds() {if (!fm::db_built) AddDataCanonical() ; return fm::database->trees.size();} //!< Get number of compounds in the database.
     //@}
     
   private:
@@ -122,6 +123,12 @@ class Last : public Fminer {
     int comp_no;
 
     vector<string> r;
+    // ONLY FOR INTERNAL USE. DO NOT MAKE PUBLIC!
+    map<string, pair<unsigned int, string> > inchi_compound_map; // AM: structure inchi => (id, smi) for canonical input
+    map<unsigned int, float> activity_map;                       // AM: structure inchi => (id, smi) for canonical input
+    bool AddDataCanonical();                                        //!< Only to be called by MineRoot!
+    bool AddCompoundCanonical(string smiles, unsigned int comp_id); //!< Only to be called by AddDataCanonical!
+    bool AddActivityCanonical(float act, unsigned int comp_id);     //!< Only to be called by AddDataCanonical!
 
 };
 

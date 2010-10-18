@@ -44,6 +44,7 @@ namespace fm {
     // pvalues missing
     bool gsp_out;
     bool console_out;
+    bool db_built;
 
 
     bool instance_present;
