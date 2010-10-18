@@ -138,7 +138,7 @@ void Last::Defaults() {
     fm::do_last=true;
     fm::last_hops=0;
     fm::die = 0;
-    fm::max_hops = 100;
+    fm::max_hops = 50;
 }
 
 
