@@ -558,7 +558,14 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
               if (siblingwalk->hops>1) {
                   siblingwalk->svd();
               }
-              if (fm::do_output) cout << siblingwalk;
+              if (fm::do_output) {
+                  if (!fm::console_out) { 
+                      ostringstream strstrm;
+                      strstrm << siblingwalk;
+                      (*fm::result) << strstrm.str(); 
+                  }
+                  else cout << siblingwalk;
+              }
           }
           delete siblingwalk;
           siblingwalk = new GSWalk();
@@ -612,7 +619,14 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
                       if (topdown->hops>1) { 
                           topdown->svd();
                       }
-                      if (fm::do_output) cout << topdown; 
+                      if (fm::do_output) { 
+                        if (!fm::console_out) { 
+                            ostringstream strstrm;
+                            strstrm << topdown;
+                            (*fm::result) << strstrm.str();
+                        }
+                        else cout << topdown;
+                      }
                   }
               }
               // ELSE: MERGE TO SIBLINGWALK
@@ -699,7 +713,14 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
               if (siblingwalk->hops>1) {
                   siblingwalk->svd();
               }
-              if (fm::do_output) cout << siblingwalk;
+              if (fm::do_output) {
+                  if (!fm::console_out) { 
+                      ostringstream strstrm;
+                      strstrm << siblingwalk;
+                      (*fm::result) << strstrm.str();
+                  }
+                  else cout << siblingwalk;
+              }
           }
           delete siblingwalk;
           siblingwalk = new GSWalk();
@@ -753,7 +774,14 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
                       if (topdown->hops>1) { 
                           topdown->svd();
                       }
-                      if (fm::do_output) cout << topdown; 
+                      if (fm::do_output) { 
+                        if (!fm::console_out) { 
+                            ostringstream strstrm;
+                            strstrm << topdown;
+                            (*fm::result) << strstrm.str();
+                        }
+                        else cout << topdown;
+                      }
                   }
               }
               // ELSE: MERGE TO SIBLINGWALK
@@ -852,7 +880,14 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
                     if (siblingwalk->hops>1) {
                         siblingwalk->svd();
                     }
-                    if (fm::do_output) cout << siblingwalk;
+                    if (fm::do_output) {
+                        if (!fm::console_out) { 
+                            ostringstream strstrm;
+                            strstrm << siblingwalk;
+                            (*fm::result) << strstrm.str();
+                        }
+                        else cout << siblingwalk;
+                    }
                 }
                 delete siblingwalk;
                 siblingwalk = new GSWalk();
@@ -899,7 +934,14 @@ GSWalk* Path::expand2 (pair<float,string> max, const int parent_size) {
                             if (topdown->hops>1) { 
                                 topdown->svd();
                             }
-                            if (fm::do_output) cout << topdown; 
+                            if (fm::do_output) { 
+                              if (!fm::console_out) { 
+                                  ostringstream strstrm;
+                                  strstrm << topdown;
+                                  (*fm::result) << strstrm.str();
+                              }
+                              else cout << topdown;
+                            }
                         }
                     }
                     // ELSE: MERGE TO SIBLINGWALK
@@ -1014,7 +1056,14 @@ void Path::expand () {
                 if (siblingwalk->hops>1) {
                     siblingwalk->svd();
                 }
-                if (fm::do_output) cout << siblingwalk;
+                if (fm::do_output) {
+                    if (!fm::console_out) { 
+                        ostringstream strstrm;
+                        strstrm << siblingwalk;
+                        (*fm::result) << strstrm.str();
+                    }
+                    else cout << siblingwalk;
+                }
             }
             delete siblingwalk;
             siblingwalk = new GSWalk();
@@ -1059,7 +1108,14 @@ void Path::expand () {
                         if (topdown->hops>1) { 
                             topdown->svd();
                         }
-                        if (fm::do_output) cout << topdown; 
+                        if (fm::do_output) { 
+                          if (!fm::console_out) { 
+                              ostringstream strstrm;
+                              strstrm << topdown;
+                              (*fm::result) << strstrm.str();
+                          }
+                          else cout << topdown;
+                        }
                     }
                 }
                 // ELSE: MERGE TO SIBLINGWALK

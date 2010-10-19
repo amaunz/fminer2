@@ -187,7 +187,9 @@ bool Last::SetPruning(bool val) {
 }
 
 bool Last::SetConsoleOut(bool val) {
-    return 0;
+    // console out not switched by fminer
+    fm::console_out=val;
+    return 1;
 }
 
 void Last::SetAromatic(bool val) {
@@ -279,25 +281,36 @@ vector<string>* Last::MineRoot(unsigned int j) {
 
 
         if (fm::do_output) {
-            cout << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
-            cout << "<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\"\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n    xsi:noNamespaceSchemaLocation=\"graphml.xsd\">" << endl << endl;
 
-            cout << "<!-- LAtent STructure Mining (LAST) descriptors-->" << endl << endl;
-            cout << "<key id=\"act\" for=\"graph\" attr.name=\"activating\" attr.type=\"boolean\" />" << endl;
-            cout << "<key id=\"hops\" for=\"graph\" attr.name=\"hops\" attr.type=\"int\" />" << endl;
-            cout << "<key id=\"lab_n\" for=\"node\" attr.name=\"node_labels\" attr.type=\"string\" />" << endl;
-            cout << "<key id=\"lab_e\" for=\"edge\" attr.name=\"edge_labels\" attr.type=\"string\" />" << endl;
-            cout << "<key id=\"weight\" for=\"edge\" attr.name=\"edge_weight\" attr.type=\"int\" />" << endl;
-            cout << "<key id=\"del\" for=\"edge\" attr.name=\"edge_deleted\" attr.type=\"boolean\" />" << endl;
-        }
+          string xml_header = 
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?> \
+<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\"\
+xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\
+xsi:noNamespaceSchemaLocation=\"graphml.xsd\"> \
+                                               \
+<!-- LAtent STructure Mining (LAST) descriptors--> \
+                                                   \
+<key id=\"act\" for=\"graph\" attr.name=\"activating\" attr.type=\"boolean\" /> \
+<key id=\"hops\" for=\"graph\" attr.name=\"hops\" attr.type=\"int\" /> \
+<key id=\"lab_n\" for=\"node\" attr.name=\"node_labels\" attr.type=\"string\" /> \
+<key id=\"lab_e\" for=\"edge\" attr.name=\"edge_labels\" attr.type=\"string\" /> \
+<key id=\"weight\" for=\"edge\" attr.name=\"edge_weight\" attr.type=\"int\" /> \
+<key id=\"del\" for=\"edge\" attr.name=\"edge_deleted\" attr.type=\"boolean\" />\n\n";
 
+         if (!fm::console_out) (*fm::result) << xml_header;
+         else cout << xml_header;
+      }
     }
+
     if (j >= fm::database->nodelabels.size()) { cerr << "Error! Root node " << j << " does not exist." << endl;  exit(1); }
     if ( fm::database->nodelabels[j].frequency >= fm::minfreq && fm::database->nodelabels[j].frequentedgelabels.size () ) {
         Path path(j);
         path.expand(); // mining step
     }
-    if (j==GetNoRootNodes()-1 && fm::do_output) cout << "</graphml>" << endl;
+    if (j==GetNoRootNodes()-1 && fm::do_output) {
+      if (!fm::console_out) (*fm::result) << "</graphml>\n";
+      else cout << "</graphml>" << endl;
+    }
     return fm::result;
 }
 
