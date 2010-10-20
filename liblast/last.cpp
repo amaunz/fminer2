@@ -283,18 +283,18 @@ vector<string>* Last::MineRoot(unsigned int j) {
         if (fm::do_output) {
 
           string xml_header = 
-"<?xml version=\"1.0\" encoding=\"UTF-8\"?> \
-<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\"\
-xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\
-xsi:noNamespaceSchemaLocation=\"graphml.xsd\"> \
-                                               \
-<!-- LAtent STructure Mining (LAST) descriptors--> \
-                                                   \
-<key id=\"act\" for=\"graph\" attr.name=\"activating\" attr.type=\"boolean\" /> \
-<key id=\"hops\" for=\"graph\" attr.name=\"hops\" attr.type=\"int\" /> \
-<key id=\"lab_n\" for=\"node\" attr.name=\"node_labels\" attr.type=\"string\" /> \
-<key id=\"lab_e\" for=\"edge\" attr.name=\"edge_labels\" attr.type=\"string\" /> \
-<key id=\"weight\" for=\"edge\" attr.name=\"edge_weight\" attr.type=\"int\" /> \
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
+<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\"\n\
+xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n\
+xsi:noNamespaceSchemaLocation=\"graphml.xsd\">\n\
+\n\
+<!-- LAtent STructure Mining (LAST) descriptors-->\n\
+\n\
+<key id=\"act\" for=\"graph\" attr.name=\"activating\" attr.type=\"boolean\" />\n\
+<key id=\"hops\" for=\"graph\" attr.name=\"hops\" attr.type=\"int\" />\n\
+<key id=\"lab_n\" for=\"node\" attr.name=\"node_labels\" attr.type=\"string\" />\n\
+<key id=\"lab_e\" for=\"edge\" attr.name=\"edge_labels\" attr.type=\"string\" />\n\
+<key id=\"weight\" for=\"edge\" attr.name=\"edge_weight\" attr.type=\"int\" />\n\
 <key id=\"del\" for=\"edge\" attr.name=\"edge_deleted\" attr.type=\"boolean\" />\n\n";
 
          if (!fm::console_out) (*fm::result) << xml_header;
