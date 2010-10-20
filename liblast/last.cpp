@@ -324,7 +324,8 @@ bool Last::AddCompound(string smiles, unsigned int comp_id) {
     return false;
   }
   stringstream ss(smiles);
-  OBConversion conv(&ss, &cout);
+  ostringstream strstrm;
+  OBConversion conv(&ss, &strstrm);
   if(!conv.SetInAndOutFormats("SMI","INCHI")) {
     cerr << "Formats not available" << endl;
     return false;

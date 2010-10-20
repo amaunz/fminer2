@@ -2152,7 +2152,8 @@ void GSWalk::svd () {
     gsl_vector_memcpy (s2,s);
     gsl_vector_mul (s2,s2);
     int cut=adj_m_size-1; float s2_sum=0.0; for (;cut>=0;cut--) { s2_sum+=gsl_vector_get(s2,cut); if (gsl_vector_get(s2,cut)!=0) adj_m_rank++; } 
-        cut=adj_m_size-1; float s2_run=0.0; for (;cut>=0;cut--) { s2_run+=gsl_vector_get(s2,cut); if (((float)(s2_run/s2_sum))>CUTOFF) break; } cout << endl;
+        cut=adj_m_size-1; float s2_run=0.0; for (;cut>=0;cut--) { s2_run+=gsl_vector_get(s2,cut); if (((float)(s2_run/s2_sum))>CUTOFF) break; } 
+        //cout << endl;
     cutoff = (1.0-s2_run);
         gsl_vector_free(s2);
     #ifdef DEBUG
