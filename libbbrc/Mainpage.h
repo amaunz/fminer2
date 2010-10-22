@@ -115,15 +115,17 @@
  *  - Cd to <code>fminer</code> subdirectory. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.
  *  - To create this documentation with doxygen, type 'make doc'. The documentation explains API, constructor usage and options.
  *  @subsection ssec23 Language Portability
- *  The API can be made available to other languages. Follow the installation instructions above. Config files for different languages bindings exist (<code>*bbrc_wrap.i</code>). 
+ *  The API can be made available to other languages.
  *
- *  The Makefile features a target that creates <b>ruby</b> bindings using this file. On Ubuntu, you can e.g. do this:
+ *  The Makefile features a target that creates <b>ruby</b> bindings. On Ubuntu, you can e.g. do this:
  *  - Use <code>./configure <version></code> to configure the Makefile automatically or, adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_RB = ...</code> so that the directory contains file <code>ruby.h</code>. Also, let <code>RUBY = ...</code> point to the right executable.
- *  - Run <code>make ruby</code>. Use <code>make rbtest</code> to test.
+ *  - Run <code>make ruby</code>. Use <code>make rbtest</code> to test. The configuration was tested with swig 1.3.40 and Ruby 1.8.
  *
- *  The Makefile features a target that creates <b>python</b> bindings using this file. On Ubuntu, you can e.g. do this:
+ *  The Makefile features a target that creates <b>python</b> bindings. On Ubuntu, you can e.g. do this:
  *  - Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_PY = ...</code> so that the directory contains file <code>Python.h</code>. Also, let <code>PYTHON = ...</code> point to the right executable.
- *  - Run <code>make python</code>. Use <code>make pytest</code> to test.
+ *  - Run <code>make python</code>. Use <code>make pytest</code> to test. The configuration was tested with swig 1.3.40 and Python 2.5.
+ *
+ * <b>Important:</b> There are swig interface files (<code>*.i</code>) and pre-configured swig output files (<code>*.cxx</code>). You need to re-create those output files if you are deploying for newer versions of the target languages, and you can find the necessary swig calls in the Makefile (commented out).
  *
  *  <a name="Guidance">
  * @section Guidance Guidance on Using (Lib)Bbrc

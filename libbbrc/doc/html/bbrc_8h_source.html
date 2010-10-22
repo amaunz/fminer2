@@ -63,80 +63,87 @@
 <a name="l00038"></a>00038     <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespacefm.html#ab121ac08f2cdaf32be0af36a5ae79755">gsp_out</a>;
 <a name="l00039"></a>00039     <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">bbrc_sep</a>;
 <a name="l00040"></a>00040     <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">regression</a>;
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042 }
-<a name="l00043"></a>00043 
-<a name="l00044"></a><a class="code" href="classBbrc.html">00044</a> <span class="keyword">class </span><a class="code" href="classBbrc.html">Bbrc</a> : <span class="keyword">public</span> Fminer {
-<a name="l00045"></a>00045 
-<a name="l00046"></a>00046   <span class="keyword">public</span>:
-<a name="l00047"></a>00047 
-<a name="l00052"></a>00052     <a class="code" href="classBbrc.html#a7dc3a2ad35ff8cff98f5f4fd3a8b58f0" title="Constructor for standard settings: 95% significance level, minimum frequency 2, type...">Bbrc</a> (); 
-<a name="l00053"></a>00053     <a class="code" href="classBbrc.html#a7dc3a2ad35ff8cff98f5f4fd3a8b58f0" title="Constructor for standard settings: 95% significance level, minimum frequency 2, type...">Bbrc</a> (<span class="keywordtype">int</span> _type, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> _minfreq); 
-<a name="l00054"></a>00054     <a class="code" href="classBbrc.html#a7dc3a2ad35ff8cff98f5f4fd3a8b58f0" title="Constructor for standard settings: 95% significance level, minimum frequency 2, type...">Bbrc</a> (<span class="keywordtype">int</span> _type, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> _minfreq, <span class="keywordtype">float</span> chisq_val, <span class="keywordtype">bool</span> _do_backbone); 
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056     <a class="code" href="classBbrc.html#acc3764b3ca93376c439bb1a2326df061">~Bbrc</a>();
-<a name="l00057"></a>00057     <span class="keywordtype">void</span> <a class="code" href="classBbrc.html#a372de693ad40b3f42839c8ec6ac845f4" title="Use this to clear the database before feeding new compounds and activities.">Reset</a>(); 
-<a name="l00058"></a>00058     <span class="keywordtype">void</span> <a class="code" href="classBbrc.html#a9f4ebfcbb62fb16b57c5bcdfaacd451f" title="Use this to set default parameters as in default constructor.">Defaults</a>(); 
-<a name="l00059"></a>00059 
+<a name="l00041"></a>00041     <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">db_built</a>;
+<a name="l00042"></a>00042 
+<a name="l00043"></a>00043 }
+<a name="l00044"></a>00044 
+<a name="l00045"></a><a class="code" href="classBbrc.html">00045</a> <span class="keyword">class </span><a class="code" href="classBbrc.html">Bbrc</a> : <span class="keyword">public</span> Fminer {
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047   <span class="keyword">public</span>:
+<a name="l00048"></a>00048 
+<a name="l00053"></a>00053     <a class="code" href="classBbrc.html#a7dc3a2ad35ff8cff98f5f4fd3a8b58f0" title="Constructor for standard settings: 95% significance level, minimum frequency 2, type...">Bbrc</a> (); 
+<a name="l00054"></a>00054     <a class="code" href="classBbrc.html#a7dc3a2ad35ff8cff98f5f4fd3a8b58f0" title="Constructor for standard settings: 95% significance level, minimum frequency 2, type...">Bbrc</a> (<span class="keywordtype">int</span> _type, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> _minfreq); 
+<a name="l00055"></a>00055     <a class="code" href="classBbrc.html#a7dc3a2ad35ff8cff98f5f4fd3a8b58f0" title="Constructor for standard settings: 95% significance level, minimum frequency 2, type...">Bbrc</a> (<span class="keywordtype">int</span> _type, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> _minfreq, <span class="keywordtype">float</span> chisq_val, <span class="keywordtype">bool</span> _do_backbone); 
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057     <a class="code" href="classBbrc.html#acc3764b3ca93376c439bb1a2326df061">~Bbrc</a>();
+<a name="l00058"></a>00058     <span class="keywordtype">void</span> <a class="code" href="classBbrc.html#a372de693ad40b3f42839c8ec6ac845f4" title="Use this to clear the database before feeding new compounds and activities.">Reset</a>(); 
+<a name="l00059"></a>00059     <span class="keywordtype">void</span> <a class="code" href="classBbrc.html#a9f4ebfcbb62fb16b57c5bcdfaacd451f" title="Use this to set default parameters as in default constructor.">Defaults</a>(); 
 <a name="l00060"></a>00060 
-<a name="l00065"></a>00065     <span class="keywordtype">int</span> <a class="code" href="classBbrc.html#a6b73a9fcdd27d073f4ba6686c9cca02f" title="Get minimum frequency.">GetMinfreq</a>(); 
-<a name="l00066"></a>00066     <span class="keywordtype">int</span> <a class="code" href="classBbrc.html#a00c83761de7dca2e16d741650b41f1ef" title="Get type.">GetType</a>(); 
-<a name="l00067"></a>00067     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a4dd6282e6926b0e7a926036127042030" title="Get whether BBRC representatives should be mined.">GetBackbone</a>(); 
-<a name="l00068"></a>00068     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#ab0cbbc3a50704734e46986234dbc68ce" title="Get whether dynamic upper bound pruning is used.">GetDynamicUpperBound</a>(); 
-<a name="l00069"></a>00069     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#ae89056d89e3847cce0172baea6a37b26" title="Get whether statistical metric pruning should be used.">GetPruning</a>(); 
-<a name="l00070"></a>00070     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a91c37ee435171e92c4efe49e084d6130" title="Get whether output should be directed to the console.">GetConsoleOut</a>(); 
-<a name="l00071"></a>00071     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a8c5138a564797432427b6667dd2976b3" title="Get whether aromatic rings should be perceived instead of Kekule notation.">GetAromatic</a>(); 
-<a name="l00072"></a>00072     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a43b57f5108e2a25ae8b08ab91179dfb5" title="Get whether fragments with frequency 1 should be refined.">GetRefineSingles</a>(); 
-<a name="l00073"></a>00073     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a854663daf425c444db86d80cc862ba9c" title="Get whether output is enabled.">GetDoOutput</a>(); 
-<a name="l00074"></a>00074     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a84f3001cb532d71e4edce28fc0f83ec2" title="Get whether BBRCs should be separated in the output.">GetBbrcSep</a>(); 
-<a name="l00075"></a>00075     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#af23472dda234c80fdc244494cd4f09cc" title="Get whether chi-square filter is active.">GetChisqActive</a>(); 
-<a name="l00076"></a>00076     <span class="keywordtype">float</span> <a class="code" href="classBbrc.html#a5b719d86b406c885f898ea332ec8deaf" title="Get significance threshold.">GetChisqSig</a>(); 
-<a name="l00077"></a>00077     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a8471ab39593e52b542e9284a12517f4c" title="Get whether continuous activity values should be used.">GetRegression</a>(); 
-<a name="l00078"></a>00078 
+<a name="l00061"></a>00061 
+<a name="l00066"></a>00066     <span class="keywordtype">int</span> <a class="code" href="classBbrc.html#a6b73a9fcdd27d073f4ba6686c9cca02f" title="Get minimum frequency.">GetMinfreq</a>(); 
+<a name="l00067"></a>00067     <span class="keywordtype">int</span> <a class="code" href="classBbrc.html#a00c83761de7dca2e16d741650b41f1ef" title="Get type.">GetType</a>(); 
+<a name="l00068"></a>00068     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a4dd6282e6926b0e7a926036127042030" title="Get whether BBRC representatives should be mined.">GetBackbone</a>(); 
+<a name="l00069"></a>00069     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#ab0cbbc3a50704734e46986234dbc68ce" title="Get whether dynamic upper bound pruning is used.">GetDynamicUpperBound</a>(); 
+<a name="l00070"></a>00070     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#ae89056d89e3847cce0172baea6a37b26" title="Get whether statistical metric pruning should be used.">GetPruning</a>(); 
+<a name="l00071"></a>00071     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a91c37ee435171e92c4efe49e084d6130" title="Get whether output should be directed to the console.">GetConsoleOut</a>(); 
+<a name="l00072"></a>00072     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a8c5138a564797432427b6667dd2976b3" title="Get whether aromatic rings should be perceived instead of Kekule notation.">GetAromatic</a>(); 
+<a name="l00073"></a>00073     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a43b57f5108e2a25ae8b08ab91179dfb5" title="Get whether fragments with frequency 1 should be refined.">GetRefineSingles</a>(); 
+<a name="l00074"></a>00074     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a854663daf425c444db86d80cc862ba9c" title="Get whether output is enabled.">GetDoOutput</a>(); 
+<a name="l00075"></a>00075     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a84f3001cb532d71e4edce28fc0f83ec2" title="Get whether BBRCs should be separated in the output.">GetBbrcSep</a>(); 
+<a name="l00076"></a>00076     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#af23472dda234c80fdc244494cd4f09cc" title="Get whether chi-square filter is active.">GetChisqActive</a>(); 
+<a name="l00077"></a>00077     <span class="keywordtype">float</span> <a class="code" href="classBbrc.html#a5b719d86b406c885f898ea332ec8deaf" title="Get significance threshold.">GetChisqSig</a>(); 
+<a name="l00078"></a>00078     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a8471ab39593e52b542e9284a12517f4c" title="Get whether continuous activity values should be used.">GetRegression</a>(); 
 <a name="l00079"></a>00079 
-<a name="l00084"></a>00084     <span class="keywordtype">void</span> <a class="code" href="classBbrc.html#a1943edc900a48af0fc9498f5d0579d80" title="Set minimum frequency (&amp;gt;=1 here).">SetMinfreq</a>(<span class="keywordtype">int</span> val); 
-<a name="l00085"></a>00085     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#abc2a46f77095216632a268a9417f1174" title="Set type 1 (paths) or 2 (trees) here.">SetType</a>(<span class="keywordtype">int</span> val); 
-<a name="l00086"></a>00086     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a7a001c8c0f5014435e1a28ba57a5d5f2" title="Pass &amp;#39;false&amp;#39; here to switch off mining for BBRC representatives.">SetBackbone</a>(<span class="keywordtype">bool</span> val); 
-<a name="l00087"></a>00087     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a273df5b815f6f9318aa65db134283b0e" title="Pass &amp;#39;false&amp;#39; here to disable dynamic upper bound pruning (e.g. for performance...">SetDynamicUpperBound</a>(<span class="keywordtype">bool</span> val); 
-<a name="l00088"></a>00088     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a3eef7a8547f2a4940fd0f4b7d1b70861" title="Pass &amp;#39;false&amp;#39; here to disable statistical metrical pruning completely.">SetPruning</a>(<span class="keywordtype">bool</span> val); 
-<a name="l00089"></a>00089     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a3dfd23b477755e3b2156185b2f73878b" title="Pass &amp;#39;true&amp;#39; here to disable usage of result vector and directly print each...">SetConsoleOut</a>(<span class="keywordtype">bool</span> val); 
-<a name="l00090"></a>00090     <span class="keywordtype">void</span> <a class="code" href="classBbrc.html#ab5195d37511301667fcc1a341f0888bf" title="Pass &amp;#39;true&amp;#39; here to enable aromatic rings and use Kekule notation.">SetAromatic</a>(<span class="keywordtype">bool</span> val); 
-<a name="l00091"></a>00091     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a799653965569b70a7dd88ef16d56f569" title="Pass &amp;#39;true&amp;#39; here to enable refinement of fragments with frequency 1.">SetRefineSingles</a>(<span class="keywordtype">bool</span> val); 
-<a name="l00092"></a>00092     <span class="keywordtype">void</span> <a class="code" href="classBbrc.html#a5ba23af2c3f5f549da20c6def6e0c554" title="Pass &amp;#39;false&amp;#39; here to disable output.">SetDoOutput</a>(<span class="keywordtype">bool</span> val); 
-<a name="l00093"></a>00093     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#ac569ce6ce6150f0efc5ac9e13293b517" title="Set this to &amp;#39;true&amp;#39; to enable BBRC separators in output.">SetBbrcSep</a>(<span class="keywordtype">bool</span> val); 
-<a name="l00094"></a>00094     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a3040636e6d4456e59fa925ddad8d4eb4" title="Set this to &amp;#39;true&amp;#39; to enable chi-square filter.">SetChisqActive</a>(<span class="keywordtype">bool</span> val); 
-<a name="l00095"></a>00095     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a2ffe9fadf7a96e7d3f83cbd977004278" title="Set significance threshold here (between 0 and 1).">SetChisqSig</a>(<span class="keywordtype">float</span> _chisq_val); 
-<a name="l00096"></a>00096     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a7b8900193deba5c64f10fe35d8bc5875" title="Set &amp;#39;true&amp;#39; here to enable continuous activity values.">SetRegression</a>(<span class="keywordtype">bool</span> val); 
-<a name="l00097"></a>00097     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#aa9adc28f882e96fc942e52eaed3db0f6" title="Dummy method for max hops (only used in LAST-PM).">SetMaxHops</a>(<span class="keywordtype">int</span> val); 
-<a name="l00098"></a>00098 
+<a name="l00080"></a>00080 
+<a name="l00085"></a>00085     <span class="keywordtype">void</span> <a class="code" href="classBbrc.html#a1943edc900a48af0fc9498f5d0579d80" title="Set minimum frequency (&amp;gt;=1 here).">SetMinfreq</a>(<span class="keywordtype">int</span> val); 
+<a name="l00086"></a>00086     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#abc2a46f77095216632a268a9417f1174" title="Set type 1 (paths) or 2 (trees) here.">SetType</a>(<span class="keywordtype">int</span> val); 
+<a name="l00087"></a>00087     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a7a001c8c0f5014435e1a28ba57a5d5f2" title="Pass &amp;#39;false&amp;#39; here to switch off mining for BBRC representatives.">SetBackbone</a>(<span class="keywordtype">bool</span> val); 
+<a name="l00088"></a>00088     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a273df5b815f6f9318aa65db134283b0e" title="Pass &amp;#39;false&amp;#39; here to disable dynamic upper bound pruning (e.g. for performance...">SetDynamicUpperBound</a>(<span class="keywordtype">bool</span> val); 
+<a name="l00089"></a>00089     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a3eef7a8547f2a4940fd0f4b7d1b70861" title="Pass &amp;#39;false&amp;#39; here to disable statistical metrical pruning completely.">SetPruning</a>(<span class="keywordtype">bool</span> val); 
+<a name="l00090"></a>00090     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a3dfd23b477755e3b2156185b2f73878b" title="Pass &amp;#39;true&amp;#39; here to disable usage of result vector and directly print each...">SetConsoleOut</a>(<span class="keywordtype">bool</span> val); 
+<a name="l00091"></a>00091     <span class="keywordtype">void</span> <a class="code" href="classBbrc.html#ab5195d37511301667fcc1a341f0888bf" title="Pass &amp;#39;true&amp;#39; here to enable aromatic rings and use Kekule notation. IMPORTANT!...">SetAromatic</a>(<span class="keywordtype">bool</span> val); 
+<a name="l00092"></a>00092     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a799653965569b70a7dd88ef16d56f569" title="Pass &amp;#39;true&amp;#39; here to enable refinement of fragments with frequency 1.">SetRefineSingles</a>(<span class="keywordtype">bool</span> val); 
+<a name="l00093"></a>00093     <span class="keywordtype">void</span> <a class="code" href="classBbrc.html#a5ba23af2c3f5f549da20c6def6e0c554" title="Pass &amp;#39;false&amp;#39; here to disable output.">SetDoOutput</a>(<span class="keywordtype">bool</span> val); 
+<a name="l00094"></a>00094     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#ac569ce6ce6150f0efc5ac9e13293b517" title="Set this to &amp;#39;true&amp;#39; to enable BBRC separators in output.">SetBbrcSep</a>(<span class="keywordtype">bool</span> val); 
+<a name="l00095"></a>00095     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a3040636e6d4456e59fa925ddad8d4eb4" title="Set this to &amp;#39;true&amp;#39; to enable chi-square filter.">SetChisqActive</a>(<span class="keywordtype">bool</span> val); 
+<a name="l00096"></a>00096     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a2ffe9fadf7a96e7d3f83cbd977004278" title="Set significance threshold here (between 0 and 1).">SetChisqSig</a>(<span class="keywordtype">float</span> _chisq_val); 
+<a name="l00097"></a>00097     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a7b8900193deba5c64f10fe35d8bc5875" title="Set &amp;#39;true&amp;#39; here to enable continuous activity values.">SetRegression</a>(<span class="keywordtype">bool</span> val); 
+<a name="l00098"></a>00098     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#aa9adc28f882e96fc942e52eaed3db0f6" title="Dummy method for max hops (only used in LAST-PM).">SetMaxHops</a>(<span class="keywordtype">int</span> val); 
 <a name="l00099"></a>00099 
-<a name="l00103"></a>00103     vector&lt;string&gt;* <a class="code" href="classBbrc.html#aca859309dfdec16d1fe7bbca9a31910a" title="Mine fragments rooted at the j-th root node (element type).">MineRoot</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> j); 
-<a name="l00104"></a>00104     <span class="keywordtype">void</span> <a class="code" href="classBbrc.html#af877482dbaf9aa27fbe9524479758c9c" title="Read in a gSpan file.">ReadGsp</a>(FILE* gsp); 
-<a name="l00105"></a>00105     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a7ae3274987947421c41022918f48378d" title="Add a compound to the database.">AddCompound</a>(<span class="keywordtype">string</span> smiles, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> comp_id); 
-<a name="l00106"></a>00106     <span class="comment">// KS: bool AddActivity(bool act, unsigned int comp_id); //!&lt; Add an activity to the database.</span>
-<a name="l00107"></a>00107     <span class="comment">// KS: recognize regr field</span>
-<a name="l00108"></a>00108     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a864483449b0171b7e7c33851471c9087" title="Add an activity to the database.">AddActivity</a>(<span class="keywordtype">float</span> act, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> comp_id); 
-<a name="l00109"></a><a class="code" href="classBbrc.html#abc7291463c89c905f4371f3d9ba12f47">00109</a>     <span class="keywordtype">int</span> <a class="code" href="classBbrc.html#abc7291463c89c905f4371f3d9ba12f47" title="Get number of root nodes (different element types).">GetNoRootNodes</a>() {<span class="keywordflow">return</span> fm::database-&gt;nodelabels.size();} 
-<a name="l00110"></a><a class="code" href="classBbrc.html#a9b74deeffd380f1269c906f4178a8ab0">00110</a>     <span class="keywordtype">int</span> <a class="code" href="classBbrc.html#a9b74deeffd380f1269c906f4178a8ab0" title="Get number of compounds in the database.">GetNoCompounds</a>() {<span class="keywordflow">return</span> fm::database-&gt;trees.size();} 
-<a name="l00111"></a>00111 
-<a name="l00112"></a>00112     
-<a name="l00113"></a>00113   <span class="keyword">private</span>:
-<a name="l00114"></a>00114     <span class="keywordtype">void</span> AddChiSqNa(){<a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;na++;<a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;n++;}
-<a name="l00115"></a>00115     <span class="keywordtype">void</span> AddChiSqNi(){<a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;ni++;<a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;n++;}
-<a name="l00116"></a>00116     <span class="comment">// KS: Insert value into set of activities</span>
-<a name="l00117"></a>00117     <span class="keywordtype">void</span> AddKS(<span class="keywordtype">float</span> val){<a class="code" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>-&gt;all.push_back(val);}
-<a name="l00118"></a>00118 
-<a name="l00119"></a>00119     <span class="keywordtype">bool</span> init_mining_done;
-<a name="l00120"></a>00120     <span class="keywordtype">int</span> comp_runner;
-<a name="l00121"></a>00121     <span class="keywordtype">int</span> comp_no;
-<a name="l00122"></a>00122 
-<a name="l00123"></a>00123     vector&lt;string&gt; r;
-<a name="l00124"></a>00124 
-<a name="l00125"></a>00125 };
-<a name="l00126"></a>00126 
-<a name="l00127"></a>00127 <span class="preprocessor">#endif</span>
+<a name="l00100"></a>00100 
+<a name="l00104"></a>00104     vector&lt;string&gt;* <a class="code" href="classBbrc.html#aca859309dfdec16d1fe7bbca9a31910a" title="Mine fragments rooted at the j-th root node (element type).">MineRoot</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> j); 
+<a name="l00105"></a>00105     <span class="keywordtype">void</span> <a class="code" href="classBbrc.html#af877482dbaf9aa27fbe9524479758c9c" title="Read in a gSpan file.">ReadGsp</a>(FILE* gsp); 
+<a name="l00106"></a>00106     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a7ae3274987947421c41022918f48378d" title="Add a compound to the database.">AddCompound</a>(<span class="keywordtype">string</span> smiles, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> comp_id); 
+<a name="l00107"></a>00107     <span class="comment">// KS: bool AddActivity(bool act, unsigned int comp_id); //!&lt; Add an activity to the database.</span>
+<a name="l00108"></a>00108     <span class="comment">// KS: recognize regr field</span>
+<a name="l00109"></a>00109     <span class="keywordtype">bool</span> <a class="code" href="classBbrc.html#a864483449b0171b7e7c33851471c9087" title="Add an activity to the database.">AddActivity</a>(<span class="keywordtype">float</span> act, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> comp_id); 
+<a name="l00110"></a><a class="code" href="classBbrc.html#abc7291463c89c905f4371f3d9ba12f47">00110</a>     <span class="keywordtype">int</span> <a class="code" href="classBbrc.html#abc7291463c89c905f4371f3d9ba12f47" title="Get number of root nodes (different element types).">GetNoRootNodes</a>() {<span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>) AddDataCanonical() ; <span class="keywordflow">return</span> fm::database-&gt;nodelabels.size();} 
+<a name="l00111"></a><a class="code" href="classBbrc.html#a9b74deeffd380f1269c906f4178a8ab0">00111</a>     <span class="keywordtype">int</span> <a class="code" href="classBbrc.html#a9b74deeffd380f1269c906f4178a8ab0" title="Get number of compounds in the database.">GetNoCompounds</a>() {<span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>) AddDataCanonical() ; <span class="keywordflow">return</span> fm::database-&gt;trees.size();} 
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113     
+<a name="l00114"></a>00114   <span class="keyword">private</span>:
+<a name="l00115"></a>00115     <span class="keywordtype">void</span> AddChiSqNa(){<a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;na++;<a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;n++;}
+<a name="l00116"></a>00116     <span class="keywordtype">void</span> AddChiSqNi(){<a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;ni++;<a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;n++;}
+<a name="l00117"></a>00117     <span class="comment">// KS: Insert value into set of activities</span>
+<a name="l00118"></a>00118     <span class="keywordtype">void</span> AddKS(<span class="keywordtype">float</span> val){<a class="code" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>-&gt;all.push_back(val);}
+<a name="l00119"></a>00119 
+<a name="l00120"></a>00120     <span class="keywordtype">bool</span> init_mining_done;
+<a name="l00121"></a>00121     <span class="keywordtype">int</span> comp_runner;
+<a name="l00122"></a>00122     <span class="keywordtype">int</span> comp_no;
+<a name="l00123"></a>00123 
+<a name="l00124"></a>00124     vector&lt;string&gt; r;
+<a name="l00125"></a>00125     <span class="comment">// ONLY FOR INTERNAL USE. DO NOT MAKE PUBLIC!</span>
+<a name="l00126"></a>00126     map&lt;string, pair&lt;unsigned int, string&gt; &gt; inchi_compound_map; <span class="comment">// AM: structure inchi =&gt; (id, smi) for canonical input</span>
+<a name="l00127"></a>00127     map&lt;unsigned int, float&gt; activity_map;                       <span class="comment">// AM: structure inchi =&gt; (id, smi) for canonical input</span>
+<a name="l00128"></a>00128     <span class="keywordtype">bool</span> AddDataCanonical();                                        
+<a name="l00129"></a>00129     <span class="keywordtype">bool</span> AddCompoundCanonical(<span class="keywordtype">string</span> smiles, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> comp_id); 
+<a name="l00130"></a>00130     <span class="keywordtype">bool</span> AddActivityCanonical(<span class="keywordtype">float</span> act, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> comp_id);     
+<a name="l00131"></a>00131 
+<a name="l00132"></a>00132 };
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Mon Jul 26 17:57:44 2010 for libbbrc by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 22 12:21:41 2010 for libbbrc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>
