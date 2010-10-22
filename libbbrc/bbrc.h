@@ -123,8 +123,9 @@ class Bbrc : public Fminer {
 
     vector<string> r;
     // ONLY FOR INTERNAL USE. DO NOT MAKE PUBLIC!
-    map<string, pair<unsigned int, string> > inchi_compound_map; // AM: structure inchi => (id, smi) for canonical input
-    map<unsigned int, float> activity_map;                       // AM: structure inchi => (id, smi) for canonical input
+    map<string, pair<unsigned int, string> > inchi_compound_map;    // AM: structure inchi => (id, smi) for canonical input to check for double structures
+    map<string, pair<unsigned int, string> > inchi_compound_mmap;   // AM: structure inchi => (id, smi) for canonical input to use for actual storage
+    map<unsigned int, float> activity_map;                          // AM: structure inchi => (id, smi) for canonical input
     bool AddDataCanonical();                                        //!< Only to be called by MineRoot!
     bool AddCompoundCanonical(string smiles, unsigned int comp_id); //!< Only to be called by AddDataCanonical!
     bool AddActivityCanonical(float act, unsigned int comp_id);     //!< Only to be called by AddDataCanonical!
