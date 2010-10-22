@@ -1,4 +1,4 @@
-%module liblast
+%module last
  
 %{
 #include "last.h"
