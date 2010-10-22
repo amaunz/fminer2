@@ -324,8 +324,7 @@ bool Last::AddCompound(string smiles, unsigned int comp_id) {
     return false;
   }
   stringstream ss(smiles);
-  ostringstream strstrm;
-  OBConversion conv(&ss, &strstrm);
+  OBConversion conv(&ss, &cout);
   if(!conv.SetInAndOutFormats("SMI","INCHI")) {
     cerr << "Formats not available" << endl;
     return false;
@@ -345,24 +344,19 @@ bool Last::AddCompound(string smiles, unsigned int comp_id) {
   pair<unsigned int, string> ori = make_pair(comp_id, smiles);
   pair< map<string,pair<unsigned int, string> >::iterator, bool> res = inchi_compound_map.insert(make_pair(inchi,ori));
   if (!res.second) {
-    cerr << "Warning: Leaving out compound '" << smiles << "' (already inserted)." << endl;
+    cerr << "Note: structure of '" << smiles << "' has been already inserted, inserting anyway..." << endl;
   }
+
+  // insert into actual map augmented by number
+  string inchi_no = inchi;
+  inchi_no += "-";
+  comp_runner++;
+  stringstream out; out << comp_runner;
+  string comp_runner_s = out.str();
+  inchi_no += comp_runner_s;
+  pair< multimap<string,pair<unsigned int, string> >::iterator, bool> resmm = inchi_compound_mmap.insert(make_pair(inchi_no,ori));
   return true;
 }
-
-
-/* KS:
-bool Last::AddActivity(bool act, unsigned int comp_id) {
-    if (fm::database->trees_map[comp_id] == NULL) { 
-        cerr << "No structure for ID " << comp_id << ". Ignoring entry!" << endl; return false; 
-    }
-    else {
-        if ((fm::database->trees_map[comp_id]->activity = act)) AddChiSqNa();
-        else AddChiSqNi();
-        return true;
-    }
-}
-*/
 
 bool Last::AddActivity(float act, unsigned int comp_id) {
   if (fm::db_built) {
@@ -401,7 +395,8 @@ extern "C" void usage() {
 bool Last::AddDataCanonical() {
     // AM: now insert all structures into the database
     // in canonical ordering according to inchis
-    for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_map.begin(); it != inchi_compound_map.end(); it++) {
+    comp_runner=0;
+    for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_mmap.begin(); it != inchi_compound_mmap.end(); it++) {
       //cerr << it->second.first << "\t" << it->second.second << endl;
       AddCompoundCanonical(it->second.second, it->second.first); // smiles, comp_id
       AddActivityCanonical(activity_map[it->second.first], it->second.first); // act, comp_id
