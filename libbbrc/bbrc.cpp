@@ -449,11 +449,6 @@ bool Bbrc::AddCompound(string smiles, unsigned int comp_id) {
   stringstream out; out << comp_runner;
   string comp_runner_s = out.str();
   inchi_no += comp_runner_s;
-
-  cerr << inchi << endl;
-  cerr << inchi_no << endl;
-  cerr << endl;
-
   pair< multimap<string,pair<unsigned int, string> >::iterator, bool> resmm = inchi_compound_mmap.insert(make_pair(inchi_no,ori));
   return true;
 }
@@ -498,7 +493,7 @@ bool Bbrc::AddDataCanonical() {
     // in canonical ordering according to inchis
     comp_runner=0;
     for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_mmap.begin(); it != inchi_compound_mmap.end(); it++) {
-//      cerr << it->second.first << "\t" << it->second.second << endl;
+      //cerr << it->second.first << "\t" << it->second.second << endl;
       AddCompoundCanonical(it->second.second, it->second.first); // smiles, comp_id
       AddActivityCanonical(activity_map[it->second.first], it->second.first); // act, comp_id
     }
