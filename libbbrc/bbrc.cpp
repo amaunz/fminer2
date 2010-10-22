@@ -445,12 +445,16 @@ bool Bbrc::AddCompound(string smiles, unsigned int comp_id) {
   // insert into actual map augmented by number
   string inchi_no = inchi;
   inchi_no += "-";
+  comp_runner++;
+  stringstream out; out << comp_runner;
+  string comp_runner_s = out.str();
+  inchi_no += comp_runner_s;
 
-  stringstream out; out << comp_no;
-  string comp_no_s; comp_no_s = out.str();
+  cerr << inchi << endl;
+  cerr << inchi_no << endl;
+  cerr << endl;
 
-  inchi_no += comp_no_s;
-  pair< multimap<string,pair<unsigned int, string> >::iterator, bool> resmm = inchi_compound_mmap.insert(make_pair(inchi,ori));
+  pair< multimap<string,pair<unsigned int, string> >::iterator, bool> resmm = inchi_compound_mmap.insert(make_pair(inchi_no,ori));
   return true;
 }
 
@@ -492,6 +496,7 @@ extern "C" void usage() {
 bool Bbrc::AddDataCanonical() {
     // AM: now insert all structures into the database
     // in canonical ordering according to inchis
+    comp_runner=0;
     for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_mmap.begin(); it != inchi_compound_mmap.end(); it++) {
 //      cerr << it->second.first << "\t" << it->second.second << endl;
       AddCompoundCanonical(it->second.second, it->second.first); // smiles, comp_id
