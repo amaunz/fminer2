@@ -1,5 +1,5 @@
-import liblast
-MyFminer = liblast.Last()
+import last
+MyFminer = last.Last()
 # Adjust setttings
 MyFminer.SetMaxHops(25)
 MyFminer.SetConsoleOut(0)

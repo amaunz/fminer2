@@ -60,7 +60,7 @@ LIB1_SONAME   = $(LIB1).2
 LIB1_REALNAME = $(LIB1_SONAME).0
 LIB2          = $(NAME).so
 LIB3          = lib$(NAME).so
-LIB4          = _lib$(NAME).so
+LIB4          = _$(NAME).so
 
 # FILES
 $(LIB1_REALNAME): $(OBJ)
