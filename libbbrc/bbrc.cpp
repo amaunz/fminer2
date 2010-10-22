@@ -449,7 +449,7 @@ bool Bbrc::AddCompound(string smiles, unsigned int comp_id) {
   stringstream out; out << comp_runner;
   string comp_runner_s = out.str();
   inchi_no += comp_runner_s;
-  pair< multimap<string,pair<unsigned int, string> >::iterator, bool> resmm = inchi_compound_mmap.insert(make_pair(inchi_no,ori));
+  pair< map<string,pair<unsigned int, string> >::iterator, bool> resmm = inchi_compound_mmap.insert(make_pair(inchi_no,ori));
   return true;
 }
 
