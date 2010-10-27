@@ -70,7 +70,7 @@ typedef BbrcLeg *BbrcLegPtr;
 
 void BbrcaddCloseExtensions ( vector<BbrcCloseBbrcLegPtr> &targetcloselegs, int number );
 void BbrcaddCloseExtensions ( vector<BbrcCloseBbrcLegPtr> &targetcloselegs, vector<BbrcCloseBbrcLegPtr> &sourcecloselegs, BbrcBbrcLegOccurrences &sourceoccs );
-CloseBbrcBbrcLegOccurrencesPtr join ( BbrcBbrcLegOccurrences &legoccsdata, CloseBbrcBbrcLegOccurrences &closelegoccsdata );
-CloseBbrcBbrcLegOccurrencesPtr join ( CloseBbrcBbrcLegOccurrences &closelegoccsdata1, CloseBbrcBbrcLegOccurrences &closelegoccsdata2 );
+CloseBbrcBbrcLegOccurrencesPtr bbrc_join ( BbrcBbrcLegOccurrences &legoccsdata, CloseBbrcBbrcLegOccurrences &closelegoccsdata );
+CloseBbrcBbrcLegOccurrencesPtr bbrc_join ( CloseBbrcBbrcLegOccurrences &closelegoccsdata1, CloseBbrcBbrcLegOccurrences &closelegoccsdata2 );
 
 #endif

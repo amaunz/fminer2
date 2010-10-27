@@ -65,7 +65,7 @@ ostream &operator<< ( ostream &stream, vector<BbrcBbrcLegOccurrence> &occs ) {
 }
 
 // This function is on the critical path. Its efficiency is MOST important.
-BbrcBbrcLegOccurrencesPtr join ( BbrcBbrcLegOccurrences &legoccsdata1, BbrcNodeId connectingnode, BbrcBbrcLegOccurrences &legoccsdata2 ) {
+BbrcBbrcLegOccurrencesPtr bbrc_join ( BbrcBbrcLegOccurrences &legoccsdata1, BbrcNodeId connectingnode, BbrcBbrcLegOccurrences &legoccsdata2 ) {
   if ( fm::graphstate->getNodeDegree ( connectingnode ) == fm::graphstate->getNodeMaxDegree ( connectingnode ) ) 
     return NULL;
 
@@ -146,7 +146,7 @@ BbrcBbrcLegOccurrencesPtr join ( BbrcBbrcLegOccurrences &legoccsdata1, BbrcNodeI
     return NULL;
 }
 
-BbrcBbrcLegOccurrencesPtr join ( BbrcBbrcLegOccurrences &legoccsdata ) {
+BbrcBbrcLegOccurrencesPtr bbrc_join ( BbrcBbrcLegOccurrences &legoccsdata ) {
   if ( legoccsdata.selfjoin < fm::minfreq ) 
     return NULL;
   fm::legoccurrences->elements.resize ( 0 );
@@ -227,7 +227,7 @@ void candidateBbrcCloseBbrcLegsAllocate ( int number, int maxnumber ) {
 
 
 
-void extend ( BbrcBbrcLegOccurrences &legoccurrencesdata ) {
+void bbrc_extend ( BbrcBbrcLegOccurrences &legoccurrencesdata ) {
   // we're trying hard to avoid repeated destructor/constructor calls for complex types like vectors.
   // better reuse previously allocated memory, if possible!
   
@@ -302,7 +302,7 @@ void extend ( BbrcBbrcLegOccurrences &legoccurrencesdata ) {
 
 
 
-void extend ( BbrcBbrcLegOccurrences &legoccurrencesdata, BbrcEdgeLabel minlabel, BbrcEdgeLabel neglect ) {
+void bbrc_extend ( BbrcBbrcLegOccurrences &legoccurrencesdata, BbrcEdgeLabel minlabel, BbrcEdgeLabel neglect ) {
 
 
   // we're trying hard to avoid repeated destructor/constructor calls for complex types like vectors.

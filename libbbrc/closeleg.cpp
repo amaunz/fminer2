@@ -53,7 +53,7 @@ void BbrcaddCloseExtensions ( vector<BbrcCloseBbrcLegPtr> &targetcloselegs, int 
 
 void BbrcaddCloseExtensions ( vector<BbrcCloseBbrcLegPtr> &targetcloselegs, vector<BbrcCloseBbrcLegPtr> &sourcecloselegs, BbrcBbrcLegOccurrences &sourceoccs ) {
   for ( int i = 0; i < (int) sourcecloselegs.size (); i++ ) {
-    CloseBbrcBbrcLegOccurrencesPtr closelegoccurrencesptr = join ( sourceoccs, sourcecloselegs[i]->occurrences );
+    CloseBbrcBbrcLegOccurrencesPtr closelegoccurrencesptr = bbrc_join ( sourceoccs, sourcecloselegs[i]->occurrences );
     if ( closelegoccurrencesptr ) {
       BbrcCloseBbrcLegPtr closelegptr = new BbrcCloseBbrcLeg;
       closelegptr->tuple = sourcecloselegs[i]->tuple;
@@ -63,7 +63,7 @@ void BbrcaddCloseExtensions ( vector<BbrcCloseBbrcLegPtr> &targetcloselegs, vect
   }
 }
 
-CloseBbrcBbrcLegOccurrencesPtr join ( BbrcBbrcLegOccurrences &legoccsdata, CloseBbrcBbrcLegOccurrences &closelegoccsdata ) {
+CloseBbrcBbrcLegOccurrencesPtr bbrc_join ( BbrcBbrcLegOccurrences &legoccsdata, CloseBbrcBbrcLegOccurrences &closelegoccsdata ) {
   BbrcFrequency frequency = 0;
   BbrcTid lasttid = NOTID;
   vector<CloseBbrcBbrcLegOccurrence> &closelegoccs = closelegoccsdata.elements;
@@ -109,7 +109,7 @@ CloseBbrcBbrcLegOccurrencesPtr join ( BbrcBbrcLegOccurrences &legoccsdata, Close
     return NULL;
 }
 
-CloseBbrcBbrcLegOccurrencesPtr join ( CloseBbrcBbrcLegOccurrences &closelegoccsdata1, CloseBbrcBbrcLegOccurrences &closelegoccsdata2 ) {
+CloseBbrcBbrcLegOccurrencesPtr bbrc_join ( CloseBbrcBbrcLegOccurrences &closelegoccsdata1, CloseBbrcBbrcLegOccurrences &closelegoccsdata2 ) {
   BbrcFrequency frequency = 0;
   BbrcTid lasttid = NOTID;
   vector<CloseBbrcBbrcLegOccurrence> &closelegoccs1 = closelegoccsdata1.elements,

@@ -62,7 +62,7 @@ void BbrcPatternTree::addExtensionBbrcLegs ( BbrcTuple &tuple, BbrcBbrcLegOccurr
   if ( legoccurrences.maxdegree == 1 )
     return;
   if ( tuple.depth == maxdepth ) {
-    extend ( legoccurrences, MAXEDGELABEL, (unsigned char) NONODE );
+    bbrc_extend ( legoccurrences, MAXEDGELABEL, (unsigned char) NONODE );
     BbrcaddCloseExtensions ( closelegs, legoccurrences.number );
     return;
   }
@@ -71,7 +71,7 @@ void BbrcPatternTree::addExtensionBbrcLegs ( BbrcTuple &tuple, BbrcBbrcLegOccurr
   if ( nextprefixindex != NONEXTPREFIX ) {
     if ( treetuples[nextprefixindex].depth <= tuple.depth ) {
       // heuristic saving
-      extend ( legoccurrences, MAXEDGELABEL, (unsigned char) NONODE );
+      bbrc_extend ( legoccurrences, MAXEDGELABEL, (unsigned char) NONODE );
       BbrcaddCloseExtensions ( closelegs, legoccurrences.number );
       return;
     }
@@ -84,7 +84,7 @@ void BbrcPatternTree::addExtensionBbrcLegs ( BbrcTuple &tuple, BbrcBbrcLegOccurr
   if ( tuple.depth == maxdepth - 1 ) {
     if ( rootpathrelations.back () > 0 ) {
       // heuristic saving
-      extend ( legoccurrences, MAXEDGELABEL, (unsigned char) NONODE );
+      bbrc_extend ( legoccurrences, MAXEDGELABEL, (unsigned char) NONODE );
       BbrcaddCloseExtensions ( closelegs, legoccurrences.number );
       return;
     }
@@ -103,9 +103,9 @@ void BbrcPatternTree::addExtensionBbrcLegs ( BbrcTuple &tuple, BbrcBbrcLegOccurr
   }
 
   if ( minlabel != NOEDGELABEL )
-    extend ( legoccurrences, minlabel, neglect );
+    bbrc_extend ( legoccurrences, minlabel, neglect );
   else
-    extend ( legoccurrences );
+    bbrc_extend ( legoccurrences );
 
   if ( fm::Bbrccandidatelegsoccurrences[pathlowestlabel].frequency >= fm::minfreq )
     // this is the first possible extension, as we force this label to be the lowest!
@@ -133,7 +133,7 @@ void BbrcPatternTree::addLeftBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, in
       int i2 = i;
       while ( (unsigned) i2 < path.legs.size () && path.legs[i2]->tuple.depth == olddepth ) {
         if ( path.legs[i2]->tuple.edgelabel == lowestlabel ) {
-          BbrcBbrcLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[i2]->tuple.connectingnode, path.legs[i2]->occurrences );
+          BbrcBbrcLegOccurrencesPtr legoccurrencesptr = bbrc_join ( leg.occurrences, path.legs[i2]->tuple.connectingnode, path.legs[i2]->occurrences );
           if ( legoccurrencesptr )
             addBbrcLeg ( path.legs[i2]->tuple.connectingnode, edgesize2 - olddepth, path.legs[i2]->tuple.edgelabel, *legoccurrencesptr );
           break;
@@ -143,7 +143,7 @@ void BbrcPatternTree::addLeftBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, in
     }
     // skip lowest label tuples, as they have already been moved to the front...
     if ( path.legs[i]->tuple.edgelabel != lowestlabel ) {
-      BbrcBbrcLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[i]->tuple.connectingnode, path.legs[i]->occurrences );
+      BbrcBbrcLegOccurrencesPtr legoccurrencesptr = bbrc_join ( leg.occurrences, path.legs[i]->tuple.connectingnode, path.legs[i]->occurrences );
       if ( legoccurrencesptr )
         addBbrcLeg ( path.legs[i]->tuple.connectingnode, edgesize2 - olddepth, path.legs[i]->tuple.edgelabel, *legoccurrencesptr );
     }
@@ -153,7 +153,7 @@ void BbrcPatternTree::addLeftBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, in
 int BbrcPatternTree::addLeftBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, BbrcTuple &tuple, unsigned int legindex, int leftend, int edgesize2 ) {
   int i;
 
-  BbrcBbrcLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences );
+  BbrcBbrcLegOccurrencesPtr legoccurrencesptr = bbrc_join ( leg.occurrences );
   if ( legoccurrencesptr )
     addBbrcLeg ( leg.tuple.connectingnode, tuple.depth, tuple.label, *legoccurrencesptr );
 
@@ -168,7 +168,7 @@ int BbrcPatternTree::addLeftBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, Bbr
     BbrcEdgeLabel lowestlabel = path.edgelabels[leg.tuple.depth - 1];
     for ( i++; i < (int) legindex; i++ ) {
       if ( path.legs[i]->tuple.edgelabel != lowestlabel ) {
-        legoccurrencesptr = join ( leg.occurrences, path.legs[i]->tuple.connectingnode, path.legs[i]->occurrences );
+        legoccurrencesptr = bbrc_join ( leg.occurrences, path.legs[i]->tuple.connectingnode, path.legs[i]->occurrences );
         if ( legoccurrencesptr )
           addBbrcLeg ( path.legs[i]->tuple.connectingnode, tuple.depth, path.legs[i]->tuple.edgelabel, *legoccurrencesptr );
       }
@@ -194,7 +194,7 @@ void BbrcPatternTree::addRightBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, i
     if ( path.legs[i]->tuple.depth != olddepth ) {
       for ( k = i + 1; k < i2; k++ ) {
         if ( path.legs[k]->tuple.edgelabel != lowestlabel ) {
-          legoccurrencesptr = join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
+          legoccurrencesptr = bbrc_join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
           if ( legoccurrencesptr )
             addBbrcLeg ( path.legs[k]->tuple.connectingnode, path.legs[k]->tuple.depth - nodesize2, path.legs[k]->tuple.edgelabel, *legoccurrencesptr );
         }
@@ -207,7 +207,7 @@ void BbrcPatternTree::addRightBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, i
     // this extension must be moved to the front, so before the other tuples are
     // added by the code above
     if ( path.legs[i]->tuple.edgelabel == lowestlabel ) {
-      legoccurrencesptr = join ( leg.occurrences, path.legs[i]->tuple.connectingnode, path.legs[i]->occurrences );
+      legoccurrencesptr = bbrc_join ( leg.occurrences, path.legs[i]->tuple.connectingnode, path.legs[i]->occurrences );
       if ( legoccurrencesptr )
         addBbrcLeg ( path.legs[i]->tuple.connectingnode, path.legs[i]->tuple.depth - nodesize2, path.legs[i]->tuple.edgelabel, *legoccurrencesptr );
     }
@@ -216,7 +216,7 @@ void BbrcPatternTree::addRightBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, i
   // some tuples may not have been checked yet
   for ( k = i + 1; k < i2; k++ ) {
     if ( path.legs[k]->tuple.edgelabel != lowestlabel ) {
-      legoccurrencesptr = join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
+      legoccurrencesptr = bbrc_join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
       if ( legoccurrencesptr )
         addBbrcLeg ( path.legs[k]->tuple.connectingnode, path.legs[k]->tuple.depth - nodesize2, path.legs[k]->tuple.edgelabel, *legoccurrencesptr );
     }
@@ -225,7 +225,7 @@ void BbrcPatternTree::addRightBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, i
 
 int BbrcPatternTree::addRightBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, BbrcTuple &tuple, unsigned int legindex, int rightstart, int nodesize2 ) {
   int i;
-  BbrcBbrcLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences );
+  BbrcBbrcLegOccurrencesPtr legoccurrencesptr = bbrc_join ( leg.occurrences );
   if ( legoccurrencesptr )
     addBbrcLeg ( leg.tuple.connectingnode, tuple.depth, tuple.label, *legoccurrencesptr );
 
@@ -238,14 +238,14 @@ int BbrcPatternTree::addRightBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, Bb
   // brothers of the new leg
   if ( rootpathrelations.back () == 0 && tuple.depth != maxdepth )
     for ( int j = i + 1; j < (int) legindex; j++ ) {
-      BbrcBbrcLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[j]->tuple.connectingnode, path.legs[j]->occurrences );
+      BbrcBbrcLegOccurrencesPtr legoccurrencesptr = bbrc_join ( leg.occurrences, path.legs[j]->tuple.connectingnode, path.legs[j]->occurrences );
       if ( legoccurrencesptr )
         addBbrcLeg ( path.legs[j]->tuple.connectingnode, tuple.depth, path.legs[j]->tuple.edgelabel, *legoccurrencesptr );
     }
   BbrcEdgeLabel lowestlabel = path.edgelabels[leg.tuple.depth];
   for ( int j = legindex + 1; j < (int) path.legs.size () && path.legs[j]->tuple.depth == leg.tuple.depth; j++ ) {
     if ( path.legs[j]->tuple.edgelabel != lowestlabel ) {
-      BbrcBbrcLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[j]->tuple.connectingnode, path.legs[j]->occurrences );
+      BbrcBbrcLegOccurrencesPtr legoccurrencesptr = bbrc_join ( leg.occurrences, path.legs[j]->tuple.connectingnode, path.legs[j]->occurrences );
       if ( legoccurrencesptr )
         addBbrcLeg ( path.legs[j]->tuple.connectingnode, tuple.depth, path.legs[j]->tuple.edgelabel, *legoccurrencesptr );
     }
@@ -372,7 +372,7 @@ BbrcPatternTree::BbrcPatternTree ( BbrcPath &path, unsigned int legindex ) {
             while ( j >= i && path.legs[j]->tuple.depth == path.nodelabels.size () - 2
                             && path.legs[j]->tuple.edgelabel >= path.edgelabels.back () );
             for ( k = j + 1; k < j2; k++ ) {
-              legoccurrencesptr = join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
+              legoccurrencesptr = bbrc_join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
               if ( legoccurrencesptr ) {
                 addBbrcLeg ( path.legs[k]->tuple.connectingnode, path.legs[k]->tuple.depth - nodesize2, path.legs[k]->tuple.edgelabel, *legoccurrencesptr );
               }
@@ -632,7 +632,7 @@ BbrcPatternTree::BbrcPatternTree ( BbrcPath &path, unsigned int legindex ) {
       while ( j >= i && (int) path.legs[j]->tuple.depth == targetdepth && path.legs[j]->tuple.edgelabel >= leg.tuple.edgelabel )
         j--;
       for ( int k = j + 1; k <= j2; k++ ) {
-        BbrcBbrcLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
+        BbrcBbrcLegOccurrencesPtr legoccurrencesptr = bbrc_join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
         if ( legoccurrencesptr )
           addBbrcLeg ( path.legs[k]->tuple.connectingnode, tuple.depth, path.legs[k]->tuple.edgelabel, *legoccurrencesptr );
       }
@@ -652,7 +652,7 @@ BbrcPatternTree::BbrcPatternTree ( BbrcPath &path, unsigned int legindex ) {
             j--;
           for ( int k = j + 1; k <= j2; k++ )
             if ( path.legs[k]->tuple.edgelabel != lowestlabel ) {
-              BbrcBbrcLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
+              BbrcBbrcLegOccurrencesPtr legoccurrencesptr = bbrc_join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
               if ( legoccurrencesptr )
                 addBbrcLeg ( path.legs[k]->tuple.connectingnode, tuple.depth, path.legs[k]->tuple.edgelabel, *legoccurrencesptr );
           }
@@ -767,7 +767,7 @@ BbrcPatternTree::BbrcPatternTree ( BbrcPatternTree &parenttree, unsigned int leg
     
   if ( nextprefixindex == nextpathstart && symmetric == 1 ) {
     secondpathleg = 0; // THE BUG
-    extend ( leg.occurrences, MAXEDGELABEL, (unsigned char) NONODE );
+    bbrc_extend ( leg.occurrences, MAXEDGELABEL, (unsigned char) NONODE );
     BbrcaddCloseExtensions ( closelegs, leg.occurrences.number );
     return;
   }
@@ -797,7 +797,7 @@ BbrcPatternTree::BbrcPatternTree ( BbrcPatternTree &parenttree, unsigned int leg
   }
 
   if ( index == (int) legindex ) {
-    BbrcBbrcLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences );
+    BbrcBbrcLegOccurrencesPtr legoccurrencesptr = bbrc_join ( leg.occurrences );
     if ( legoccurrencesptr )
       addBbrcLeg ( leg.tuple.connectingnode, leg.tuple.depth, leg.tuple.label, *legoccurrencesptr );
     index++;
@@ -808,7 +808,7 @@ BbrcPatternTree::BbrcPatternTree ( BbrcPatternTree &parenttree, unsigned int leg
     while ( index < (int) parenttree.legs.size () ) {
       if ( index == parenttree.secondpathleg )
         secondpathleg = legs.size ();
-      BbrcBbrcLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, parenttree.legs[index]->tuple.connectingnode, parenttree.legs[index]->occurrences );
+      BbrcBbrcLegOccurrencesPtr legoccurrencesptr = bbrc_join ( leg.occurrences, parenttree.legs[index]->tuple.connectingnode, parenttree.legs[index]->occurrences );
       if ( legoccurrencesptr )
         addBbrcLeg ( parenttree.legs[index]->tuple.connectingnode, parenttree.legs[index]->tuple.depth, parenttree.legs[index]->tuple.label, *legoccurrencesptr );
       index++;
@@ -818,7 +818,7 @@ BbrcPatternTree::BbrcPatternTree ( BbrcPatternTree &parenttree, unsigned int leg
   }
   else {
     while ( index < (int) parenttree.legs.size () ) {
-      BbrcBbrcLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, parenttree.legs[index]->tuple.connectingnode,  parenttree.legs[index]->occurrences );
+      BbrcBbrcLegOccurrencesPtr legoccurrencesptr = bbrc_join ( leg.occurrences, parenttree.legs[index]->tuple.connectingnode,  parenttree.legs[index]->occurrences );
       if ( legoccurrencesptr )
         addBbrcLeg ( parenttree.legs[index]->tuple.connectingnode, parenttree.legs[index]->tuple.depth, parenttree.legs[index]->tuple.label, *legoccurrencesptr );
       index++;

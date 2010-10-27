@@ -37,7 +37,7 @@ float ChisqConstraint::ChiSq(float x, float y) {
 float KSConstraint::KS(vector<float> all_activities, vector<float> feat_activities) {
 
     // Kolmogorov-Smirnov Test
-    // numerical recipies in C pp 626, extended version with better sensitivity at the ends
+    // numerical recipies in C pp 626, bbrc_extended version with better sensitivity at the ends
     
     sort(feat_activities.begin(),feat_activities.end());
     sort(all_activities.begin(), all_activities.end());

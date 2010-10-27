@@ -199,7 +199,7 @@ BbrcPath::BbrcPath ( BbrcPath &parentpath, unsigned int legindex ) {
 
 
     // build OccurrenceLists
-    extend ( leg.occurrences );
+    bbrc_extend ( leg.occurrences );
     for (unsigned int i = 0; i < fm::Bbrccandidatelegsoccurrences.size (); i++ ) {
       if ( fm::Bbrccandidatelegsoccurrences[i].frequency >= fm::minfreq ) {
         BbrcPathBbrcLegPtr leg2 = new BbrcPathBbrcLeg;
@@ -272,7 +272,7 @@ BbrcPath::BbrcPath ( BbrcPath &parentpath, unsigned int legindex ) {
   for ( ; i < legindex; i++ ) {
     BbrcPathBbrcLeg &leg2 = (*parentpath.legs[i]);
 
-    if ( (legoccurrencesptr = join ( leg.occurrences, leg2.tuple.connectingnode, leg2.occurrences )) ) { // JOIN OCCURRENCES
+    if ( (legoccurrencesptr = bbrc_join ( leg.occurrences, leg2.tuple.connectingnode, leg2.occurrences )) ) { // JOIN OCCURRENCES
       BbrcPathBbrcLegPtr leg3 = new BbrcPathBbrcLeg;
       legs.push_back ( leg3 );
       leg3->tuple.connectingnode = leg2.tuple.connectingnode;
@@ -283,7 +283,7 @@ BbrcPath::BbrcPath ( BbrcPath &parentpath, unsigned int legindex ) {
     }
   }
 
-  if ( (legoccurrencesptr = join ( leg.occurrences )) ) {
+  if ( (legoccurrencesptr = bbrc_join ( leg.occurrences )) ) {
     BbrcPathBbrcLegPtr leg3 = new BbrcPathBbrcLeg;
     legs.push_back ( leg3 );
     leg3->tuple.connectingnode = leg.tuple.connectingnode;
@@ -295,7 +295,7 @@ BbrcPath::BbrcPath ( BbrcPath &parentpath, unsigned int legindex ) {
 
   for ( i++; i < parentpath.legs.size (); i++ ) {
     BbrcPathBbrcLeg &leg2 = (*parentpath.legs[i]);
-    if ( (legoccurrencesptr = join ( leg.occurrences, leg2.tuple.connectingnode, leg2.occurrences )) ) {
+    if ( (legoccurrencesptr = bbrc_join ( leg.occurrences, leg2.tuple.connectingnode, leg2.occurrences )) ) {
       BbrcPathBbrcLegPtr leg3 = new BbrcPathBbrcLeg;
       legs.push_back ( leg3 );
       leg3->tuple.connectingnode = leg2.tuple.connectingnode;
@@ -311,7 +311,7 @@ BbrcPath::BbrcPath ( BbrcPath &parentpath, unsigned int legindex ) {
     return;
   }
 
-  extend ( leg.occurrences );
+  bbrc_extend ( leg.occurrences );
   for ( unsigned int i = 0; i < fm::Bbrccandidatelegsoccurrences.size (); i++ ) {
     if ( fm::Bbrccandidatelegsoccurrences[i].frequency >= fm::minfreq ) {
       BbrcPathBbrcLegPtr leg2 = new BbrcPathBbrcLeg;
