@@ -106,8 +106,8 @@ void Last::Reset() {
     fm::last_database = new LastDatabase();
     fm::last_db_built = false;
     fm::last_statistics = new LastStatistics();
-    fm::last_chisq = new ChisqConstraint(3.84146);
-    fm::last_ks = new KSConstraint(0.95);
+    fm::last_chisq = new ChisqLastConstraint(3.84146);
+    fm::last_ks = new KSLastConstraint(0.95);
     fm::last_graphstate = new LastGraphState();
     fm::last_closelegoccurrences = new CloseLastLegOccurrences();
     fm::last_legoccurrences = new LastLegOccurrences();

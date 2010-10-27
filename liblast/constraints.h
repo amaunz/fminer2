@@ -33,9 +33,9 @@ namespace fm {
     extern LastDatabase* last_database;
 }
 
-class Constraint {};
+class LastConstraint {};
 
-class ChisqConstraint : public Constraint {
+class ChisqLastConstraint : public LastConstraint {
     public:
     unsigned int na, ni, n;
     unsigned int fa, fi;
@@ -44,7 +44,7 @@ class ChisqConstraint : public Constraint {
     set<LastTid> fa_set, fi_set;
     bool activating; //defaults to deactivating (0)
 
-    ChisqConstraint (float sig) : na(0), ni(0), n(0), fa(0), fi(0), sig(sig), chisq(0.0), p(0.0), u(0.0), active(0), activating(0) {}
+    ChisqLastConstraint (float sig) : na(0), ni(0), n(0), fa(0), fi(0), sig(sig), chisq(0.0), p(0.0), u(0.0), active(0), activating(0) {}
 
     //!< Calculate chi^2 of current and upper bound for chi^2 of more specific features (see Morishita and Sese, 2000)
     template <typename OccurrenceType>
@@ -97,7 +97,7 @@ class ChisqConstraint : public Constraint {
 
 };
 
-class KSConstraint : public Constraint {
+class KSLastConstraint : public LastConstraint {
     public:
     vector<float> all;
     vector<float> feat;
@@ -105,7 +105,7 @@ class KSConstraint : public Constraint {
     set<LastTid> fa_set, fi_set;
     bool activating; //defaults to deactivating (0)
 
-    KSConstraint (float sig) : sig(sig), p(0.0), activating(0) {}
+    KSLastConstraint (float sig) : sig(sig), p(0.0), activating(0) {}
 
     template <typename OccurrenceType>
     void Calc(vector<OccurrenceType>& legocc) {

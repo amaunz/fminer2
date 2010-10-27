@@ -29,8 +29,8 @@
 
 
 namespace fm {
-    extern ChisqConstraint* bbrc_chisq;
-    extern KSConstraint* bbrc_ks;
+    extern ChisqBbrcConstraint* bbrc_chisq;
+    extern KSBbrcConstraint* bbrc_ks;
     extern bool bbrc_console_out;
     extern bool bbrc_gsp_out;
     extern bool bbrc_do_yaml;

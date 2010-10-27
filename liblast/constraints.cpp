@@ -21,7 +21,7 @@
 #include "constraints.h"
 #include "stats.h"
 
-float ChisqConstraint::ChiSq(float x, float y, bool decide_activating) {
+float ChisqLastConstraint::ChiSq(float x, float y, bool decide_activating) {
 
         float ea = 0.0, ei = 0.0, impact = 0.0;
         
@@ -39,7 +39,7 @@ float ChisqConstraint::ChiSq(float x, float y, bool decide_activating) {
 
 }
 
-float KSConstraint::KS(vector<float> all_activities, vector<float> feat_activities, bool decide_activating) {
+float KSLastConstraint::KS(vector<float> all_activities, vector<float> feat_activities, bool decide_activating) {
 
     // Kolmogorov-Smirnov Test
     // numerical recipies in C pp 626, bbrc_extended version with better sensitivity at the ends

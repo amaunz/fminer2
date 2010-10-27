@@ -28,7 +28,7 @@ namespace fm {
 
     unsigned int last_minfreq;
     int last_type;
-    ChisqConstraint* last_chisq=NULL;
+    ChisqLastConstraint* last_chisq=NULL;
     // do_backbone missing
     // adjust_ub missing
     bool last_do_pruning;
@@ -64,7 +64,7 @@ namespace fm {
     vector<LastLegOccurrences> last_Lastcandidatelegsoccurrences;
     vector<vector< CloseLastLegOccurrences> > last_candidatecloselegsoccs;
     vector<bool> last_candidateLastcloselegsoccsused;
-    KSConstraint* last_ks=NULL;
+    KSLastConstraint* last_ks=NULL;
 
 
     bool last_Lastcloselegsoccsused;

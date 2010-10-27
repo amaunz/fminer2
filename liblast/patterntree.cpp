@@ -36,8 +36,8 @@ namespace fm {
     extern bool last_do_last;
 
     extern LastDatabase* last_database;
-    extern ChisqConstraint* last_chisq;
-    extern KSConstraint* last_ks;
+    extern ChisqLastConstraint* last_chisq;
+    extern KSLastConstraint* last_ks;
     extern vector<string>* last_result;
     extern LastStatistics* last_statistics;
     extern LastGraphState* last_graphstate;

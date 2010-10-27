@@ -40,8 +40,8 @@ namespace fm {
     extern bool bbrc_regression;
 
     extern BbrcDatabase* bbrc_database;
-    extern ChisqConstraint* bbrc_chisq;
-    extern KSConstraint* bbrc_ks;
+    extern ChisqBbrcConstraint* bbrc_chisq;
+    extern KSBbrcConstraint* bbrc_ks;
     extern vector<string>* bbrc_result;
     extern BbrcStatistics* bbrc_statistics;
     extern BbrcGraphState* bbrc_graphstate;

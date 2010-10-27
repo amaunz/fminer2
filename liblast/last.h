@@ -31,8 +31,8 @@ namespace fm {
 
     extern bool last_do_pruning;
     extern bool last_aromatic;
-    extern ChisqConstraint* last_chisq;
-    extern KSConstraint* last_ks;
+    extern ChisqLastConstraint* last_chisq;
+    extern KSLastConstraint* last_ks;
     extern bool last_gsp_out;
     extern bool last_bbrc_sep;
     extern bool last_regression;

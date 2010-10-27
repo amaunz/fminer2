@@ -33,9 +33,9 @@ namespace fm {
     extern BbrcDatabase* bbrc_database;
 }
 
-class Constraint {};
+class BbrcConstraint {};
 
-class ChisqConstraint : public Constraint {
+class ChisqBbrcConstraint : public BbrcConstraint {
     public:
     unsigned int na, ni, n;
     unsigned int fa, fi;
@@ -43,7 +43,7 @@ class ChisqConstraint : public Constraint {
     bool active;
     set<BbrcTid> fa_set, fi_set;
 
-    ChisqConstraint (float sig) : na(0), ni(0), n(0), fa(0), fi(0), sig(sig), chisq(0.0), p(0.0), u(0.0), active(0) {}
+    ChisqBbrcConstraint (float sig) : na(0), ni(0), n(0), fa(0), fi(0), sig(sig), chisq(0.0), p(0.0), u(0.0), active(0) {}
 
     //!< Calculate chi^2 of current and upper bound for chi^2 of more specific features (see Morishita and Sese, 2000)
     template <typename OccurrenceType>
@@ -97,14 +97,14 @@ class ChisqConstraint : public Constraint {
 
 };
 
-class KSConstraint : public Constraint {
+class KSBbrcConstraint : public BbrcConstraint {
     public:
     vector<float> all;
     vector<float> feat;
     float sig, p;
     set<BbrcTid> fa_set, fi_set;
 
-    KSConstraint (float sig) : sig(sig), p(0.0) {}
+    KSBbrcConstraint (float sig) : sig(sig), p(0.0) {}
 
     template <typename OccurrenceType>
     void Calc(vector<OccurrenceType>& legocc) {

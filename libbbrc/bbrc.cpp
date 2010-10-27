@@ -116,8 +116,8 @@ void Bbrc::Reset() {
     fm::bbrc_database = new BbrcDatabase();
     fm::bbrc_db_built = false;
     fm::bbrc_statistics = new BbrcStatistics();
-    fm::bbrc_chisq = new ChisqConstraint(3.84146);
-    fm::bbrc_ks = new KSConstraint(0.95);
+    fm::bbrc_chisq = new ChisqBbrcConstraint(3.84146);
+    fm::bbrc_ks = new KSBbrcConstraint(0.95);
     fm::bbrc_graphstate = new BbrcGraphState();
     fm::bbrc_closelegoccurrences = new CloseBbrcLegOccurrences();
     fm::bbrc_legoccurrences = new BbrcLegOccurrences();

@@ -28,7 +28,7 @@ namespace fm {
     // switched by fminer binary
     unsigned int bbrc_minfreq; // fminer, set
     int bbrc_type;             // fminer, set
-    ChisqConstraint* bbrc_chisq=NULL; // fminer, set (sig).
+    ChisqBbrcConstraint* bbrc_chisq=NULL; // fminer, set (sig).
     bool bbrc_do_backbone; // fminer, set
     bool bbrc_adjust_ub; // fminer, set
     bool bbrc_do_pruning; // fminer, set
@@ -64,7 +64,7 @@ namespace fm {
     vector<BbrcLegOccurrences> bbrc_Bbrccandidatelegsoccurrences;
     vector<vector< CloseBbrcLegOccurrences> > bbrc_candidatecloselegsoccs;
     vector<bool> bbrc_candidateBbrccloselegsoccsused;
-    KSConstraint* bbrc_ks=NULL;
+    KSBbrcConstraint* bbrc_ks=NULL;
 
     // controlled externally, set on demand
     bool bbrc_Bbrccloselegsoccsused; // demand

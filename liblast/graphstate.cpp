@@ -28,7 +28,7 @@
 #include "misc.h"
 
 namespace fm {
-    extern ChisqConstraint* last_chisq;
+    extern ChisqLastConstraint* last_chisq;
     extern bool last_console_out;
     extern bool last_gsp_out;
     extern LastDatabase* last_database;

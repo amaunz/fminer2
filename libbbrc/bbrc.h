@@ -32,8 +32,8 @@ namespace fm {
     extern bool bbrc_adjust_ub;
     extern bool bbrc_do_pruning;
     extern bool bbrc_aromatic;
-    extern ChisqConstraint* bbrc_chisq;
-    extern KSConstraint* bbrc_ks;
+    extern ChisqBbrcConstraint* bbrc_chisq;
+    extern KSBbrcConstraint* bbrc_ks;
     extern bool bbrc_do_yaml;
     extern bool bbrc_gsp_out;
     extern bool bbrc_bbrc_sep;
