@@ -25,21 +25,21 @@
 
 namespace fm {
     extern unsigned int minfreq;
-    extern CloseLegOccurrences* closelegoccurrences;
-    extern LegOccurrences* legoccurrences;
-    extern vector<vector< CloseLegOccurrences> > candidatecloselegsoccs;
-    extern vector<bool> candidatecloselegsoccsused;
-    extern bool closelegsoccsused;
+    extern CloseLastLastLegOccurrences* closelegoccurrences;
+    extern LastLastLegOccurrences* legoccurrences;
+    extern vector<vector< CloseLastLastLegOccurrences> > candidatecloselegsoccs;
+    extern vector<bool> candidateLastcloselegsoccsused;
+    extern bool Lastcloselegsoccsused;
 }
 
-void addCloseExtensions ( vector<CloseLegPtr> &targetcloselegs, int number ) {
-  if ( fm::closelegsoccsused ) {
+void LastaddCloseExtensions ( vector<LastCloseLastLegPtr> &targetcloselegs, int number ) {
+  if ( fm::Lastcloselegsoccsused ) {
     for ( int i = 1; i < (int) fm::candidatecloselegsoccs.size (); i++ )
-      if ( fm::candidatecloselegsoccsused[i] ) {
-        vector<CloseLegOccurrences> &edgelabeloccs = fm::candidatecloselegsoccs[i];
-        for ( EdgeLabel j = 0; j < edgelabeloccs.size (); j++ ) {
+      if ( fm::candidateLastcloselegsoccsused[i] ) {
+        vector<CloseLastLastLegOccurrences> &edgelabeloccs = fm::candidatecloselegsoccs[i];
+        for ( LastEdgeLabel j = 0; j < edgelabeloccs.size (); j++ ) {
           if ( edgelabeloccs[j].frequency >= fm::minfreq ) {
-            CloseLegPtr closelegptr = new CloseLeg;
+            LastCloseLastLegPtr closelegptr = new LastCloseLastLeg;
             closelegptr->tuple.label = j;
             closelegptr->tuple.to = i;
             closelegptr->tuple.from = number;
@@ -51,11 +51,11 @@ void addCloseExtensions ( vector<CloseLegPtr> &targetcloselegs, int number ) {
   }
 }
 
-void addCloseExtensions ( vector<CloseLegPtr> &targetcloselegs, vector<CloseLegPtr> &sourcecloselegs, LegOccurrences &sourceoccs ) {
+void LastaddCloseExtensions ( vector<LastCloseLastLegPtr> &targetcloselegs, vector<LastCloseLastLegPtr> &sourcecloselegs, LastLastLegOccurrences &sourceoccs ) {
   for ( int i = 0; i < (int) sourcecloselegs.size (); i++ ) {
-    CloseLegOccurrencesPtr closelegoccurrencesptr = join ( sourceoccs, sourcecloselegs[i]->occurrences );
+    CloseLastLastLegOccurrencesPtr closelegoccurrencesptr = join ( sourceoccs, sourcecloselegs[i]->occurrences );
     if ( closelegoccurrencesptr ) {
-      CloseLegPtr closelegptr = new CloseLeg;
+      LastCloseLastLegPtr closelegptr = new LastCloseLastLeg;
       closelegptr->tuple = sourcecloselegs[i]->tuple;
       swap ( closelegptr->occurrences, *closelegoccurrencesptr );
       targetcloselegs.push_back ( closelegptr );
@@ -63,16 +63,16 @@ void addCloseExtensions ( vector<CloseLegPtr> &targetcloselegs, vector<CloseLegP
   }
 }
 
-CloseLegOccurrencesPtr join ( LegOccurrences &legoccsdata, CloseLegOccurrences &closelegoccsdata ) {
-  Frequency frequency = 0;
-  Tid lasttid = NOTID;
-  vector<CloseLegOccurrence> &closelegoccs = closelegoccsdata.elements;
-  vector<LegOccurrence> &legoccs = legoccsdata.elements;
+CloseLastLastLegOccurrencesPtr join ( LastLastLegOccurrences &legoccsdata, CloseLastLastLegOccurrences &closelegoccsdata ) {
+  LastFrequency frequency = 0;
+  LastTid lasttid = NOTID;
+  vector<CloseLastLastLegOccurrence> &closelegoccs = closelegoccsdata.elements;
+  vector<LastLastLegOccurrence> &legoccs = legoccsdata.elements;
 
   fm::closelegoccurrences->elements.resize ( 0 );
 
   unsigned int legoccssize = legoccs.size (), closelegoccssize = closelegoccs.size ();
-  OccurrenceId j = 0, k = 0;
+  LastOccurrenceId j = 0, k = 0;
   int comp;
 
   while ( true ) {
@@ -84,7 +84,7 @@ CloseLegOccurrencesPtr join ( LegOccurrences &legoccsdata, CloseLegOccurrences &
     }
     else {
       if ( comp == 0 ) {
-        fm::closelegoccurrences->elements.push_back ( CloseLegOccurrence ( legoccs[j].tid, j ) );
+        fm::closelegoccurrences->elements.push_back ( CloseLastLastLegOccurrence ( legoccs[j].tid, j ) );
         if ( legoccs[j].tid != lasttid ) {
           lasttid = legoccs[j].tid;
           frequency++;
@@ -109,15 +109,15 @@ CloseLegOccurrencesPtr join ( LegOccurrences &legoccsdata, CloseLegOccurrences &
     return NULL;
 }
 
-CloseLegOccurrencesPtr join ( CloseLegOccurrences &closelegoccsdata1, CloseLegOccurrences &closelegoccsdata2 ) {
-  Frequency frequency = 0;
-  Tid lasttid = NOTID;
-  vector<CloseLegOccurrence> &closelegoccs1 = closelegoccsdata1.elements,
+CloseLastLastLegOccurrencesPtr join ( CloseLastLastLegOccurrences &closelegoccsdata1, CloseLastLastLegOccurrences &closelegoccsdata2 ) {
+  LastFrequency frequency = 0;
+  LastTid lasttid = NOTID;
+  vector<CloseLastLastLegOccurrence> &closelegoccs1 = closelegoccsdata1.elements,
                              &closelegoccs2 = closelegoccsdata2.elements;
 
   unsigned int closelegoccs1size = closelegoccs1.size (), closelegoccs2size = closelegoccs2.size ();
   fm::closelegoccurrences->elements.resize ( 0 );
-  OccurrenceId j = 0, k = 0;
+  LastOccurrenceId j = 0, k = 0;
   int comp;
 
   while ( true ) {
@@ -129,7 +129,7 @@ CloseLegOccurrencesPtr join ( CloseLegOccurrences &closelegoccsdata1, CloseLegOc
     }
     else {
       if ( comp == 0 ) {
-        fm::closelegoccurrences->elements.push_back ( CloseLegOccurrence ( closelegoccs1[j].tid, closelegoccs1[j].occurrenceid )  );
+        fm::closelegoccurrences->elements.push_back ( CloseLastLastLegOccurrence ( closelegoccs1[j].tid, closelegoccs1[j].occurrenceid )  );
         if ( closelegoccs1[j].tid != lasttid ) {
           lasttid = closelegoccs1[j].tid;
           frequency++;

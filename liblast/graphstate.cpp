@@ -31,15 +31,15 @@ namespace fm {
     extern ChisqConstraint* chisq;
     extern bool console_out;
     extern bool gsp_out;
-    extern Database* database;
-    extern GraphState* graphstate;
+    extern LastDatabase* database;
+    extern LastGraphState* graphstate;
     extern int die;
 }
 
-GraphState::GraphState () {
+LastGraphState::LastGraphState () {
 }
 
-void GraphState::init () {
+void LastGraphState::init () {
   edgessize = 0;
   closecount = 0;
 
@@ -55,27 +55,27 @@ void GraphState::init () {
   deletededge.tonode = deletededge.fromnode = NONODE;
 }
 
-void GraphState::insertNode ( NodeLabel nodelabel, short unsigned int maxdegree ) {
+void LastGraphState::insertNode ( LastNodeLabel nodelabel, short unsigned int maxdegree ) {
   vector_push_back ( GSNode, nodes, node );
   node.label = nodelabel;
   node.maxdegree = maxdegree;
 }
 
-void GraphState::insertStartNode ( NodeLabel nodelabel ) {
+void LastGraphState::insertStartNode ( LastNodeLabel nodelabel ) {
   insertNode ( nodelabel, (short unsigned int) (-1) );
 }
 
-void GraphState::deleteNode2 () {
+void LastGraphState::deleteNode2 () {
   nodes.pop_back ();
 }
 
-void GraphState::deleteStartNode () {
+void LastGraphState::deleteStartNode () {
   deleteNode2 ();
 }
 
-void GraphState::insertNode ( int from, EdgeLabel edgelabel, short unsigned int maxdegree  ) {
-  NodeLabel fromlabel = nodes[from].label, tolabel;
-  DatabaseEdgeLabel &dataedgelabel = fm::database->edgelabels[fm::database->edgelabelsindexes[edgelabel]];
+void LastGraphState::insertNode ( int from, LastEdgeLabel edgelabel, short unsigned int maxdegree  ) {
+  LastNodeLabel fromlabel = nodes[from].label, tolabel;
+  LastDatabaseLastEdgeLabel &dataedgelabel = fm::database->edgelabels[fm::database->edgelabelsindexes[edgelabel]];
   if ( dataedgelabel.fromnodelabel == fromlabel )
     tolabel = dataedgelabel.tonodelabel;
   else
@@ -89,7 +89,7 @@ void GraphState::insertNode ( int from, EdgeLabel edgelabel, short unsigned int 
   edgessize++;
 }
 
-void GraphState::deleteNode () {
+void LastGraphState::deleteNode () {
 
   GSEdge &gsedge = nodes.back ().edges[0];
   int from = gsedge.tonode;
@@ -98,22 +98,22 @@ void GraphState::deleteNode () {
   edgessize--;
 }
 
-void GraphState::insertEdge ( int from, int to, EdgeLabel edgelabel ) {
+void LastGraphState::insertEdge ( int from, int to, LastEdgeLabel edgelabel ) {
   from--; to--;
   nodes[to].edges.push_back ( GSEdge ( from, nodes[from].edges.size (), edgelabel, true ) );
   nodes[from].edges.push_back ( GSEdge ( to, nodes[to].edges.size () - 1, edgelabel, true ) );
   edgessize++;
 }
 
-void GraphState::deleteEdge ( int from, int to ) {
+void LastGraphState::deleteEdge ( int from, int to ) {
   from--; to--;
-  //EdgeLabel edgelabel = nodes[to].edges.back ().edgelabel;
+  //LastEdgeLabel edgelabel = nodes[to].edges.back ().edgelabel;
   nodes[to].edges.pop_back ();
   nodes[from].edges.pop_back ();
   edgessize--;
 }
 
-void GraphState::deleteEdge ( GSEdge &edge ) {
+void LastGraphState::deleteEdge ( GSEdge &edge ) {
   vector_push_back ( GSDeletedEdge, deletededges, deletededge );
   // fill in the info about the deleted edge
   deletededge.tonode = edge.tonode;
@@ -144,7 +144,7 @@ void GraphState::deleteEdge ( GSEdge &edge ) {
   closecount += deletededge.close;
 }
 
-void GraphState::reinsertEdge () {
+void LastGraphState::reinsertEdge () {
   GSDeletedEdge &deletededge = deletededges.back ();
   vector<GSEdge> &edges1 = nodes[deletededge.tonode].edges;
   vector_push_back ( GSEdge, edges1, edge );
@@ -181,7 +181,7 @@ void GraphState::reinsertEdge () {
 // Given a graph, they determine whether the current code is canonical.
 // The algorithm is a horror to implement.
 
-int GraphState::normalizeSelf () {
+int LastGraphState::normalizeSelf () {
   vector<pair<int, int> > removededges;
   selfdone = true;
   
@@ -213,7 +213,7 @@ int GraphState::normalizeSelf () {
 // == 0 no lower found
 // == 1 lower found, last tuple was however the only lower
 // == 2 lower found, larger prefix was lower
-int GraphState::is_normal () { 
+int LastGraphState::is_normal () { 
   selfdone = false;
   
   int b = enumerateSpanning ();
@@ -222,7 +222,7 @@ int GraphState::is_normal () {
   return b;
 }
 
-void GraphState::determineCycles ( unsigned int usedbit ) { 
+void LastGraphState::determineCycles ( unsigned int usedbit ) { 
   int nodestack[edgessize+1];
   int edgestack[edgessize+1];
   int stacktop = 1;
@@ -278,7 +278,7 @@ void GraphState::determineCycles ( unsigned int usedbit ) {
 }
 
 // returns true if lower found, otherwise false
-int GraphState::enumerateSpanning () {
+int LastGraphState::enumerateSpanning () {
   if ( edgessize == (int) nodes.size () - 1 ) {
     // we have a tree
     if ( closecount == (int) closetuples->size () )
@@ -316,7 +316,7 @@ int GraphState::enumerateSpanning () {
 
 // PRINT GSP TO STDOUT
 
-void GraphState::print ( FILE *f ) {
+void LastGraphState::print ( FILE *f ) {
   static int counter = 0;
   counter++;
   putc ( 't', f );
@@ -333,7 +333,7 @@ void GraphState::print ( FILE *f ) {
   }
   for ( int i = 0; i < (int) nodes.size (); i++ ) {
     for ( int j = 0; j < (int) nodes[i].edges.size (); j++ ) {
-      GraphState::GSEdge &edge = nodes[i].edges[j];
+      LastGraphState::GSEdge &edge = nodes[i].edges[j];
       if ( i < edge.tonode ) {
         putc ( 'e', f );
         putc ( ' ', f );
@@ -353,19 +353,19 @@ void GraphState::print ( FILE *f ) {
 
 // GENERATE VECTOR REPRESENTATIONS FOR LATENT STRUCTURE MINING
 
-void GraphState::print ( GSWalk* gsw, map<Tid, int> weightmap_a, map<Tid, int> weightmap_i ) {
+void LastGraphState::print ( GSWalk* gsw, map<LastTid, int> weightmap_a, map<LastTid, int> weightmap_i ) {
 
   // convert occurrence lists to weight maps
   for ( int i = 0; i < (int) nodes.size (); i++ ) {
-    set<InputNodeLabel> inl; inl.insert(fm::database->nodelabels[nodes[i].label].inputlabel);
+    set<InputLastNodeLabel> inl; inl.insert(fm::database->nodelabels[nodes[i].label].inputlabel);
     gsw->nodewalk.push_back( (GSWNode) { inl } );
   }
 
   for ( int i = 0; i < (int) nodes.size (); i++ ) {
     for ( int j = 0; j < (int) nodes[i].edges.size (); j++ ) {
-      GraphState::GSEdge &edge = nodes[i].edges[j];
+      LastGraphState::GSEdge &edge = nodes[i].edges[j];
       if ( i < edge.tonode ) {
-          set<InputEdgeLabel> iel; iel.insert((InputEdgeLabel) fm::database->edgelabels[fm::database->edgelabelsindexes[edge.edgelabel]].inputedgelabel);
+          set<InputLastEdgeLabel> iel; iel.insert((InputLastEdgeLabel) fm::database->edgelabels[fm::database->edgelabelsindexes[edge.edgelabel]].inputedgelabel);
           gsw->edgewalk[i][edge.tonode] = (GSWEdge) { edge.tonode , iel, weightmap_a, weightmap_i, 0, 1 } ;
       }
     }
@@ -378,8 +378,8 @@ void GraphState::print ( GSWalk* gsw, map<Tid, int> weightmap_a, map<Tid, int> w
 
 // PRINT SMARTS TO STDOUT
 
-void GraphState::DfsOut(int cur_n, int from_n) {
-    InputNodeLabel inl = fm::database->nodelabels[nodes[cur_n].label].inputlabel;
+void LastGraphState::DfsOut(int cur_n, int from_n) {
+    InputLastNodeLabel inl = fm::database->nodelabels[nodes[cur_n].label].inputlabel;
     if (inl<=150) {
         const char* str = etab.GetSymbol(inl);
         for(int i = 0; str[i] != '\0'; i++) putchar(str[i]);
@@ -392,9 +392,9 @@ void GraphState::DfsOut(int cur_n, int from_n) {
         putchar(']');
     }
     int fanout = (int) nodes[cur_n].edges.size ();
-    InputEdgeLabel iel;
+    InputLastEdgeLabel iel;
     for ( int j = 0; j < fanout; j++ ) {
-        GraphState::GSEdge &edge = nodes[cur_n].edges[j];
+        LastGraphState::GSEdge &edge = nodes[cur_n].edges[j];
         if ( edge.tonode != from_n) {
             if (fanout>2) putchar ('(');
             iel = fm::database->edgelabels[fm::database->edgelabelsindexes[edge.edgelabel]].inputedgelabel;
@@ -425,7 +425,7 @@ void GraphState::DfsOut(int cur_n, int from_n) {
 
 // ENTRY: BRANCH TO GSP (STDOUT) or PRINT YAML/LAZAR TO STDOUT
 
-void GraphState::print ( unsigned int frequency ) {
+void LastGraphState::print ( unsigned int frequency ) {
     float p, sig;
     if (fm::chisq->active) {
         p = fm::chisq->p;
@@ -464,7 +464,7 @@ void GraphState::print ( unsigned int frequency ) {
           // output occurrences
           if (fm::chisq->active) {
               putchar ('[');
-              set<Tid>::iterator iter;
+              set<LastTid>::iterator iter;
               for (iter = fm::chisq->fa_set.begin(); iter != fm::chisq->fa_set.end(); iter++) {
                   if (iter != fm::chisq->fa_set.begin()) putchar (',');
                   putchar (' ');
@@ -478,7 +478,7 @@ void GraphState::print ( unsigned int frequency ) {
                   if (iter != fm::chisq->fi_set.begin()) putchar (',');
                   printf(" %i", (*iter)); 
               }
-              set<Tid> ids;
+              set<LastTid> ids;
               ids.insert(fm::chisq->fa_set.begin(), fm::chisq->fa_set.end());
               ids.insert(fm::chisq->fi_set.begin(), fm::chisq->fi_set.end());
               for (iter = ids.begin(); iter != ids.end(); iter++) {
@@ -500,7 +500,7 @@ void GraphState::print ( unsigned int frequency ) {
 
 // PRINT GSP TO OSS
 
-void GraphState::to_s ( string& oss ) {
+void LastGraphState::to_s ( string& oss ) {
   static int counter = 0;
   counter++;
   oss.append( "t");
@@ -520,7 +520,7 @@ void GraphState::to_s ( string& oss ) {
   }
   for ( int i = 0; i < (int) nodes.size (); i++ ) {
     for ( int j = 0; j < (int) nodes[i].edges.size (); j++ ) {
-      GraphState::GSEdge &edge = nodes[i].edges[j];
+      LastGraphState::GSEdge &edge = nodes[i].edges[j];
       if ( i < edge.tonode ) {
     oss.append( "e");
     oss.append( " ");
@@ -541,8 +541,8 @@ void GraphState::to_s ( string& oss ) {
 
 // PRINT SMARTS TO OSS
 
-void GraphState::DfsOut(int cur_n, string& oss, int from_n) {
-    InputNodeLabel inl = fm::database->nodelabels[nodes[cur_n].label].inputlabel;
+void LastGraphState::DfsOut(int cur_n, string& oss, int from_n) {
+    InputLastNodeLabel inl = fm::database->nodelabels[nodes[cur_n].label].inputlabel;
     if (inl<=150) {
         oss.append(etab.GetSymbol(inl));
     }
@@ -552,9 +552,9 @@ void GraphState::DfsOut(int cur_n, string& oss, int from_n) {
         oss.append("&a]");
     }
     int fanout = (int) nodes[cur_n].edges.size ();
-    InputEdgeLabel iel;
+    InputLastEdgeLabel iel;
     for ( int j = 0; j < fanout; j++ ) {
-        GraphState::GSEdge &edge = nodes[cur_n].edges[j];
+        LastGraphState::GSEdge &edge = nodes[cur_n].edges[j];
         if ( edge.tonode != from_n) {
             if (fanout>2) oss.append ("(");
             iel = fm::database->edgelabels[fm::database->edgelabelsindexes[edge.edgelabel]].inputedgelabel;
@@ -584,7 +584,7 @@ void GraphState::DfsOut(int cur_n, string& oss, int from_n) {
 
 // ENTRY: BRANCH TO GSP (OSS) or PRINT YAML/LAZAR TO OSS
 
-string GraphState::to_s ( unsigned int frequency ) {
+string LastGraphState::to_s ( unsigned int frequency ) {
 
     if (!fm::chisq->active || fm::chisq->p >= fm::chisq->sig) {
 
@@ -625,12 +625,12 @@ string GraphState::to_s ( unsigned int frequency ) {
           if (fm::chisq->active) {
               oss.append ("[");
 
-              set<Tid>::iterator iter;
+              set<LastTid>::iterator iter;
               char x[20];
 
-              set<Tid>::iterator begin = fm::chisq->fa_set.begin();
-              set<Tid>::iterator end = fm::chisq->fa_set.end();
-              set<Tid>::iterator last = end; if (fm::chisq->fa_set.size()) last = --(fm::chisq->fa_set.end());
+              set<LastTid>::iterator begin = fm::chisq->fa_set.begin();
+              set<LastTid>::iterator end = fm::chisq->fa_set.end();
+              set<LastTid>::iterator last = end; if (fm::chisq->fa_set.size()) last = --(fm::chisq->fa_set.end());
 
               for (iter = begin; iter != end; iter++) {
                   if (iter != begin) oss.append (",");
@@ -651,7 +651,7 @@ string GraphState::to_s ( unsigned int frequency ) {
                   if ((last != end) && (iter == last)) oss.append (" ");
               }
 
-              set<Tid> ids;
+              set<LastTid> ids;
               ids.insert(fm::chisq->fa_set.begin(), fm::chisq->fa_set.end());
               ids.insert(fm::chisq->fi_set.begin(), fm::chisq->fi_set.end());
               for (iter = ids.begin(); iter != ids.end(); iter++) {
@@ -673,12 +673,12 @@ string GraphState::to_s ( unsigned int frequency ) {
     else return "";
 }
   
-string GraphState::sep() {
+string LastGraphState::sep() {
     if (fm::gsp_out) return "#";
     else return "---";
 }
 
-void GraphState::undoState () {
+void LastGraphState::undoState () {
   int s = nodes.size ();
   for ( int i = 1; i < s; i++ )
     deleteNode ();
@@ -688,7 +688,7 @@ void GraphState::undoState () {
 // In this function the real work is done. Currently it is one function (645 lines),
 // as many arrays are reused. This choice was made because this setup is more
 // efficient (but less readable, unfortunately).
-int GraphState::normalizetree () {
+int LastGraphState::normalizetree () {
   unsigned int nrnodes = nodes.size ();
   int distmarkers[nrnodes];
   int adjacentdones[nrnodes];
@@ -704,7 +704,7 @@ int GraphState::normalizetree () {
     if ( nodes[i].edges.size () == 1 ) {
       onecnt++;
       distmarkers[i] = 1;
-      NodeId adjacent = nodes[i].edges[0].tonode;
+      LastNodeId adjacent = nodes[i].edges[0].tonode;
       adjacentdones[adjacent]++;
       if ( nodes[adjacent].edges.size () - adjacentdones[adjacent] == 1 ) {
         distmarkers[adjacent] = 2;
@@ -713,7 +713,7 @@ int GraphState::normalizetree () {
       }
     }
 
-  NodeId tonode;
+  LastNodeId tonode;
   bool done = true;
   
   if ( queueend + onecnt == (int) nodes.size () ) {// otherwise all nodes have been done already
@@ -742,7 +742,7 @@ int GraphState::normalizetree () {
   
   // discover the two canonical labeled paths
   bool bicenter = queuebegin && ( distmarkers[queue[queuebegin]] == distmarkers[queue[queuebegin-1]] );
-  Depth maxdepth = distmarkers[queue[queuebegin]];
+  LastDepth maxdepth = distmarkers[queue[queuebegin]];
   int pathlength = maxdepth * 2;
   if ( !bicenter ) {
     maxdepth--;
@@ -752,7 +752,7 @@ int GraphState::normalizetree () {
     }
     if ( pathlength > backbonelength )
       return 0;
-    NodeLabel rl =  nodes[queue[queuebegin]].label;
+    LastNodeLabel rl =  nodes[queue[queuebegin]].label;
     if ( rl < centerlabel ) {
       return 2;
     }
@@ -769,7 +769,7 @@ int GraphState::normalizetree () {
     GSNode &node = nodes[queue[queuebegin]];
     int i;
     for ( i = 0; node.edges[i].tonode != queue[queuebegin-1]; i++ );
-    EdgeLabel rl = node.edges[i].edgelabel;
+    LastEdgeLabel rl = node.edges[i].edgelabel;
     if ( rl < bicenterlabel ) {
       return 2;
     }
@@ -785,7 +785,7 @@ int GraphState::normalizetree () {
   int minlabelednodessize[2] = { 0, 0 };
   int children[nrnodes];
   int nodewalk;
-  EdgeLabel pathedgelabels[2][nrnodes+1];
+  LastEdgeLabel pathedgelabels[2][nrnodes+1];
   int pathedgelabelssize = 1;
   for ( int i = 0; i < (int) maxdepth + 1; i++ ) 
     depthnodessizes[i] = 0;
@@ -794,7 +794,7 @@ int GraphState::normalizetree () {
   int nodes_nochildren[nrnodes];
   int nodes_walkchild[nrnodes];
   int nodes_parent[nrnodes];
-  EdgeLabel nodes_edgelabel[nrnodes];
+  LastEdgeLabel nodes_edgelabel[nrnodes];
   int nodes_code[nrnodes];
   int nodes_treenr[nrnodes];
   int nodes_marker[nrnodes];
@@ -832,13 +832,13 @@ int GraphState::normalizetree () {
     nodes_parent[nodeid] = NONODE;
     lowestlabel = MAXEDGELABEL;
     secondlowestlabel = MAXEDGELABEL;
-    GSNode &node = GraphState::nodes[nodeid];
+    GSNode &node = LastGraphState::nodes[nodeid];
     int edgessize = node.edges.size ();
     depthnodes[0] = nodes;
     depthnodessizes[0] = edgessize;
     nodewalk = edgessize;
     for ( int j = 0; j < edgessize; j++ ) {
-      NodeId tonode = node.edges[j].tonode;
+      LastNodeId tonode = node.edges[j].tonode;
       int lab = node.edges[j].edgelabel;
       depthnodes[0][j] = tonode;
       nodes_edgelabel[tonode] = lab;
@@ -859,7 +859,7 @@ int GraphState::normalizetree () {
 	      secondlowestlabel = lab;
     }
     for ( int j = 0; j < edgessize; j++ ) {
-      NodeId tonode = node.edges[j].tonode;
+      LastNodeId tonode = node.edges[j].tonode;
       int lab = node.edges[j].edgelabel;
       if ( distmarkers[tonode] == distmarkers[nodeid] - 1 )
         if ( lab == lowestlabel ) {
@@ -884,23 +884,23 @@ int GraphState::normalizetree () {
   
   // walk through the tree from the root, determine the lowest path,
   // and fill in all datastructures that we require for the next pass
-  for ( Depth depth = 0; depth < maxdepth; depth++ ) {
+  for ( LastDepth depth = 0; depth < maxdepth; depth++ ) {
     lowestlabel = MAXEDGELABEL;
     secondlowestlabel = MAXEDGELABEL;
     depthnodes[depth+1] = nodes + nodewalk;
     bool difftreenrlowlab = 0;
     for ( int i = 0; i < depthnodessizes[depth]; i++ ) {
-      NodeId nodeid = depthnodes[depth][i];
-      GSNode &node = GraphState::nodes[nodeid];
+      LastNodeId nodeid = depthnodes[depth][i];
+      GSNode &node = LastGraphState::nodes[nodeid];
       int edgessize = node.edges.size ();
       nodes_walkchild[nodeid] = 0;
       nodes_nochildren[nodeid] = 0;
       nodes_firstchild[nodeid] = children + nodewalk;
       
       for ( int j = 0; j < edgessize; j++ ) {
-        NodeId tonode = node.edges[j].tonode;
+        LastNodeId tonode = node.edges[j].tonode;
         if ( distmarkers[tonode] < distmarkers[nodeid] ) {
-	  EdgeLabel lab = node.edges[j].edgelabel;
+	  LastEdgeLabel lab = node.edges[j].edgelabel;
           if ( distmarkers[tonode] == distmarkers[nodeid] - 1 )
 	    if ( nodes_marker[nodeid] == 1 ) {
   	      if ( lab < lowestlabel ) {
@@ -1029,8 +1029,8 @@ int GraphState::normalizetree () {
   if ( nasty ) {
     int nodeid1 = queue[queuebegin];
     int nodeid2 = queue[queuebegin-1];
-    nodes_edgelabel[nodeid1] = GraphState::nodes[nodeid1].label; // in this way we force one end to be the first
-    nodes_edgelabel[nodeid2] = GraphState::nodes[nodeid2].label;    
+    nodes_edgelabel[nodeid1] = LastGraphState::nodes[nodeid1].label; // in this way we force one end to be the first
+    nodes_edgelabel[nodeid2] = LastGraphState::nodes[nodeid2].label;    
   }
   
   // DO IT HERE
@@ -1039,7 +1039,7 @@ int GraphState::normalizetree () {
   // next, we're going bottom-up through the tree
   bool equal[nrnodes];
   
-  for ( Depth depth = maxdepth - 1; ; depth-- ) {
+  for ( LastDepth depth = maxdepth - 1; ; depth-- ) {
     // sort the nodes at that type using insertion sort
     int size = depthnodessizes[depth];
     int *dnodes = depthnodes[depth];
@@ -1119,7 +1119,7 @@ int GraphState::normalizetree () {
   
   int stacksize = 0;
   for ( int r = depthnodessizes[0] - 1; r >= 0; r-- ) {
-    NodeId node = depthnodes[0][r];
+    LastNodeId node = depthnodes[0][r];
     stack[stacksize] = node;
     depths[stacksize] = 0;
     stacksize++;
@@ -1192,7 +1192,7 @@ int GraphState::normalizetree () {
     nodeclose[i] = false;
   
   for ( int i = 1; i < (int) deletededges.size (); i++ ) {
-    NodeId ni = deletededges[i].fromnode;
+    LastNodeId ni = deletededges[i].fromnode;
     while ( ni != NONODE ) {
       nodeclose[ni] = true;
       ni = nodes_parent[ni];
@@ -1230,8 +1230,8 @@ int GraphState::normalizetree () {
           j--;
         j++;
         while ( j < nsize && nodes_code[nodes[j]] == nodes_code[nodes[i]] ) {
-          NodeId node = nodes[j];
-          NodeId parent = nodes_parent[node];
+          LastNodeId node = nodes[j];
+          LastNodeId parent = nodes_parent[node];
           if ( parent != NONODE ) {
             btcode[btcodesize] = preordernumber[node] - preordernumber[parent];
             btparent[btcodesize] = nodesinbt[parent];
@@ -1263,7 +1263,7 @@ int GraphState::normalizetree () {
     
   // walk through all permutations, for each determine the coding of the closings
   int permstack[btcodesize];
-  CloseTuple closetuples[deletededges.size ()];
+  LastCloseLastTuple closetuples[deletededges.size ()];
   stacksize = 1;
   permstack[0] = 0;
   while ( true ) {
@@ -1315,13 +1315,13 @@ int GraphState::normalizetree () {
               swap ( closetuples[j-1], closetuples[j] );
             j--;
           }
-          if ( closetuples[i-1] < (*GraphState::closetuples)[i-1] ) {
+          if ( closetuples[i-1] < (*LastGraphState::closetuples)[i-1] ) {
             return 2;
           }
-          if ( closetuples[i-1] > (*GraphState::closetuples)[i-1] )
+          if ( closetuples[i-1] > (*LastGraphState::closetuples)[i-1] )
             goto end2; // continue with next permutation
         }
-        if ( closetuples[ddsize-1] < (*GraphState::closetuples)[ddsize-1] ) {
+        if ( closetuples[ddsize-1] < (*LastGraphState::closetuples)[ddsize-1] ) {
           return 1; // the last tuple was lower!
         }
       }
@@ -1343,7 +1343,7 @@ end2:
   return 0;
 }
 
-void GraphState::puti ( FILE *f, int i ) { 
+void LastGraphState::puti ( FILE *f, int i ) { 
   char array[100]; 
   int k = 0; 
   do { 
@@ -1423,10 +1423,10 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
                 map<int, GSWEdge>& e1i = from->second;
                 for (map<int, GSWEdge>::iterator to=e1i.begin(); to!=e1i.end(); to++) {
                     if (to->first <= border) {
-                        map<Tid, int> weightmap_a; 
-                        map<Tid, int> weightmap_i; 
-                        set<InputNodeLabel> inl;
-                        set<InputEdgeLabel> iel;
+                        map<LastTid, int> weightmap_a; 
+                        map<LastTid, int> weightmap_i; 
+                        set<InputLastNodeLabel> inl;
+                        set<InputLastEdgeLabel> iel;
                         GSWNode n = { inl };
                         GSWEdge e = { to->first, iel, weightmap_a, weightmap_i, 0, 0 };
                         if (nodewalk_empty) s->add_edge(from->first, e, n, 0, &core_ids, &u12);
@@ -1516,8 +1516,8 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
                         map<int, GSWEdge>& w2j = e2->second;
                         cout << "C12: " << j << "->" << w2j.find(*it)->first;
                         cout << " < "; 
-                        set<InputEdgeLabel>& labs = w2j.find(*it)->second.labs;
-                        for (set<InputEdgeLabel>::iterator it2=labs.begin(); it2!=labs.end(); it2++) {
+                        set<InputLastEdgeLabel>& labs = w2j.find(*it)->second.labs;
+                        for (set<InputLastEdgeLabel>::iterator it2=labs.begin(); it2!=labs.end(); it2++) {
                             cout << *it2 << " ";
                         }
                         cout << ">" << endl;
@@ -1535,17 +1535,17 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
                                 map<int, GSWEdge>& w2j = e2->second;
                                 cout << "D21: " << j << "->" << w2j.find(*it)->first;
                                 cout << " < "; 
-                                set<InputEdgeLabel>& labs = w2j.find(*it)->second.labs;
-                                for (set<InputEdgeLabel>::iterator it2=labs.begin(); it2!=labs.end(); it2++) {
+                                set<InputLastEdgeLabel>& labs = w2j.find(*it)->second.labs;
+                                for (set<InputLastEdgeLabel>::iterator it2=labs.begin(); it2!=labs.end(); it2++) {
                                     cout << *it2 << " ";
                                 }
                                 cout << ">" << endl;
                             }
                             #endif
-                            map<Tid, int> weightmap_a; 
-                            map<Tid, int> weightmap_i; 
-                            set<InputNodeLabel> inl;
-                            set<InputEdgeLabel> iel;
+                            map<LastTid, int> weightmap_a; 
+                            map<LastTid, int> weightmap_i; 
+                            set<InputLastNodeLabel> inl;
+                            set<InputLastEdgeLabel> iel;
                             GSWNode n = { inl };
                             GSWEdge e = { *it, iel, weightmap_a, weightmap_i, 0, 0 };
                             ninsert21[*it][j]=n;
@@ -1571,17 +1571,17 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
                                 map<int, GSWEdge>& w1j = e1->second;
                                 cout << "D12: " << j << "->" << w1j.find(*it)->first; // needs no check for end() by def of d12
                                 cout << " < ";
-                                set<InputEdgeLabel>& labs = w1j.find(*it)->second.labs;
-                                for (set<InputEdgeLabel>::iterator it2=labs.begin(); it2!=labs.end(); it2++) {
+                                set<InputLastEdgeLabel>& labs = w1j.find(*it)->second.labs;
+                                for (set<InputLastEdgeLabel>::iterator it2=labs.begin(); it2!=labs.end(); it2++) {
                                     cout << *it2 << " ";
                                 }
                                 cout << ">" << endl;
                             }
                             #endif
-                            map<Tid, int> weightmap_a; 
-                            map<Tid, int> weightmap_i; 
-                            set<InputNodeLabel> inl;
-                            set<InputEdgeLabel> iel;
+                            map<LastTid, int> weightmap_a; 
+                            map<LastTid, int> weightmap_i; 
+                            set<InputLastNodeLabel> inl;
+                            set<InputLastEdgeLabel> iel;
 
                             GSWNode n = { inl };
                             GSWEdge e = { *it, iel, weightmap_a, weightmap_i, 0, 0 };
@@ -1951,10 +1951,10 @@ int GSWNode::stack (GSWNode n) {
 //
 int GSWEdge::stack (GSWEdge e) {
     labs.insert(e.labs.begin(), e.labs.end());
-    for (map<Tid,int>::iterator it=e.a.begin(); it!=e.a.end(); it++) {
+    for (map<LastTid,int>::iterator it=e.a.begin(); it!=e.a.end(); it++) {
         a[it->first] = a[it->first] + it->second;
     }
-    for (map<Tid,int>::iterator it=e.i.begin(); it!=e.i.end(); it++) {
+    for (map<LastTid,int>::iterator it=e.i.begin(); it!=e.i.end(); it++) {
         i[it->first] = i[it->first] + it->second;
     }
     discrete_weight = discrete_weight + e.discrete_weight;
@@ -2103,10 +2103,10 @@ void GSWalk::svd () {
                     double count=0.0;
                     count = count + it2->second.discrete_weight;
                     /*
-                    for (map<Tid, int>::iterator it3=it2->second.a.begin(); it3!=it2->second.a.end(); it3++) {
+                    for (map<LastTid, int>::iterator it3=it2->second.a.begin(); it3!=it2->second.a.end(); it3++) {
                         count += it3->second;
                     }
-                    for (map<Tid, int>::iterator it3=it2->second.i.begin(); it3!=it2->second.i.end(); it3++) {
+                    for (map<LastTid, int>::iterator it3=it2->second.i.begin(); it3!=it2->second.i.end(); it3++) {
                         count += it3->second;
                     }
                     */

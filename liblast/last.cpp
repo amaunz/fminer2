@@ -85,9 +85,9 @@ Last::~Last() {
         delete fm::closelegoccurrences;
         delete fm::legoccurrences;
 
-        fm::candidatelegsoccurrences.clear();
+        fm::Lastcandidatelegsoccurrences.clear();
         fm::candidatecloselegsoccs.clear();
-        fm::candidatecloselegsoccsused.clear();
+        fm::candidateLastcloselegsoccsused.clear();
 
         fm::instance_present=false;
     }
@@ -103,16 +103,16 @@ void Last::Reset() {
         delete fm::closelegoccurrences;
         delete fm::legoccurrences;
     }
-    fm::database = new Database();
+    fm::database = new LastDatabase();
     fm::db_built = false;
-    fm::statistics = new Statistics();
+    fm::statistics = new LastStatistics();
     fm::chisq = new ChisqConstraint(3.84146);
     fm::ks = new KSConstraint(0.95);
-    fm::graphstate = new GraphState();
-    fm::closelegoccurrences = new CloseLegOccurrences();
-    fm::legoccurrences = new LegOccurrences();
+    fm::graphstate = new LastGraphState();
+    fm::closelegoccurrences = new CloseLastLastLegOccurrences();
+    fm::legoccurrences = new LastLastLegOccurrences();
 
-    fm::candidatecloselegsoccsused.clear();
+    fm::candidateLastcloselegsoccsused.clear();
 
     fm::chisq->active=true; 
     fm::result = &r;
@@ -246,7 +246,7 @@ vector<string>* Last::MineRoot(unsigned int j) {
         }
         fm::database->edgecount (); 
         fm::database->reorder (); 
-        initLegStatics (); 
+        LastinitLastLegStatics (); 
         fm::graphstate->init (); 
         if (fm::bbrc_sep && fm::do_output && !fm::console_out) (*fm::result) << fm::graphstate->sep();
         init_mining_done=true; 
@@ -304,7 +304,7 @@ xsi:noNamespaceSchemaLocation=\"graphml.xsd\">\n\
 
     if (j >= fm::database->nodelabels.size()) { cerr << "Error! Root node " << j << " does not exist." << endl;  exit(1); }
     if ( fm::database->nodelabels[j].frequency >= fm::minfreq && fm::database->nodelabels[j].frequentedgelabels.size () ) {
-        Path path(j);
+        LastPath path(j);
         path.expand(); // mining step
     }
     if (j==GetNoRootNodes()-1 && fm::do_output) {
@@ -320,7 +320,7 @@ void Last::ReadGsp(FILE* gsp){
 
 bool Last::AddCompound(string smiles, unsigned int comp_id) {
   if (fm::db_built) {
-    cerr << "Database has been already processed! Please reset() and insert a new dataset." << endl;
+    cerr << "LastDatabase has been already processed! Please reset() and insert a new dataset." << endl;
     return false;
   }
   stringstream ss(smiles);
@@ -360,7 +360,7 @@ bool Last::AddCompound(string smiles, unsigned int comp_id) {
 
 bool Last::AddActivity(float act, unsigned int comp_id) {
   if (fm::db_built) {
-    cerr << "Database has been already processed! Please reset() and insert a new dataset." << endl;
+    cerr << "LastDatabase has been already processed! Please reset() and insert a new dataset." << endl;
     return false;
   }
   activity_map.insert(make_pair(comp_id, act));

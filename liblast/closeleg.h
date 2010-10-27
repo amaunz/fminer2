@@ -26,51 +26,51 @@
 #include "misc.h"
 #include "legoccurrence.h"
 
-struct CloseTuple {
-  EdgeLabel label;
+struct LastCloseLastTuple {
+  LastEdgeLabel label;
   int from;
   int to;
-  friend bool operator< ( CloseTuple &a, CloseTuple &b ) { return a.from < b.from || ( a.from == b.from && ( a.to < b.to || ( a.to == b.to && a.label < b.label ) ) ); }
-  friend bool operator> ( CloseTuple &a, CloseTuple &b ) { return a.from > b.from || ( a.from == b.from && ( a.to > b.to || ( a.to == b.to && a.label > b.label ) ) ); }
-  friend ostream &operator<< ( ostream &stream, CloseTuple &tuple ) { 
+  friend bool operator< ( LastCloseLastTuple &a, LastCloseLastTuple &b ) { return a.from < b.from || ( a.from == b.from && ( a.to < b.to || ( a.to == b.to && a.label < b.label ) ) ); }
+  friend bool operator> ( LastCloseLastTuple &a, LastCloseLastTuple &b ) { return a.from > b.from || ( a.from == b.from && ( a.to > b.to || ( a.to == b.to && a.label > b.label ) ) ); }
+  friend ostream &operator<< ( ostream &stream, LastCloseLastTuple &tuple ) { 
     stream << (int) tuple.from << " " << tuple.to << " " << (int) tuple.label << endl;
     return stream;
   }
 };
 
-struct CloseLegOccurrence {
-  Tid tid;
-  OccurrenceId occurrenceid;
+struct CloseLastLastLegOccurrence {
+  LastTid tid;
+  LastOccurrenceId occurrenceid;
 
-  CloseLegOccurrence ( Tid tid, OccurrenceId occurrenceid ): tid ( tid ), occurrenceid ( occurrenceid ) { }
-  CloseLegOccurrence () { }
+  CloseLastLastLegOccurrence ( LastTid tid, LastOccurrenceId occurrenceid ): tid ( tid ), occurrenceid ( occurrenceid ) { }
+  CloseLastLastLegOccurrence () { }
 };
 
-struct CloseLegOccurrences {
-  Frequency frequency;
-  vector<CloseLegOccurrence> elements;
-  CloseLegOccurrences () : frequency ( 0 ) { }
+struct CloseLastLastLegOccurrences {
+  LastFrequency frequency;
+  vector<CloseLastLastLegOccurrence> elements;
+  CloseLastLastLegOccurrences () : frequency ( 0 ) { }
 };
 
-typedef CloseLegOccurrences *CloseLegOccurrencesPtr;
+typedef CloseLastLastLegOccurrences *CloseLastLastLegOccurrencesPtr;
 
-struct CloseLeg {
+struct LastCloseLastLeg {
   bool copy;
-  CloseTuple tuple;
-  CloseLegOccurrences occurrences;
-  CloseLeg (): copy ( true ) { }
+  LastCloseLastTuple tuple;
+  CloseLastLastLegOccurrences occurrences;
+  LastCloseLastLeg (): copy ( true ) { }
 };
 
-typedef CloseLeg *CloseLegPtr;
+typedef LastCloseLastLeg *LastCloseLastLegPtr;
 
-extern bool closelegsoccsused;
+extern bool Lastcloselegsoccsused;
 
-class Leg;
-typedef Leg *LegPtr;
+class LastLeg;
+typedef LastLeg *LastLegPtr;
 
-void addCloseExtensions ( vector<CloseLegPtr> &targetcloselegs, int number );
-void addCloseExtensions ( vector<CloseLegPtr> &targetcloselegs, vector<CloseLegPtr> &sourcecloselegs, LegOccurrences &sourceoccs );
-CloseLegOccurrencesPtr join ( LegOccurrences &legoccsdata, CloseLegOccurrences &closelegoccsdata );
-CloseLegOccurrencesPtr join ( CloseLegOccurrences &closelegoccsdata1, CloseLegOccurrences &closelegoccsdata2 );
+void LastaddCloseExtensions ( vector<LastCloseLastLegPtr> &targetcloselegs, int number );
+void LastaddCloseExtensions ( vector<LastCloseLastLegPtr> &targetcloselegs, vector<LastCloseLastLegPtr> &sourcecloselegs, LastLastLegOccurrences &sourceoccs );
+CloseLastLastLegOccurrencesPtr join ( LastLastLegOccurrences &legoccsdata, CloseLastLastLegOccurrences &closelegoccsdata );
+CloseLastLastLegOccurrencesPtr join ( CloseLastLastLegOccurrences &closelegoccsdata1, CloseLastLastLegOccurrences &closelegoccsdata2 );
 
 #endif

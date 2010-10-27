@@ -35,22 +35,22 @@ namespace fm {
     extern int die;
     extern bool do_last;
 
-    extern Database* database;
+    extern LastDatabase* database;
     extern ChisqConstraint* chisq;
     extern KSConstraint* ks;
     extern vector<string>* result;
-    extern Statistics* statistics;
-    extern GraphState* graphstate;
-    extern LegOccurrences* legoccurrences;
+    extern LastStatistics* statistics;
+    extern LastGraphState* graphstate;
+    extern LastLastLegOccurrences* legoccurrences;
 
-    extern vector<LegOccurrences> candidatelegsoccurrences; 
+    extern vector<LastLastLegOccurrences> Lastcandidatelegsoccurrences; 
     extern int max_hops;
 }
 
-int maxsize = ( 1 << ( sizeof(NodeId)*8 ) ) - 1; // safe default for the largest allowed pattern
+int maxsize = ( 1 << ( sizeof(LastNodeId)*8 ) ) - 1; // safe default for the largest allowed pattern
 
-inline void PatternTree::addLeg ( NodeId connectingnode, const int depth, const EdgeLabel edgelabel, LegOccurrences &legoccurrences ) {
-  LegPtr leg = new Leg;
+inline void LastPatternTree::addLastLeg ( LastNodeId connectingnode, const int depth, const LastEdgeLabel edgelabel, LastLastLegOccurrences &legoccurrences ) {
+  LastLegPtr leg = new LastLeg;
   leg->tuple.depth = depth;
   leg->tuple.label = edgelabel;
   leg->tuple.connectingnode = connectingnode;
@@ -60,21 +60,21 @@ inline void PatternTree::addLeg ( NodeId connectingnode, const int depth, const 
 
 // this function assumes that the extension tuple is already added at the back of the queue,
 // and the equivalency information has been filled in.
-void PatternTree::addExtensionLegs ( Tuple &tuple, LegOccurrences &legoccurrences ) {
+void LastPatternTree::addExtensionLastLegs ( LastTuple &tuple, LastLastLegOccurrences &legoccurrences ) {
   if ( legoccurrences.maxdegree == 1 )
     return;
   if ( tuple.depth == maxdepth ) {
     extend ( legoccurrences, MAXEDGELABEL, (unsigned char) NONODE );
-    addCloseExtensions ( closelegs, legoccurrences.number );
+    LastaddCloseExtensions ( closelegs, legoccurrences.number );
     return;
   }
-  EdgeLabel minlabel = NOEDGELABEL, neglect = '\0', pathlowestlabel = treetuples[tuple.depth + 1 + rootpathstart].label;
+  LastEdgeLabel minlabel = NOEDGELABEL, neglect = '\0', pathlowestlabel = treetuples[tuple.depth + 1 + rootpathstart].label;
 
   if ( nextprefixindex != NONEXTPREFIX ) {
     if ( treetuples[nextprefixindex].depth <= tuple.depth ) {
       // heuristic saving
       extend ( legoccurrences, MAXEDGELABEL, (unsigned char) NONODE );
-      addCloseExtensions ( closelegs, legoccurrences.number );
+      LastaddCloseExtensions ( closelegs, legoccurrences.number );
       return;
     }
     minlabel = treetuples[nextprefixindex].label;
@@ -87,7 +87,7 @@ void PatternTree::addExtensionLegs ( Tuple &tuple, LegOccurrences &legoccurrence
     if ( rootpathrelations.back () > 0 ) {
       // heuristic saving
       extend ( legoccurrences, MAXEDGELABEL, (unsigned char) NONODE );
-      addCloseExtensions ( closelegs, legoccurrences.number );
+      LastaddCloseExtensions ( closelegs, legoccurrences.number );
       return;
     }
     if ( rootpathrelations.back () == 0 )
@@ -109,19 +109,19 @@ void PatternTree::addExtensionLegs ( Tuple &tuple, LegOccurrences &legoccurrence
   else
     extend ( legoccurrences );
 
-  if ( fm::candidatelegsoccurrences[pathlowestlabel].frequency >= fm::minfreq )
+  if ( fm::Lastcandidatelegsoccurrences[pathlowestlabel].frequency >= fm::minfreq )
     // this is the first possible extension, as we force this label to be the lowest!
-    addLeg ( fm::graphstate->lastNode (), tuple.depth + 1, pathlowestlabel, fm::candidatelegsoccurrences[pathlowestlabel] );
+    addLastLeg ( fm::graphstate->lastNode (), tuple.depth + 1, pathlowestlabel, fm::Lastcandidatelegsoccurrences[pathlowestlabel] );
 
-  for ( int i = 0; (unsigned) i < fm::candidatelegsoccurrences.size (); i++ ) {
-    if ( fm::candidatelegsoccurrences[i].frequency >= fm::minfreq && i != pathlowestlabel )
-      addLeg ( fm::graphstate->lastNode (), tuple.depth + 1, i, fm::candidatelegsoccurrences[i] );
+  for ( int i = 0; (unsigned) i < fm::Lastcandidatelegsoccurrences.size (); i++ ) {
+    if ( fm::Lastcandidatelegsoccurrences[i].frequency >= fm::minfreq && i != pathlowestlabel )
+      addLastLeg ( fm::graphstate->lastNode (), tuple.depth + 1, i, fm::Lastcandidatelegsoccurrences[i] );
   }
 
-  addCloseExtensions ( closelegs, legoccurrences.number );
+  LastaddCloseExtensions ( closelegs, legoccurrences.number );
 }
 
-void PatternTree::addLeftLegs ( Path &path, PathLeg &leg, int &i, Depth olddepth, EdgeLabel lowestlabel, int leftend, int edgesize2 ) {
+void LastPatternTree::addLeftLastLegs ( LastPath &path, LastPathLastLeg &leg, int &i, LastDepth olddepth, LastEdgeLabel lowestlabel, int leftend, int edgesize2 ) {
   // the order of the other extensions is almost correct - except that we must move
   // extensions at depth d which are for the label of the path at depth d to the front of
   // all legs of depth d...
@@ -135,9 +135,9 @@ void PatternTree::addLeftLegs ( Path &path, PathLeg &leg, int &i, Depth olddepth
       int i2 = i;
       while ( (unsigned) i2 < path.legs.size () && path.legs[i2]->tuple.depth == olddepth ) {
         if ( path.legs[i2]->tuple.edgelabel == lowestlabel ) {
-          LegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[i2]->tuple.connectingnode, path.legs[i2]->occurrences );
+          LastLastLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[i2]->tuple.connectingnode, path.legs[i2]->occurrences );
           if ( legoccurrencesptr )
-            addLeg ( path.legs[i2]->tuple.connectingnode, edgesize2 - olddepth, path.legs[i2]->tuple.edgelabel, *legoccurrencesptr );
+            addLastLeg ( path.legs[i2]->tuple.connectingnode, edgesize2 - olddepth, path.legs[i2]->tuple.edgelabel, *legoccurrencesptr );
           break;
         }
         i2++;
@@ -145,19 +145,19 @@ void PatternTree::addLeftLegs ( Path &path, PathLeg &leg, int &i, Depth olddepth
     }
     // skip lowest label tuples, as they have already been moved to the front...
     if ( path.legs[i]->tuple.edgelabel != lowestlabel ) {
-      LegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[i]->tuple.connectingnode, path.legs[i]->occurrences );
+      LastLastLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[i]->tuple.connectingnode, path.legs[i]->occurrences );
       if ( legoccurrencesptr )
-        addLeg ( path.legs[i]->tuple.connectingnode, edgesize2 - olddepth, path.legs[i]->tuple.edgelabel, *legoccurrencesptr );
+        addLastLeg ( path.legs[i]->tuple.connectingnode, edgesize2 - olddepth, path.legs[i]->tuple.edgelabel, *legoccurrencesptr );
     }
   }
 }
 
-int PatternTree::addLeftLegs ( Path &path, PathLeg &leg, Tuple &tuple, unsigned int legindex, int leftend, int edgesize2 ) {
+int LastPatternTree::addLeftLastLegs ( LastPath &path, LastPathLastLeg &leg, LastTuple &tuple, unsigned int legindex, int leftend, int edgesize2 ) {
   int i;
 
-  LegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences );
+  LastLastLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences );
   if ( legoccurrencesptr )
-    addLeg ( leg.tuple.connectingnode, tuple.depth, tuple.label, *legoccurrencesptr );
+    addLastLeg ( leg.tuple.connectingnode, tuple.depth, tuple.label, *legoccurrencesptr );
 
   // the easy part - the extensions of the left side of the original path
 
@@ -167,12 +167,12 @@ int PatternTree::addLeftLegs ( Path &path, PathLeg &leg, Tuple &tuple, unsigned 
     // no path may be lower than the current path
 
     for ( i = legindex - 1; i >= 0 && path.legs[i]->tuple.depth == leg.tuple.depth; i-- );
-    EdgeLabel lowestlabel = path.edgelabels[leg.tuple.depth - 1];
+    LastEdgeLabel lowestlabel = path.edgelabels[leg.tuple.depth - 1];
     for ( i++; i < (int) legindex; i++ ) {
       if ( path.legs[i]->tuple.edgelabel != lowestlabel ) {
         legoccurrencesptr = join ( leg.occurrences, path.legs[i]->tuple.connectingnode, path.legs[i]->occurrences );
         if ( legoccurrencesptr )
-          addLeg ( path.legs[i]->tuple.connectingnode, tuple.depth, path.legs[i]->tuple.edgelabel, *legoccurrencesptr );
+          addLastLeg ( path.legs[i]->tuple.connectingnode, tuple.depth, path.legs[i]->tuple.edgelabel, *legoccurrencesptr );
       }
     }
   }
@@ -182,14 +182,14 @@ int PatternTree::addLeftLegs ( Path &path, PathLeg &leg, Tuple &tuple, unsigned 
   // all legs of depth d...
 
   i = legindex + 1;
-  addLeftLegs ( path, leg, i, leg.tuple.depth, path.edgelabels[leg.tuple.depth - 1], leftend, edgesize2 );
+  addLeftLastLegs ( path, leg, i, leg.tuple.depth, path.edgelabels[leg.tuple.depth - 1], leftend, edgesize2 );
 
   return i;
 }
 
-void PatternTree::addRightLegs ( Path &path, PathLeg &leg, int &i, Depth olddepth, EdgeLabel lowestlabel, int rightstart, int nodesize2 ) {
+void LastPatternTree::addRightLastLegs ( LastPath &path, LastPathLastLeg &leg, int &i, LastDepth olddepth, LastEdgeLabel lowestlabel, int rightstart, int nodesize2 ) {
   int i2 = i + 1, k;
-  LegOccurrencesPtr legoccurrencesptr;
+  LastLastLegOccurrencesPtr legoccurrencesptr;
 
   while ( i >= 0 && (int) path.legs[i]->tuple.depth >= rightstart ) {
     // we encounter a new depth, do all the extensions of the previous depths...
@@ -198,7 +198,7 @@ void PatternTree::addRightLegs ( Path &path, PathLeg &leg, int &i, Depth olddept
         if ( path.legs[k]->tuple.edgelabel != lowestlabel ) {
           legoccurrencesptr = join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
           if ( legoccurrencesptr )
-            addLeg ( path.legs[k]->tuple.connectingnode, path.legs[k]->tuple.depth - nodesize2, path.legs[k]->tuple.edgelabel, *legoccurrencesptr );
+            addLastLeg ( path.legs[k]->tuple.connectingnode, path.legs[k]->tuple.depth - nodesize2, path.legs[k]->tuple.edgelabel, *legoccurrencesptr );
         }
       }
       i2 = i + 1;
@@ -211,7 +211,7 @@ void PatternTree::addRightLegs ( Path &path, PathLeg &leg, int &i, Depth olddept
     if ( path.legs[i]->tuple.edgelabel == lowestlabel ) {
       legoccurrencesptr = join ( leg.occurrences, path.legs[i]->tuple.connectingnode, path.legs[i]->occurrences );
       if ( legoccurrencesptr )
-        addLeg ( path.legs[i]->tuple.connectingnode, path.legs[i]->tuple.depth - nodesize2, path.legs[i]->tuple.edgelabel, *legoccurrencesptr );
+        addLastLeg ( path.legs[i]->tuple.connectingnode, path.legs[i]->tuple.depth - nodesize2, path.legs[i]->tuple.edgelabel, *legoccurrencesptr );
     }
     i--;
   }
@@ -220,16 +220,16 @@ void PatternTree::addRightLegs ( Path &path, PathLeg &leg, int &i, Depth olddept
     if ( path.legs[k]->tuple.edgelabel != lowestlabel ) {
       legoccurrencesptr = join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
       if ( legoccurrencesptr )
-        addLeg ( path.legs[k]->tuple.connectingnode, path.legs[k]->tuple.depth - nodesize2, path.legs[k]->tuple.edgelabel, *legoccurrencesptr );
+        addLastLeg ( path.legs[k]->tuple.connectingnode, path.legs[k]->tuple.depth - nodesize2, path.legs[k]->tuple.edgelabel, *legoccurrencesptr );
     }
   }
 }
 
-int PatternTree::addRightLegs ( Path &path, PathLeg &leg, Tuple &tuple, unsigned int legindex, int rightstart, int nodesize2 ) {
+int LastPatternTree::addRightLastLegs ( LastPath &path, LastPathLastLeg &leg, LastTuple &tuple, unsigned int legindex, int rightstart, int nodesize2 ) {
   int i;
-  LegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences );
+  LastLastLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences );
   if ( legoccurrencesptr )
-    addLeg ( leg.tuple.connectingnode, tuple.depth, tuple.label, *legoccurrencesptr );
+    addLastLeg ( leg.tuple.connectingnode, tuple.depth, tuple.label, *legoccurrencesptr );
 
   // other extensions at the right path
 
@@ -240,34 +240,34 @@ int PatternTree::addRightLegs ( Path &path, PathLeg &leg, Tuple &tuple, unsigned
   // brothers of the new leg
   if ( rootpathrelations.back () == 0 && tuple.depth != maxdepth )
     for ( int j = i + 1; j < (int) legindex; j++ ) {
-      LegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[j]->tuple.connectingnode, path.legs[j]->occurrences );
+      LastLastLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[j]->tuple.connectingnode, path.legs[j]->occurrences );
       if ( legoccurrencesptr )
-        addLeg ( path.legs[j]->tuple.connectingnode, tuple.depth, path.legs[j]->tuple.edgelabel, *legoccurrencesptr );
+        addLastLeg ( path.legs[j]->tuple.connectingnode, tuple.depth, path.legs[j]->tuple.edgelabel, *legoccurrencesptr );
     }
-  EdgeLabel lowestlabel = path.edgelabels[leg.tuple.depth];
+  LastEdgeLabel lowestlabel = path.edgelabels[leg.tuple.depth];
   for ( int j = legindex + 1; j < (int) path.legs.size () && path.legs[j]->tuple.depth == leg.tuple.depth; j++ ) {
     if ( path.legs[j]->tuple.edgelabel != lowestlabel ) {
-      LegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[j]->tuple.connectingnode, path.legs[j]->occurrences );
+      LastLastLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[j]->tuple.connectingnode, path.legs[j]->occurrences );
       if ( legoccurrencesptr )
-        addLeg ( path.legs[j]->tuple.connectingnode, tuple.depth, path.legs[j]->tuple.edgelabel, *legoccurrencesptr );
+        addLastLeg ( path.legs[j]->tuple.connectingnode, tuple.depth, path.legs[j]->tuple.edgelabel, *legoccurrencesptr );
     }
   }
 
   // candidates at a lower depth
   if ( i >= 0 )
-    addRightLegs ( path, leg, i, leg.tuple.depth, lowestlabel, rightstart, nodesize2 );
+    addRightLastLegs ( path, leg, i, leg.tuple.depth, lowestlabel, rightstart, nodesize2 );
 
   return i;
 }
 
-PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
-  PathLeg &leg = (*path.legs[legindex]);
+LastPatternTree::LastPatternTree ( LastPath &path, unsigned int legindex ) {
+  LastPathLastLeg &leg = (*path.legs[legindex]);
   
   maxdepth = path.edgelabels.size () / 2 - 1;
   int leftwalk, leftstart, rightwalk, rightstart;
-  LegOccurrencesPtr legoccurrencesptr;
+  LastLastLegOccurrencesPtr legoccurrencesptr;
 
-  addCloseExtensions ( closelegs, path.closelegs, leg.occurrences );
+  LastaddCloseExtensions ( closelegs, path.closelegs, leg.occurrences );
 
   int nodesize2 = path.nodelabels.size () / 2;
   int edgesize2 = path.edgelabels.size () / 2;
@@ -295,7 +295,7 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
       treetuples.reserve ( path.edgelabels.size () + 1 );
       int i, j;
       for ( i = leftstart, j = 0; i >= 0; i--, j++ ) {
-        vector_push_back ( Tuple, treetuples, tuple );
+        vector_push_back ( LastTuple, treetuples, tuple );
         tuple.label = path.edgelabels[i];
         tuple.depth = j;
       }
@@ -306,7 +306,7 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
         // extension is an extension of the first path
 
         // add extension tuple
-        vector_push_back ( Tuple, treetuples, tuple );
+        vector_push_back ( LastTuple, treetuples, tuple );
         tuple.label = leg.tuple.edgelabel;
         tuple.depth = edgesize2 - leg.tuple.depth;
 
@@ -330,11 +330,11 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
         nextpathstart = treetuples.size ();
 
         // fill in possible extensions below the new node
-        addExtensionLegs ( tuple, leg.occurrences );
+        addExtensionLastLegs ( tuple, leg.occurrences );
 
         // add second path
         for ( i = rightstart, j = 0; i < (int) path.edgelabels.size (); i++, j++ ) {
-          vector_push_back ( Tuple, treetuples, tuple );
+          vector_push_back ( LastTuple, treetuples, tuple );
           tuple.label = path.edgelabels[i];
           tuple.depth = j;
         }
@@ -344,7 +344,7 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
         // the new node. This is complicated as the occurrence list order of the path
         // has to be changed...
 
-        i = addLeftLegs ( path, leg, tuple, legindex, leftend, edgesize2 );
+        i = addLeftLastLegs ( path, leg, tuple, legindex, leftend, edgesize2 );
 
 	secondpathleg = legs.size ();
 
@@ -376,7 +376,7 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
             for ( k = j + 1; k < j2; k++ ) {
               legoccurrencesptr = join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
               if ( legoccurrencesptr ) {
-                addLeg ( path.legs[k]->tuple.connectingnode, path.legs[k]->tuple.depth - nodesize2, path.legs[k]->tuple.edgelabel, *legoccurrencesptr );
+                addLastLeg ( path.legs[k]->tuple.connectingnode, path.legs[k]->tuple.depth - nodesize2, path.legs[k]->tuple.edgelabel, *legoccurrencesptr );
               }
             }
           }
@@ -385,7 +385,7 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
         }
 
         if ( j >= i )
-          addRightLegs ( path, leg, j, NODEPTH, NOEDGELABEL, rightstart, nodesize2 );
+          addRightLastLegs ( path, leg, j, NODEPTH, NOEDGELABEL, rightstart, nodesize2 );
 
         // we're done!
 
@@ -397,12 +397,12 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
 
         // add second path
         for ( i = rightstart, j = 0; i < (int) path.edgelabels.size (); i++, j++ ) {
-          vector_push_back ( Tuple, treetuples, tuple );
+          vector_push_back ( LastTuple, treetuples, tuple );
           tuple.label = path.edgelabels[i];
           tuple.depth = j;
         }
         // add extension tuple
-        vector_push_back ( Tuple, treetuples, tuple );
+        vector_push_back ( LastTuple, treetuples, tuple );
         tuple.label = leg.tuple.edgelabel;
         tuple.depth = leg.tuple.depth - nodesize2;
 
@@ -423,11 +423,11 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
         }
 
         // fill in possible extensions below the new node
-        addExtensionLegs ( tuple, leg.occurrences );
+        addExtensionLastLegs ( tuple, leg.occurrences );
 
         // add the leg itself
 
-        addRightLegs ( path, leg, tuple, legindex, rightstart, nodesize2 );
+        addRightLastLegs ( path, leg, tuple, legindex, rightstart, nodesize2 );
 
         secondpathleg = legs.size ();
         // we're done
@@ -439,7 +439,7 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
       treetuples.reserve ( path.edgelabels.size () + 1 );
       int i, j;
       for ( i = rightstart, j = 0; i < (int) path.edgelabels.size (); i++, j++ ) {
-        vector_push_back ( Tuple, treetuples, tuple );
+        vector_push_back ( LastTuple, treetuples, tuple );
         tuple.label = path.edgelabels[i];
         tuple.depth = j;
       }
@@ -453,12 +453,12 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
 
         // add second path (the left path)
         for ( i = leftstart, j = 0; i >= 0; i--, j++ ) {
-          vector_push_back ( Tuple, treetuples, tuple );
+          vector_push_back ( LastTuple, treetuples, tuple );
           tuple.label = path.edgelabels[i];
           tuple.depth = j;
         }
         // add extension tuple
-        vector_push_back ( Tuple, treetuples, tuple );
+        vector_push_back ( LastTuple, treetuples, tuple );
         tuple.label = leg.tuple.edgelabel;
         tuple.depth = edgesize2 - leg.tuple.depth;
 
@@ -480,11 +480,11 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
 
 
         // fill in possible extensions below the new node
-        addExtensionLegs ( tuple, leg.occurrences );
+        addExtensionLastLegs ( tuple, leg.occurrences );
 
         // add the leg itself, and all legs on the left path above in the tree
 
-        addLeftLegs ( path, leg, tuple, legindex, leftend, edgesize2 );
+        addLeftLastLegs ( path, leg, tuple, legindex, leftend, edgesize2 );
 
         secondpathleg = legs.size ();
 
@@ -496,7 +496,7 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
 
         int i, j;
 
-        vector_push_back ( Tuple, treetuples, tuple );
+        vector_push_back ( LastTuple, treetuples, tuple );
         tuple.label = leg.tuple.edgelabel;
         tuple.depth = leg.tuple.depth - nodesize2;
 
@@ -521,11 +521,11 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
         nextpathstart = treetuples.size ();
 
         // fill in possible extensions below the new node
-        addExtensionLegs ( tuple, leg.occurrences );
+        addExtensionLastLegs ( tuple, leg.occurrences );
 
         // add second path
         for ( i = leftstart, j = 0; i >= 0; i--, j++ ) {
-          vector_push_back ( Tuple, treetuples, tuple );
+          vector_push_back ( LastTuple, treetuples, tuple );
           tuple.label = path.edgelabels[i];
           tuple.depth = j;
         }
@@ -536,7 +536,7 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
         // has to be changed...
 
 
-        i = addRightLegs ( path, leg, tuple, legindex, rightstart, nodesize2 );
+        i = addRightLastLegs ( path, leg, tuple, legindex, rightstart, nodesize2 );
 
         secondpathleg = legs.size ();
 
@@ -555,7 +555,7 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
           j++;
 
         if ( j <= i )
-          addLeftLegs ( path, leg, j, NODEPTH, NOEDGELABEL, leftend, edgesize2 );
+          addLeftLastLegs ( path, leg, j, NODEPTH, NOEDGELABEL, leftend, edgesize2 );
 
         // we're done!
       }
@@ -566,7 +566,7 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
     treetuples.reserve ( path.edgelabels.size () + 1 );
     int i, j;
     for ( i = leftstart, j = 0; i >= 0; i--, j++ ) {
-      vector_push_back ( Tuple, treetuples, tuple );
+      vector_push_back ( LastTuple, treetuples, tuple );
       tuple.label = path.edgelabels[i];
       tuple.depth = j;
     }
@@ -575,7 +575,7 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
     // is performed on the middle node of a string of odd number of nodes
 
     // add extension tuple
-    vector_push_back ( Tuple, treetuples, tuple );
+    vector_push_back ( LastTuple, treetuples, tuple );
     tuple.label = leg.tuple.edgelabel;
     tuple.depth = edgesize2 - leg.tuple.depth;
 
@@ -599,11 +599,11 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
     nextpathstart = treetuples.size ();
 
     // fill in possible extensions below the new node
-    addExtensionLegs ( tuple, leg.occurrences );
+    addExtensionLastLegs ( tuple, leg.occurrences );
 
     // add second path
     for ( i = rightstart, j = 0; i < (int) path.edgelabels.size (); i++, j++ ) {
-      vector_push_back ( Tuple, treetuples, tuple );
+      vector_push_back ( LastTuple, treetuples, tuple );
       tuple.label = path.edgelabels[i];
       tuple.depth = j;
     }
@@ -613,7 +613,7 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
     // the new node. This is complicated as the occurrence list order of the path
     // has to be changed...
 
-    i = addLeftLegs ( path, leg, tuple, legindex, rightstart - 1, edgesize2 );
+    i = addLeftLastLegs ( path, leg, tuple, legindex, rightstart - 1, edgesize2 );
 
     // a difficult part - the extensions of the right side of the original path; here the labels
     // are in correct order, but the depth order is incorrect (more precisely, reversed)
@@ -634,9 +634,9 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
       while ( j >= i && (int) path.legs[j]->tuple.depth == targetdepth && path.legs[j]->tuple.edgelabel >= leg.tuple.edgelabel )
         j--;
       for ( int k = j + 1; k <= j2; k++ ) {
-        LegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
+        LastLastLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
         if ( legoccurrencesptr )
-          addLeg ( path.legs[k]->tuple.connectingnode, tuple.depth, path.legs[k]->tuple.edgelabel, *legoccurrencesptr );
+          addLastLeg ( path.legs[k]->tuple.connectingnode, tuple.depth, path.legs[k]->tuple.edgelabel, *legoccurrencesptr );
       }
       while ( j >= i && (int) path.legs[j]->tuple.depth == targetdepth )
         j--;
@@ -647,16 +647,16 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
       if ( j >= i ) {
         if ( rootpathrelations.back () != 0 && (int) path.legs[j]->tuple.depth == targetdepth ) {
           int j2 = j;
-          EdgeLabel lowestlabel = path.edgelabels[targetdepth];
+          LastEdgeLabel lowestlabel = path.edgelabels[targetdepth];
           while ( j >= i &&
 	          (int) path.legs[j]->tuple.depth == targetdepth &&
 	  	  path.legs[j]->tuple.edgelabel >= tuple.label )
             j--;
           for ( int k = j + 1; k <= j2; k++ )
             if ( path.legs[k]->tuple.edgelabel != lowestlabel ) {
-              LegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
+              LastLastLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, path.legs[k]->tuple.connectingnode, path.legs[k]->occurrences );
               if ( legoccurrencesptr )
-                addLeg ( path.legs[k]->tuple.connectingnode, tuple.depth, path.legs[k]->tuple.edgelabel, *legoccurrencesptr );
+                addLastLeg ( path.legs[k]->tuple.connectingnode, tuple.depth, path.legs[k]->tuple.edgelabel, *legoccurrencesptr );
           }
           while ( j >= i && (int) path.legs[j]->tuple.depth == targetdepth )
             j--;
@@ -665,7 +665,7 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
     }
 
     if ( j >= i )
-      addRightLegs ( path, leg, j, NODEPTH, NOEDGELABEL, rightstart, nodesize2 );
+      addRightLastLegs ( path, leg, j, NODEPTH, NOEDGELABEL, rightstart, nodesize2 );
         // we're done!
 
     // symmetry
@@ -683,10 +683,10 @@ PatternTree::PatternTree ( Path &path, unsigned int legindex ) {
   fm::graphstate->startsecondpath = nextpathstart;
 }
 
-PatternTree::PatternTree ( PatternTree &parenttree, unsigned int legindex ) {
-  Leg &leg = * ( parenttree.legs[legindex] );
+LastPatternTree::LastPatternTree ( LastPatternTree &parenttree, unsigned int legindex ) {
+  LastLeg &leg = * ( parenttree.legs[legindex] );
     
-  addCloseExtensions ( closelegs, parenttree.closelegs, leg.occurrences );
+  LastaddCloseExtensions ( closelegs, parenttree.closelegs, leg.occurrences );
   
   symmetric = parenttree.symmetric;
   // update information used to determine canonical form
@@ -770,20 +770,20 @@ PatternTree::PatternTree ( PatternTree &parenttree, unsigned int legindex ) {
   if ( nextprefixindex == nextpathstart && symmetric == 1 ) {
     secondpathleg = 0; // THE BUG
     extend ( leg.occurrences, MAXEDGELABEL, (unsigned char) NONODE );
-    addCloseExtensions ( closelegs, leg.occurrences.number );
+    LastaddCloseExtensions ( closelegs, leg.occurrences.number );
     return;
   }
 
   // determine legs that can be added at leg.tuple.depth + 1 (if possible) (type 1)
 
-  addExtensionLegs ( leg.tuple, leg.occurrences );
+  addExtensionLastLegs ( leg.tuple, leg.occurrences );
 
   int index = legindex;
 
   if ( nextprefixindex != NONEXTPREFIX && treetuples[nextprefixindex].depth <= leg.tuple.depth ) {
-    Depth nextprefixdepth = treetuples[nextprefixindex].depth;
-    EdgeLabel nextprefixlabel = treetuples[nextprefixindex].label;
-    EdgeLabel lowestlabel = treetuples[rootpathstart + nextprefixdepth].label;
+    LastDepth nextprefixdepth = treetuples[nextprefixindex].depth;
+    LastEdgeLabel nextprefixlabel = treetuples[nextprefixindex].label;
+    LastEdgeLabel lowestlabel = treetuples[rootpathstart + nextprefixdepth].label;
     while ( index < maxleg  &&
             parenttree.legs[index]->tuple.depth > nextprefixdepth )
       index++;
@@ -799,9 +799,9 @@ PatternTree::PatternTree ( PatternTree &parenttree, unsigned int legindex ) {
   }
 
   if ( index == (int) legindex ) {
-    LegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences );
+    LastLastLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences );
     if ( legoccurrencesptr )
-      addLeg ( leg.tuple.connectingnode, leg.tuple.depth, leg.tuple.label, *legoccurrencesptr );
+      addLastLeg ( leg.tuple.connectingnode, leg.tuple.depth, leg.tuple.label, *legoccurrencesptr );
     index++;
   }
 
@@ -810,9 +810,9 @@ PatternTree::PatternTree ( PatternTree &parenttree, unsigned int legindex ) {
     while ( index < (int) parenttree.legs.size () ) {
       if ( index == parenttree.secondpathleg )
         secondpathleg = legs.size ();
-      LegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, parenttree.legs[index]->tuple.connectingnode, parenttree.legs[index]->occurrences );
+      LastLastLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, parenttree.legs[index]->tuple.connectingnode, parenttree.legs[index]->occurrences );
       if ( legoccurrencesptr )
-        addLeg ( parenttree.legs[index]->tuple.connectingnode, parenttree.legs[index]->tuple.depth, parenttree.legs[index]->tuple.label, *legoccurrencesptr );
+        addLastLeg ( parenttree.legs[index]->tuple.connectingnode, parenttree.legs[index]->tuple.depth, parenttree.legs[index]->tuple.label, *legoccurrencesptr );
       index++;
     }
     if ( index == parenttree.secondpathleg )
@@ -820,16 +820,16 @@ PatternTree::PatternTree ( PatternTree &parenttree, unsigned int legindex ) {
   }
   else {
     while ( index < (int) parenttree.legs.size () ) {
-      LegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, parenttree.legs[index]->tuple.connectingnode,  parenttree.legs[index]->occurrences );
+      LastLastLegOccurrencesPtr legoccurrencesptr = join ( leg.occurrences, parenttree.legs[index]->tuple.connectingnode,  parenttree.legs[index]->occurrences );
       if ( legoccurrencesptr )
-        addLeg ( parenttree.legs[index]->tuple.connectingnode, parenttree.legs[index]->tuple.depth, parenttree.legs[index]->tuple.label, *legoccurrencesptr );
+        addLastLeg ( parenttree.legs[index]->tuple.connectingnode, parenttree.legs[index]->tuple.depth, parenttree.legs[index]->tuple.label, *legoccurrencesptr );
       index++;
     }
     secondpathleg = legs.size ();
   }
 }
 
-GSWalk* PatternTree::expand (pair<float, string> max, const int parent_size) {
+GSWalk* LastPatternTree::expand (pair<float, string> max, const int parent_size) {
 
   assert(parent_size>0);
 
@@ -840,7 +840,7 @@ GSWalk* PatternTree::expand (pair<float, string> max, const int parent_size) {
     fm::statistics->frequentgraphnumbers.resize ( fm::statistics->patternsize, 0 );
   }
   ++fm::statistics->frequenttreenumbers[fm::statistics->patternsize-1];
-  if ( fm::statistics->patternsize == ((1<<(sizeof(NodeId)*8))-1) ) {
+  if ( fm::statistics->patternsize == ((1<<(sizeof(LastNodeId)*8))-1) ) {
     fm::statistics->patternsize--;
     return NULL;
   }
@@ -882,8 +882,8 @@ GSWalk* PatternTree::expand (pair<float, string> max, const int parent_size) {
     #endif
 
     if (fm::chisq->active) { 
-        map<Tid, int> weightmap_a; each_it(fm::chisq->fa_set, set<Tid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
-        map<Tid, int> weightmap_i; each_it(fm::chisq->fi_set, set<Tid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
+        map<LastTid, int> weightmap_a; each_it(fm::chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
+        map<LastTid, int> weightmap_i; each_it(fm::chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
         fm::graphstate->print(gsw, weightmap_a, weightmap_i); // print to graphstate walk
 
         if (!fm::regression) {
@@ -935,7 +935,7 @@ GSWalk* PatternTree::expand (pair<float, string> max, const int parent_size) {
     if ( ( !fm::do_pruning ||  (  fm::chisq->u >= fm::chisq->sig) ) &&
          (  fm::refine_singles || (legs[i]->occurrences.frequency>1) )
        ) {
-        PatternTree p ( *this, i );
+        LastPatternTree p ( *this, i );
         if (cur_chisq > max.first) { fm::updated = true; topdown = p.expand (pair<float, string>(cur_chisq,fm::graphstate->to_s(legs[i]->occurrences.frequency)), gsw_size); }
         else topdown = p.expand (max, gsw_size);
     }
@@ -1014,7 +1014,7 @@ GSWalk* PatternTree::expand (pair<float, string> max, const int parent_size) {
 
 
 
-PatternTree::~PatternTree () {
+LastPatternTree::~LastPatternTree () {
   for ( int i = 0; i < (int) legs.size (); i++ )
     delete legs[i];
   for ( int i = 0; i < (int) closelegs.size (); i++ )
@@ -1022,8 +1022,8 @@ PatternTree::~PatternTree () {
 }
 
 /*
-ostream &operator<< ( ostream &stream, Tuple &tuple ) {
-  DatabaseEdgeLabel edgelabel = database->edgelabels[fm::database->edgelabelsindexes[tuple.label]];
+ostream &operator<< ( ostream &stream, LastTuple &tuple ) {
+  LastDatabaseLastEdgeLabel edgelabel = database->edgelabels[fm::database->edgelabelsindexes[tuple.label]];
   stream << "(" << tuple.depth << ","
          << fm::database->nodelabels[edgelabel.fromnodelabel].inputlabel << "-"
          << edgelabel.inputedgelabel << "-"
@@ -1033,7 +1033,7 @@ ostream &operator<< ( ostream &stream, Tuple &tuple ) {
 }
 */
 
-void PatternTree::checkIfIndeedNormal () {
+void LastPatternTree::checkIfIndeedNormal () {
   int i = 0, j = nextpathstart;
   bool equal = true;
   for ( ; i <= (int) maxdepth && equal; i++, j++ )
@@ -1077,7 +1077,7 @@ ostream& operator<< (ostream& os, GSWalk* gsw) {
     for(vector<GSWNode>::iterator it=gsw->nodewalk.begin(); it!=gsw->nodewalk.end(); it++) {
         os << "        <node id=\"" << distance(gsw->nodewalk.begin(), it) << "\">" << endl;
         string labels;
-        for (set<InputNodeLabel>::iterator it2=it->labs.begin(); it2!=it->labs.end(); it2++) {
+        for (set<InputLastNodeLabel>::iterator it2=it->labs.begin(); it2!=it->labs.end(); it2++) {
             if (it2!=it->labs.begin()) labels.append(" ");
             labels.append(to_string(*it2));
         }
@@ -1092,7 +1092,7 @@ ostream& operator<< (ostream& os, GSWalk* gsw) {
 
             // from and to
             string labels;
-            for (set<InputEdgeLabel>::iterator it3=it2->second.labs.begin(); it3!=it2->second.labs.end(); it3++) {
+            for (set<InputLastEdgeLabel>::iterator it3=it2->second.labs.begin(); it3!=it2->second.labs.end(); it3++) {
                 if (it3!=it2->second.labs.begin()) labels.append(" ");
                 labels.append(to_string(*it3));
             }
@@ -1118,7 +1118,7 @@ ostream& operator<< (ostream& os, GSWalk* gsw) {
     for(vector<GSWNode>::iterator it=gsw->nodewalk.begin(); it!=gsw->nodewalk.end(); it++) {
         os << distance(gsw->nodewalk.begin(), it);
         os << " < ";
-        for (set<InputNodeLabel>::iterator it2=it->labs.begin(); it2!=it->labs.end(); it2++) {
+        for (set<InputLastNodeLabel>::iterator it2=it->labs.begin(); it2!=it->labs.end(); it2++) {
             os << *it2 << " ";
         }
         os << ">";
@@ -1134,17 +1134,17 @@ ostream& operator<< (ostream& os, GSWalk* gsw) {
             os << it->first << " " << it2->first; 
 
             os << " < ";
-            for (set<InputEdgeLabel>::iterator it3=it2->second.labs.begin(); it3!=it2->second.labs.end(); it3++) {
+            for (set<InputLastEdgeLabel>::iterator it3=it2->second.labs.begin(); it3!=it2->second.labs.end(); it3++) {
                 os << *it3 << " ";
             }
             os << ">";
 
             /*
             int count=0;
-            for (map<Tid, int>::iterator it3=it2->second.a.begin(); it3!=it2->second.a.end(); it3++) {
+            for (map<LastTid, int>::iterator it3=it2->second.a.begin(); it3!=it2->second.a.end(); it3++) {
                 count = count + it3->second;
             }
-            for (map<Tid, int>::iterator it3=it2->second.i.begin(); it3!=it2->second.i.end(); it3++) {
+            for (map<LastTid, int>::iterator it3=it2->second.i.begin(); it3!=it2->second.i.end(); it3++) {
                 count = count + it3->second;
             }
             os << " " << count;
@@ -1169,10 +1169,10 @@ ostream& operator<< (ostream& os, GSWalk* gsw) {
 
 
 ostream& operator<< (ostream& os, GSWEdge* gswe) {
-    typedef map<Tid,int> mmap;
+    typedef map<LastTid,int> mmap;
     os << "To: " << gswe->to;
     os << " Labs: <";
-    each_it(gswe->labs, set<InputEdgeLabel>::iterator) {
+    each_it(gswe->labs, set<InputLastEdgeLabel>::iterator) {
         os << *it << " ";
     }
     os << "> ";
@@ -1189,9 +1189,9 @@ ostream& operator<< (ostream& os, GSWEdge* gswe) {
 }
 
 ostream& operator<< (ostream& os, GSWNode* gswn) {
-    typedef map<Tid,int> mmap;
+    typedef map<LastTid,int> mmap;
     os << " Labs: <";
-    each_it(gswn->labs, set<InputEdgeLabel>::iterator) {
+    each_it(gswn->labs, set<InputLastEdgeLabel>::iterator) {
         os << *it << " ";
     }
     os << "> ";

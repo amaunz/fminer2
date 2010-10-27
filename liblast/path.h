@@ -34,39 +34,39 @@ using namespace std;
 
 class GSWalk;
 
-struct PathTuple {
-  Depth depth;
-  NodeId connectingnode;
-  EdgeLabel edgelabel;
-  NodeLabel nodelabel;
+struct LastPathLastTuple {
+  LastDepth depth;
+  LastNodeId connectingnode;
+  LastEdgeLabel edgelabel;
+  LastNodeLabel nodelabel;
 };
 
-struct PathLeg {
-  PathTuple tuple;
-  LegOccurrences occurrences;
+struct LastPathLastLeg {
+  LastPathLastTuple tuple;
+  LastLastLegOccurrences occurrences;
 };
 
-typedef PathLeg *PathLegPtr;
+typedef LastPathLastLeg *LastPathLastLegPtr;
 
-class Path {
+class LastPath {
   public:
-    Path ( NodeLabel startnodelabel );
-    ~Path ();
+    LastPath ( LastNodeLabel startnodelabel );
+    ~LastPath ();
     void expand ();
   private:
-    friend class PatternTree;
-    bool is_normal ( EdgeLabel edgelabel ); // ADDED
+    friend class LastPatternTree;
+    bool is_normal ( LastEdgeLabel edgelabel ); // ADDED
     GSWalk* expand2 (pair<float, string> max, const int parent_size);
-    Path ( Path &parentpath, unsigned int legindex );
-    vector<PathLegPtr> legs; // pointers used to avoid copy-constructor during a resize of the vector
-    vector<CloseLegPtr> closelegs;
-    vector<NodeLabel> nodelabels;
-    vector<EdgeLabel> edgelabels;
+    LastPath ( LastPath &parentpath, unsigned int legindex );
+    vector<LastPathLastLegPtr> legs; // pointers used to avoid copy-constructor during a resize of the vector
+    vector<LastCloseLastLegPtr> closelegs;
+    vector<LastNodeLabel> nodelabels;
+    vector<LastEdgeLabel> edgelabels;
     int frontsymmetry; // which is lower, the front or front reverse?
     int backsymmetry; // which is lower, the back or back reverse?
     int totalsymmetry; // which is lower, from left to right, or the reverse?
 
-    friend ostream &operator<< ( ostream &stream, Path &path );
+    friend ostream &operator<< ( ostream &stream, LastPath &path );
 };
 
 #endif

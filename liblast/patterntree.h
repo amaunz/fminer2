@@ -41,44 +41,44 @@ extern unsigned int minfreq;
 
 class GSWalk;
 
-struct Tuple {
-  Depth depth;
-  EdgeLabel label;
-  NodeId connectingnode;
+struct LastTuple {
+  LastDepth depth;
+  LastEdgeLabel label;
+  LastNodeId connectingnode;
   
-  Tuple ( Depth depth, EdgeLabel label, NodeId connectingnode ): 
+  LastTuple ( LastDepth depth, LastEdgeLabel label, LastNodeId connectingnode ): 
     depth ( depth ), label ( label ), connectingnode ( connectingnode ) { }
-  Tuple () { }
+  LastTuple () { }
 
-  friend bool operator< ( Tuple &a, Tuple &b ) { return a.depth > b.depth || ( a.depth == b.depth && a.label < b.label ); }
-  friend bool operator== ( Tuple &a, Tuple &b ) { return a.depth == b.depth && a.label == b.label; }
-  friend ostream &operator<< ( ostream &stream, Tuple &tuple );
+  friend bool operator< ( LastTuple &a, LastTuple &b ) { return a.depth > b.depth || ( a.depth == b.depth && a.label < b.label ); }
+  friend bool operator== ( LastTuple &a, LastTuple &b ) { return a.depth == b.depth && a.label == b.label; }
+  friend ostream &operator<< ( ostream &stream, LastTuple &tuple );
 };
 
-struct Leg {
-  Tuple tuple;
-  LegOccurrences occurrences;
+struct LastLeg {
+  LastTuple tuple;
+  LastLastLegOccurrences occurrences;
 };
 
-typedef Leg *LegPtr;
+typedef LastLeg *LastLegPtr;
 
-class PatternTree {
+class LastPatternTree {
   public:
-    PatternTree ( Path &path, unsigned int legindex );
-    ~PatternTree ();
+    LastPatternTree ( LastPath &path, unsigned int legindex );
+    ~LastPatternTree ();
     GSWalk* expand (pair<float, string> max, const int parent_size);
-    vector<LegPtr> legs; // pointers used to avoid copy-constructor during a resize of the vector
+    vector<LastLegPtr> legs; // pointers used to avoid copy-constructor during a resize of the vector
   private:
     void checkIfIndeedNormal ();
-    /* inline */ void addExtensionLegs ( Tuple &tuple, LegOccurrences &legoccurrences );
-    /* inline */ void addLeg ( const NodeId connectingnode, const int depth, const EdgeLabel edgelabel, LegOccurrences &legoccurrences );
-    /* inline */ void addLeftLegs ( Path &path, PathLeg &leg, int &i, Depth olddepth, EdgeLabel lowestlabel, int leftend, int edgesize2 );
-    /* inline */ int addLeftLegs ( Path &path, PathLeg &leg, Tuple &tuple, unsigned int legindex, int leftend, int edgesize2 );
-    /* inline */ void addRightLegs ( Path &path, PathLeg &leg, int &i, Depth olddepth, EdgeLabel lowestlabel, int rightstart, int nodesize2 );
-    /* inline */ int addRightLegs ( Path &path, PathLeg &leg, Tuple &tuple, unsigned int legindex, int rightstart, int nodesize2 );
-    PatternTree ( PatternTree &parenttree, unsigned int legindex );
-    vector<Tuple> treetuples;
-    vector<NodeId> rightmostindexes;
+    /* inline */ void addExtensionLastLegs ( LastTuple &tuple, LastLastLegOccurrences &legoccurrences );
+    /* inline */ void addLastLeg ( const LastNodeId connectingnode, const int depth, const LastEdgeLabel edgelabel, LastLastLegOccurrences &legoccurrences );
+    /* inline */ void addLeftLastLegs ( LastPath &path, LastPathLastLeg &leg, int &i, LastDepth olddepth, LastEdgeLabel lowestlabel, int leftend, int edgesize2 );
+    /* inline */ int addLeftLastLegs ( LastPath &path, LastPathLastLeg &leg, LastTuple &tuple, unsigned int legindex, int leftend, int edgesize2 );
+    /* inline */ void addRightLastLegs ( LastPath &path, LastPathLastLeg &leg, int &i, LastDepth olddepth, LastEdgeLabel lowestlabel, int rightstart, int nodesize2 );
+    /* inline */ int addRightLastLegs ( LastPath &path, LastPathLastLeg &leg, LastTuple &tuple, unsigned int legindex, int rightstart, int nodesize2 );
+    LastPatternTree ( LastPatternTree &parenttree, unsigned int legindex );
+    vector<LastTuple> treetuples;
+    vector<LastNodeId> rightmostindexes;
     vector<short> rootpathrelations;
     unsigned int nextprefixindex;
     unsigned int rootpathstart;
@@ -86,13 +86,13 @@ class PatternTree {
     unsigned int maxdepth;
     int symmetric; // 0 == not symmetric, 1 == symmetric, even length path, 2 == symmetric, odd length path
     int secondpathleg;
-    vector<CloseLegPtr> closelegs;
-    friend ostream &operator<< ( ostream &stream, PatternTree &patterntree );
+    vector<LastCloseLastLegPtr> closelegs;
+    friend ostream &operator<< ( ostream &stream, LastPatternTree &patterntree );
 #ifdef GRAPH_OUTPUT
-    friend void fillMatrix ( int **A, int &nextnode, int rootnode, NodeLabel rootlabel, 
-                  int startpos, int endpos, PatternTree &patterntree );
-    NodeLabel tree1rootlabel, tree2rootlabel;
-    EdgeLabel rootpathlabel;
+    friend void fillMatrix ( int **A, int &nextnode, int rootnode, LastNodeLabel rootlabel, 
+                  int startpos, int endpos, LastPatternTree &patterntree );
+    LastNodeLabel tree1rootlabel, tree2rootlabel;
+    LastEdgeLabel rootpathlabel;
 #endif
 };
 

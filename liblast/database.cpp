@@ -29,21 +29,21 @@ namespace fm {
     extern unsigned int minfreq;
 }
 
-ostream &operator<< ( ostream &stream, DatabaseTreeEdge &databasetreeedge ) {
-  stream << "DatabaseTreeEdge; edgelabel: " << databasetreeedge.edgelabel << "; tonode: " << databasetreeedge.tonode << endl;
+ostream &operator<< ( ostream &stream, LastDatabaseTreeEdge &databasetreeedge ) {
+  stream << "LastDatabaseTreeEdge; edgelabel: " << databasetreeedge.edgelabel << "; tonode: " << databasetreeedge.tonode << endl;
   return stream;
 }
 
-ostream &operator<< ( ostream &stream, DatabaseTreeNode &databasetreenode ) {
-  stream << "DatabaseTreeNode; label: " << databasetreenode.nodelabel << "; edges: " << endl;
+ostream &operator<< ( ostream &stream, LastDatabaseTreeNode &databasetreenode ) {
+  stream << "LastDatabaseTreeNode; label: " << databasetreenode.nodelabel << "; edges: " << endl;
   for (int i = 0; i < databasetreenode.edges.size (); i++ )
     stream << databasetreenode.edges[i];
   stream << endl;
   return stream;
 }
 
-ostream &operator<< ( ostream &stream, DatabaseTree &databasetree ) {
-  stream << "DatabaseTree; tid: " << databasetree.tid << "; nodes: " << endl;
+ostream &operator<< ( ostream &stream, LastDatabaseTree &databasetree ) {
+  stream << "LastDatabaseTree; tid: " << databasetree.tid << "; nodes: " << endl;
   for (unsigned int i = 0; i < databasetree.nodes.size (); i++ )
     stream << databasetree.nodes[i];
   stream << endl;
@@ -54,7 +54,7 @@ ostream &operator<< ( ostream &stream, DatabaseTree &databasetree ) {
 
 
 
-bool Database::readTreeSmi (string smi, Tid tid, Tid orig_tid, int line_nr) {
+bool LastDatabase::readTreeSmi (string smi, LastTid tid, LastTid orig_tid, int line_nr) {
 
     OBMol mol;
 
@@ -75,7 +75,7 @@ bool Database::readTreeSmi (string smi, Tid tid, Tid orig_tid, int line_nr) {
     }
 
     // create and store new tree object
-    DatabaseTreePtr tree = new DatabaseTree ( tid , orig_tid , line_nr );
+    LastDatabaseTreePtr tree = new LastDatabaseTree ( tid , orig_tid , line_nr );
 
 
     // SEGFAULT
@@ -83,8 +83,8 @@ bool Database::readTreeSmi (string smi, Tid tid, Tid orig_tid, int line_nr) {
     trees_map[orig_tid] = tree;
 
     int nodessize = 0, edgessize = 0;
-    static vector<DatabaseTreeNode> nodes;
-    static vector<vector<DatabaseTreeEdge> > edges;
+    static vector<LastDatabaseTreeNode> nodes;
+    static vector<vector<LastDatabaseTreeEdge> > edges;
     nodes.resize ( 0 );
 
 //    cerr << "Atoms are (Type(ID)):" << endl;
@@ -100,7 +100,7 @@ bool Database::readTreeSmi (string smi, Tid tid, Tid orig_tid, int line_nr) {
 
         //cerr << " " << (*atom)->GetType() << " (idx " << (*atom)->GetIdx() << ")" << endl;
 
-        InputNodeLabel inputnodelabel=0;
+        InputLastNodeLabel inputnodelabel=0;
 
         // set atom type as label
         // code for 'c' is set to -1 (aromatic carbon).
@@ -113,13 +113,13 @@ bool Database::readTreeSmi (string smi, Tid tid, Tid orig_tid, int line_nr) {
         // Insert into map, using subsequent numbering for internal labels:
     	// node nr. 1, node nr. 2, ...
 	    // Store direction inputlabel -> internal label
-    	//cerr << "NodeLabelMap: insert " << inputnodelabel << " --> " << nodelabels.size() << endl;
+    	//cerr << "LastNodeLabelMap: insert " << inputnodelabel << " --> " << nodelabels.size() << endl;
         map_insert_pair ( nodelabelmap ) p = nodelabelmap.insert ( make_pair ( inputnodelabel, (nodelabels.size()) ) );
 
         // Store direction internal label -> node
         // if node has NOT been present, label it and set frequency to 1
         if ( p.second ) {
-          vector_push_back ( DatabaseNodeLabel, nodelabels, nodelabel );
+          vector_push_back ( LastDatabaseLastNodeLabel, nodelabels, nodelabel );
           nodelabel.inputlabel = inputnodelabel;
           nodelabel.occurrences.parent = NULL;
           nodelabel.occurrences.number = 1;
@@ -128,14 +128,14 @@ bool Database::readTreeSmi (string smi, Tid tid, Tid orig_tid, int line_nr) {
         }
         // if node has been present, increase frequency
         else {
-          DatabaseNodeLabel &nodelabel = nodelabels[p.first->second];
+          LastDatabaseLastNodeLabel &nodelabel = nodelabels[p.first->second];
           if ( nodelabel.lasttid != tid ) nodelabel.frequency++;
           nodelabel.lasttid = tid;
           //cerr << "Updated node label " << nodelabel.inputlabel << " (freq " << nodelabel.frequency << ")" << endl;
         }
 
         // Tree node
-        vector_push_back ( DatabaseTreeNode, nodes, node );
+        vector_push_back ( LastDatabaseTreeNode, nodes, node );
         node.nodelabel = p.first->second;                           // refer to nodelabel
     //    node.atom = (*atom);                                        // attach OB atom
         node.incycle = false;
@@ -155,8 +155,8 @@ bool Database::readTreeSmi (string smi, Tid tid, Tid orig_tid, int line_nr) {
     }
     //cerr << endl;
 
-    InputEdgeLabel inputedgelabel;
-    InputNodeId nodeid1, nodeid2;
+    InputLastEdgeLabel inputedgelabel;
+    InputLastNodeId nodeid1, nodeid2;
 
     //cerr << "Bonds are (idx[label] bo idx[label]):" << endl;
     OBBondIterator bond;
@@ -171,8 +171,8 @@ bool Database::readTreeSmi (string smi, Tid tid, Tid orig_tid, int line_nr) {
         
         do {
 
-            nodeid1 = (InputNodeId) ((*bond)->GetBeginAtomIdx())-1;     // USE OB INDICES (same as nodelabel+1)!
-            nodeid2 = (InputNodeId) ((*bond)->GetEndAtomIdx())-1;       //
+            nodeid1 = (InputLastNodeId) ((*bond)->GetBeginAtomIdx())-1;     // USE OB INDICES (same as nodelabel+1)!
+            nodeid2 = (InputLastNodeId) ((*bond)->GetEndAtomIdx())-1;       //
             int bondorder = (*bond)->GetBondOrder();
 
             // set input edge label
@@ -180,33 +180,33 @@ bool Database::readTreeSmi (string smi, Tid tid, Tid orig_tid, int line_nr) {
             if (fm::aromatic && (*bond)->IsAromatic()) inputedgelabel = 4;
 
 //            cerr << nodeid1 << inputedgelabel << "(" << (*bond)->IsAromatic() << ")" << nodeid2 << " ";
-            NodeLabel node1label = tree->nodes[nodeid1].nodelabel;
-            NodeLabel node2label = tree->nodes[nodeid2].nodelabel;
+            LastNodeLabel node1label = tree->nodes[nodeid1].nodelabel;
+            LastNodeLabel node2label = tree->nodes[nodeid2].nodelabel;
             
             //cerr << "(" << (*bond)->GetBeginAtomIdx() << "[" << (int) node1label << "] " << (*bond)->GetBondOrder() << " " << (*bond)->GetEndAtomIdx() << "[" << (int) node2label << "]"<< ")" << endl;
 
             
             // Direction of edge always from low to high
             if ( node1label > node2label ) {
-                NodeLabel temp = node1label;
+                LastNodeLabel temp = node1label;
                 node1label = node2label;
                 node2label = temp;
             }
 
             // Create combined input label for edge
-            CombinedInputLabel combinedinputlabel;
+            LastCombinedInputLabel combinedinputlabel;
             combinedinputlabel = combineInputLabels ( inputedgelabel, node1label, node2label );
 
             // Insert into map, analoguous to nodes, using subsequent numbering for internal labels:
             // edge nr. 1, edge nr. 2, ...
             
             // Direction inputlabel -> internal label
-            //cerr << "EdgeLabelMap: insert " << combinedinputlabel << "-->" << edgelabels.size() << endl;
+            //cerr << "LastEdgeLabelMap: insert " << combinedinputlabel << "-->" << edgelabels.size() << endl;
             map_insert_pair ( edgelabelmap ) p = edgelabelmap.insert ( make_pair ( combinedinputlabel, edgelabels.size () ) );
      
             // Direction internal label -> edge
             if ( p.second ) {
-              vector_push_back ( DatabaseEdgeLabel, edgelabels, edgelabel );
+              vector_push_back ( LastDatabaseLastEdgeLabel, edgelabels, edgelabel );
               edgelabel.fromnodelabel = node1label;	// directed edges
               edgelabel.tonodelabel = node2label;
               edgelabel.inputedgelabel = inputedgelabel;
@@ -214,7 +214,7 @@ bool Database::readTreeSmi (string smi, Tid tid, Tid orig_tid, int line_nr) {
               //cerr << "Created edge " << edgelabel.inputedgelabel << " (" << (int) edgelabel.fromnodelabel << "-->" << (int) edgelabel.tonodelabel << ")" << ":" << edgelabel.frequency << endl;
             }
             else {
-              DatabaseEdgeLabel &edgelabel = edgelabels[p.first->second];
+              LastDatabaseLastEdgeLabel &edgelabel = edgelabels[p.first->second];
               if ( edgelabel.lasttid != tid )
                 edgelabel.frequency++;
                 edgelabel.lasttid = tid;
@@ -222,12 +222,12 @@ bool Database::readTreeSmi (string smi, Tid tid, Tid orig_tid, int line_nr) {
             }
         
             // Tree edge (2 versions)
-            vector_push_back ( DatabaseTreeEdge, edges[nodeid1], edge );
+            vector_push_back ( LastDatabaseTreeEdge, edges[nodeid1], edge );
             edge.edgelabel = p.first->second;
             edge.tonode = nodeid2;
     //        edge.bond = (*bond);
                 
-            vector_push_back ( DatabaseTreeEdge, edges[nodeid2], edge2 );
+            vector_push_back ( LastDatabaseTreeEdge, edges[nodeid2], edge2 );
             edge2.edgelabel = p.first->second;
             edge2.tonode = nodeid1;
     //        edge2.bond = (*bond);
@@ -238,7 +238,7 @@ bool Database::readTreeSmi (string smi, Tid tid, Tid orig_tid, int line_nr) {
     }
 
     // copy edges to tree
-    tree->edges = new DatabaseTreeEdge[edgessize * 2];	// allocate space
+    tree->edges = new LastDatabaseTreeEdge[edgessize * 2];	// allocate space
                                                         // two instances per edge (both directions)
     int pos = 0;
     for ( int i = 0; i < nodessize; i++ ) {				// for all nodes...
@@ -280,12 +280,12 @@ bool Database::readTreeSmi (string smi, Tid tid, Tid orig_tid, int line_nr) {
     return(1);
 }
 
-void Database::readGsp (FILE* input) {
-  Tid tid2 = 0; 
+void LastDatabase::readGsp (FILE* input) {
+  LastTid tid2 = 0; 
 
   char array[100];
   fgets ( array, 100, input );
-  string tree_s = array; Tid orig_tid = (unsigned int) atoi((tree_s.substr(tree_s.find_first_of("123456789"))).c_str());
+  string tree_s = array; LastTid orig_tid = (unsigned int) atoi((tree_s.substr(tree_s.find_first_of("123456789"))).c_str());
 
   while ( !feof ( input ) ) {
     readTreeGsp ( input, tid2, orig_tid );
@@ -325,10 +325,10 @@ char readcommand ( FILE *input ) {
   return car;
 }
 
-void Database::readTreeGsp ( FILE *input, Tid tid , Tid orig_tid) {
-  InputNodeLabel inputnodelabel;
+void LastDatabase::readTreeGsp ( FILE *input, LastTid tid , LastTid orig_tid) {
+  InputLastNodeLabel inputnodelabel;
 
-  DatabaseTreePtr tree = new DatabaseTree ( tid , orig_tid , tid );
+  LastDatabaseTreePtr tree = new LastDatabaseTree ( tid , orig_tid , tid );
   trees.push_back ( tree );
   trees_map[orig_tid] = tree;
 
@@ -337,8 +337,8 @@ void Database::readTreeGsp ( FILE *input, Tid tid , Tid orig_tid) {
   int nodessize = 0, edgessize = 0;
   command = readcommand ( input );
   
-  static vector<DatabaseTreeNode> nodes;
-  static vector<vector<DatabaseTreeEdge> > edges;
+  static vector<LastDatabaseTreeNode> nodes;
+  static vector<vector<LastDatabaseTreeEdge> > edges;
   nodes.resize ( 0 );
 
   while ( command == 'v' ) {
@@ -352,20 +352,20 @@ void Database::readTreeGsp ( FILE *input, Tid tid , Tid orig_tid) {
 
     map_insert_pair ( nodelabelmap ) p = nodelabelmap.insert ( make_pair ( inputnodelabel, nodelabels.size () ) );
     if ( p.second ) {
-      vector_push_back ( DatabaseNodeLabel, nodelabels, nodelabel );
+      vector_push_back ( LastDatabaseLastNodeLabel, nodelabels, nodelabel );
       nodelabel.inputlabel = inputnodelabel;
       nodelabel.occurrences.parent = NULL;
       nodelabel.occurrences.number = 1;
       nodelabel.lasttid = tid;
     }
     else {
-      DatabaseNodeLabel &nodelabel = nodelabels[p.first->second];
+      LastDatabaseLastNodeLabel &nodelabel = nodelabels[p.first->second];
       if ( nodelabel.lasttid != tid )
         nodelabel.frequency++;
       nodelabel.lasttid = tid;
     }
     
-    vector_push_back ( DatabaseTreeNode, nodes, node );
+    vector_push_back ( LastDatabaseTreeNode, nodes, node );
     node.nodelabel = p.first->second;
     node.incycle = false;
 
@@ -380,18 +380,18 @@ void Database::readTreeGsp ( FILE *input, Tid tid , Tid orig_tid) {
     tree->nodes.push_back ( nodes[i] );
   }
   
-  InputEdgeLabel inputedgelabel;
-  InputNodeId nodeid1, nodeid2;
+  InputLastEdgeLabel inputedgelabel;
+  InputLastNodeId nodeid1, nodeid2;
 
   while ( !feof ( input ) && command == 'e' ) {
     nodeid1 = readint ( input );
     nodeid2 = readint ( input );
     inputedgelabel = readint ( input );
-    NodeLabel node2label = tree->nodes[nodeid2].nodelabel;
-    NodeLabel node1label = tree->nodes[nodeid1].nodelabel;
-    CombinedInputLabel combinedinputlabel;
+    LastNodeLabel node2label = tree->nodes[nodeid2].nodelabel;
+    LastNodeLabel node1label = tree->nodes[nodeid1].nodelabel;
+    LastCombinedInputLabel combinedinputlabel;
     if ( node1label > node2label ) {
-      NodeLabel temp = node1label;
+      LastNodeLabel temp = node1label;
       node1label = node2label;
       node2label = temp;
     }
@@ -399,24 +399,24 @@ void Database::readTreeGsp ( FILE *input, Tid tid , Tid orig_tid) {
 
     map_insert_pair ( edgelabelmap ) p = edgelabelmap.insert ( make_pair ( combinedinputlabel, edgelabels.size () ) );
     if ( p.second ) {
-      vector_push_back ( DatabaseEdgeLabel, edgelabels, edgelabel );
+      vector_push_back ( LastDatabaseLastEdgeLabel, edgelabels, edgelabel );
       edgelabel.fromnodelabel = node1label;
       edgelabel.tonodelabel = node2label;
       edgelabel.inputedgelabel = inputedgelabel;
       edgelabel.lasttid = tid;
     }
     else {
-      DatabaseEdgeLabel &edgelabel = edgelabels[p.first->second];
+      LastDatabaseLastEdgeLabel &edgelabel = edgelabels[p.first->second];
       if ( edgelabel.lasttid != tid )
         edgelabel.frequency++;
       edgelabel.lasttid = tid;
     }
 
-    vector_push_back ( DatabaseTreeEdge, edges[nodeid1], edge );
+    vector_push_back ( LastDatabaseTreeEdge, edges[nodeid1], edge );
     edge.edgelabel = p.first->second;
     edge.tonode = nodeid2;
 
-    vector_push_back ( DatabaseTreeEdge, edges[nodeid2], edge2 );
+    vector_push_back ( LastDatabaseTreeEdge, edges[nodeid2], edge2 );
     edge2.edgelabel = p.first->second;
     edge2.tonode = nodeid1;
 
@@ -426,7 +426,7 @@ void Database::readTreeGsp ( FILE *input, Tid tid , Tid orig_tid) {
     if (command == 't') fseek (input, -1, SEEK_CUR);
   }
 
-  tree->edges = new DatabaseTreeEdge[edgessize * 2];
+  tree->edges = new LastDatabaseTreeEdge[edgessize * 2];
   int pos = 0;
   for ( int i = 0; i < nodessize; i++ ) {
     int s = edges[i].size ();
@@ -466,11 +466,11 @@ void Database::readTreeGsp ( FILE *input, Tid tid , Tid orig_tid) {
 // TREE                      
 // determine internal cycles 
 
-void Database::determineCycledNodes ( DatabaseTreePtr tree, vector<int> &nodestack, vector<bool> &visited1, vector<bool> &visited2 ) {
+void LastDatabase::determineCycledNodes ( LastDatabaseTreePtr tree, vector<int> &nodestack, vector<bool> &visited1, vector<bool> &visited2 ) {
     int node = nodestack.back ();
-    pvector<DatabaseTreeEdge> &edges = tree->nodes[node].edges;	// jump to beginning of (flat) edge storage
+    Lastpvector<LastDatabaseTreeEdge> &edges = tree->nodes[node].edges;	// jump to beginning of (flat) edge storage
 
-    for ( int i = 0; i < edges.size (); i++ ) {		            // edges.size() answered by pvector
+    for ( int i = 0; i < edges.size (); i++ ) {		            // edges.size() answered by Lastpvector
         if ( !visited1[edges[i].tonode] ) {				        // [] operator = array + i steps!!
             //cerr << edges[i].tonode << " (" << nodestack.size() << ")" << endl;
             nodestack.push_back ( edges[i].tonode );
@@ -496,7 +496,7 @@ void Database::determineCycledNodes ( DatabaseTreePtr tree, vector<int> &nodesta
     }
 }
 
-void Database::edgecount () {
+void LastDatabase::edgecount () {
   for (unsigned int i = 0; i < edgelabels.size (); i++ ) {                              // DATABASE                    
     if ( edgelabels[i].frequency >= fm::minfreq ) {                                         // if edge is frequent...      
       nodelabels[edgelabels[i].tonodelabel].frequentedgelabels.push_back ( i );         // ... store it at the to-node 
@@ -506,20 +506,20 @@ void Database::edgecount () {
   }
 }
 
-class EdgeLabelsIndexesSort:public std::binary_function<int,int,bool> {
-    const vector<DatabaseEdgeLabel> &edgelabels;
+class LastEdgeLabelsIndexesSort:public std::binary_function<int,int,bool> {
+    const vector<LastDatabaseLastEdgeLabel> &edgelabels;
   public:
-    EdgeLabelsIndexesSort ( const vector<DatabaseEdgeLabel> &edgelabels ) : edgelabels ( edgelabels ) { }
+    LastEdgeLabelsIndexesSort ( const vector<LastDatabaseLastEdgeLabel> &edgelabels ) : edgelabels ( edgelabels ) { }
     bool operator () ( int a, int b ) const {
       return edgelabels[a].frequency < edgelabels[b].frequency;
     }
 };
 
-bool operator< ( const DatabaseTreeEdge &a, const DatabaseTreeEdge &b ) {
+bool operator< ( const LastDatabaseTreeEdge &a, const LastDatabaseTreeEdge &b ) {
   return a.edgelabel < b.edgelabel;
 }
 
-void Database::reorder () {
+void LastDatabase::reorder () {
     
 
     // PHASE I: LABEL EDGES ACCORDING TO FREQUENCY
@@ -542,7 +542,7 @@ void Database::reorder () {
   //}
   //cerr << endl;
 
-    sort ( edgelabelsindexes.begin (), edgelabelsindexes.end (), EdgeLabelsIndexesSort ( edgelabels ) );
+    sort ( edgelabelsindexes.begin (), edgelabelsindexes.end (), LastEdgeLabelsIndexesSort ( edgelabels ) );
 
   //each(edgelabelsindexes) {
   //    cerr << (int) edgelabelsindexes[i] << " (" 
@@ -559,7 +559,7 @@ void Database::reorder () {
         edgelabels[edgelabelsindexes[i]].edgelabel = i;                 // fill in the edge labels for the first time
 //     #define DEBUG
      #ifdef DEBUG
-    DatabaseEdgeLabel &label = edgelabels[edgelabelsindexes[i]];
+    LastDatabaseLastEdgeLabel &label = edgelabels[edgelabelsindexes[i]];
     cout << (int) nodelabels[label.tonodelabel].inputlabel 
          << "[" << (int) label.inputedgelabel << "]" 
 	 << (int) nodelabels[label.fromnodelabel].inputlabel <<"-->" << i <<endl;
@@ -570,27 +570,27 @@ void Database::reorder () {
     // PHASE II: REMOVE INFREQUENT EDGES FROM NODES
 //    cerr << "REMOVE" << endl;
 
-    for ( Tid i = 0; i < trees.size (); i++ ) {
-        DatabaseTree &tree = * (trees[i]);                                          // for every tree i...
-        for ( NodeId j = 0; j < tree.nodes.size (); j++ ) {                         // for every node j...
+    for ( LastTid i = 0; i < trees.size (); i++ ) {
+        LastDatabaseTree &tree = * (trees[i]);                                          // for every tree i...
+        for ( LastNodeId j = 0; j < tree.nodes.size (); j++ ) {                         // for every node j...
   //        cerr << endl;
-            DatabaseTreeNode &node = tree.nodes[j];
+            LastDatabaseTreeNode &node = tree.nodes[j];
             if ( nodelabels[node.nodelabel].frequency >= fm::minfreq ) {                  // ...check its frequency...
-                DatabaseNodeLabel &nodelabel = nodelabels[node.nodelabel];
+                LastDatabaseLastNodeLabel &nodelabel = nodelabels[node.nodelabel];
 
-  //            cerr << "Leg Occurence for node " << nodelabel.inputlabel
+  //            cerr << "LastLeg Occurence for node " << nodelabel.inputlabel
   //                 << ": " << tree.tid << " " << nodelabel.occurrences.elements.size() << " " << j << " " << NONODE << endl;
-                nodelabel.occurrences.elements.push_back ( LegOccurrence ( tree.tid, (OccurrenceId) nodelabel.occurrences.elements.size (), j, NONODE )  );
+                nodelabel.occurrences.elements.push_back ( LastLastLegOccurrence ( tree.tid, (LastOccurrenceId) nodelabel.occurrences.elements.size (), j, NONODE )  );
                                                                                         // ...and push occurence in database
                 int k = 0;
   //            cerr << "node " << (int) node.nodelabel  << " (" << nodelabels[node.nodelabel].inputlabel << ")"  << endl;
                 for ( int l = 0; l < node.edges.size (); l++ ) {                        // For each edge l going out of j...
                     
                                         
-                    EdgeLabel lab = node.edges[l].edgelabel;                            // ... (with label lab)...
+                    LastEdgeLabel lab = node.edges[l].edgelabel;                            // ... (with label lab)...
                     if ( edgelabels[lab].frequency >= fm::minfreq ) {                       // ... check its frequency...
 
-  //                    DatabaseTreeEdge& edge = node.edges[l];
+  //                    LastDatabaseTreeEdge& edge = node.edges[l];
   //                    cerr << "  edge " << (int) edge.edgelabel << " moved from " << l << " to " << k << endl;
 
                         node.edges[k].edgelabel = edgelabels[lab].edgelabel;            // ... and overwrite old edges
@@ -609,12 +609,12 @@ void Database::reorder () {
 
 }
 
-void Database::printTrees () {
+void LastDatabase::printTrees () {
   for (unsigned int i = 0; i < trees.size (); i++ )
     cout << trees[i];
 }
 
-Database::~Database () {
+LastDatabase::~LastDatabase () {
   for (unsigned int i = 0; i < trees.size (); i++ )
     delete trees[i];
 }

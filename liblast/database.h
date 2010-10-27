@@ -37,47 +37,47 @@
 using namespace std;
 using namespace OpenBabel;
 
-typedef short InputEdgeLabel;
-typedef short InputNodeLabel;
-typedef short InputNodeId;
-typedef unsigned int CombinedInputLabel;
+typedef short InputLastEdgeLabel;
+typedef short InputLastNodeLabel;
+typedef short InputLastNodeId;
+typedef unsigned int LastCombinedInputLabel;
 
 #define combineInputLabels(label1,label2,label3) (label1 | ( ((unsigned int) label2 ) << 16 ) | ( ( (unsigned int) label3 ) << 24 ) )
 // maximum 255 node labels for now.
 
-#define NOINPUTEDGELABEL ((InputEdgeLabel) -1)
-#define NOINPUTNODELABEL ((InputNodeLabel) -1)
+#define NOINPUTEDGELABEL ((InputLastEdgeLabel) -1)
+#define NOINPUTNODELABEL ((InputLastNodeLabel) -1)
 
 template<class T>
-class pvector {
+class Lastpvector {
 public:
   T *array;
   int _size;
-  pvector<T> ( T *array, int _size ): array ( array ), _size ( _size ) { }
-  pvector<T> () { }
+  Lastpvector<T> ( T *array, int _size ): array ( array ), _size ( _size ) { }
+  Lastpvector<T> () { }
   inline int size () const { return _size; }
   void resize ( int s ) { _size = s; }
   void clear () { _size = 0; } // cannot remove allocation, as we are not managing that memory here 
   T &operator[] ( int i ) { return array[i]; }
 };
 
-struct DatabaseTreeEdge {
-  EdgeLabel edgelabel;
-  NodeId tonode;
+struct LastDatabaseTreeEdge {
+  LastEdgeLabel edgelabel;
+  LastNodeId tonode;
 
-  DatabaseTreeEdge ()  { }
+  LastDatabaseTreeEdge ()  { }
 
-  friend ostream &operator<< ( ostream &stream, DatabaseTreeEdge &databasetreeedge );
+  friend ostream &operator<< ( ostream &stream, LastDatabaseTreeEdge &databasetreeedge );
 };
 
-struct DatabaseTreeNode {
-  NodeLabel nodelabel;
+struct LastDatabaseTreeNode {
+  LastNodeLabel nodelabel;
   bool incycle;
-  pvector<DatabaseTreeEdge> edges;
+  Lastpvector<LastDatabaseTreeEdge> edges;
 
-  DatabaseTreeNode () { }
+  LastDatabaseTreeNode () { }
 
-  friend ostream &operator<< ( ostream &stream, DatabaseTreeNode &databasetreenode );
+  friend ostream &operator<< ( ostream &stream, LastDatabaseTreeNode &databasetreenode );
 };
 
 /*
@@ -85,82 +85,82 @@ Nodes:			nodes =  [node1, ..., node n]
 Edges			edges -> [e1 of n1,...,em of n1, ..., e1 of nn...,ek of nn]
 */
 
-struct DatabaseTree {
-  Tid tid, orig_tid;
+struct LastDatabaseTree {
+  LastTid tid, orig_tid;
   int line_nr;
-  vector<DatabaseTreeNode> nodes;
+  vector<LastDatabaseTreeNode> nodes;
 
-  DatabaseTreeEdge *edges;
+  LastDatabaseTreeEdge *edges;
   // KS: int activity;
   // KS: float
   float activity;
 
-  // KS: DatabaseTree ( Tid tid , Tid orig_tid , int line_nr ): tid ( tid ), orig_tid (orig_tid ), line_nr (line_nr), activity ( -1 ) { }
+  // KS: LastDatabaseTree ( LastTid tid , LastTid orig_tid , int line_nr ): tid ( tid ), orig_tid (orig_tid ), line_nr (line_nr), activity ( -1 ) { }
   // KS: initialize to 0.0
-  DatabaseTree ( Tid tid , Tid orig_tid , int line_nr ): tid ( tid ), orig_tid (orig_tid ), line_nr (line_nr), activity ( 0.0 ) { }
-  DatabaseTree () { }
+  LastDatabaseTree ( LastTid tid , LastTid orig_tid , int line_nr ): tid ( tid ), orig_tid (orig_tid ), line_nr (line_nr), activity ( 0.0 ) { }
+  LastDatabaseTree () { }
   
-  friend ostream &operator<< ( ostream &stream, DatabaseTree &databasetree );
+  friend ostream &operator<< ( ostream &stream, LastDatabaseTree &databasetree );
 };
 
-typedef DatabaseTree *DatabaseTreePtr;
+typedef LastDatabaseTree *LastDatabaseTreePtr;
 
-struct DatabaseNodeLabel {
-  InputNodeLabel inputlabel;
-  Frequency frequency;
-  Tid lasttid;
+struct LastDatabaseLastNodeLabel {
+  InputLastNodeLabel inputlabel;
+  LastFrequency frequency;
+  LastTid lasttid;
 
-  LegOccurrences occurrences;
-  vector<EdgeLabel> frequentedgelabels;
+  LastLastLegOccurrences occurrences;
+  vector<LastEdgeLabel> frequentedgelabels;
 
-  DatabaseNodeLabel (): frequency ( 1 ) { }
+  LastDatabaseLastNodeLabel (): frequency ( 1 ) { }
 };
 
-struct DatabaseEdgeLabel {
-  InputEdgeLabel inputedgelabel;
-  NodeLabel tonodelabel, fromnodelabel; 
-  EdgeLabel edgelabel; // the (order) edge label to which this entry corresponds during the search
-  Frequency frequency;
-  Tid lasttid;
+struct LastDatabaseLastEdgeLabel {
+  InputLastEdgeLabel inputedgelabel;
+  LastNodeLabel tonodelabel, fromnodelabel; 
+  LastEdgeLabel edgelabel; // the (order) edge label to which this entry corresponds during the search
+  LastFrequency frequency;
+  LastTid lasttid;
 
-  DatabaseEdgeLabel (): frequency ( 1 ) { }
+  LastDatabaseLastEdgeLabel (): frequency ( 1 ) { }
 };
 
-class Database {
+class LastDatabase {
   public:
-    Database() {}
-    vector<DatabaseTreePtr> trees;
-    map<Tid, DatabaseTreePtr> trees_map;
-    vector<DatabaseNodeLabel> nodelabels;
-    vector<DatabaseEdgeLabel> edgelabels;
-    map<InputNodeLabel,NodeLabel> nodelabelmap;
-    map<CombinedInputLabel,EdgeLabel> edgelabelmap;
-    vector<EdgeLabel> edgelabelsindexes; // given an edge label, returns the index of the element in edgelabels in which
-    EdgeLabel frequentEdgeLabelSize () const { return edgelabelsindexes.size (); }
+    LastDatabase() {}
+    vector<LastDatabaseTreePtr> trees;
+    map<LastTid, LastDatabaseTreePtr> trees_map;
+    vector<LastDatabaseLastNodeLabel> nodelabels;
+    vector<LastDatabaseLastEdgeLabel> edgelabels;
+    map<InputLastNodeLabel,LastNodeLabel> nodelabelmap;
+    map<LastCombinedInputLabel,LastEdgeLabel> edgelabelmap;
+    vector<LastEdgeLabel> edgelabelsindexes; // given an edge label, returns the index of the element in edgelabels in which
+    LastEdgeLabel frequentLastEdgeLabelSize () const { return edgelabelsindexes.size (); }
                                          // all information about this edge can be found. Used during the search,
 					 // only frequent edge label, node label pairs are stored.
 
      // NOTE! In the input file, the nodes MUST be listed in pre-order.
 
 
-     // after "read", determines the frequency of edges, using DatabaseNodeLabel's edgelasttid/edgelabelfrequency
+     // after "read", determines the frequency of edges, using LastDatabaseLastNodeLabel's edgelasttid/edgelabelfrequency
     void edgecount ();
 
      // after "edgecount",
      // - removes infrequent data
      // - cleans up the datastructures used until now for counting frequencies
      // - changes the edge label order to optimise the search, fills the database with order numbers instead of
-     //   the numbers assigned in the previous levels; fills edgelabelsindexes.
+     //   the numbers assigned in the previous Lastlevels; fills edgelabelsindexes.
     void reorder ();
 
     void printTrees ();
-    ~Database ();
-    bool readTreeSmi (string smi, Tid tid , Tid orig_tid, int line_nr);
+    ~LastDatabase ();
+    bool readTreeSmi (string smi, LastTid tid , LastTid orig_tid, int line_nr);
     void readGsp (FILE* input);
-    void readTreeGsp (FILE *input, Tid orig_tid, Tid tid);
+    void readTreeGsp (FILE *input, LastTid orig_tid, LastTid tid);
   
   	// Perform DFS through tree to identify cycles
-    void determineCycledNodes ( DatabaseTreePtr tree, vector<int> &nodestack, vector<bool> &visited1, vector<bool> &visited2 );
+    void determineCycledNodes ( LastDatabaseTreePtr tree, vector<int> &nodestack, vector<bool> &visited1, vector<bool> &visited2 );
 };
 
 #endif

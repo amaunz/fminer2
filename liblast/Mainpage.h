@@ -244,7 +244,7 @@
  * </ul>
  *
  * \code
- *  //! Constructor for standard settings: 95% significance level, minimum frequency 2, type trees
+ *  //! Constructor for standard settings: 95% significance Lastlevel, minimum frequency 2, type trees
  *  Last ();
  *  \endcode
 

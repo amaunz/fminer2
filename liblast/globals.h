@@ -51,23 +51,23 @@ namespace fm {
     int max_hops;
 
 
-    Database* database=NULL;
-    Statistics* statistics=NULL;
-    GraphState* graphstate=NULL;
+    LastDatabase* database=NULL;
+    LastStatistics* statistics=NULL;
+    LastGraphState* graphstate=NULL;
 
 
     vector<string>* result=NULL;
 
 
-    LegOccurrences* legoccurrences=NULL;
-    CloseLegOccurrences* closelegoccurrences=NULL; 
-    vector<LegOccurrences> candidatelegsoccurrences;
-    vector<vector< CloseLegOccurrences> > candidatecloselegsoccs;
-    vector<bool> candidatecloselegsoccsused;
+    LastLastLegOccurrences* legoccurrences=NULL;
+    CloseLastLastLegOccurrences* closelegoccurrences=NULL; 
+    vector<LastLastLegOccurrences> Lastcandidatelegsoccurrences;
+    vector<vector< CloseLastLastLegOccurrences> > candidatecloselegsoccs;
+    vector<bool> candidateLastcloselegsoccsused;
     KSConstraint* ks=NULL;
 
 
-    bool closelegsoccsused;
+    bool Lastcloselegsoccsused;
 
 
     // introduced by LAST
