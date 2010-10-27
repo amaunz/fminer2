@@ -8045,23 +8045,23 @@ free_std_vector_Sl_std_string_Sg_(std::vector< std::string > *arg1) {
 }
 
 SWIGINTERN VALUE
-_wrap_do_pruning_get(VALUE self) {
+_wrap_last_do_pruning_get(VALUE self) {
   VALUE _val;
   
-  _val = SWIG_From_bool(static_cast< bool >(fm::do_pruning));
+  _val = SWIG_From_bool(static_cast< bool >(fm::last_do_pruning));
   return _val;
 }
 
 
 SWIGINTERN VALUE
-_wrap_do_pruning_set(VALUE self, VALUE _val) {
+_wrap_last_do_pruning_set(VALUE self, VALUE _val) {
   {
     bool val;
     int res = SWIG_AsVal_bool(_val, &val);
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::do_pruning""' of type '""bool""'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_do_pruning""' of type '""bool""'");
     }
-    fm::do_pruning = static_cast< bool >(val);
+    fm::last_do_pruning = static_cast< bool >(val);
   }
   return _val;
 fail:
@@ -8070,23 +8070,23 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_aromatic_get(VALUE self) {
+_wrap_last_aromatic_get(VALUE self) {
   VALUE _val;
   
-  _val = SWIG_From_bool(static_cast< bool >(fm::aromatic));
+  _val = SWIG_From_bool(static_cast< bool >(fm::last_aromatic));
   return _val;
 }
 
 
 SWIGINTERN VALUE
-_wrap_aromatic_set(VALUE self, VALUE _val) {
+_wrap_last_aromatic_set(VALUE self, VALUE _val) {
   {
     bool val;
     int res = SWIG_AsVal_bool(_val, &val);
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::aromatic""' of type '""bool""'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_aromatic""' of type '""bool""'");
     }
-    fm::aromatic = static_cast< bool >(val);
+    fm::last_aromatic = static_cast< bool >(val);
   }
   return _val;
 fail:
@@ -8095,23 +8095,23 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_chisq_get(VALUE self) {
+_wrap_last_chisq_get(VALUE self) {
   VALUE _val;
   
-  _val = SWIG_NewPointerObj(SWIG_as_voidptr(fm::chisq), SWIGTYPE_p_ChisqConstraint,  0 );
+  _val = SWIG_NewPointerObj(SWIG_as_voidptr(fm::last_chisq), SWIGTYPE_p_ChisqConstraint,  0 );
   return _val;
 }
 
 
 SWIGINTERN VALUE
-_wrap_chisq_set(VALUE self, VALUE _val) {
+_wrap_last_chisq_set(VALUE self, VALUE _val) {
   {
     void *argp = 0;
     int res = SWIG_ConvertPtr(_val, &argp, SWIGTYPE_p_ChisqConstraint,  0 );  
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::chisq""' of type '""ChisqConstraint *""'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_chisq""' of type '""ChisqConstraint *""'");
     }
-    fm::chisq = reinterpret_cast< ChisqConstraint * >(argp);
+    fm::last_chisq = reinterpret_cast< ChisqConstraint * >(argp);
   }
   return _val;
 fail:
@@ -8120,23 +8120,23 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_ks_get(VALUE self) {
+_wrap_last_ks_get(VALUE self) {
   VALUE _val;
   
-  _val = SWIG_NewPointerObj(SWIG_as_voidptr(fm::ks), SWIGTYPE_p_KSConstraint,  0 );
+  _val = SWIG_NewPointerObj(SWIG_as_voidptr(fm::last_ks), SWIGTYPE_p_KSConstraint,  0 );
   return _val;
 }
 
 
 SWIGINTERN VALUE
-_wrap_ks_set(VALUE self, VALUE _val) {
+_wrap_last_ks_set(VALUE self, VALUE _val) {
   {
     void *argp = 0;
     int res = SWIG_ConvertPtr(_val, &argp, SWIGTYPE_p_KSConstraint,  0 );  
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::ks""' of type '""KSConstraint *""'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_ks""' of type '""KSConstraint *""'");
     }
-    fm::ks = reinterpret_cast< KSConstraint * >(argp);
+    fm::last_ks = reinterpret_cast< KSConstraint * >(argp);
   }
   return _val;
 fail:
@@ -8145,23 +8145,23 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_gsp_out_get(VALUE self) {
+_wrap_last_gsp_out_get(VALUE self) {
   VALUE _val;
   
-  _val = SWIG_From_bool(static_cast< bool >(fm::gsp_out));
+  _val = SWIG_From_bool(static_cast< bool >(fm::last_gsp_out));
   return _val;
 }
 
 
 SWIGINTERN VALUE
-_wrap_gsp_out_set(VALUE self, VALUE _val) {
+_wrap_last_gsp_out_set(VALUE self, VALUE _val) {
   {
     bool val;
     int res = SWIG_AsVal_bool(_val, &val);
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::gsp_out""' of type '""bool""'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_gsp_out""' of type '""bool""'");
     }
-    fm::gsp_out = static_cast< bool >(val);
+    fm::last_gsp_out = static_cast< bool >(val);
   }
   return _val;
 fail:
@@ -8170,23 +8170,23 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_bbrc_sep_get(VALUE self) {
+_wrap_last_bbrc_sep_get(VALUE self) {
   VALUE _val;
   
-  _val = SWIG_From_bool(static_cast< bool >(fm::bbrc_sep));
+  _val = SWIG_From_bool(static_cast< bool >(fm::last_bbrc_sep));
   return _val;
 }
 
 
 SWIGINTERN VALUE
-_wrap_bbrc_sep_set(VALUE self, VALUE _val) {
+_wrap_last_bbrc_sep_set(VALUE self, VALUE _val) {
   {
     bool val;
     int res = SWIG_AsVal_bool(_val, &val);
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::bbrc_sep""' of type '""bool""'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_bbrc_sep""' of type '""bool""'");
     }
-    fm::bbrc_sep = static_cast< bool >(val);
+    fm::last_bbrc_sep = static_cast< bool >(val);
   }
   return _val;
 fail:
@@ -8195,23 +8195,23 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_regression_get(VALUE self) {
+_wrap_last_regression_get(VALUE self) {
   VALUE _val;
   
-  _val = SWIG_From_bool(static_cast< bool >(fm::regression));
+  _val = SWIG_From_bool(static_cast< bool >(fm::last_regression));
   return _val;
 }
 
 
 SWIGINTERN VALUE
-_wrap_regression_set(VALUE self, VALUE _val) {
+_wrap_last_regression_set(VALUE self, VALUE _val) {
   {
     bool val;
     int res = SWIG_AsVal_bool(_val, &val);
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::regression""' of type '""bool""'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_regression""' of type '""bool""'");
     }
-    fm::regression = static_cast< bool >(val);
+    fm::last_regression = static_cast< bool >(val);
   }
   return _val;
 fail:
@@ -8220,23 +8220,48 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_max_hops_get(VALUE self) {
+_wrap_last_max_hops_get(VALUE self) {
   VALUE _val;
   
-  _val = SWIG_From_int(static_cast< int >(fm::max_hops));
+  _val = SWIG_From_int(static_cast< int >(fm::last_max_hops));
   return _val;
 }
 
 
 SWIGINTERN VALUE
-_wrap_max_hops_set(VALUE self, VALUE _val) {
+_wrap_last_max_hops_set(VALUE self, VALUE _val) {
   {
     int val;
     int res = SWIG_AsVal_int(_val, &val);
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::max_hops""' of type '""int""'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_max_hops""' of type '""int""'");
     }
-    fm::max_hops = static_cast< int >(val);
+    fm::last_max_hops = static_cast< int >(val);
+  }
+  return _val;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_last_db_built_get(VALUE self) {
+  VALUE _val;
+  
+  _val = SWIG_From_bool(static_cast< bool >(fm::last_db_built));
+  return _val;
+}
+
+
+SWIGINTERN VALUE
+_wrap_last_db_built_set(VALUE self, VALUE _val) {
+  {
+    bool val;
+    int res = SWIG_AsVal_bool(_val, &val);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_db_built""' of type '""bool""'");
+    }
+    fm::last_db_built = static_cast< bool >(val);
   }
   return _val;
 fail:
@@ -9718,22 +9743,24 @@ SWIGEXPORT void Init_last(void) {
   SwigClassSVector.mark = 0;
   SwigClassSVector.destroy = (void (*)(void *)) free_std_vector_Sl_std_string_Sg_;
   SwigClassSVector.trackObjects = 0;
-  rb_define_singleton_method(mLast, "do_pruning", VALUEFUNC(_wrap_do_pruning_get), 0);
-  rb_define_singleton_method(mLast, "do_pruning=", VALUEFUNC(_wrap_do_pruning_set), 1);
-  rb_define_singleton_method(mLast, "aromatic", VALUEFUNC(_wrap_aromatic_get), 0);
-  rb_define_singleton_method(mLast, "aromatic=", VALUEFUNC(_wrap_aromatic_set), 1);
-  rb_define_singleton_method(mLast, "chisq", VALUEFUNC(_wrap_chisq_get), 0);
-  rb_define_singleton_method(mLast, "chisq=", VALUEFUNC(_wrap_chisq_set), 1);
-  rb_define_singleton_method(mLast, "ks", VALUEFUNC(_wrap_ks_get), 0);
-  rb_define_singleton_method(mLast, "ks=", VALUEFUNC(_wrap_ks_set), 1);
-  rb_define_singleton_method(mLast, "gsp_out", VALUEFUNC(_wrap_gsp_out_get), 0);
-  rb_define_singleton_method(mLast, "gsp_out=", VALUEFUNC(_wrap_gsp_out_set), 1);
-  rb_define_singleton_method(mLast, "bbrc_sep", VALUEFUNC(_wrap_bbrc_sep_get), 0);
-  rb_define_singleton_method(mLast, "bbrc_sep=", VALUEFUNC(_wrap_bbrc_sep_set), 1);
-  rb_define_singleton_method(mLast, "regression", VALUEFUNC(_wrap_regression_get), 0);
-  rb_define_singleton_method(mLast, "regression=", VALUEFUNC(_wrap_regression_set), 1);
-  rb_define_singleton_method(mLast, "max_hops", VALUEFUNC(_wrap_max_hops_get), 0);
-  rb_define_singleton_method(mLast, "max_hops=", VALUEFUNC(_wrap_max_hops_set), 1);
+  rb_define_singleton_method(mLast, "last_do_pruning", VALUEFUNC(_wrap_last_do_pruning_get), 0);
+  rb_define_singleton_method(mLast, "last_do_pruning=", VALUEFUNC(_wrap_last_do_pruning_set), 1);
+  rb_define_singleton_method(mLast, "last_aromatic", VALUEFUNC(_wrap_last_aromatic_get), 0);
+  rb_define_singleton_method(mLast, "last_aromatic=", VALUEFUNC(_wrap_last_aromatic_set), 1);
+  rb_define_singleton_method(mLast, "last_chisq", VALUEFUNC(_wrap_last_chisq_get), 0);
+  rb_define_singleton_method(mLast, "last_chisq=", VALUEFUNC(_wrap_last_chisq_set), 1);
+  rb_define_singleton_method(mLast, "last_ks", VALUEFUNC(_wrap_last_ks_get), 0);
+  rb_define_singleton_method(mLast, "last_ks=", VALUEFUNC(_wrap_last_ks_set), 1);
+  rb_define_singleton_method(mLast, "last_gsp_out", VALUEFUNC(_wrap_last_gsp_out_get), 0);
+  rb_define_singleton_method(mLast, "last_gsp_out=", VALUEFUNC(_wrap_last_gsp_out_set), 1);
+  rb_define_singleton_method(mLast, "last_bbrc_sep", VALUEFUNC(_wrap_last_bbrc_sep_get), 0);
+  rb_define_singleton_method(mLast, "last_bbrc_sep=", VALUEFUNC(_wrap_last_bbrc_sep_set), 1);
+  rb_define_singleton_method(mLast, "last_regression", VALUEFUNC(_wrap_last_regression_get), 0);
+  rb_define_singleton_method(mLast, "last_regression=", VALUEFUNC(_wrap_last_regression_set), 1);
+  rb_define_singleton_method(mLast, "last_max_hops", VALUEFUNC(_wrap_last_max_hops_get), 0);
+  rb_define_singleton_method(mLast, "last_max_hops=", VALUEFUNC(_wrap_last_max_hops_set), 1);
+  rb_define_singleton_method(mLast, "last_db_built", VALUEFUNC(_wrap_last_db_built_get), 0);
+  rb_define_singleton_method(mLast, "last_db_built=", VALUEFUNC(_wrap_last_db_built_set), 1);
   
   SwigClassLast.klass = rb_define_class_under(mLast, "Last", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_Last, (void *) &SwigClassLast);
