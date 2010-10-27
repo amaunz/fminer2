@@ -21,6 +21,20 @@
 #include "constraints.h"
 #include "stats.h"
 
+float ChisqLastConstraint::ChiSq(float x, float y, unsigned int n_active, unsigned int n_inactive) {
+  unsigned int na_tmp = na;
+  unsigned int ni_tmp = ni;
+  unsigned int n_tmp = n;
+  na=n_active;
+  ni=n_inactive;
+  n=na+ni;
+  float res = ChiSq(x,y,true); // Always decide activating in this mode
+  na=na_tmp;
+  ni=ni_tmp;
+  n=n_tmp;
+  return res;
+}
+
 float ChisqLastConstraint::ChiSq(float x, float y, bool decide_activating) {
 
         float ea = 0.0, ei = 0.0, impact = 0.0;

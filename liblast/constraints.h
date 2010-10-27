@@ -37,10 +37,12 @@ class LastConstraint {};
 
 class ChisqLastConstraint : public LastConstraint {
     public:
-    unsigned int na, ni, n;
-    unsigned int fa, fi;
-    float sig, chisq, p, u;
-    bool active;
+    unsigned int na, ni, n;  // counters for a, i, n
+    unsigned int fa, fi;     // same for occurrences of spec feature
+    float sig;               // sig to store significance threshold
+    float chisq, p, u;       // chisq, p, u, are test results
+    bool active;             // whether test is active
+
     set<LastTid> fa_set, fi_set;
     bool activating; //defaults to deactivating (0)
 
@@ -50,17 +52,17 @@ class ChisqLastConstraint : public LastConstraint {
     template <typename OccurrenceType>
     void Calc(vector<OccurrenceType>& legocc) {
 
-        chisq = 0.0; p = 0.0; u = 0.0;
+        chisq = 0.0; p = 0.0; u = 0.0; // init chisq, p, u
 
         LastLegActivityOccurrence(legocc);
         fa = fa_set.size(); // fa is y(I) in Morishita and Sese
         fi = fi_set.size(); // fi is x(I)-y(I)  in Morishita and Sese
 
         // chisq_p for current feature
-        p = ChiSq(fa+fi,fa,1);
+        p = ChiSq(fa+fi,fa,1);         // set p to chisq test result => P IS NOT A P-VALUE
 
         // upper bound u for chisq_p of more specific features
-        float u1 = 0.0, u2 = 0.0;
+        float u1 = 0.0, u2 = 0.0;      // set u
         u1 = ChiSq(fa,fa,0);                                  // upper bound at
         u2 = ChiSq(fi,0,0);                                   // max{ chisq (y(I), y(I)) ,
         u = u1; if (u2>u1) u = u2;                            //      chisq (x(I)-y(I),0) }
@@ -69,8 +71,9 @@ class ChisqLastConstraint : public LastConstraint {
 
     private:
 
-    //!< Calculates chi^2 and upper bound values
+    //!< Calculates chi^2 value
     float ChiSq(float x, float y, bool decide_activating);
+    float ChiSq(float x, float y, unsigned int n_active, unsigned int n_inactive);
 
     //!< Counts occurrences of legs in active and inactive compounds
     template <typename OccurrenceType>
