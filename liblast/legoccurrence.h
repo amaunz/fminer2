@@ -58,17 +58,17 @@ ostream &operator<< ( ostream &stream, vector<LastLastLegOccurrence> &occs );
 
 //extern LastLastLegOccurrences legoccurrences;
 
-// returns the join if this join is frequent. The returned array may be swapped.
-LastLastLegOccurrencesPtr join ( LastLastLegOccurrences &legoccsdata1, LastNodeId connectingnode, LastLastLegOccurrences &legoccsdata2 );
-LastLastLegOccurrencesPtr join ( LastLastLegOccurrences &legoccsdata );
+// returns the bbrc_join if this bbrc_join is frequent. The returned array may be swapped.
+LastLastLegOccurrencesPtr bbrc_join ( LastLastLegOccurrences &legoccsdata1, LastNodeId connectingnode, LastLastLegOccurrences &legoccsdata2 );
+LastLastLegOccurrencesPtr bbrc_join ( LastLastLegOccurrences &legoccsdata );
 
-extern vector<LastLastLegOccurrences> Lastcandidatelegsoccurrences; // for each frequent possible edge, the occurrences found, used by extend
+extern vector<LastLastLegOccurrences> Lastcandidatelegsoccurrences; // for each frequent possible edge, the occurrences found, used by bbrc_extend
 extern vector<LastFrequency> Lastcandidatelegsfrequencies;
 
 void LastinitLastLegStatics ();
 
-void extend ( LastLastLegOccurrences &legoccurrencesdata ); // fills the global arrays above
-void extend ( LastLastLegOccurrences &legoccurrencesdata, LastEdgeLabel minlabel, LastEdgeLabel neglect );
+void bbrc_extend ( LastLastLegOccurrences &legoccurrencesdata ); // fills the global arrays above
+void bbrc_extend ( LastLastLegOccurrences &legoccurrencesdata, LastEdgeLabel minlabel, LastEdgeLabel neglect );
 
 void sanityCheck ( LastLastLegOccurrencesPtr legoccurrencesptr );
 

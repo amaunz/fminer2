@@ -201,7 +201,7 @@ LastPath::LastPath ( LastPath &parentpath, unsigned int legindex ) {
 
 
     // build OccurrenceLists
-    extend ( leg.occurrences );
+    bbrc_extend ( leg.occurrences );
     for (unsigned int i = 0; i < fm::Lastcandidatelegsoccurrences.size (); i++ ) {
       if ( fm::Lastcandidatelegsoccurrences[i].frequency >= fm::minfreq ) {
         LastPathLastLegPtr leg2 = new LastPathLastLeg;
@@ -274,7 +274,7 @@ LastPath::LastPath ( LastPath &parentpath, unsigned int legindex ) {
   for ( ; i < legindex; i++ ) {
     LastPathLastLeg &leg2 = (*parentpath.legs[i]);
 
-    if ( (legoccurrencesptr = join ( leg.occurrences, leg2.tuple.connectingnode, leg2.occurrences )) ) { // JOIN OCCURRENCES
+    if ( (legoccurrencesptr = bbrc_join ( leg.occurrences, leg2.tuple.connectingnode, leg2.occurrences )) ) { // JOIN OCCURRENCES
       LastPathLastLegPtr leg3 = new LastPathLastLeg;
       legs.push_back ( leg3 );
       leg3->tuple.connectingnode = leg2.tuple.connectingnode;
@@ -285,7 +285,7 @@ LastPath::LastPath ( LastPath &parentpath, unsigned int legindex ) {
     }
   }
 
-  if ( (legoccurrencesptr = join ( leg.occurrences )) ) {
+  if ( (legoccurrencesptr = bbrc_join ( leg.occurrences )) ) {
     LastPathLastLegPtr leg3 = new LastPathLastLeg;
     legs.push_back ( leg3 );
     leg3->tuple.connectingnode = leg.tuple.connectingnode;
@@ -297,7 +297,7 @@ LastPath::LastPath ( LastPath &parentpath, unsigned int legindex ) {
 
   for ( i++; i < parentpath.legs.size (); i++ ) {
     LastPathLastLeg &leg2 = (*parentpath.legs[i]);
-    if ( (legoccurrencesptr = join ( leg.occurrences, leg2.tuple.connectingnode, leg2.occurrences )) ) {
+    if ( (legoccurrencesptr = bbrc_join ( leg.occurrences, leg2.tuple.connectingnode, leg2.occurrences )) ) {
       LastPathLastLegPtr leg3 = new LastPathLastLeg;
       legs.push_back ( leg3 );
       leg3->tuple.connectingnode = leg2.tuple.connectingnode;
@@ -313,7 +313,7 @@ LastPath::LastPath ( LastPath &parentpath, unsigned int legindex ) {
     return;
   }
 
-  extend ( leg.occurrences );
+  bbrc_extend ( leg.occurrences );
   for ( unsigned int i = 0; i < fm::Lastcandidatelegsoccurrences.size (); i++ ) {
     if ( fm::Lastcandidatelegsoccurrences[i].frequency >= fm::minfreq ) {
       LastPathLastLegPtr leg2 = new LastPathLastLeg;

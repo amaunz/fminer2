@@ -70,7 +70,7 @@ typedef LastLeg *LastLegPtr;
 
 void LastaddCloseExtensions ( vector<LastCloseLastLegPtr> &targetcloselegs, int number );
 void LastaddCloseExtensions ( vector<LastCloseLastLegPtr> &targetcloselegs, vector<LastCloseLastLegPtr> &sourcecloselegs, LastLastLegOccurrences &sourceoccs );
-CloseLastLastLegOccurrencesPtr join ( LastLastLegOccurrences &legoccsdata, CloseLastLastLegOccurrences &closelegoccsdata );
-CloseLastLastLegOccurrencesPtr join ( CloseLastLastLegOccurrences &closelegoccsdata1, CloseLastLastLegOccurrences &closelegoccsdata2 );
+CloseLastLastLegOccurrencesPtr bbrc_join ( LastLastLegOccurrences &legoccsdata, CloseLastLastLegOccurrences &closelegoccsdata );
+CloseLastLastLegOccurrencesPtr bbrc_join ( CloseLastLastLegOccurrences &closelegoccsdata1, CloseLastLastLegOccurrences &closelegoccsdata2 );
 
 #endif
