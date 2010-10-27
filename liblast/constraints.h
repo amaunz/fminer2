@@ -30,7 +30,7 @@
 #include "database.h"
 
 namespace fm {
-    extern LastDatabase* database;
+    extern LastDatabase* last_database;
 }
 
 class Constraint {};
@@ -81,12 +81,12 @@ class ChisqConstraint : public Constraint {
 
       each (legocc) { 
 
-        if (fm::database->trees[legocc[i].tid]->activity == 1) {
-            fa_set.insert(fm::database->trees[legocc[i].tid]->orig_tid); 
+        if (fm::last_database->trees[legocc[i].tid]->activity == 1) {
+            fa_set.insert(fm::last_database->trees[legocc[i].tid]->orig_tid); 
         }
 
-        else if (fm::database->trees[legocc[i].tid]->activity == 0) {
-            fi_set.insert(fm::database->trees[legocc[i].tid]->orig_tid); 
+        else if (fm::last_database->trees[legocc[i].tid]->activity == 0) {
+            fi_set.insert(fm::last_database->trees[legocc[i].tid]->orig_tid); 
         }
 
       }
@@ -125,8 +125,8 @@ class KSConstraint : public Constraint {
 
       feat.clear();
       each (legocc) {
-        feat.push_back(fm::database->trees[legocc[i].tid]->activity);
-        fa_set.insert(fm::database->trees[legocc[i].tid]->orig_tid); 
+        feat.push_back(fm::last_database->trees[legocc[i].tid]->activity);
+        fa_set.insert(fm::last_database->trees[legocc[i].tid]->orig_tid); 
       }
     }
 

@@ -26,53 +26,53 @@
 
 namespace fm {
 
-    unsigned int minfreq;
-    int type;
-    ChisqConstraint* chisq=NULL;
+    unsigned int last_minfreq;
+    int last_type;
+    ChisqConstraint* last_chisq=NULL;
     // do_backbone missing
     // adjust_ub missing
-    bool do_pruning;
-    bool aromatic;
-    bool refine_singles;
-    bool do_output;
-    bool bbrc_sep;
-    bool regression;
+    bool last_do_pruning;
+    bool last_aromatic;
+    bool last_refine_singles;
+    bool last_do_output;
+    bool last_bbrc_sep;
+    bool last_regression;
 
 
-    bool updated;
+    bool last_updated;
     // do_yaml missing
     // pvalues missing
-    bool gsp_out;
-    bool console_out;
-    bool db_built;
+    bool last_gsp_out;
+    bool last_console_out;
+    bool last_db_built;
 
 
-    bool instance_present;
-    int max_hops;
+    bool last_instance_present;
+    int last_max_hops;
 
 
-    LastDatabase* database=NULL;
-    LastStatistics* statistics=NULL;
-    LastGraphState* graphstate=NULL;
+    LastDatabase* last_database=NULL;
+    LastStatistics* last_statistics=NULL;
+    LastGraphState* last_graphstate=NULL;
 
 
-    vector<string>* result=NULL;
+    vector<string>* last_result=NULL;
 
 
-    LastLegOccurrences* legoccurrences=NULL;
-    CloseLastLegOccurrences* closelegoccurrences=NULL; 
-    vector<LastLegOccurrences> Lastcandidatelegsoccurrences;
-    vector<vector< CloseLastLegOccurrences> > candidatecloselegsoccs;
-    vector<bool> candidateLastcloselegsoccsused;
-    KSConstraint* ks=NULL;
+    LastLegOccurrences* last_legoccurrences=NULL;
+    CloseLastLegOccurrences* last_closelegoccurrences=NULL; 
+    vector<LastLegOccurrences> last_Lastcandidatelegsoccurrences;
+    vector<vector< CloseLastLegOccurrences> > last_candidatecloselegsoccs;
+    vector<bool> last_candidateLastcloselegsoccsused;
+    KSConstraint* last_ks=NULL;
 
 
-    bool Lastcloselegsoccsused;
+    bool last_Lastcloselegsoccsused;
 
 
     // introduced by LAST
-    int die;
-    bool do_last;
+    int last_die;
+    bool last_do_last;
     unsigned int last_hops;
 
 

@@ -27,51 +27,51 @@
 #include "misc.h"
 
 namespace fm {
-    extern unsigned int minfreq;
-    extern bool do_pruning;
-    extern bool updated;
-    extern int type;
-    extern bool console_out;
-    extern bool refine_singles;
-    extern bool do_output;
-    extern bool bbrc_sep;
-    extern bool regression;
-    extern bool gsp_out;
-    extern bool die;
-    extern bool do_last;
+    extern unsigned int last_minfreq;
+    extern bool last_do_pruning;
+    extern bool last_updated;
+    extern int last_type;
+    extern bool last_console_out;
+    extern bool last_refine_singles;
+    extern bool last_do_output;
+    extern bool last_bbrc_sep;
+    extern bool last_regression;
+    extern bool last_gsp_out;
+    extern bool last_die;
+    extern bool last_do_last;
 
-    extern LastDatabase* database;
-    extern ChisqConstraint* chisq;
-    extern KSConstraint* ks;
-    extern vector<string>* result;
-    extern LastStatistics* statistics;
-    extern LastGraphState* graphstate;
+    extern LastDatabase* last_database;
+    extern ChisqConstraint* last_chisq;
+    extern KSConstraint* last_ks;
+    extern vector<string>* last_result;
+    extern LastStatistics* last_statistics;
+    extern LastGraphState* last_graphstate;
 
-    extern vector<LastLegOccurrences> Lastcandidatelegsoccurrences; 
-    extern int max_hops;
+    extern vector<LastLegOccurrences> last_Lastcandidatelegsoccurrences; 
+    extern int last_max_hops;
 }
 
 // for every database node...
 LastPath::LastPath ( LastNodeLabel startnodelabel ) {
   
-    fm::graphstate->insertStartNode ( startnodelabel );
+    fm::last_graphstate->insertStartNode ( startnodelabel );
     nodelabels.push_back ( startnodelabel );
     frontsymmetry = backsymmetry = totalsymmetry = 0;
 
-    InputLastNodeLabel inl = fm::database->nodelabels[startnodelabel].inputlabel;
+    InputLastNodeLabel inl = fm::last_database->nodelabels[startnodelabel].inputlabel;
     cerr << "Root: " << inl << endl;
 
-    LastDatabaseLastNodeLabel &databasenodelabel = fm::database->nodelabels[startnodelabel];
+    LastDatabaseLastNodeLabel &databasenodelabel = fm::last_database->nodelabels[startnodelabel];
 
     // ...gather frequent edge labels
     vector<LastEdgeLabel> frequentedgelabels;
     for ( unsigned int i = 0; i < databasenodelabel.frequentedgelabels.size (); i++ )
-        frequentedgelabels.push_back ( fm::database->edgelabels[databasenodelabel.frequentedgelabels[i]].edgelabel );
+        frequentedgelabels.push_back ( fm::last_database->edgelabels[databasenodelabel.frequentedgelabels[i]].edgelabel );
                                                                                                     //  ^^^^^^^^^ is frequency rank!
     sort ( frequentedgelabels.begin (), frequentedgelabels.end () );                                // restores the rank order
     
     LastTid lastself[frequentedgelabels.size ()];
-    vector<LastEdgeLabel> edgelabelorder ( fm::database->edgelabelsindexes.size () );
+    vector<LastEdgeLabel> edgelabelorder ( fm::last_database->edgelabelsindexes.size () );
     LastEdgeLabel j = 0;
 
     // FOR ALL EDGES...
@@ -92,7 +92,7 @@ LastPath::LastPath ( LastNodeLabel startnodelabel ) {
         leg->occurrences.maxdegree = 0;
         leg->occurrences.selfjoin = 0;
 
-        LastDatabaseLastEdgeLabel &databaseedgelabel = fm::database->edgelabels[fm::database->edgelabelsindexes[frequentedgelabels[i]]];
+        LastDatabaseLastEdgeLabel &databaseedgelabel = fm::last_database->edgelabels[fm::last_database->edgelabelsindexes[frequentedgelabels[i]]];
         leg->occurrences.frequency = databaseedgelabel.frequency;
 
         if ( databaseedgelabel.fromnodelabel == startnodelabel ) {
@@ -109,7 +109,7 @@ LastPath::LastPath ( LastNodeLabel startnodelabel ) {
     
     // ... OCCURRENCES DESCRIBES LOCATION IN TREE (2)
     for ( unsigned int i = 0; i < databasenodelabel.occurrences.elements.size (); i++ ) {
-        LastDatabaseTree &tree = * (fm::database->trees[databasenodelabel.occurrences.elements[i].tid]);
+        LastDatabaseTree &tree = * (fm::last_database->trees[databasenodelabel.occurrences.elements[i].tid]);
         LastDatabaseTreeNode &datanode = tree.nodes[databasenodelabel.occurrences.elements[i].tonodeid];
         for ( int j = 0; j < datanode.edges.size (); j++ ) {
             LastEdgeLabel edgelabel = edgelabelorder[datanode.edges[j].edgelabel];
@@ -202,19 +202,19 @@ LastPath::LastPath ( LastPath &parentpath, unsigned int legindex ) {
 
     // build OccurrenceLists
     bbrc_extend ( leg.occurrences );
-    for (unsigned int i = 0; i < fm::Lastcandidatelegsoccurrences.size (); i++ ) {
-      if ( fm::Lastcandidatelegsoccurrences[i].frequency >= fm::minfreq ) {
+    for (unsigned int i = 0; i < fm::last_Lastcandidatelegsoccurrences.size (); i++ ) {
+      if ( fm::last_Lastcandidatelegsoccurrences[i].frequency >= fm::last_minfreq ) {
         LastPathLastLegPtr leg2 = new LastPathLastLeg;
         legs.push_back ( leg2 );
         leg2->tuple.edgelabel = i;
-    	leg2->tuple.connectingnode = fm::graphstate->lastNode ();
-        LastDatabaseLastEdgeLabel &databaseedgelabel = fm::database->edgelabels[fm::database->edgelabelsindexes[i]];
+    	leg2->tuple.connectingnode = fm::last_graphstate->lastNode ();
+        LastDatabaseLastEdgeLabel &databaseedgelabel = fm::last_database->edgelabels[fm::last_database->edgelabelsindexes[i]];
         if ( databaseedgelabel.fromnodelabel == leg.tuple.nodelabel )
           leg2->tuple.nodelabel = databaseedgelabel.tonodelabel;
         else
           leg2->tuple.nodelabel = databaseedgelabel.fromnodelabel;
         leg2->tuple.depth = 0;
-        store ( leg2->occurrences, fm::Lastcandidatelegsoccurrences[i] ); // avoid copying
+        store ( leg2->occurrences, fm::last_Lastcandidatelegsoccurrences[i] ); // avoid copying
       }
     }
 
@@ -314,19 +314,19 @@ LastPath::LastPath ( LastPath &parentpath, unsigned int legindex ) {
   }
 
   bbrc_extend ( leg.occurrences );
-  for ( unsigned int i = 0; i < fm::Lastcandidatelegsoccurrences.size (); i++ ) {
-    if ( fm::Lastcandidatelegsoccurrences[i].frequency >= fm::minfreq ) {
+  for ( unsigned int i = 0; i < fm::last_Lastcandidatelegsoccurrences.size (); i++ ) {
+    if ( fm::last_Lastcandidatelegsoccurrences[i].frequency >= fm::last_minfreq ) {
       LastPathLastLegPtr leg2 = new LastPathLastLeg;
       legs.push_back ( leg2 );
       leg2->tuple.edgelabel = i;
-      leg2->tuple.connectingnode = fm::graphstate->lastNode ();
-      LastDatabaseLastEdgeLabel &databaseedgelabel = fm::database->edgelabels[fm::database->edgelabelsindexes[i]];
+      leg2->tuple.connectingnode = fm::last_graphstate->lastNode ();
+      LastDatabaseLastEdgeLabel &databaseedgelabel = fm::last_database->edgelabels[fm::last_database->edgelabelsindexes[i]];
       if ( databaseedgelabel.fromnodelabel == leg.tuple.nodelabel )
         leg2->tuple.nodelabel = databaseedgelabel.tonodelabel;
       else
         leg2->tuple.nodelabel = databaseedgelabel.fromnodelabel;
       leg2->tuple.depth = leg.tuple.depth + 1;
-      store ( leg2->occurrences, fm::Lastcandidatelegsoccurrences[i] ); // avoid copying
+      store ( leg2->occurrences, fm::last_Lastcandidatelegsoccurrences[i] ); // avoid copying
     }
   }
 
@@ -430,16 +430,16 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
 
   assert(parent_size>0);
 
-  fm::statistics->patternsize++;
-  if ( (unsigned) fm::statistics->patternsize > fm::statistics->frequenttreenumbers.size () ) {
-    fm::statistics->frequenttreenumbers.push_back ( 0 );
-    fm::statistics->frequentpathnumbers.push_back ( 0 );
-    fm::statistics->frequentgraphnumbers.push_back ( 0 );
+  fm::last_statistics->patternsize++;
+  if ( (unsigned) fm::last_statistics->patternsize > fm::last_statistics->frequenttreenumbers.size () ) {
+    fm::last_statistics->frequenttreenumbers.push_back ( 0 );
+    fm::last_statistics->frequentpathnumbers.push_back ( 0 );
+    fm::last_statistics->frequentgraphnumbers.push_back ( 0 );
   }
-  ++fm::statistics->frequentpathnumbers[fm::statistics->patternsize-1];
+  ++fm::last_statistics->frequentpathnumbers[fm::last_statistics->patternsize-1];
   
-  if ( fm::statistics->patternsize == ((1<<(sizeof(LastNodeId)*8))-1) ) {
-    fm::statistics->patternsize--;
+  if ( fm::last_statistics->patternsize == ((1<<(sizeof(LastNodeId)*8))-1) ) {
+    fm::last_statistics->patternsize--;
     return new GSWalk();
   }
 
@@ -509,40 +509,40 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
 
     // Calculate chisq
     float cur_chisq;
-    if (fm::chisq->active) { 
-        if (!fm::regression) { fm::chisq->Calc(legs[index]->occurrences.elements); cur_chisq=fm::chisq->p; }
-        else                 {    fm::ks->Calc(legs[index]->occurrences.elements); cur_chisq=   fm::ks->p; }
+    if (fm::last_chisq->active) { 
+        if (!fm::last_regression) { fm::last_chisq->Calc(legs[index]->occurrences.elements); cur_chisq=fm::last_chisq->p; }
+        else                 {    fm::last_ks->Calc(legs[index]->occurrences.elements); cur_chisq=   fm::last_ks->p; }
     }
 
           
     // GRAPHSTATE AND OUTPUT
-    fm::graphstate->insertNode ( legs[index]->tuple.connectingnode, legs[index]->tuple.edgelabel, legs[index]->occurrences.maxdegree );
+    fm::last_graphstate->insertNode ( legs[index]->tuple.connectingnode, legs[index]->tuple.edgelabel, legs[index]->occurrences.maxdegree );
     #ifdef DEBUG
-    fm::graphstate->print(legs[index]->occurrences.frequency);
+    fm::last_graphstate->print(legs[index]->occurrences.frequency);
     #endif
 
     // immediate output
 
     #ifdef DEBUG
-    fm::gsp_out=false;
-    string s = fm::graphstate->to_s(legs[index]->occurrences.frequency);
-    if (s.find("C-C=C-O-C-N")!=string::npos) { fm::die=1; diehard=1; }
-    fm::die=1;
+    fm::last_gsp_out=false;
+    string s = fm::last_graphstate->to_s(legs[index]->occurrences.frequency);
+    if (s.find("C-C=C-O-C-N")!=string::npos) { fm::last_die=1; diehard=1; }
+    fm::last_die=1;
     #endif
    
-    if (fm::chisq->active) {
-        map<LastTid, int> weightmap_a; each_it(fm::chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
-        map<LastTid, int> weightmap_i; each_it(fm::chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
-        fm::graphstate->print(gsw, weightmap_a, weightmap_i);
-        if (!fm::regression) {
-            gsw->activating=fm::chisq->activating;
-            if (cur_chisq >= fm::chisq->sig) {
+    if (fm::last_chisq->active) {
+        map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
+        map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
+        fm::last_graphstate->print(gsw, weightmap_a, weightmap_i);
+        if (!fm::last_regression) {
+            gsw->activating=fm::last_chisq->activating;
+            if (cur_chisq >= fm::last_chisq->sig) {
                 nsign=0;
             }
         }
         else {
-            gsw->activating=fm::ks->activating;
-            if (cur_chisq >= fm::ks->sig) {
+            gsw->activating=fm::last_ks->activating;
+            if (cur_chisq >= fm::last_ks->sig) {
                 nsign=0;
             }
         }
@@ -553,16 +553,16 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
     // !STOP: MERGE TO SIBLINGWALK
     if (gsw->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr<<"Error! Already nodes marked as available 2.1. "<<gsw->to_nodes_ex.size()<<" "<<siblingwalk->to_nodes_ex.size()<<endl; exit(1); }
 
-    if (nsign || gsw->activating!=siblingwalk->activating || siblingwalk->hops > fm::max_hops) {
+    if (nsign || gsw->activating!=siblingwalk->activating || siblingwalk->hops > fm::last_max_hops) {
           if (siblingwalk->hops>0) {
               if (siblingwalk->hops>1) {
                   siblingwalk->svd();
               }
-              if (fm::do_output) {
-                  if (!fm::console_out) { 
+              if (fm::last_do_output) {
+                  if (!fm::last_console_out) { 
                       ostringstream strstrm;
                       strstrm << siblingwalk;
-                      (*fm::result) << strstrm.str(); 
+                      (*fm::last_result) << strstrm.str(); 
                   }
                   else cout << siblingwalk;
               }
@@ -572,7 +572,7 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
     }
     if (!nsign && ((gsw->activating==siblingwalk->activating) || !siblingwalk->edgewalk.size())) {
         #ifdef DEBUG
-        if (fm::die) cout << "CR gsw 1" << endl;
+        if (fm::last_die) cout << "CR gsw 1" << endl;
         #endif
         int res=gsw->conflict_resolution(core_ids, siblingwalk);
     }
@@ -580,17 +580,17 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
     if (gsw->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr<<"Error! Still nodes marked as available 2.1. "<<gsw->to_nodes_ex.size()<<" "<<siblingwalk->to_nodes_ex.size()<<endl; exit(1); }
 
     // RECURSE
-    if ( ( !fm::do_pruning || (fm::chisq->u >= fm::chisq->sig) ) &&
-         (  fm::refine_singles || (legs[index]->occurrences.frequency>1) )
+    if ( ( !fm::last_do_pruning || (fm::last_chisq->u >= fm::last_chisq->sig) ) &&
+         (  fm::last_refine_singles || (legs[index]->occurrences.frequency>1) )
        ) {   // UB-PRUNING
             LastPath path ( *this, index );
 
-            if (!fm::regression) {
-                if (max.first<fm::chisq->p) { fm::updated = true; topdown = path.expand2 ( pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[index]->occurrences.frequency)), gsw_size); }
+            if (!fm::last_regression) {
+                if (max.first<fm::last_chisq->p) { fm::last_updated = true; topdown = path.expand2 ( pair<float, string>(fm::last_chisq->p, fm::last_graphstate->to_s(legs[index]->occurrences.frequency)), gsw_size); }
                 else topdown = path.expand2 (max,  gsw_size);
             }
             else {
-                if (max.first<fm::ks->p) { fm::updated = true; topdown = path.expand2 ( pair<float, string>(fm::ks->p, fm::graphstate->to_s(legs[index]->occurrences.frequency)), gsw_size); }
+                if (max.first<fm::last_ks->p) { fm::last_updated = true; topdown = path.expand2 ( pair<float, string>(fm::last_ks->p, fm::last_graphstate->to_s(legs[index]->occurrences.frequency)), gsw_size); }
                 else topdown = path.expand2 (max,  gsw_size);
             }
 
@@ -601,7 +601,7 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
          if (topdown->edgewalk.size()) {
 
               #ifdef DEBUG
-              if (fm::die) {
+              if (fm::last_die) {
                   cout << "TOPDOWN BEGIN " << core_ids.size() << endl;
                   cout << topdown ;
                   cout << "--result--" << endl;
@@ -613,17 +613,17 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
               // STOP: OUTPUT TOPDOWN
               if (nsign || siblingwalk->activating!=topdown->activating) {
                   #ifdef DEBUG
-                  if (fm::die) cout << "STOP CRITERIUM at CHI " << cur_chisq << endl;
+                  if (fm::last_die) cout << "STOP CRITERIUM at CHI " << cur_chisq << endl;
                   #endif
                   if (topdown->hops>0) { 
                       if (topdown->hops>1) { 
                           topdown->svd();
                       }
-                      if (fm::do_output) { 
-                        if (!fm::console_out) { 
+                      if (fm::last_do_output) { 
+                        if (!fm::last_console_out) { 
                             ostringstream strstrm;
                             strstrm << topdown;
-                            (*fm::result) << strstrm.str();
+                            (*fm::last_result) << strstrm.str();
                         }
                         else cout << topdown;
                       }
@@ -636,7 +636,7 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
               if (topdown->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr << "Error! Still nodes marked as available 2.2. " << topdown->to_nodes_ex.size() << " " << siblingwalk->to_nodes_ex.size() <<  endl; each_it(topdown->to_nodes_ex, vector<int>::iterator) cout << *it << " "; cout << endl;  exit(1); }
 
               #ifdef DEBUG
-              if (fm::die) {
+              if (fm::last_die) {
                   cout << "TOPDOWN END " << core_ids.size() << endl;
                   cout << topdown ;
                   cout << "--result--" << endl;
@@ -646,7 +646,7 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
          }
     }
 
-    fm::graphstate->deleteNode ();
+    fm::last_graphstate->deleteNode ();
 
     delete topdown;
     delete gsw;
@@ -674,31 +674,31 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
 
     // Calculate chisq
     float cur_chisq;
-    if (fm::chisq->active) { 
-        if (!fm::regression) { fm::chisq->Calc(legs[index]->occurrences.elements); cur_chisq=fm::chisq->p; }
-        else                 {    fm::ks->Calc(legs[index]->occurrences.elements); cur_chisq=   fm::ks->p; }
+    if (fm::last_chisq->active) { 
+        if (!fm::last_regression) { fm::last_chisq->Calc(legs[index]->occurrences.elements); cur_chisq=fm::last_chisq->p; }
+        else                 {    fm::last_ks->Calc(legs[index]->occurrences.elements); cur_chisq=   fm::last_ks->p; }
     }
 
 
     // GRAPHSTATE AND OUTPUT
-    fm::graphstate->insertNode ( legs[index]->tuple.connectingnode, legs[index]->tuple.edgelabel, legs[index]->occurrences.maxdegree );
+    fm::last_graphstate->insertNode ( legs[index]->tuple.connectingnode, legs[index]->tuple.edgelabel, legs[index]->occurrences.maxdegree );
     #ifdef DEBUG
-    fm::graphstate->print(legs[index]->occurrences.frequency);
+    fm::last_graphstate->print(legs[index]->occurrences.frequency);
     #endif
 
-    if (fm::chisq->active) {
-        map<LastTid, int> weightmap_a; each_it(fm::chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
-        map<LastTid, int> weightmap_i; each_it(fm::chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
-        fm::graphstate->print(gsw, weightmap_a, weightmap_i);
-        if (!fm::regression) {
-            gsw->activating=fm::chisq->activating;
-            if (cur_chisq >= fm::chisq->sig) {
+    if (fm::last_chisq->active) {
+        map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
+        map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
+        fm::last_graphstate->print(gsw, weightmap_a, weightmap_i);
+        if (!fm::last_regression) {
+            gsw->activating=fm::last_chisq->activating;
+            if (cur_chisq >= fm::last_chisq->sig) {
                 nsign=0;
             }
         }
         else {
-            gsw->activating=fm::ks->activating;
-            if (cur_chisq >= fm::ks->sig) {
+            gsw->activating=fm::last_ks->activating;
+            if (cur_chisq >= fm::last_ks->sig) {
                 nsign=0;
             }
         }
@@ -708,16 +708,16 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
     // !STOP: MERGE TO SIBLINGWALK
     if (gsw->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr<<"Error! Already nodes marked as available 3.1. "<<gsw->to_nodes_ex.size()<<" "<<siblingwalk->to_nodes_ex.size()<<endl; exit(1); }
 
-    if (nsign || gsw->activating!=siblingwalk->activating || siblingwalk->hops > fm::max_hops) {
+    if (nsign || gsw->activating!=siblingwalk->activating || siblingwalk->hops > fm::last_max_hops) {
           if (siblingwalk->hops>0) {
               if (siblingwalk->hops>1) {
                   siblingwalk->svd();
               }
-              if (fm::do_output) {
-                  if (!fm::console_out) { 
+              if (fm::last_do_output) {
+                  if (!fm::last_console_out) { 
                       ostringstream strstrm;
                       strstrm << siblingwalk;
-                      (*fm::result) << strstrm.str();
+                      (*fm::last_result) << strstrm.str();
                   }
                   else cout << siblingwalk;
               }
@@ -727,7 +727,7 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
     }
     if (!nsign && ((gsw->activating==siblingwalk->activating) || !siblingwalk->edgewalk.size())) {
         #ifdef DEBUG
-        if (fm::die) cout << "CR gsw 2" << endl;
+        if (fm::last_die) cout << "CR gsw 2" << endl;
         #endif
         int res=gsw->conflict_resolution(core_ids, siblingwalk);
     }
@@ -736,17 +736,17 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
  
 
     // RECURSE
-    if ( ( !fm::do_pruning || (fm::chisq->u >= fm::chisq->sig) ) &&
-         (  fm::refine_singles || (legs[index]->occurrences.frequency>1) )
+    if ( ( !fm::last_do_pruning || (fm::last_chisq->u >= fm::last_chisq->sig) ) &&
+         (  fm::last_refine_singles || (legs[index]->occurrences.frequency>1) )
        ) {   // UB-PRUNING
             LastPath path ( *this, index );
 
-            if (!fm::regression) {
-                if (max.first<fm::chisq->p) { fm::updated = true; topdown = path.expand2 ( pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[index]->occurrences.frequency)), gsw_size); }
+            if (!fm::last_regression) {
+                if (max.first<fm::last_chisq->p) { fm::last_updated = true; topdown = path.expand2 ( pair<float, string>(fm::last_chisq->p, fm::last_graphstate->to_s(legs[index]->occurrences.frequency)), gsw_size); }
                 else topdown = path.expand2 (max,  gsw_size);
             }
             else {
-                if (max.first<fm::ks->p) { fm::updated = true; topdown = path.expand2 ( pair<float, string>(fm::ks->p, fm::graphstate->to_s(legs[index]->occurrences.frequency)), gsw_size); }
+                if (max.first<fm::last_ks->p) { fm::last_updated = true; topdown = path.expand2 ( pair<float, string>(fm::last_ks->p, fm::last_graphstate->to_s(legs[index]->occurrences.frequency)), gsw_size); }
                 else topdown = path.expand2 (max,  gsw_size);
             }
     }
@@ -756,7 +756,7 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
          if (topdown->edgewalk.size()) {
 
               #ifdef DEBUG
-              if (fm::die) {
+              if (fm::last_die) {
                   cout << "TOPDOWN BEGIN " << core_ids.size() << endl;
                   cout << topdown ;
                   cout << "--result--" << endl;
@@ -768,17 +768,17 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
               // STOP: OUTPUT TOPDOWN
               if (nsign || siblingwalk->activating!=topdown->activating) {
                   #ifdef DEBUG
-                  if (fm::die) cout << "STOP CRITERIUM at CHI " << cur_chisq << endl;
+                  if (fm::last_die) cout << "STOP CRITERIUM at CHI " << cur_chisq << endl;
                   #endif
                   if (topdown->hops>0) { 
                       if (topdown->hops>1) { 
                           topdown->svd();
                       }
-                      if (fm::do_output) { 
-                        if (!fm::console_out) { 
+                      if (fm::last_do_output) { 
+                        if (!fm::last_console_out) { 
                             ostringstream strstrm;
                             strstrm << topdown;
-                            (*fm::result) << strstrm.str();
+                            (*fm::last_result) << strstrm.str();
                         }
                         else cout << topdown;
                       }
@@ -791,7 +791,7 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
               if (topdown->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr << "Error! Still nodes marked as available 3.2. " << topdown->to_nodes_ex.size() << " " << siblingwalk->to_nodes_ex.size() <<  endl; exit(1); }
 
               #ifdef DEBUG
-              if (fm::die) {
+              if (fm::last_die) {
                   cout << "TOPDOWN END " << core_ids.size() << endl;
                   cout << topdown ;
                   cout << "--result--" << endl;
@@ -802,7 +802,7 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
     }
 
    
-    fm::graphstate->deleteNode ();
+    fm::last_graphstate->deleteNode ();
 
     delete topdown;
     delete gsw;
@@ -810,10 +810,10 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
   }
 
 
-  bool uptmp = fm::updated;
+  bool uptmp = fm::last_updated;
 
-  if (fm::bbrc_sep && legs.size() > 0) {
-      if (fm::do_output && !fm::console_out && fm::result->size() && (fm::result->back()!=fm::graphstate->sep())) (*fm::result) << fm::graphstate->sep();
+  if (fm::last_bbrc_sep && legs.size() > 0) {
+      if (fm::last_do_output && !fm::last_console_out && fm::last_result->size() && (fm::last_result->back()!=fm::last_graphstate->sep())) (*fm::last_result) << fm::last_graphstate->sep();
   }
 
   for ( unsigned int i = 0; i < legs.size (); i++ ) {
@@ -825,7 +825,7 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
       if ( ( totalsymmetry || legs[i]->tuple.depth <= edgelabels.size () / 2 ) &&
       ( legs[i]->tuple.depth != 1 || legs[i]->tuple.edgelabel >= edgelabels[0] ) &&
       ( legs[i]->tuple.depth != nodelabels.size () - 2 || legs[i]->tuple.edgelabel >= edgelabels.back () ) &&
-      fm::type > 1 ) {
+      fm::last_type > 1 ) {
 
           // new current pattern
           GSWalk* gsw = new GSWalk();
@@ -834,38 +834,38 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
           bool nsign=1;
 
           float cur_chisq;
-          if (fm::chisq->active) { 
-              if (!fm::regression) { fm::chisq->Calc(legs[i]->occurrences.elements); cur_chisq=fm::chisq->p; }
-              else                 {    fm::ks->Calc(legs[i]->occurrences.elements); cur_chisq=   fm::ks->p; }
+          if (fm::last_chisq->active) { 
+              if (!fm::last_regression) { fm::last_chisq->Calc(legs[i]->occurrences.elements); cur_chisq=fm::last_chisq->p; }
+              else                 {    fm::last_ks->Calc(legs[i]->occurrences.elements); cur_chisq=   fm::last_ks->p; }
           }
 
 
-          fm::graphstate->insertNode ( legs[i]->tuple.connectingnode, legs[i]->tuple.edgelabel, legs[i]->occurrences.maxdegree );
+          fm::last_graphstate->insertNode ( legs[i]->tuple.connectingnode, legs[i]->tuple.edgelabel, legs[i]->occurrences.maxdegree );
           #ifdef DEBUG
-          fm::graphstate->print(legs[i]->occurrences.frequency);
+          fm::last_graphstate->print(legs[i]->occurrences.frequency);
           #endif
 
           #ifdef DEBUG
-          fm::gsp_out=false;
-          string s = fm::graphstate->to_s(legs[i]->occurrences.frequency);
+          fm::last_gsp_out=false;
+          string s = fm::last_graphstate->to_s(legs[i]->occurrences.frequency);
           bool diehard=0;
-          //if (s.find("C-C(-O-C-N-O)(=C-C)")!=string::npos) { fm::die=1; diehard=1; }
+          //if (s.find("C-C(-O-C-N-O)(=C-C)")!=string::npos) { fm::last_die=1; diehard=1; }
           #endif
 
-          if (fm::chisq->active) {
-              map<LastTid, int> weightmap_a; each_it(fm::chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
-              map<LastTid, int> weightmap_i; each_it(fm::chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
-              fm::graphstate->print(gsw, weightmap_a, weightmap_i);
+          if (fm::last_chisq->active) {
+              map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
+              map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
+              fm::last_graphstate->print(gsw, weightmap_a, weightmap_i);
 
-              if (!fm::regression) {
-                  gsw->activating=fm::chisq->activating;
-                  if (cur_chisq >= fm::chisq->sig) {
+              if (!fm::last_regression) {
+                  gsw->activating=fm::last_chisq->activating;
+                  if (cur_chisq >= fm::last_chisq->sig) {
                       nsign=0;
                   }
               }
               else {
-                  gsw->activating=fm::ks->activating;
-                  if (cur_chisq >= fm::ks->sig) {
+                  gsw->activating=fm::last_ks->activating;
+                  if (cur_chisq >= fm::last_ks->sig) {
                       nsign=0;
                   }
               }
@@ -875,16 +875,16 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
           // !STOP: MERGE TO SIBLINGWALK
           if (gsw->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr<<"Error! Already nodes marked as available 4.1. "<<gsw->to_nodes_ex.size()<<" "<<siblingwalk->to_nodes_ex.size()<<endl; exit(1); }
 
-          if (nsign || gsw->activating!=siblingwalk->activating || siblingwalk->hops > fm::max_hops) {
+          if (nsign || gsw->activating!=siblingwalk->activating || siblingwalk->hops > fm::last_max_hops) {
                 if (siblingwalk->hops>0) {
                     if (siblingwalk->hops>1) {
                         siblingwalk->svd();
                     }
-                    if (fm::do_output) {
-                        if (!fm::console_out) { 
+                    if (fm::last_do_output) {
+                        if (!fm::last_console_out) { 
                             ostringstream strstrm;
                             strstrm << siblingwalk;
-                            (*fm::result) << strstrm.str();
+                            (*fm::last_result) << strstrm.str();
                         }
                         else cout << siblingwalk;
                     }
@@ -894,7 +894,7 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
           }
           if (!nsign && ((gsw->activating==siblingwalk->activating) || !siblingwalk->edgewalk.size())) {
               #ifdef DEBUG
-              if (fm::die) cout << "CR gsw 3" << endl;
+              if (fm::last_die) cout << "CR gsw 3" << endl;
               #endif
               int res=gsw->conflict_resolution(core_ids, siblingwalk);
           }
@@ -902,12 +902,12 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
 
           if (gsw->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr<<"Error! Still nodes marked as available 4.1. "<<gsw->to_nodes_ex.size()<<" "<<siblingwalk->to_nodes_ex.size()<<endl; exit(1); }
 
-          if ( ( !fm::do_pruning ||  (fm::chisq->u >= fm::chisq->sig ) ) &&
-               (  fm::refine_singles || (legs[i]->occurrences.frequency>1) )
+          if ( ( !fm::last_do_pruning ||  (fm::last_chisq->u >= fm::last_chisq->sig ) ) &&
+               (  fm::last_refine_singles || (legs[i]->occurrences.frequency>1) )
              ) {
               LastPatternTree tree ( *this, i );
 
-              if (max.first<cur_chisq) { fm::updated = true; topdown = tree.expand ( pair<float, string>(cur_chisq, fm::graphstate->to_s(legs[i]->occurrences.frequency)), gsw_size); }
+              if (max.first<cur_chisq) { fm::last_updated = true; topdown = tree.expand ( pair<float, string>(cur_chisq, fm::last_graphstate->to_s(legs[i]->occurrences.frequency)), gsw_size); }
               else topdown = tree.expand (max, gsw_size);
           }
 
@@ -916,7 +916,7 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
                if (topdown->edgewalk.size()) {
 
                     #ifdef DEBUG
-                    if (fm::die) {
+                    if (fm::last_die) {
                         cout << "TOPDOWN BEGIN " << core_ids.size() << endl;
                         cout << topdown ;
                         cout << "--result--" << endl;
@@ -928,17 +928,17 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
                     // STOP: OUTPUT TOPDOWN
                     if (nsign || siblingwalk->activating!=topdown->activating) {
                         #ifdef DEBUG
-                        if (fm::die) cout << "STOP CRITERIUM at CHI " << cur_chisq << endl;
+                        if (fm::last_die) cout << "STOP CRITERIUM at CHI " << cur_chisq << endl;
                         #endif
                         if (topdown->hops>0) { 
                             if (topdown->hops>1) { 
                                 topdown->svd();
                             }
-                            if (fm::do_output) { 
-                              if (!fm::console_out) { 
+                            if (fm::last_do_output) { 
+                              if (!fm::last_console_out) { 
                                   ostringstream strstrm;
                                   strstrm << topdown;
-                                  (*fm::result) << strstrm.str();
+                                  (*fm::last_result) << strstrm.str();
                               }
                               else cout << topdown;
                             }
@@ -951,7 +951,7 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
                     if (topdown->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr << "Error! Still nodes marked as available 4.2. " << topdown->to_nodes_ex.size() << " " << siblingwalk->to_nodes_ex.size() <<  endl; exit(1); }
 
                     #ifdef DEBUG
-                    if (fm::die) {
+                    if (fm::last_die) {
                         cout << "TOPDOWN END " << core_ids.size() << endl;
                         cout << topdown;
                         cout << "--result--" << endl;
@@ -962,7 +962,7 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
           }
 
 
-	      fm::graphstate->deleteNode ();
+	      fm::last_graphstate->deleteNode ();
           delete topdown;
           delete gsw;
           #ifdef DEBUG
@@ -975,15 +975,15 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
         }
 
         #ifdef DEBUG  
-        if (!legs.size()) cout << fm::graphstate->sep() << endl;
+        if (!legs.size()) cout << fm::last_graphstate->sep() << endl;
         #endif
       }
     }
   }
 
   // delete horizontal view
-  fm::updated=uptmp;
-  fm::statistics->patternsize--;
+  fm::last_updated=uptmp;
+  fm::last_statistics->patternsize--;
   return siblingwalk;
 
 //  cerr << "backtracking p" << endl;
@@ -998,7 +998,7 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
 
 void LastPath::expand () {
 
-  //fm::die=1;
+  //fm::last_die=1;
   // horizontal view: conflict_resolution will merge into siblingwalk
   // NOTE: siblingwalk is intended to 'carry' the growing meta pattern
   GSWalk* siblingwalk = new GSWalk();
@@ -1016,31 +1016,31 @@ void LastPath::expand () {
     if ( tuple.nodelabel >= nodelabels[0] ) {
         
       float cur_chisq;
-      if (fm::chisq->active) { 
-          if (!fm::regression) { fm::chisq->Calc(legs[i]->occurrences.elements); cur_chisq=fm::chisq->p; }
-          else                 {    fm::ks->Calc(legs[i]->occurrences.elements); cur_chisq=   fm::ks->p; }
+      if (fm::last_chisq->active) { 
+          if (!fm::last_regression) { fm::last_chisq->Calc(legs[i]->occurrences.elements); cur_chisq=fm::last_chisq->p; }
+          else                 {    fm::last_ks->Calc(legs[i]->occurrences.elements); cur_chisq=   fm::last_ks->p; }
       }
 
       // GRAPHSTATE AND OUTPUT
-      fm::graphstate->insertNode ( tuple.connectingnode, tuple.edgelabel, legs[i]->occurrences.maxdegree );
+      fm::last_graphstate->insertNode ( tuple.connectingnode, tuple.edgelabel, legs[i]->occurrences.maxdegree );
       #ifdef DEBUG
-      fm::graphstate->print(legs[i]->occurrences.frequency);
+      fm::last_graphstate->print(legs[i]->occurrences.frequency);
       #endif
 
-      if (fm::chisq->active) {
-          map<LastTid, int> weightmap_a; each_it(fm::chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
-          map<LastTid, int> weightmap_i; each_it(fm::chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
-          fm::graphstate->print(gsw, weightmap_a, weightmap_i);
+      if (fm::last_chisq->active) {
+          map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
+          map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
+          fm::last_graphstate->print(gsw, weightmap_a, weightmap_i);
 
-          if (!fm::regression) {
-              gsw->activating=fm::chisq->activating;
-              if (cur_chisq >= fm::chisq->sig) {
+          if (!fm::last_regression) {
+              gsw->activating=fm::last_chisq->activating;
+              if (cur_chisq >= fm::last_chisq->sig) {
                   nsign=0;
               }
           }
           else {
-              gsw->activating=fm::ks->activating;
-              if (cur_chisq >= fm::ks->sig) {
+              gsw->activating=fm::last_ks->activating;
+              if (cur_chisq >= fm::last_ks->sig) {
                   nsign=0;
               }
           }
@@ -1051,16 +1051,16 @@ void LastPath::expand () {
       // !STOP: MERGE TO SIBLINGWALK
       if (gsw->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr<<"Error! Already nodes marked as available 1.1. "<<gsw->to_nodes_ex.size()<<" "<<siblingwalk->to_nodes_ex.size()<<endl; exit(1); }
 
-      if (nsign || gsw->activating!=siblingwalk->activating || siblingwalk->hops > fm::max_hops) {
+      if (nsign || gsw->activating!=siblingwalk->activating || siblingwalk->hops > fm::last_max_hops) {
             if (siblingwalk->hops>0) {
                 if (siblingwalk->hops>1) {
                     siblingwalk->svd();
                 }
-                if (fm::do_output) {
-                    if (!fm::console_out) { 
+                if (fm::last_do_output) {
+                    if (!fm::last_console_out) { 
                         ostringstream strstrm;
                         strstrm << siblingwalk;
-                        (*fm::result) << strstrm.str();
+                        (*fm::last_result) << strstrm.str();
                     }
                     else cout << siblingwalk;
                 }
@@ -1070,7 +1070,7 @@ void LastPath::expand () {
       }
       if (!nsign && ((gsw->activating==siblingwalk->activating) || !siblingwalk->edgewalk.size())) {
           #ifdef DEBUG
-          if (fm::die) cout << "CR gsw 4" << endl;
+          if (fm::last_die) cout << "CR gsw 4" << endl;
           #endif
           int res=gsw->conflict_resolution(core_ids, siblingwalk);
       }
@@ -1080,17 +1080,17 @@ void LastPath::expand () {
 
       // RECURSE
       LastPath path (*this, i);
-      fm::updated = true;
+      fm::last_updated = true;
 
-      if (!fm::regression) topdown = path.expand2 (pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[i]->occurrences.frequency)), gsw_size);
-      else topdown = path.expand2 (pair<float, string>(fm::ks->p, fm::graphstate->to_s(legs[i]->occurrences.frequency)), gsw_size);
+      if (!fm::last_regression) topdown = path.expand2 (pair<float, string>(fm::last_chisq->p, fm::last_graphstate->to_s(legs[i]->occurrences.frequency)), gsw_size);
+      else topdown = path.expand2 (pair<float, string>(fm::last_ks->p, fm::last_graphstate->to_s(legs[i]->occurrences.frequency)), gsw_size);
 
       // merge to siblingwalk
       if (topdown != NULL) {
            if (topdown->edgewalk.size()) {
 
                 #ifdef DEBUG
-                if (fm::die) {
+                if (fm::last_die) {
                     cout << "TOPDOWN BEGIN " << core_ids.size() << endl;
                     cout << topdown;
                     cout << "--result--" << endl;
@@ -1102,17 +1102,17 @@ void LastPath::expand () {
                 // STOP: OUTPUT TOPDOWN
                 if (nsign || siblingwalk->activating!=topdown->activating) {
                     #ifdef DEBUG
-                    if (fm::die) cout << "STOP CRITERIUM at CHI " << cur_chisq << endl;
+                    if (fm::last_die) cout << "STOP CRITERIUM at CHI " << cur_chisq << endl;
                     #endif
                     if (topdown->hops>0) { 
                         if (topdown->hops>1) { 
                             topdown->svd();
                         }
-                        if (fm::do_output) { 
-                          if (!fm::console_out) { 
+                        if (fm::last_do_output) { 
+                          if (!fm::last_console_out) { 
                               ostringstream strstrm;
                               strstrm << topdown;
-                              (*fm::result) << strstrm.str();
+                              (*fm::last_result) << strstrm.str();
                           }
                           else cout << topdown;
                         }
@@ -1125,7 +1125,7 @@ void LastPath::expand () {
                 if (topdown->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr << "Error! Still nodes marked as available 1.2. " << topdown->to_nodes_ex.size() << " " << siblingwalk->to_nodes_ex.size() <<  endl; exit(1); }
 
                 #ifdef DEBUG
-                if (fm::die) {
+                if (fm::last_die) {
                     cout << "TOPDOWN END " << core_ids.size() << endl;
                     cout << topdown ;
                     cout << "--result--" << endl;
@@ -1135,7 +1135,7 @@ void LastPath::expand () {
            }
       }
 
-      fm::graphstate->deleteNode ();
+      fm::last_graphstate->deleteNode ();
 
     }
 
@@ -1143,7 +1143,7 @@ void LastPath::expand () {
     delete topdown;
 
   }
-  fm::graphstate->deleteStartNode ();
+  fm::last_graphstate->deleteStartNode ();
   delete siblingwalk;
 
 //  cerr << "backtracking p" << endl;

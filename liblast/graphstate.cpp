@@ -28,12 +28,12 @@
 #include "misc.h"
 
 namespace fm {
-    extern ChisqConstraint* chisq;
-    extern bool console_out;
-    extern bool gsp_out;
-    extern LastDatabase* database;
-    extern LastGraphState* graphstate;
-    extern int die;
+    extern ChisqConstraint* last_chisq;
+    extern bool last_console_out;
+    extern bool last_gsp_out;
+    extern LastDatabase* last_database;
+    extern LastGraphState* last_graphstate;
+    extern int last_die;
 }
 
 LastGraphState::LastGraphState () {
@@ -75,7 +75,7 @@ void LastGraphState::deleteStartNode () {
 
 void LastGraphState::insertNode ( int from, LastEdgeLabel edgelabel, short unsigned int maxdegree  ) {
   LastNodeLabel fromlabel = nodes[from].label, tolabel;
-  LastDatabaseLastEdgeLabel &dataedgelabel = fm::database->edgelabels[fm::database->edgelabelsindexes[edgelabel]];
+  LastDatabaseLastEdgeLabel &dataedgelabel = fm::last_database->edgelabels[fm::last_database->edgelabelsindexes[edgelabel]];
   if ( dataedgelabel.fromnodelabel == fromlabel )
     tolabel = dataedgelabel.tonodelabel;
   else
@@ -328,7 +328,7 @@ void LastGraphState::print ( FILE *f ) {
     putc ( ' ', f );
     puti ( f, (int) i );
     putc ( ' ', f );
-    puti ( f, (int) fm::database->nodelabels[nodes[i].label].inputlabel );
+    puti ( f, (int) fm::last_database->nodelabels[nodes[i].label].inputlabel );
     putc ( '\n', f );
   }
   for ( int i = 0; i < (int) nodes.size (); i++ ) {
@@ -341,8 +341,8 @@ void LastGraphState::print ( FILE *f ) {
         putc ( ' ', f );
         puti ( f, (int) edge.tonode );
         putc ( ' ', f );
-        puti ( f, (int) fm::database->edgelabels[
-                 fm::database->edgelabelsindexes[edge.edgelabel]
+        puti ( f, (int) fm::last_database->edgelabels[
+                 fm::last_database->edgelabelsindexes[edge.edgelabel]
                                                 ].inputedgelabel );
         putc ( '\n', f );
       }
@@ -357,7 +357,7 @@ void LastGraphState::print ( GSWalk* gsw, map<LastTid, int> weightmap_a, map<Las
 
   // convert occurrence lists to weight maps
   for ( int i = 0; i < (int) nodes.size (); i++ ) {
-    set<InputLastNodeLabel> inl; inl.insert(fm::database->nodelabels[nodes[i].label].inputlabel);
+    set<InputLastNodeLabel> inl; inl.insert(fm::last_database->nodelabels[nodes[i].label].inputlabel);
     gsw->nodewalk.push_back( (GSWNode) { inl } );
   }
 
@@ -365,7 +365,7 @@ void LastGraphState::print ( GSWalk* gsw, map<LastTid, int> weightmap_a, map<Las
     for ( int j = 0; j < (int) nodes[i].edges.size (); j++ ) {
       LastGraphState::GSEdge &edge = nodes[i].edges[j];
       if ( i < edge.tonode ) {
-          set<InputLastEdgeLabel> iel; iel.insert((InputLastEdgeLabel) fm::database->edgelabels[fm::database->edgelabelsindexes[edge.edgelabel]].inputedgelabel);
+          set<InputLastEdgeLabel> iel; iel.insert((InputLastEdgeLabel) fm::last_database->edgelabels[fm::last_database->edgelabelsindexes[edge.edgelabel]].inputedgelabel);
           gsw->edgewalk[i][edge.tonode] = (GSWEdge) { edge.tonode , iel, weightmap_a, weightmap_i, 0, 1 } ;
       }
     }
@@ -379,7 +379,7 @@ void LastGraphState::print ( GSWalk* gsw, map<LastTid, int> weightmap_a, map<Las
 // PRINT SMARTS TO STDOUT
 
 void LastGraphState::DfsOut(int cur_n, int from_n) {
-    InputLastNodeLabel inl = fm::database->nodelabels[nodes[cur_n].label].inputlabel;
+    InputLastNodeLabel inl = fm::last_database->nodelabels[nodes[cur_n].label].inputlabel;
     if (inl<=150) {
         const char* str = etab.GetSymbol(inl);
         for(int i = 0; str[i] != '\0'; i++) putchar(str[i]);
@@ -397,7 +397,7 @@ void LastGraphState::DfsOut(int cur_n, int from_n) {
         LastGraphState::GSEdge &edge = nodes[cur_n].edges[j];
         if ( edge.tonode != from_n) {
             if (fanout>2) putchar ('(');
-            iel = fm::database->edgelabels[fm::database->edgelabelsindexes[edge.edgelabel]].inputedgelabel;
+            iel = fm::last_database->edgelabels[fm::last_database->edgelabelsindexes[edge.edgelabel]].inputedgelabel;
             switch (iel) {
             case 1:
                 putchar('-');
@@ -427,12 +427,12 @@ void LastGraphState::DfsOut(int cur_n, int from_n) {
 
 void LastGraphState::print ( unsigned int frequency ) {
     float p, sig;
-    if (fm::chisq->active) {
-        p = fm::chisq->p;
-        sig = fm::chisq->sig;
+    if (fm::last_chisq->active) {
+        p = fm::last_chisq->p;
+        sig = fm::last_chisq->sig;
     }
-    if (!fm::chisq->active || p >= sig) {
-        if (fm::gsp_out) { 
+    if (!fm::last_chisq->active || p >= sig) {
+        if (fm::last_gsp_out) { 
             print(stdout); 
         }
         else {
@@ -451,22 +451,22 @@ void LastGraphState::print ( unsigned int frequency ) {
           putchar(',');
           putchar(' ');
           // output chisq
-          if (fm::chisq->active) {
-            printf("%.4f, ", fm::chisq->p);
+          if (fm::last_chisq->active) {
+            printf("%.4f, ", fm::last_chisq->p);
           }
           // output freq
-          if (fm::chisq->active) {
-              if (frequency != (fm::chisq->fa+fm::chisq->fi)) { cerr << "Error: wrong counts! " << frequency << "!=" << fm::chisq->fa + fm::chisq->fi << "(" << fm::chisq->fa << "+" << fm::chisq->fi << ")" << endl; }
+          if (fm::last_chisq->active) {
+              if (frequency != (fm::last_chisq->fa+fm::last_chisq->fi)) { cerr << "Error: wrong counts! " << frequency << "!=" << fm::last_chisq->fa + fm::last_chisq->fi << "(" << fm::last_chisq->fa << "+" << fm::last_chisq->fi << ")" << endl; }
           }
           else { 
               printf("%i", frequency);
           }
           // output occurrences
-          if (fm::chisq->active) {
+          if (fm::last_chisq->active) {
               putchar ('[');
               set<LastTid>::iterator iter;
-              for (iter = fm::chisq->fa_set.begin(); iter != fm::chisq->fa_set.end(); iter++) {
-                  if (iter != fm::chisq->fa_set.begin()) putchar (',');
+              for (iter = fm::last_chisq->fa_set.begin(); iter != fm::last_chisq->fa_set.end(); iter++) {
+                  if (iter != fm::last_chisq->fa_set.begin()) putchar (',');
                   putchar (' ');
                   printf("%i", (*iter)); 
               }
@@ -474,13 +474,13 @@ void LastGraphState::print ( unsigned int frequency ) {
               putchar (',');
               putchar (' ');
               putchar ('[');
-              for (iter = fm::chisq->fi_set.begin(); iter != fm::chisq->fi_set.end(); iter++) {
-                  if (iter != fm::chisq->fi_set.begin()) putchar (',');
+              for (iter = fm::last_chisq->fi_set.begin(); iter != fm::last_chisq->fi_set.end(); iter++) {
+                  if (iter != fm::last_chisq->fi_set.begin()) putchar (',');
                   printf(" %i", (*iter)); 
               }
               set<LastTid> ids;
-              ids.insert(fm::chisq->fa_set.begin(), fm::chisq->fa_set.end());
-              ids.insert(fm::chisq->fi_set.begin(), fm::chisq->fi_set.end());
+              ids.insert(fm::last_chisq->fa_set.begin(), fm::last_chisq->fa_set.end());
+              ids.insert(fm::last_chisq->fi_set.begin(), fm::last_chisq->fi_set.end());
               for (iter = ids.begin(); iter != ids.end(); iter++) {
                   putchar(' ');
                   printf("%i", (*iter)); 
@@ -490,7 +490,7 @@ void LastGraphState::print ( unsigned int frequency ) {
           }
           putchar(' ');
           putchar(']');
-          if(fm::console_out) putchar('\n');
+          if(fm::last_console_out) putchar('\n');
        }
     }
 }
@@ -514,7 +514,7 @@ void LastGraphState::to_s ( string& oss ) {
     sprintf(x, "%i", i);
     oss.append( x);
     oss.append( " ");
-    sprintf(x, "%i", fm::database->nodelabels[nodes[i].label].inputlabel);
+    sprintf(x, "%i", fm::last_database->nodelabels[nodes[i].label].inputlabel);
     oss.append( x);
     oss.append( "\n");
   }
@@ -530,7 +530,7 @@ void LastGraphState::to_s ( string& oss ) {
     sprintf(x, "%i", edge.tonode);
     oss.append(x);
     oss.append( " ");
-    sprintf(x, "%i", (int) fm::database->edgelabels[fm::database->edgelabelsindexes[edge.edgelabel]].inputedgelabel);
+    sprintf(x, "%i", (int) fm::last_database->edgelabels[fm::last_database->edgelabelsindexes[edge.edgelabel]].inputedgelabel);
     oss.append( x);
         oss.append( "\n");
       }
@@ -542,7 +542,7 @@ void LastGraphState::to_s ( string& oss ) {
 // PRINT SMARTS TO OSS
 
 void LastGraphState::DfsOut(int cur_n, string& oss, int from_n) {
-    InputLastNodeLabel inl = fm::database->nodelabels[nodes[cur_n].label].inputlabel;
+    InputLastNodeLabel inl = fm::last_database->nodelabels[nodes[cur_n].label].inputlabel;
     if (inl<=150) {
         oss.append(etab.GetSymbol(inl));
     }
@@ -557,7 +557,7 @@ void LastGraphState::DfsOut(int cur_n, string& oss, int from_n) {
         LastGraphState::GSEdge &edge = nodes[cur_n].edges[j];
         if ( edge.tonode != from_n) {
             if (fanout>2) oss.append ("(");
-            iel = fm::database->edgelabels[fm::database->edgelabelsindexes[edge.edgelabel]].inputedgelabel;
+            iel = fm::last_database->edgelabels[fm::last_database->edgelabelsindexes[edge.edgelabel]].inputedgelabel;
             switch (iel) {
             case 1:
                 oss.append("-");
@@ -586,11 +586,11 @@ void LastGraphState::DfsOut(int cur_n, string& oss, int from_n) {
 
 string LastGraphState::to_s ( unsigned int frequency ) {
 
-    if (!fm::chisq->active || fm::chisq->p >= fm::chisq->sig) {
+    if (!fm::last_chisq->active || fm::last_chisq->p >= fm::last_chisq->sig) {
 
         string oss;
 
-        if (fm::gsp_out) { 
+        if (fm::last_gsp_out) { 
             to_s(oss); 
             return oss;
         }
@@ -608,13 +608,13 @@ string LastGraphState::to_s ( unsigned int frequency ) {
           oss.append ("\", ");
 
           // output chisq
-          if (fm::chisq->active) {
-            char x[20]; sprintf(x,"%.4f", fm::chisq->p); (oss.append(x)).append(", ");
+          if (fm::last_chisq->active) {
+            char x[20]; sprintf(x,"%.4f", fm::last_chisq->p); (oss.append(x)).append(", ");
           }
 
           // output freq
-          if (fm::chisq->active) {
-              if (frequency != (fm::chisq->fa+fm::chisq->fi)) { cerr << "Notice: Wrong counts for frequency " << frequency << " [!=" << fm::chisq->fa << "(fa)+" << fm::chisq->fi << "(fi)]." << endl; }
+          if (fm::last_chisq->active) {
+              if (frequency != (fm::last_chisq->fa+fm::last_chisq->fi)) { cerr << "Notice: Wrong counts for frequency " << frequency << " [!=" << fm::last_chisq->fa << "(fa)+" << fm::last_chisq->fi << "(fi)]." << endl; }
           }
           else { 
               char x[20]; sprintf(x,"%i", frequency); 
@@ -622,15 +622,15 @@ string LastGraphState::to_s ( unsigned int frequency ) {
           }
 
           // output occurrences
-          if (fm::chisq->active) {
+          if (fm::last_chisq->active) {
               oss.append ("[");
 
               set<LastTid>::iterator iter;
               char x[20];
 
-              set<LastTid>::iterator begin = fm::chisq->fa_set.begin();
-              set<LastTid>::iterator end = fm::chisq->fa_set.end();
-              set<LastTid>::iterator last = end; if (fm::chisq->fa_set.size()) last = --(fm::chisq->fa_set.end());
+              set<LastTid>::iterator begin = fm::last_chisq->fa_set.begin();
+              set<LastTid>::iterator end = fm::last_chisq->fa_set.end();
+              set<LastTid>::iterator last = end; if (fm::last_chisq->fa_set.size()) last = --(fm::last_chisq->fa_set.end());
 
               for (iter = begin; iter != end; iter++) {
                   if (iter != begin) oss.append (",");
@@ -640,9 +640,9 @@ string LastGraphState::to_s ( unsigned int frequency ) {
               }
               oss.append ("], [");
 
-              begin = fm::chisq->fi_set.begin();
-              end = fm::chisq->fi_set.end();
-              last = end; if (fm::chisq->fi_set.size()) last = --(fm::chisq->fi_set.end());
+              begin = fm::last_chisq->fi_set.begin();
+              end = fm::last_chisq->fi_set.end();
+              last = end; if (fm::last_chisq->fi_set.size()) last = --(fm::last_chisq->fi_set.end());
 
               for (iter = begin; iter != end; iter++) {
                   if (iter != begin) oss.append (",");
@@ -652,8 +652,8 @@ string LastGraphState::to_s ( unsigned int frequency ) {
               }
 
               set<LastTid> ids;
-              ids.insert(fm::chisq->fa_set.begin(), fm::chisq->fa_set.end());
-              ids.insert(fm::chisq->fi_set.begin(), fm::chisq->fi_set.end());
+              ids.insert(fm::last_chisq->fa_set.begin(), fm::last_chisq->fa_set.end());
+              ids.insert(fm::last_chisq->fi_set.begin(), fm::last_chisq->fi_set.end());
               for (iter = ids.begin(); iter != ids.end(); iter++) {
                   sprintf(x,"%i", (*iter)); 
                   (oss.append (" ")).append(x);
@@ -663,7 +663,7 @@ string LastGraphState::to_s ( unsigned int frequency ) {
 
           oss.append (" ]");
 
-          fm::console_out ? oss.append ("\n") : oss.append ("");
+          fm::last_console_out ? oss.append ("\n") : oss.append ("");
 
 
           return oss;
@@ -674,7 +674,7 @@ string LastGraphState::to_s ( unsigned int frequency ) {
 }
   
 string LastGraphState::sep() {
-    if (fm::gsp_out) return "#";
+    if (fm::last_gsp_out) return "#";
     else return "---";
 }
 
@@ -1411,7 +1411,7 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
 
         if (nodewalk_empty) {
             #ifdef DEBUG
-            if (fm::die) {
+            if (fm::last_die) {
                 cout << "Initializing new SW (" << activating << ")." << endl;
             }
             #endif
@@ -1447,7 +1447,7 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
         do {
 
             #ifdef DEBUG
-            if (fm::die) {
+            if (fm::last_die) {
                 cout << "-CR begin-" << endl;
                 cout << this ;
                 cout << s ;
@@ -1465,7 +1465,7 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
             index_revisit.clear();
 
             #ifdef DEBUG
-            if (fm::die) {
+            if (fm::last_die) {
                 cerr << "U12: '";
                 each_it(u12, set<int>::iterator) cerr << *it << " "; 
                 cerr << "'" <<endl;
@@ -1492,7 +1492,7 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
                     for (map<int, GSWEdge>::iterator it = e2->second.begin(); it!=e2->second.end(); it++) d2.insert(it->first);
                 }
                 #ifdef DEBUG
-                if (fm::die) {
+                if (fm::last_die) {
                     cout << "j: " << j << ", W1: " << e1->second.size() << ", W2: " << e2->second.size() << endl;
                 }
                 #endif
@@ -1512,7 +1512,7 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
                 // intersection \ core
                 each_it(c12, set<int>::iterator) {
                     #ifdef DEBUG
-                    if (fm::die) {
+                    if (fm::last_die) {
                         map<int, GSWEdge>& w2j = e2->second;
                         cout << "C12: " << j << "->" << w2j.find(*it)->first;
                         cout << " < "; 
@@ -1531,7 +1531,7 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
                     if (ceiling==0 || *it<ceiling) {
                         if (*it <= nodewalk.size()) { // only insert in-bound edges
                             #ifdef DEBUG
-                            if (fm::die) {
+                            if (fm::last_die) {
                                 map<int, GSWEdge>& w2j = e2->second;
                                 cout << "D21: " << j << "->" << w2j.find(*it)->first;
                                 cout << " < "; 
@@ -1553,7 +1553,7 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
                         }
                         else { // remember index for next round
                             #ifdef DEBUG
-                            if (fm::die) cout << "Node-to-revisit: " << j << endl;
+                            if (fm::last_die) cout << "Node-to-revisit: " << j << endl;
                             #endif
                             index_revisit.insert(j);
                         }
@@ -1567,7 +1567,7 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
                     if (ceiling==0 || *it<ceiling) {
                         if (*it <= s->nodewalk.size()) {
                             #ifdef DEBUG
-                            if (fm::die) {
+                            if (fm::last_die) {
                                 map<int, GSWEdge>& w1j = e1->second;
                                 cout << "D12: " << j << "->" << w1j.find(*it)->first; // needs no check for end() by def of d12
                                 cout << " < ";
@@ -1591,7 +1591,7 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
                         }
                         else {
                             #ifdef DEBUG
-                            if (fm::die) cout << "Node-to-revisit: " << j << endl;
+                            if (fm::last_die) cout << "Node-to-revisit: " << j << endl;
                             #endif
                             index_revisit.insert(j);
                         }
@@ -1735,7 +1735,7 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
             // bag handling
             if (do_ceiling) {
                 #ifdef DEBUG
-                if (fm::die) {
+                if (fm::last_die) {
                     cout << endl << endl << endl << "STARTING CEILING MODE next_to: '" << next_to << "' c: '" << c << "'" << endl << endl << endl;
                 }
                 #endif
@@ -1744,7 +1744,7 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
                     u12.insert(i);
                 }
                 #ifdef DEBUG
-                if (fm::die) {
+                if (fm::last_die) {
                     cout << endl << endl << endl << "ENDING CEILING MODE next_to: '" << next_to << "' c: '" << c << "'" << endl << endl << endl;
                 }
                 #endif
@@ -1754,7 +1754,7 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
 
             #ifdef DEBUG
             else {
-                if (fm::die) {
+                if (fm::last_die) {
                      cout << "Finished CR." << endl;
                 }
             }
@@ -1780,14 +1780,14 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
 
         } while (einsert21.size() || einsert12.size() || c12_inc.size()); // Finished all edges for core ids
         #ifdef DEBUG
-        if (fm::die) {
+        if (fm::last_die) {
              cout << "Left while loop·" << endl;
         }
         #endif
        
 
         #ifdef DEBUG
-        if (fm::die) {
+        if (fm::last_die) {
             //cout << this ;
             //cout << s ;
             cout << "-stack-" << endl;
@@ -1821,7 +1821,7 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
 
 
         #ifdef DEBUG
-        if (fm::die) {
+        if (fm::last_die) {
             cout << this ;
             cout << s ;
             cout << "-CR end-" << endl;
@@ -1831,16 +1831,16 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
 
         // calculate one step core ids 
         #ifdef DEBUG
-        if (fm::die) if (index_revisit.size()) cout << "Revisiting '";
+        if (fm::last_die) if (index_revisit.size()) cout << "Revisiting '";
         #endif
         each_it(index_revisit, set<int>::iterator) { 
             #ifdef DEBUG
-            if (fm::die) cout << *it  << " ";
+            if (fm::last_die) cout << *it  << " ";
             #endif
             u12.insert(*it); 
         }
         #ifdef DEBUG
-        if (fm::die) if (index_revisit.size()) cout << "'." << endl;
+        if (fm::last_die) if (index_revisit.size()) cout << "'." << endl;
         #endif
 
         if (u12.size()) conflict_resolution(vector<int> (u12.begin(),u12.end()), s, 0, ceiling);
@@ -1903,7 +1903,7 @@ int GSWalk::stack (GSWalk* w, map<int,int> stack_locations) {
             edgemap::iterator w_from=w->edgewalk.find(from->first);
             if (w_from == w->edgewalk.end()) {
                 #ifdef DEBUG
-                if (fm::die) cout << "Different 'from'-components (" << from->first << ")." << endl; 
+                if (fm::last_die) cout << "Different 'from'-components (" << from->first << ")." << endl; 
                 #endif
             }
             else {
@@ -1914,7 +1914,7 @@ int GSWalk::stack (GSWalk* w, map<int,int> stack_locations) {
                     map<int, GSWEdge>::iterator w_to=se.find(to->first);
                     if (w_to == se.end()) {
                         #ifdef DEBUG
-                        if (fm::die) cout << "Different 'to'-component (" << to->first << ")." << endl;
+                        if (fm::last_die) cout << "Different 'to'-component (" << to->first << ")." << endl;
                         #endif
                     }
                     else to->second.stack(w_to->second);
@@ -1966,7 +1966,7 @@ int GSWEdge::stack (GSWEdge e) {
 void GSWalk::add_edge (int f, GSWEdge e, GSWNode n, bool reorder, vector<int>* core_ids, set<int>* u12) {
 
     #ifdef DEBUG
-    if (fm::die) {
+    if (fm::last_die) {
         cout << "e.to " << e.to << endl;
     }
     #endif
@@ -1982,7 +1982,7 @@ void GSWalk::add_edge (int f, GSWEdge e, GSWNode n, bool reorder, vector<int>* c
     if ((e.to >= *(core_ids->begin())) && (e.to <= *(core_ids->end()-1))) { 
         to_core_range=1; 
         #ifdef DEBUG 
-        if (fm::die) cout << "to in core range (" << e.to << ")." << endl; 
+        if (fm::last_die) cout << "to in core range (" << e.to << ")." << endl; 
         #endif
     }
     if (reorder && find(core_ids->begin(), core_ids->end(), e.to) != core_ids->end()) { cerr << "Error! e.to (" << e.to << ") is a core-id." << endl; exit(1); }
@@ -2010,21 +2010,21 @@ void GSWalk::add_edge (int f, GSWEdge e, GSWNode n, bool reorder, vector<int>* c
             for (edgemap::iterator from = edgewalk.begin(); from != edgewalk.end(); from++) {
                 map<int, GSWEdge>& to_map = from->second;
                 #ifdef DEBUG
-                if (fm::die) cout << endl << from->first << " to" << endl << "to_map size: " << to_map.size() << endl;
+                if (fm::last_die) cout << endl << from->first << " to" << endl << "to_map size: " << to_map.size() << endl;
                 #endif
                 map<int, GSWEdge>::iterator to=to_map.end();
                 to--;
                 for (; to != to_map.begin(); ) {
                     // increase all to-values equal or higher by 1
                     #ifdef DEBUG
-                    if (fm::die) cout << "to->first " << to->first << endl;
+                    if (fm::last_die) cout << "to->first " << to->first << endl;
                     #endif
                     if ((to->first >= e.to) && ((find(core_ids->begin(), core_ids->end(), to->first) == core_ids->end()) || to_core_range)) {
                         GSWEdge val = to->second; val.to++; // correct the data ...
                         pair<map<int, GSWEdge>::reverse_iterator, bool> p = to_map.insert(make_pair(val.to,val)); // ... and insert new value
                         if (!p.second) { cerr << "Error! Replaced a value while moving down. This should never happen." << endl; exit(1); }
                         #ifdef DEBUG
-                        if (fm::die) cout << "    " << val.to-1 << "->" << val.to << endl;
+                        if (fm::last_die) cout << "    " << val.to-1 << "->" << val.to << endl;
                         #endif
                         to_map.erase(to--);
                     }
@@ -2033,14 +2033,14 @@ void GSWalk::add_edge (int f, GSWEdge e, GSWNode n, bool reorder, vector<int>* c
                 if (to == to_map.begin()) {
                     // increase all to-values equal or higher by 1 (last element)
                     #ifdef DEBUG
-                    if (fm::die) cout << "to->first " << to->first << endl;
+                    if (fm::last_die) cout << "to->first " << to->first << endl;
                     #endif
                     if ((to->first >= e.to) && ((find(core_ids->begin(), core_ids->end(), to->first) == core_ids->end()) || to_core_range)) {
                         GSWEdge val = to->second; val.to++; // correct the data ...
                         pair<map<int, GSWEdge>::reverse_iterator, bool> p = to_map.insert(make_pair(val.to,val)); // ... and insert new value
                         if (!p.second) { cerr << "Error! Replaced a value while moving down. This should never happen." << endl; exit(1); }
                         #ifdef DEBUG
-                        if (fm::die) cout << "    " << val.to-1 << "->" << val.to << endl;
+                        if (fm::last_die) cout << "    " << val.to-1 << "->" << val.to << endl;
                         #endif
                         to_map.erase(to);
                     }
@@ -2129,7 +2129,7 @@ void GSWalk::svd () {
     }
 
     #ifdef DEBUG
-    if (fm::die) {
+    if (fm::last_die) {
         cout << fixed << setprecision(0)<< "A: " << endl;
         for (int i=0; i<A->size1; i++) { 
             for (int j=0; j<A->size2; j++) { 
@@ -2157,7 +2157,7 @@ void GSWalk::svd () {
     cutoff = (1.0-s2_run);
         gsl_vector_free(s2);
     #ifdef DEBUG
-    if (fm::die) 
+    if (fm::last_die) 
     cout << "CUT: " << cut+1 << " (" << adj_m_size << ")" << endl;
     #endif
 
@@ -2170,7 +2170,7 @@ void GSWalk::svd () {
     gsl_matrix_mul_elements(A, spur);
 
     #ifdef DEBUG
-    if (fm::die) {
+    if (fm::last_die) {
         cout << fixed << setprecision(0) << "ASV^T * spur: " << adj_m_rank << " (" << adj_m_size << ")" << endl;
         for (int i=0; i<A->size1; i++) { 
             for (int j=0; j<A->size2; j++) { 

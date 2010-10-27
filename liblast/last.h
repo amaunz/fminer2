@@ -29,15 +29,15 @@
 
 namespace fm { 
 
-    extern bool do_pruning;
-    extern bool aromatic;
-    extern ChisqConstraint* chisq;
-    extern KSConstraint* ks;
-    extern bool gsp_out;
-    extern bool bbrc_sep;
-    extern bool regression;
-    extern int max_hops;
-    extern bool db_built;
+    extern bool last_do_pruning;
+    extern bool last_aromatic;
+    extern ChisqConstraint* last_chisq;
+    extern KSConstraint* last_ks;
+    extern bool last_gsp_out;
+    extern bool last_bbrc_sep;
+    extern bool last_regression;
+    extern int last_max_hops;
+    extern bool last_db_built;
 
 }
 
@@ -108,15 +108,15 @@ class Last : public Fminer {
     void ReadGsp(FILE* gsp); //!< Read in a gSpan file
     bool AddCompound(string smiles, unsigned int comp_id); //!< Add a compound to the database.
     bool AddActivity(float act, unsigned int comp_id); //!< Add an activity to the database.
-    int GetNoRootNodes() {if (!fm::db_built) AddDataCanonical() ; return fm::database->nodelabels.size();} //!< Get number of root nodes (different element types).
-    int GetNoCompounds() {if (!fm::db_built) AddDataCanonical() ; return fm::database->trees.size();} //!< Get number of compounds in the database.
+    int GetNoRootNodes() {if (!fm::last_db_built) AddDataCanonical() ; return fm::last_database->nodelabels.size();} //!< Get number of root nodes (different element types).
+    int GetNoCompounds() {if (!fm::last_db_built) AddDataCanonical() ; return fm::last_database->trees.size();} //!< Get number of compounds in the database.
     //@}
     
   private:
-    void AddChiSqNa(){fm::chisq->na++;fm::chisq->n++;}
-    void AddChiSqNi(){fm::chisq->ni++;fm::chisq->n++;}
+    void AddChiSqNa(){fm::last_chisq->na++;fm::last_chisq->n++;}
+    void AddChiSqNi(){fm::last_chisq->ni++;fm::last_chisq->n++;}
     // KS: Insert value into set of activities
-    void AddKS(float val){fm::ks->all.push_back(val);}
+    void AddKS(float val){fm::last_ks->all.push_back(val);}
 
     bool init_mining_done;
     int comp_runner;

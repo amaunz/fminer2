@@ -23,28 +23,28 @@
 #include "graphstate.h"
 
 namespace fm {
-    extern unsigned int minfreq;
-    extern bool updated;
-    extern bool do_pruning;
-    extern bool console_out;
-    extern bool refine_singles;
-    extern bool do_output;
-    extern bool bbrc_sep;
-    extern bool regression;
-    extern bool gsp_out;
-    extern int die;
-    extern bool do_last;
+    extern unsigned int last_minfreq;
+    extern bool last_updated;
+    extern bool last_do_pruning;
+    extern bool last_console_out;
+    extern bool last_refine_singles;
+    extern bool last_do_output;
+    extern bool last_bbrc_sep;
+    extern bool last_regression;
+    extern bool last_gsp_out;
+    extern int last_die;
+    extern bool last_do_last;
 
-    extern LastDatabase* database;
-    extern ChisqConstraint* chisq;
-    extern KSConstraint* ks;
-    extern vector<string>* result;
-    extern LastStatistics* statistics;
-    extern LastGraphState* graphstate;
-    extern LastLegOccurrences* legoccurrences;
+    extern LastDatabase* last_database;
+    extern ChisqConstraint* last_chisq;
+    extern KSConstraint* last_ks;
+    extern vector<string>* last_result;
+    extern LastStatistics* last_statistics;
+    extern LastGraphState* last_graphstate;
+    extern LastLegOccurrences* last_legoccurrences;
 
-    extern vector<LastLegOccurrences> Lastcandidatelegsoccurrences; 
-    extern int max_hops;
+    extern vector<LastLegOccurrences> last_Lastcandidatelegsoccurrences; 
+    extern int last_max_hops;
 }
 
 int maxsize = ( 1 << ( sizeof(LastNodeId)*8 ) ) - 1; // safe default for the largest allowed pattern
@@ -109,13 +109,13 @@ void LastPatternTree::addExtensionLastLegs ( LastTuple &tuple, LastLegOccurrence
   else
     bbrc_extend ( legoccurrences );
 
-  if ( fm::Lastcandidatelegsoccurrences[pathlowestlabel].frequency >= fm::minfreq )
+  if ( fm::last_Lastcandidatelegsoccurrences[pathlowestlabel].frequency >= fm::last_minfreq )
     // this is the first possible extension, as we force this label to be the lowest!
-    addLastLeg ( fm::graphstate->lastNode (), tuple.depth + 1, pathlowestlabel, fm::Lastcandidatelegsoccurrences[pathlowestlabel] );
+    addLastLeg ( fm::last_graphstate->lastNode (), tuple.depth + 1, pathlowestlabel, fm::last_Lastcandidatelegsoccurrences[pathlowestlabel] );
 
-  for ( int i = 0; (unsigned) i < fm::Lastcandidatelegsoccurrences.size (); i++ ) {
-    if ( fm::Lastcandidatelegsoccurrences[i].frequency >= fm::minfreq && i != pathlowestlabel )
-      addLastLeg ( fm::graphstate->lastNode (), tuple.depth + 1, i, fm::Lastcandidatelegsoccurrences[i] );
+  for ( int i = 0; (unsigned) i < fm::last_Lastcandidatelegsoccurrences.size (); i++ ) {
+    if ( fm::last_Lastcandidatelegsoccurrences[i].frequency >= fm::last_minfreq && i != pathlowestlabel )
+      addLastLeg ( fm::last_graphstate->lastNode (), tuple.depth + 1, i, fm::last_Lastcandidatelegsoccurrences[i] );
   }
 
   LastaddCloseExtensions ( closelegs, legoccurrences.number );
@@ -288,7 +288,7 @@ LastPatternTree::LastPatternTree ( LastPath &path, unsigned int legindex ) {
       // In this case, we assume that the left part is the first path,
       // furthermore the position of the extension determines to which path
       // it is added
-    fm::graphstate->nasty = ( leftwalk == -1 );
+    fm::last_graphstate->nasty = ( leftwalk == -1 );
     if ( leftwalk == -1 || path.edgelabels[leftwalk] < path.edgelabels[rightwalk] ) {
       // left part of the path should be the first path in the tree
 
@@ -672,15 +672,15 @@ LastPatternTree::LastPatternTree ( LastPath &path, unsigned int legindex ) {
   }
   
   // ADDED
-  fm::graphstate->backbonelength = path.nodelabels.size ();
-  if ( fm::graphstate->backbonelength % 2 == 0 )
-    fm::graphstate->bicenterlabel = path.edgelabels [ fm::graphstate->backbonelength / 2 - 1 ];
+  fm::last_graphstate->backbonelength = path.nodelabels.size ();
+  if ( fm::last_graphstate->backbonelength % 2 == 0 )
+    fm::last_graphstate->bicenterlabel = path.edgelabels [ fm::last_graphstate->backbonelength / 2 - 1 ];
   else
-    fm::graphstate->centerlabel = path.nodelabels [ ( fm::graphstate->backbonelength - 1 ) / 2 ];
-  fm::graphstate->nasty = false;
-  fm::graphstate->treetuples = &treetuples;
-  fm::graphstate->closetuples = NULL;
-  fm::graphstate->startsecondpath = nextpathstart;
+    fm::last_graphstate->centerlabel = path.nodelabels [ ( fm::last_graphstate->backbonelength - 1 ) / 2 ];
+  fm::last_graphstate->nasty = false;
+  fm::last_graphstate->treetuples = &treetuples;
+  fm::last_graphstate->closetuples = NULL;
+  fm::last_graphstate->startsecondpath = nextpathstart;
 }
 
 LastPatternTree::LastPatternTree ( LastPatternTree &parenttree, unsigned int legindex ) {
@@ -763,9 +763,9 @@ LastPatternTree::LastPatternTree ( LastPatternTree &parenttree, unsigned int leg
   }
 
   // ADDED
-  fm::graphstate->treetuples = &treetuples;
-  fm::graphstate->closetuples = NULL;
-  fm::graphstate->startsecondpath = nextpathstart;
+  fm::last_graphstate->treetuples = &treetuples;
+  fm::last_graphstate->closetuples = NULL;
+  fm::last_graphstate->startsecondpath = nextpathstart;
     
   if ( nextprefixindex == nextpathstart && symmetric == 1 ) {
     secondpathleg = 0; // THE BUG
@@ -833,15 +833,15 @@ GSWalk* LastPatternTree::expand (pair<float, string> max, const int parent_size)
 
   assert(parent_size>0);
 
-  fm::statistics->patternsize++;
-  if ( fm::statistics->patternsize > (int) fm::statistics->frequenttreenumbers.size () ) {
-    fm::statistics->frequenttreenumbers.resize ( fm::statistics->patternsize, 0 );
-    fm::statistics->frequentpathnumbers.resize ( fm::statistics->patternsize, 0 );
-    fm::statistics->frequentgraphnumbers.resize ( fm::statistics->patternsize, 0 );
+  fm::last_statistics->patternsize++;
+  if ( fm::last_statistics->patternsize > (int) fm::last_statistics->frequenttreenumbers.size () ) {
+    fm::last_statistics->frequenttreenumbers.resize ( fm::last_statistics->patternsize, 0 );
+    fm::last_statistics->frequentpathnumbers.resize ( fm::last_statistics->patternsize, 0 );
+    fm::last_statistics->frequentgraphnumbers.resize ( fm::last_statistics->patternsize, 0 );
   }
-  ++fm::statistics->frequenttreenumbers[fm::statistics->patternsize-1];
-  if ( fm::statistics->patternsize == ((1<<(sizeof(LastNodeId)*8))-1) ) {
-    fm::statistics->patternsize--;
+  ++fm::last_statistics->frequenttreenumbers[fm::last_statistics->patternsize-1];
+  if ( fm::last_statistics->patternsize == ((1<<(sizeof(LastNodeId)*8))-1) ) {
+    fm::last_statistics->patternsize--;
     return NULL;
   }
    
@@ -863,38 +863,38 @@ GSWalk* LastPatternTree::expand (pair<float, string> max, const int parent_size)
     bool nsign=1;
 
     float cur_chisq;
-    if (fm::chisq->active) {
-        if (!fm::regression) { fm::chisq->Calc(legs[i]->occurrences.elements); cur_chisq=fm::chisq->p; }
-        else                 {    fm::ks->Calc(legs[i]->occurrences.elements); cur_chisq=   fm::ks->p; }
+    if (fm::last_chisq->active) {
+        if (!fm::last_regression) { fm::last_chisq->Calc(legs[i]->occurrences.elements); cur_chisq=fm::last_chisq->p; }
+        else                 {    fm::last_ks->Calc(legs[i]->occurrences.elements); cur_chisq=   fm::last_ks->p; }
     }
     
 
-    fm::graphstate->insertNode ( legs[i]->tuple.connectingnode, legs[i]->tuple.label, legs[i]->occurrences.maxdegree );
+    fm::last_graphstate->insertNode ( legs[i]->tuple.connectingnode, legs[i]->tuple.label, legs[i]->occurrences.maxdegree );
     #ifdef DEBUG
-    fm::graphstate->print(legs[i]->occurrences.frequency);
+    fm::last_graphstate->print(legs[i]->occurrences.frequency);
     #endif
 
     #ifdef DEBUG
-    fm::gsp_out=false;
-    string s = fm::graphstate->to_s(legs[i]->occurrences.frequency);
+    fm::last_gsp_out=false;
+    string s = fm::last_graphstate->to_s(legs[i]->occurrences.frequency);
     bool diehard=0;
-    //if (s.find("N-C-C(-O-C-N)(=C-C)")!=string::npos) { fm::die=1; diehard=1; }
+    //if (s.find("N-C-C(-O-C-N)(=C-C)")!=string::npos) { fm::last_die=1; diehard=1; }
     #endif
 
-    if (fm::chisq->active) { 
-        map<LastTid, int> weightmap_a; each_it(fm::chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
-        map<LastTid, int> weightmap_i; each_it(fm::chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
-        fm::graphstate->print(gsw, weightmap_a, weightmap_i); // print to graphstate walk
+    if (fm::last_chisq->active) { 
+        map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
+        map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
+        fm::last_graphstate->print(gsw, weightmap_a, weightmap_i); // print to graphstate walk
 
-        if (!fm::regression) {
-            gsw->activating=fm::chisq->activating;
-            if (cur_chisq >= fm::chisq->sig) {
+        if (!fm::last_regression) {
+            gsw->activating=fm::last_chisq->activating;
+            if (cur_chisq >= fm::last_chisq->sig) {
                 nsign=0;
             }
         }
         else {
-            gsw->activating=fm::ks->activating;
-            if (cur_chisq >= fm::ks->sig) {
+            gsw->activating=fm::last_ks->activating;
+            if (cur_chisq >= fm::last_ks->sig) {
                 nsign=0;
             }
         }
@@ -904,16 +904,16 @@ GSWalk* LastPatternTree::expand (pair<float, string> max, const int parent_size)
 
     // !STOP: MERGE TO SIBLINGWALK
     if (gsw->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr<<"Error! Already nodes marked as available 5.1. "<<gsw->to_nodes_ex.size()<<" "<<siblingwalk->to_nodes_ex.size()<<endl;exit(1); }
-    if (nsign || gsw->activating!=siblingwalk->activating || siblingwalk->hops > fm::max_hops) { // empty sw needs no checks
+    if (nsign || gsw->activating!=siblingwalk->activating || siblingwalk->hops > fm::last_max_hops) { // empty sw needs no checks
           if (siblingwalk->hops>0) {
               if (siblingwalk->hops>1) {
                     siblingwalk->svd();
               }
-              if (fm::do_output) {
-                  if (!fm::console_out) { 
+              if (fm::last_do_output) {
+                  if (!fm::last_console_out) { 
                       ostringstream strstrm;
                       strstrm << siblingwalk;
-                      (*fm::result) << strstrm.str();
+                      (*fm::last_result) << strstrm.str();
                   }
                   else cout << siblingwalk;
               }
@@ -923,7 +923,7 @@ GSWalk* LastPatternTree::expand (pair<float, string> max, const int parent_size)
     }
     if (!nsign && ((gsw->activating==siblingwalk->activating) || !siblingwalk->edgewalk.size())) {
         #ifdef DEBUG
-        if (fm::die) cout << "CR gsw" << endl;
+        if (fm::last_die) cout << "CR gsw" << endl;
         #endif
         int res=gsw->conflict_resolution(core_ids, siblingwalk);
     }
@@ -932,11 +932,11 @@ GSWalk* LastPatternTree::expand (pair<float, string> max, const int parent_size)
 
     
     // RECURSE
-    if ( ( !fm::do_pruning ||  (  fm::chisq->u >= fm::chisq->sig) ) &&
-         (  fm::refine_singles || (legs[i]->occurrences.frequency>1) )
+    if ( ( !fm::last_do_pruning ||  (  fm::last_chisq->u >= fm::last_chisq->sig) ) &&
+         (  fm::last_refine_singles || (legs[i]->occurrences.frequency>1) )
        ) {
         LastPatternTree p ( *this, i );
-        if (cur_chisq > max.first) { fm::updated = true; topdown = p.expand (pair<float, string>(cur_chisq,fm::graphstate->to_s(legs[i]->occurrences.frequency)), gsw_size); }
+        if (cur_chisq > max.first) { fm::last_updated = true; topdown = p.expand (pair<float, string>(cur_chisq,fm::last_graphstate->to_s(legs[i]->occurrences.frequency)), gsw_size); }
         else topdown = p.expand (max, gsw_size);
     }
 
@@ -945,7 +945,7 @@ GSWalk* LastPatternTree::expand (pair<float, string> max, const int parent_size)
        if (topdown->edgewalk.size()) {
 
             #ifdef DEBUG
-            if (fm::die) {
+            if (fm::last_die) {
                 cout << "TOPDOWN2 BEGIN " << core_ids.size() << endl;
                 cout << topdown ;
                 cout << "--result--" << endl;
@@ -957,17 +957,17 @@ GSWalk* LastPatternTree::expand (pair<float, string> max, const int parent_size)
             // STOP: OUTPUT TOPDOWN
             if (nsign || siblingwalk->activating!=topdown->activating) { 
                 #ifdef DEBUG
-                if (fm::die) cout << "STOP CRITERIUM at CHI " << cur_chisq << endl;
+                if (fm::last_die) cout << "STOP CRITERIUM at CHI " << cur_chisq << endl;
                 #endif
                 if (topdown->hops>0) { 
                     if (topdown->hops>1) { 
                         topdown->svd();
                     }
-                    if (fm::do_output) {
-                        if (!fm::console_out) { 
+                    if (fm::last_do_output) {
+                        if (!fm::last_console_out) { 
                             ostringstream strstrm;
                             strstrm << topdown;
-                            (*fm::result) << strstrm.str();
+                            (*fm::last_result) << strstrm.str();
                         }
                         else cout << topdown;
                     }
@@ -980,7 +980,7 @@ GSWalk* LastPatternTree::expand (pair<float, string> max, const int parent_size)
             if (topdown->to_nodes_ex.size() || siblingwalk->to_nodes_ex.size()) { cerr << "Error! Still nodes marked as available 5.2. " << topdown->to_nodes_ex.size() << " " << siblingwalk->to_nodes_ex.size() <<  endl; exit(1); }
 
             #ifdef DEBUG
-            if (fm::die) {
+            if (fm::last_die) {
                 cout << "TOPDOWN2 END " << core_ids.size() << endl;
                 cout << topdown ;
                 cout << "--result--" << endl;
@@ -991,7 +991,7 @@ GSWalk* LastPatternTree::expand (pair<float, string> max, const int parent_size)
        }
     }
     
-    fm::graphstate->deleteNode ();
+    fm::last_graphstate->deleteNode ();
     delete topdown;
     delete gsw;
     #ifdef DEBUG
@@ -1004,10 +1004,10 @@ GSWalk* LastPatternTree::expand (pair<float, string> max, const int parent_size)
   }
 
   #ifdef DEBUG  
-  if (!legs.size()) cout << fm::graphstate->sep() << endl;
+  if (!legs.size()) cout << fm::last_graphstate->sep() << endl;
   #endif
   
-  fm::statistics->patternsize--;
+  fm::last_statistics->patternsize--;
   return siblingwalk;
 
 }
@@ -1023,11 +1023,11 @@ LastPatternTree::~LastPatternTree () {
 
 /*
 ostream &operator<< ( ostream &stream, LastTuple &tuple ) {
-  LastDatabaseLastEdgeLabel edgelabel = database->edgelabels[fm::database->edgelabelsindexes[tuple.label]];
+  LastDatabaseLastEdgeLabel edgelabel = database->edgelabels[fm::last_database->edgelabelsindexes[tuple.label]];
   stream << "(" << tuple.depth << ","
-         << fm::database->nodelabels[edgelabel.fromnodelabel].inputlabel << "-"
+         << fm::last_database->nodelabels[edgelabel.fromnodelabel].inputlabel << "-"
          << edgelabel.inputedgelabel << "-"
-         << fm::database->nodelabels[edgelabel.tonodelabel].inputlabel << "[" << (int) tuple.label << "])";
+         << fm::last_database->nodelabels[edgelabel.tonodelabel].inputlabel << "[" << (int) tuple.label << "])";
 
   return stream;
 }

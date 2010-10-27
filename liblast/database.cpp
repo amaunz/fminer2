@@ -25,8 +25,8 @@
 #include <iostream>
 
 namespace fm {
-    extern bool aromatic;
-    extern unsigned int minfreq;
+    extern bool last_aromatic;
+    extern unsigned int last_minfreq;
 }
 
 ostream &operator<< ( ostream &stream, LastDatabaseTreeEdge &databasetreeedge ) {
@@ -104,7 +104,7 @@ bool LastDatabase::readTreeSmi (string smi, LastTid tid, LastTid orig_tid, int l
 
         // set atom type as label
         // code for 'c' is set to -1 (aromatic carbon).
-        if (fm::aromatic) {
+        if (fm::last_aromatic) {
             (*atom)->IsAromatic() ? inputnodelabel = (*atom)->GetAtomicNum()+150 : inputnodelabel = (*atom)->GetAtomicNum();
         }
         else inputnodelabel = (*atom)->GetAtomicNum();
@@ -177,7 +177,7 @@ bool LastDatabase::readTreeSmi (string smi, LastTid tid, LastTid orig_tid, int l
 
             // set input edge label
             inputedgelabel = bondorder;
-            if (fm::aromatic && (*bond)->IsAromatic()) inputedgelabel = 4;
+            if (fm::last_aromatic && (*bond)->IsAromatic()) inputedgelabel = 4;
 
 //            cerr << nodeid1 << inputedgelabel << "(" << (*bond)->IsAromatic() << ")" << nodeid2 << " ";
             LastNodeLabel node1label = tree->nodes[nodeid1].nodelabel;
@@ -498,7 +498,7 @@ void LastDatabase::determineCycledNodes ( LastDatabaseTreePtr tree, vector<int> 
 
 void LastDatabase::edgecount () {
   for (unsigned int i = 0; i < edgelabels.size (); i++ ) {                              // DATABASE                    
-    if ( edgelabels[i].frequency >= fm::minfreq ) {                                         // if edge is frequent...      
+    if ( edgelabels[i].frequency >= fm::last_minfreq ) {                                         // if edge is frequent...      
       nodelabels[edgelabels[i].tonodelabel].frequentedgelabels.push_back ( i );         // ... store it at the to-node 
       if ( edgelabels[i].fromnodelabel != edgelabels[i].tonodelabel )                   // ... and also (if different) 
         nodelabels[edgelabels[i].fromnodelabel].frequentedgelabels.push_back ( i );     // ... at the from-node        
@@ -529,7 +529,7 @@ void LastDatabase::reorder () {
     // gather frequent edgelabels and sort according to frequency
     edgelabelsindexes.reserve ( edgelabels.size () );
     for (unsigned int i = 0; i < edgelabels.size (); i++ ) {
-        if ( edgelabels[i].frequency >= fm::minfreq )
+        if ( edgelabels[i].frequency >= fm::last_minfreq )
             edgelabelsindexes.push_back ( i );                                                              
     }
 
@@ -575,7 +575,7 @@ void LastDatabase::reorder () {
         for ( LastNodeId j = 0; j < tree.nodes.size (); j++ ) {                         // for every node j...
   //        cerr << endl;
             LastDatabaseTreeNode &node = tree.nodes[j];
-            if ( nodelabels[node.nodelabel].frequency >= fm::minfreq ) {                  // ...check its frequency...
+            if ( nodelabels[node.nodelabel].frequency >= fm::last_minfreq ) {                  // ...check its frequency...
                 LastDatabaseLastNodeLabel &nodelabel = nodelabels[node.nodelabel];
 
   //            cerr << "LastLeg Occurence for node " << nodelabel.inputlabel
@@ -588,7 +588,7 @@ void LastDatabase::reorder () {
                     
                                         
                     LastEdgeLabel lab = node.edges[l].edgelabel;                            // ... (with label lab)...
-                    if ( edgelabels[lab].frequency >= fm::minfreq ) {                       // ... check its frequency...
+                    if ( edgelabels[lab].frequency >= fm::last_minfreq ) {                       // ... check its frequency...
 
   //                    LastDatabaseTreeEdge& edge = node.edges[l];
   //                    cerr << "  edge " << (int) edge.edgelabel << " moved from " << l << " to " << k << endl;

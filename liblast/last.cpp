@@ -26,12 +26,12 @@
 // 1. Constructors and Initializers
 
 Last::Last() : init_mining_done(false) {
-  if (!fm::instance_present) {
-      fm::database = NULL; fm::statistics = NULL; fm::chisq = NULL; fm::result = NULL;
+  if (!fm::last_instance_present) {
+      fm::last_database = NULL; fm::last_statistics = NULL; fm::last_chisq = NULL; fm::last_result = NULL;
       Reset();
       Defaults();
-      fm::instance_present=true;
-      fm::gsp_out = false; 
+      fm::last_instance_present=true;
+      fm::last_gsp_out = false; 
   }
   else {
     cerr << "Error! Cannot create more than 1 instance." << endl; 
@@ -41,14 +41,14 @@ Last::Last() : init_mining_done(false) {
 
 /*
 Last::Last(int _type, unsigned int _minfreq) : init_mining_done(false) {
-  if (!fm::instance_present) {
-      fm::database = NULL; fm::statistics = NULL; fm::chisq = NULL; fm::result = NULL;
+  if (!fm::last_instance_present) {
+      fm::last_database = NULL; fm::last_statistics = NULL; fm::last_chisq = NULL; fm::last_result = NULL;
       Reset();
       Defaults();
       SetType(_type);
       SetMinfreq(_minfreq);
-      fm::instance_present=true;
-      fm::gsp_out = false; 
+      fm::last_instance_present=true;
+      fm::last_gsp_out = false; 
   }
   else {
     cerr << "Error! Cannot create more than 1 instance." << endl; 
@@ -57,15 +57,15 @@ Last::Last(int _type, unsigned int _minfreq) : init_mining_done(false) {
 }
 
 Last::Last(int _type, unsigned int _minfreq, float _chisq_val, bool _do_backbone) : init_mining_done(false) {
-  if (!fm::instance_present) {
-      fm::database = NULL; fm::statistics = NULL; fm::chisq = NULL; fm::result = NULL;
+  if (!fm::last_instance_present) {
+      fm::last_database = NULL; fm::last_statistics = NULL; fm::last_chisq = NULL; fm::last_result = NULL;
       Reset();
       Defaults();
       SetType(_type);
       SetMinfreq(_minfreq);
       SetChisqSig(_chisq_val);
-      fm::instance_present=true;
-      fm::gsp_out = false; 
+      fm::last_instance_present=true;
+      fm::last_gsp_out = false; 
 
   }
   else {
@@ -76,88 +76,88 @@ Last::Last(int _type, unsigned int _minfreq, float _chisq_val, bool _do_backbone
 */
 
 Last::~Last() {
-    if (fm::instance_present) {
-        delete fm::database;
-        delete fm::statistics; 
-        delete fm::chisq; 
-        delete fm::ks;
-        delete fm::graphstate;
-        delete fm::closelegoccurrences;
-        delete fm::legoccurrences;
+    if (fm::last_instance_present) {
+        delete fm::last_database;
+        delete fm::last_statistics; 
+        delete fm::last_chisq; 
+        delete fm::last_ks;
+        delete fm::last_graphstate;
+        delete fm::last_closelegoccurrences;
+        delete fm::last_legoccurrences;
 
-        fm::Lastcandidatelegsoccurrences.clear();
-        fm::candidatecloselegsoccs.clear();
-        fm::candidateLastcloselegsoccsused.clear();
+        fm::last_Lastcandidatelegsoccurrences.clear();
+        fm::last_candidatecloselegsoccs.clear();
+        fm::last_candidateLastcloselegsoccsused.clear();
 
-        fm::instance_present=false;
+        fm::last_instance_present=false;
     }
 }
 
 void Last::Reset() { 
-    if (fm::instance_present) {
-        delete fm::database;
-        delete fm::statistics;
-        delete fm::chisq;
-        delete fm::ks;
-        delete fm::graphstate;
-        delete fm::closelegoccurrences;
-        delete fm::legoccurrences;
+    if (fm::last_instance_present) {
+        delete fm::last_database;
+        delete fm::last_statistics;
+        delete fm::last_chisq;
+        delete fm::last_ks;
+        delete fm::last_graphstate;
+        delete fm::last_closelegoccurrences;
+        delete fm::last_legoccurrences;
     }
-    fm::database = new LastDatabase();
-    fm::db_built = false;
-    fm::statistics = new LastStatistics();
-    fm::chisq = new ChisqConstraint(3.84146);
-    fm::ks = new KSConstraint(0.95);
-    fm::graphstate = new LastGraphState();
-    fm::closelegoccurrences = new CloseLastLegOccurrences();
-    fm::legoccurrences = new LastLegOccurrences();
+    fm::last_database = new LastDatabase();
+    fm::last_db_built = false;
+    fm::last_statistics = new LastStatistics();
+    fm::last_chisq = new ChisqConstraint(3.84146);
+    fm::last_ks = new KSConstraint(0.95);
+    fm::last_graphstate = new LastGraphState();
+    fm::last_closelegoccurrences = new CloseLastLegOccurrences();
+    fm::last_legoccurrences = new LastLegOccurrences();
 
-    fm::candidateLastcloselegsoccsused.clear();
+    fm::last_candidateLastcloselegsoccsused.clear();
 
-    fm::chisq->active=true; 
-    fm::result = &r;
+    fm::last_chisq->active=true; 
+    fm::last_result = &r;
     comp_runner=0; 
     comp_no=0; 
     init_mining_done = false;
 }
 
 void Last::Defaults() {
-    fm::minfreq = 2;
-    fm::type = 2;
-    fm::do_pruning = true;
-    fm::console_out = true;
-    fm::aromatic = true;
-    fm::refine_singles = false;
-    fm::do_output=true;
-    fm::bbrc_sep=false;
-    fm::updated = true;
-    fm::gsp_out=true;
-    fm::regression=false;
+    fm::last_minfreq = 2;
+    fm::last_type = 2;
+    fm::last_do_pruning = true;
+    fm::last_console_out = true;
+    fm::last_aromatic = true;
+    fm::last_refine_singles = false;
+    fm::last_do_output=true;
+    fm::last_bbrc_sep=false;
+    fm::last_updated = true;
+    fm::last_gsp_out=true;
+    fm::last_regression=false;
 
     // LAST
-    fm::do_last=true;
+    fm::last_do_last=true;
     fm::last_hops=0;
-    fm::die = 0;
-    fm::max_hops = 50;
+    fm::last_die = 0;
+    fm::last_max_hops = 50;
 }
 
 
 // 2. Getter methods
 
-int Last::GetMinfreq(){return fm::minfreq;}
-int Last::GetType(){return fm::type;}
+int Last::GetMinfreq(){return fm::last_minfreq;}
+int Last::GetType(){return fm::last_type;}
 bool Last::GetBackbone(){return false;}
 bool Last::GetDynamicUpperBound(){return false;}
-bool Last::GetPruning() {return fm::do_pruning;}
-bool Last::GetConsoleOut(){return fm::console_out;}
-bool Last::GetAromatic() {return fm::aromatic;}
-bool Last::GetRefineSingles() {return fm::refine_singles;}
-bool Last::GetDoOutput() {return fm::do_output;}
-bool Last::GetBbrcSep(){return fm::bbrc_sep;}
-bool Last::GetChisqActive(){return fm::chisq->active;}
-float Last::GetChisqSig(){if (!fm::regression) return fm::chisq->sig; else return fm::ks->sig;}
-bool Last::GetRegression() {return fm::regression;}
-int Last::GetMaxHops() {return fm::max_hops;}
+bool Last::GetPruning() {return fm::last_do_pruning;}
+bool Last::GetConsoleOut(){return fm::last_console_out;}
+bool Last::GetAromatic() {return fm::last_aromatic;}
+bool Last::GetRefineSingles() {return fm::last_refine_singles;}
+bool Last::GetDoOutput() {return fm::last_do_output;}
+bool Last::GetBbrcSep(){return fm::last_bbrc_sep;}
+bool Last::GetChisqActive(){return fm::last_chisq->active;}
+float Last::GetChisqSig(){if (!fm::last_regression) return fm::last_chisq->sig; else return fm::last_ks->sig;}
+bool Last::GetRegression() {return fm::last_regression;}
+int Last::GetMaxHops() {return fm::last_max_hops;}
 
 
 // 3. Setter methods
@@ -165,7 +165,7 @@ int Last::GetMaxHops() {return fm::max_hops;}
 void Last::SetMinfreq(int val) {
     if (val < 1) { cerr << "Error! Invalid value '" << val << "' for parameter minfreq." << endl; exit(1); }
     if (val > 1 && GetRefineSingles()) { cerr << "Warning! Minimum frequency of '" << val << "' could not be set due to activated single refinement." << endl;}
-    fm::minfreq = val;
+    fm::last_minfreq = val;
 }
 
 // These methods report forbidden switches (synopsis) back to main
@@ -188,12 +188,12 @@ bool Last::SetPruning(bool val) {
 
 bool Last::SetConsoleOut(bool val) {
     // console out not switched by fminer
-    fm::console_out=val;
+    fm::last_console_out=val;
     return 1;
 }
 
 void Last::SetAromatic(bool val) {
-    fm::aromatic = val;
+    fm::last_aromatic = val;
 }
 
 bool Last::SetRefineSingles(bool val) {
@@ -201,7 +201,7 @@ bool Last::SetRefineSingles(bool val) {
 }
 
 void Last::SetDoOutput(bool val) {
-    fm::do_output = val;
+    fm::last_do_output = val;
 }
 
 bool Last::SetBbrcSep(bool val) {
@@ -219,39 +219,39 @@ bool Last::SetChisqSig(float _chisq_val) {
 bool Last::SetRegression(bool val) {
     // return 0;
     // TODO: enable regression
-    fm::regression=val;
+    fm::last_regression=val;
     return 1;
 }
 
 bool Last::SetMaxHops(int val) {
-    fm::max_hops=val;
+    fm::last_max_hops=val;
     return 1;
 }
 
 // 4. Other methods
 
 vector<string>* Last::MineRoot(unsigned int j) {
-    fm::result->clear();
+    fm::last_result->clear();
     if (!init_mining_done) {
-        if (!fm::db_built) {
+        if (!fm::last_db_built) {
           AddDataCanonical();
         }
-        if (fm::chisq->active) {
-            each (fm::database->trees) {
-                if (fm::database->trees[i]->activity == -1) {
-                    cerr << "Error! ID " << fm::database->trees[i]->orig_tid << " is missing activity information." << endl;
+        if (fm::last_chisq->active) {
+            each (fm::last_database->trees) {
+                if (fm::last_database->trees[i]->activity == -1) {
+                    cerr << "Error! ID " << fm::last_database->trees[i]->orig_tid << " is missing activity information." << endl;
                     exit(1);
                 }
             }
         }
-        fm::database->edgecount (); 
-        fm::database->reorder (); 
+        fm::last_database->edgecount (); 
+        fm::last_database->reorder (); 
         LastinitLastLegStatics (); 
-        fm::graphstate->init (); 
-        if (fm::bbrc_sep && fm::do_output && !fm::console_out) (*fm::result) << fm::graphstate->sep();
+        fm::last_graphstate->init (); 
+        if (fm::last_bbrc_sep && fm::last_do_output && !fm::last_console_out) (*fm::last_result) << fm::last_graphstate->sep();
         init_mining_done=true; 
 
-        if (!fm::regression) {
+        if (!fm::last_regression) {
             cerr << "Settings:" << endl \
                  << "---" << endl \
                  << "Type:                                 " << GetType() << endl \
@@ -280,7 +280,7 @@ vector<string>* Last::MineRoot(unsigned int j) {
 
 
 
-        if (fm::do_output) {
+        if (fm::last_do_output) {
 
           string xml_header = 
 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
@@ -297,29 +297,29 @@ xsi:noNamespaceSchemaLocation=\"graphml.xsd\">\n\
 <key id=\"weight\" for=\"edge\" attr.name=\"edge_weight\" attr.type=\"int\" />\n\
 <key id=\"del\" for=\"edge\" attr.name=\"edge_deleted\" attr.type=\"boolean\" />\n\n";
 
-         if (!fm::console_out) (*fm::result) << xml_header;
+         if (!fm::last_console_out) (*fm::last_result) << xml_header;
          else cout << xml_header;
       }
     }
 
-    if (j >= fm::database->nodelabels.size()) { cerr << "Error! Root node " << j << " does not exist." << endl;  exit(1); }
-    if ( fm::database->nodelabels[j].frequency >= fm::minfreq && fm::database->nodelabels[j].frequentedgelabels.size () ) {
+    if (j >= fm::last_database->nodelabels.size()) { cerr << "Error! Root node " << j << " does not exist." << endl;  exit(1); }
+    if ( fm::last_database->nodelabels[j].frequency >= fm::last_minfreq && fm::last_database->nodelabels[j].frequentedgelabels.size () ) {
         LastPath path(j);
         path.expand(); // mining step
     }
-    if (j==GetNoRootNodes()-1 && fm::do_output) {
-      if (!fm::console_out) (*fm::result) << "</graphml>\n";
+    if (j==GetNoRootNodes()-1 && fm::last_do_output) {
+      if (!fm::last_console_out) (*fm::last_result) << "</graphml>\n";
       else cout << "</graphml>" << endl;
     }
-    return fm::result;
+    return fm::last_result;
 }
 
 void Last::ReadGsp(FILE* gsp){
-    fm::database->readGsp(gsp);
+    fm::last_database->readGsp(gsp);
 }
 
 bool Last::AddCompound(string smiles, unsigned int comp_id) {
-  if (fm::db_built) {
+  if (fm::last_db_built) {
     cerr << "LastDatabase has been already processed! Please reset() and insert a new dataset." << endl;
     return false;
   }
@@ -359,7 +359,7 @@ bool Last::AddCompound(string smiles, unsigned int comp_id) {
 }
 
 bool Last::AddActivity(float act, unsigned int comp_id) {
-  if (fm::db_built) {
+  if (fm::last_db_built) {
     cerr << "LastDatabase has been already processed! Please reset() and insert a new dataset." << endl;
     return false;
   }
@@ -401,14 +401,14 @@ bool Last::AddDataCanonical() {
       AddCompoundCanonical(it->second.second, it->second.first); // smiles, comp_id
       AddActivityCanonical(activity_map[it->second.first], it->second.first); // act, comp_id
     }
-    fm::db_built=true;
+    fm::last_db_built=true;
 }
 
 bool Last::AddCompoundCanonical(string smiles, unsigned int comp_id) {
   bool insert_done=false;
   if (comp_id<=0) { cerr << "Error! IDs must be of type: Int > 0." << endl;}
   else {
-    if (fm::database->readTreeSmi (smiles, comp_no, comp_id, comp_runner)) {
+    if (fm::last_database->readTreeSmi (smiles, comp_no, comp_id, comp_runner)) {
       insert_done=true;
       comp_no++;
     }
@@ -419,16 +419,16 @@ bool Last::AddCompoundCanonical(string smiles, unsigned int comp_id) {
 }
 
 bool Last::AddActivityCanonical(float act, unsigned int comp_id) {
-  if (fm::database->trees_map[comp_id] == NULL) { 
+  if (fm::last_database->trees_map[comp_id] == NULL) { 
     cerr << "No structure for ID " << comp_id << ". Ignoring entry!" << endl; return false; 
   }
   else {
-    if (!fm::regression) {
-      if ((fm::database->trees_map[comp_id]->activity = act) == 1.0) AddChiSqNa();
+    if (!fm::last_regression) {
+      if ((fm::last_database->trees_map[comp_id]->activity = act) == 1.0) AddChiSqNa();
       else AddChiSqNi();
     }
     else {
-      if ((fm::database->trees_map[comp_id]->activity = act)) AddKS(act);
+      if ((fm::last_database->trees_map[comp_id]->activity = act)) AddKS(act);
     }
     return true;
   }
