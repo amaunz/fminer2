@@ -38,26 +38,26 @@ struct LastCloseLastTuple {
   }
 };
 
-struct CloseLastLastLegOccurrence {
+struct CloseLastLegOccurrence {
   LastTid tid;
   LastOccurrenceId occurrenceid;
 
-  CloseLastLastLegOccurrence ( LastTid tid, LastOccurrenceId occurrenceid ): tid ( tid ), occurrenceid ( occurrenceid ) { }
-  CloseLastLastLegOccurrence () { }
+  CloseLastLegOccurrence ( LastTid tid, LastOccurrenceId occurrenceid ): tid ( tid ), occurrenceid ( occurrenceid ) { }
+  CloseLastLegOccurrence () { }
 };
 
-struct CloseLastLastLegOccurrences {
+struct CloseLastLegOccurrences {
   LastFrequency frequency;
-  vector<CloseLastLastLegOccurrence> elements;
-  CloseLastLastLegOccurrences () : frequency ( 0 ) { }
+  vector<CloseLastLegOccurrence> elements;
+  CloseLastLegOccurrences () : frequency ( 0 ) { }
 };
 
-typedef CloseLastLastLegOccurrences *CloseLastLastLegOccurrencesPtr;
+typedef CloseLastLegOccurrences *CloseLastLegOccurrencesPtr;
 
 struct LastCloseLastLeg {
   bool copy;
   LastCloseLastTuple tuple;
-  CloseLastLastLegOccurrences occurrences;
+  CloseLastLegOccurrences occurrences;
   LastCloseLastLeg (): copy ( true ) { }
 };
 
@@ -69,8 +69,8 @@ class LastLeg;
 typedef LastLeg *LastLegPtr;
 
 void LastaddCloseExtensions ( vector<LastCloseLastLegPtr> &targetcloselegs, int number );
-void LastaddCloseExtensions ( vector<LastCloseLastLegPtr> &targetcloselegs, vector<LastCloseLastLegPtr> &sourcecloselegs, LastLastLegOccurrences &sourceoccs );
-CloseLastLastLegOccurrencesPtr bbrc_join ( LastLastLegOccurrences &legoccsdata, CloseLastLastLegOccurrences &closelegoccsdata );
-CloseLastLastLegOccurrencesPtr bbrc_join ( CloseLastLastLegOccurrences &closelegoccsdata1, CloseLastLastLegOccurrences &closelegoccsdata2 );
+void LastaddCloseExtensions ( vector<LastCloseLastLegPtr> &targetcloselegs, vector<LastCloseLastLegPtr> &sourcecloselegs, LastLegOccurrences &sourceoccs );
+CloseLastLegOccurrencesPtr bbrc_join ( LastLegOccurrences &legoccsdata, CloseLastLegOccurrences &closelegoccsdata );
+CloseLastLegOccurrencesPtr bbrc_join ( CloseLastLegOccurrences &closelegoccsdata1, CloseLastLegOccurrences &closelegoccsdata2 );
 
 #endif

@@ -109,8 +109,8 @@ void Last::Reset() {
     fm::chisq = new ChisqConstraint(3.84146);
     fm::ks = new KSConstraint(0.95);
     fm::graphstate = new LastGraphState();
-    fm::closelegoccurrences = new CloseLastLastLegOccurrences();
-    fm::legoccurrences = new LastLastLegOccurrences();
+    fm::closelegoccurrences = new CloseLastLegOccurrences();
+    fm::legoccurrences = new LastLegOccurrences();
 
     fm::candidateLastcloselegsoccsused.clear();
 

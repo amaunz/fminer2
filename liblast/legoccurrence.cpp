@@ -27,10 +27,10 @@
 namespace fm {
     extern LastDatabase* database;
     extern LastGraphState* graphstate;
-    extern LastLastLegOccurrences* legoccurrences;
+    extern LastLegOccurrences* legoccurrences;
     extern unsigned int minfreq;
-    extern vector<LastLastLegOccurrences> Lastcandidatelegsoccurrences; 
-    extern vector<vector< CloseLastLastLegOccurrences> > candidatecloselegsoccs;
+    extern vector<LastLegOccurrences> Lastcandidatelegsoccurrences; 
+    extern vector<vector< CloseLastLegOccurrences> > candidatecloselegsoccs;
     extern vector<bool> candidateLastcloselegsoccsused;
     extern bool Lastcloselegsoccsused;
 }
@@ -42,13 +42,13 @@ void LastinitLastLegStatics () {
 
 
 /*
-ostream &operator<< ( ostream &stream, LastLastLegOccurrence &occ ) {
+ostream &operator<< ( ostream &stream, LastLegOccurrence &occ ) {
   stream << "[" << occ.tid << "(" << fm::database->trees[occ.tid]->activity  << ")" << "," << occ.occurrenceid << "," << occ.tonodeid << "," << occ.fromnodeid << "]";
   return stream;
 }
 */
 
-ostream &operator<< ( ostream &stream, vector<LastLastLegOccurrence> &occs ) {
+ostream &operator<< ( ostream &stream, vector<LastLegOccurrence> &occs ) {
   LastTid lasttid = NOTID;
   LastFrequency frequency = 0;
   for ( int i = 0; i < (int) occs.size (); i++ ) {
@@ -65,13 +65,13 @@ ostream &operator<< ( ostream &stream, vector<LastLastLegOccurrence> &occs ) {
 }
 
 // This function is on the critical path. Its efficiency is MOST important.
-LastLastLegOccurrencesPtr bbrc_join ( LastLastLegOccurrences &legoccsdata1, LastNodeId connectingnode, LastLastLegOccurrences &legoccsdata2 ) {
+LastLegOccurrencesPtr bbrc_join ( LastLegOccurrences &legoccsdata1, LastNodeId connectingnode, LastLegOccurrences &legoccsdata2 ) {
   if ( fm::graphstate->getNodeDegree ( connectingnode ) == fm::graphstate->getNodeMaxDegree ( connectingnode ) ) 
     return NULL;
 
   LastFrequency frequency = 0;
   LastTid lasttid = NOTID;
-  vector<LastLastLegOccurrence> &legoccs1 = legoccsdata1.elements, &legoccs2 = legoccsdata2.elements;
+  vector<LastLegOccurrence> &legoccs1 = legoccsdata1.elements, &legoccs2 = legoccsdata2.elements;
   fm::legoccurrences->elements.resize ( 0 );
   fm::legoccurrences->maxdegree = 0;
   fm::legoccurrences->selfjoin = 0;
@@ -85,7 +85,7 @@ LastLastLegOccurrencesPtr bbrc_join ( LastLastLegOccurrences &legoccsdata1, Last
       j++;
     }
     if ( j < legoccs1size ) {
-      LastLastLegOccurrence &jlegocc = legoccs1[j];
+      LastLegOccurrence &jlegocc = legoccs1[j];
       while ( k < legoccs2size && legoccs2[k].occurrenceid < jlegocc.occurrenceid ) {
         k++;
       }
@@ -107,7 +107,7 @@ LastLastLegOccurrencesPtr bbrc_join ( LastLastLegOccurrences &legoccsdata1, Last
             for ( LastOccurrenceId l2 = l; l2 < k; l2++ ) {
 	      LastNodeId tonodeid = legoccs2[l2].tonodeid;
               if ( legoccs1[m2].tonodeid !=  tonodeid ) {
-                fm::legoccurrences->elements.push_back ( LastLastLegOccurrence ( jlegocc.tid, m2, tonodeid, legoccs2[l2].fromnodeid ) );
+                fm::legoccurrences->elements.push_back ( LastLegOccurrence ( jlegocc.tid, m2, tonodeid, legoccs2[l2].fromnodeid ) );
                 Lastsetmax ( fm::legoccurrences->maxdegree, fm::database->trees[jlegocc.tid]->nodes[tonodeid].edges.size () );
         		add = true;
         		d++;
@@ -146,11 +146,11 @@ LastLastLegOccurrencesPtr bbrc_join ( LastLastLegOccurrences &legoccsdata1, Last
     return NULL;
 }
 
-LastLastLegOccurrencesPtr bbrc_join ( LastLastLegOccurrences &legoccsdata ) {
+LastLegOccurrencesPtr bbrc_join ( LastLegOccurrences &legoccsdata ) {
   if ( legoccsdata.selfjoin < fm::minfreq ) 
     return NULL;
   fm::legoccurrences->elements.resize ( 0 );
-  vector<LastLastLegOccurrence> &legoccs = legoccsdata.elements;
+  vector<LastLegOccurrence> &legoccs = legoccsdata.elements;
   fm::legoccurrences->maxdegree = 0;
   fm::legoccurrences->selfjoin = 0;
   LastTid lastself = NOTID;
@@ -158,7 +158,7 @@ LastLastLegOccurrencesPtr bbrc_join ( LastLastLegOccurrences &legoccsdata ) {
   LastOccurrenceId j = 0, k, l, m;
   do {
     k = j;
-    LastLastLegOccurrence &legocc = legoccs[k];
+    LastLegOccurrence &legocc = legoccs[k];
     do {
       j++;
     }
@@ -167,7 +167,7 @@ LastLastLegOccurrencesPtr bbrc_join ( LastLastLegOccurrences &legoccsdata ) {
     for ( l = k; l < j; l++ )
       for ( m = k; m < j; m++ )
         if ( l != m ) {
-          fm::legoccurrences->elements.push_back ( LastLastLegOccurrence ( legocc.tid, l, legoccs[m].tonodeid, legoccs[m].fromnodeid ) );
+          fm::legoccurrences->elements.push_back ( LastLegOccurrence ( legocc.tid, l, legoccs[m].tonodeid, legoccs[m].fromnodeid ) );
           Lastsetmax ( fm::legoccurrences->maxdegree, fm::database->trees[legocc.tid]->nodes[legoccs[m].tonodeid].edges.size () );
         }
     if ( ( j - k > 2 ) && legocc.tid != lastself ) {
@@ -186,7 +186,7 @@ LastLastLegOccurrencesPtr bbrc_join ( LastLastLegOccurrences &legoccsdata ) {
   return fm::legoccurrences;
 }
 
-inline int nocycle ( LastDatabaseTreePtr tree, LastDatabaseTreeNode &node, LastNodeId tonode, LastOccurrenceId occurrenceid, LastLastLegOccurrencesPtr legoccurrencesdataptr ) {
+inline int nocycle ( LastDatabaseTreePtr tree, LastDatabaseTreeNode &node, LastNodeId tonode, LastOccurrenceId occurrenceid, LastLegOccurrencesPtr legoccurrencesdataptr ) {
   if ( !tree->nodes[tonode].incycle )
     return 0;
   if ( !node.incycle )
@@ -214,7 +214,7 @@ void candidateLastCloseLastLegsAllocate ( int number, int maxnumber ) {
   }
   if ( !fm::candidateLastcloselegsoccsused[number] ) {
     fm::candidateLastcloselegsoccsused[number] = true;
-    vector<CloseLastLastLegOccurrences> &candidateedgelabeloccs = fm::candidatecloselegsoccs[number];
+    vector<CloseLastLegOccurrences> &candidateedgelabeloccs = fm::candidatecloselegsoccs[number];
     for ( int k = 0; k < (int) candidateedgelabeloccs.size (); k++ ) {
       candidateedgelabeloccs[k].elements.resize ( 0 );
       candidateedgelabeloccs[k].frequency = 0;
@@ -227,13 +227,13 @@ void candidateLastCloseLastLegsAllocate ( int number, int maxnumber ) {
 
 
 
-void bbrc_extend ( LastLastLegOccurrences &legoccurrencesdata ) {
+void bbrc_extend ( LastLegOccurrences &legoccurrencesdata ) {
   // we're trying hard to avoid repeated destructor/constructor calls for complex types like vectors.
   // better reuse previously allocated memory, if possible!
   
   
 
-  vector<LastLastLegOccurrence> &legoccurrences = legoccurrencesdata.elements;   ///////////////////////////////////////AM : BUG!!!
+  vector<LastLegOccurrence> &legoccurrences = legoccurrencesdata.elements;   ///////////////////////////////////////AM : BUG!!!
 
 
 
@@ -254,7 +254,7 @@ void bbrc_extend ( LastLastLegOccurrences &legoccurrencesdata ) {
                              // many cases
 
   for ( LastOccurrenceId i = 0; i < legoccurrences.size (); i++ ) {
-    LastLastLegOccurrence &legocc = legoccurrences[i];
+    LastLegOccurrence &legocc = legoccurrences[i];
     LastDatabaseTreePtr tree = fm::database->trees[legocc.tid];
     LastDatabaseTreeNode &node = tree->nodes[legocc.tonodeid];
     for ( int j = 0; j < node.edges.size (); j++ ) {
@@ -264,7 +264,7 @@ void bbrc_extend ( LastLastLegOccurrences &legoccurrencesdata ) {
         int number = nocycle ( tree, node, node.edges[j].tonode, i, &legoccurrencesdata );
 
         if ( number == 0 ) {
-          vector<LastLastLegOccurrence> &candidatelegsoccs = fm::Lastcandidatelegsoccurrences[edgelabel].elements;
+          vector<LastLegOccurrence> &candidatelegsoccs = fm::Lastcandidatelegsoccurrences[edgelabel].elements;
           if ( candidatelegsoccs.empty () )  fm::Lastcandidatelegsoccurrences[edgelabel].frequency++;
           else {
 
@@ -278,16 +278,16 @@ void bbrc_extend ( LastLastLegOccurrences &legoccurrencesdata ) {
 	            }
 
           }
-          candidatelegsoccs.push_back ( LastLastLegOccurrence ( legocc.tid, i, node.edges[j].tonode, legocc.tonodeid ) );
+          candidatelegsoccs.push_back ( LastLegOccurrence ( legocc.tid, i, node.edges[j].tonode, legocc.tonodeid ) );
           Lastsetmax ( fm::Lastcandidatelegsoccurrences[edgelabel].maxdegree, fm::database->trees[legocc.tid]->nodes[node.edges[j].tonode].edges.size () );
         }
 
         else if ( number - 1 != fm::graphstate->nodes.back().edges[0].tonode ) {
             candidateLastCloseLastLegsAllocate ( number, legoccurrencesdata.number + 1 );
-            vector<CloseLastLastLegOccurrence> &candidatelegsoccs = fm::candidatecloselegsoccs[number][edgelabel].elements;
+            vector<CloseLastLegOccurrence> &candidatelegsoccs = fm::candidatecloselegsoccs[number][edgelabel].elements;
             if ( !candidatelegsoccs.size () || candidatelegsoccs.back ().tid != legocc.tid )
 	            fm::candidatecloselegsoccs[number][edgelabel].frequency++;
-            candidatelegsoccs.push_back ( CloseLastLastLegOccurrence ( legocc.tid, i ) );
+            candidatelegsoccs.push_back ( CloseLastLegOccurrence ( legocc.tid, i ) );
             Lastsetmax ( fm::Lastcandidatelegsoccurrences[edgelabel].maxdegree, fm::database->trees[legocc.tid]->nodes[node.edges[j].tonode].edges.size () );
         }
 
@@ -302,7 +302,7 @@ void bbrc_extend ( LastLastLegOccurrences &legoccurrencesdata ) {
 
 
 
-void bbrc_extend ( LastLastLegOccurrences &legoccurrencesdata, LastEdgeLabel minlabel, LastEdgeLabel neglect ) {
+void bbrc_extend ( LastLegOccurrences &legoccurrencesdata, LastEdgeLabel minlabel, LastEdgeLabel neglect ) {
 
 
   // we're trying hard to avoid repeated destructor/constructor calls for complex types like vectors.
@@ -311,7 +311,7 @@ void bbrc_extend ( LastLastLegOccurrences &legoccurrencesdata, LastEdgeLabel min
 
 
 
-  vector<LastLastLegOccurrence> &legoccurrences = legoccurrencesdata.elements;  ///////////////////////////////////////AM : BUG!!!
+  vector<LastLegOccurrence> &legoccurrences = legoccurrencesdata.elements;  ///////////////////////////////////////AM : BUG!!!
 
 
 
@@ -331,7 +331,7 @@ void bbrc_extend ( LastLastLegOccurrences &legoccurrencesdata, LastEdgeLabel min
   fm::Lastcloselegsoccsused = false; // we are lazy with the initialization of close leg arrays, as we may not need them at all in
                              // many cases
   for ( LastOccurrenceId i = 0; i < legoccurrences.size (); i++ ) {
-    LastLastLegOccurrence &legocc = legoccurrences[i];
+    LastLegOccurrence &legocc = legoccurrences[i];
     LastDatabaseTreePtr tree = fm::database->trees[legocc.tid];
     LastDatabaseTreeNode &node = tree->nodes[legocc.tonodeid];
     for ( int j = 0; j < node.edges.size (); j++ ) {
@@ -340,7 +340,7 @@ void bbrc_extend ( LastLastLegOccurrences &legoccurrencesdata, LastEdgeLabel min
         int number = nocycle ( tree, node, node.edges[j].tonode, i, &legoccurrencesdata );
         if ( number == 0 ) {
 	  if ( edgelabel >= minlabel && edgelabel != neglect ) {
-            vector<LastLastLegOccurrence> &candidatelegsoccs = fm::Lastcandidatelegsoccurrences[edgelabel].elements;
+            vector<LastLegOccurrence> &candidatelegsoccs = fm::Lastcandidatelegsoccurrences[edgelabel].elements;
             if ( candidatelegsoccs.empty () )
   	      fm::Lastcandidatelegsoccurrences[edgelabel].frequency++;
 	    else {
@@ -352,17 +352,17 @@ void bbrc_extend ( LastLastLegOccurrences &legoccurrencesdata, LastEdgeLabel min
                 fm::Lastcandidatelegsoccurrences[edgelabel].selfjoin++;
               }
             }
-            candidatelegsoccs.push_back ( LastLastLegOccurrence ( legocc.tid, i, node.edges[j].tonode, legocc.tonodeid ) );
+            candidatelegsoccs.push_back ( LastLegOccurrence ( legocc.tid, i, node.edges[j].tonode, legocc.tonodeid ) );
 	    Lastsetmax ( fm::Lastcandidatelegsoccurrences[edgelabel].maxdegree, fm::database->trees[legocc.tid]->nodes[node.edges[j].tonode].edges.size () );
 	  }
         }
         else if ( number - 1 != fm::graphstate->nodes.back().edges[0].tonode ) {
           candidateLastCloseLastLegsAllocate ( number, legoccurrencesdata.number + 1 );
 
-          vector<CloseLastLastLegOccurrence> &candidatelegsoccs = fm::candidatecloselegsoccs[number][edgelabel].elements;
+          vector<CloseLastLegOccurrence> &candidatelegsoccs = fm::candidatecloselegsoccs[number][edgelabel].elements;
           if ( !candidatelegsoccs.size () || candidatelegsoccs.back ().tid != legocc.tid )
 	    fm::candidatecloselegsoccs[number][edgelabel].frequency++;
-          candidatelegsoccs.push_back ( CloseLastLastLegOccurrence ( legocc.tid, i ) );
+          candidatelegsoccs.push_back ( CloseLastLegOccurrence ( legocc.tid, i ) );
           Lastsetmax ( fm::Lastcandidatelegsoccurrences[edgelabel].maxdegree, fm::database->trees[legocc.tid]->nodes[node.edges[j].tonode].edges.size () );
         }
       }
@@ -379,7 +379,7 @@ class Counter {
   ~Counter () { cout << number << endl; }
 } counter, counter2;
 
-void sanityCheck ( LastLastLegOccurrencesPtr legoccurrencesptr ) {
+void sanityCheck ( LastLegOccurrencesPtr legoccurrencesptr ) {
   if ( !legoccurrencesptr )
     return;
   counter2.number++;
@@ -389,9 +389,9 @@ void sanityCheck ( LastLastLegOccurrencesPtr legoccurrencesptr ) {
       if ( legoccurrencesptr->elements[t].tonodeid == legoccurrencesptr->elements[i].tonodeid )
         cerr << "MULTIPLE OCCURRENCES FOR THE SAME OCCURRENCE ID OF THE SAME NODE: "
              << legoccurrencesptr->elements[t].tonodeid << " IN " << legoccurrencesptr->elements[t].tid << endl;
-    LastLastLegOccurrence &legocc = legoccurrencesptr->elements[i];
+    LastLegOccurrence &legocc = legoccurrencesptr->elements[i];
     LastOccurrenceId j = i, k;
-    LastLastLegOccurrencesPtr walk1 = legoccurrencesptr, walk2;
+    LastLegOccurrencesPtr walk1 = legoccurrencesptr, walk2;
     int val = 0;
     while ( walk1 ) {
       k = walk1->elements[j].occurrenceid;

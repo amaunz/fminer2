@@ -30,46 +30,46 @@ using namespace std;
 
 typedef unsigned int LastOccurrenceId;
 
-struct LastLastLegOccurrence {
+struct LastLegOccurrence {
   LastTid tid;
   LastOccurrenceId occurrenceid;
   LastNodeId tonodeid, fromnodeid;
 
-  LastLastLegOccurrence ( LastTid tid, LastOccurrenceId occurrenceid, LastNodeId tonodeid, LastNodeId fromnodeid ): tid ( tid ), occurrenceid ( occurrenceid ), tonodeid ( tonodeid ), fromnodeid ( fromnodeid ) { }
-  LastLastLegOccurrence () {}
+  LastLegOccurrence ( LastTid tid, LastOccurrenceId occurrenceid, LastNodeId tonodeid, LastNodeId fromnodeid ): tid ( tid ), occurrenceid ( occurrenceid ), tonodeid ( tonodeid ), fromnodeid ( fromnodeid ) { }
+  LastLegOccurrence () {}
 
-  friend ostream &operator<< ( ostream &stream, LastLastLegOccurrence &occ );
+  friend ostream &operator<< ( ostream &stream, LastLegOccurrence &occ );
 };
 
-struct LastLastLegOccurrences;
-typedef LastLastLegOccurrences *LastLastLegOccurrencesPtr;
+struct LastLegOccurrences;
+typedef LastLegOccurrences *LastLegOccurrencesPtr;
 
-struct LastLastLegOccurrences {
-  vector<LastLastLegOccurrence> elements;
-  LastLastLegOccurrencesPtr parent;
+struct LastLegOccurrences {
+  vector<LastLegOccurrence> elements;
+  LastLegOccurrencesPtr parent;
   int number;
   LastFrequency selfjoin;
   short unsigned int maxdegree;
   LastFrequency frequency;
-  LastLastLegOccurrences () : selfjoin ( 0 ), frequency ( 0 ) { }
+  LastLegOccurrences () : selfjoin ( 0 ), frequency ( 0 ) { }
 };
 
-ostream &operator<< ( ostream &stream, vector<LastLastLegOccurrence> &occs );
+ostream &operator<< ( ostream &stream, vector<LastLegOccurrence> &occs );
 
-//extern LastLastLegOccurrences legoccurrences;
+//extern LastLegOccurrences legoccurrences;
 
 // returns the bbrc_join if this bbrc_join is frequent. The returned array may be swapped.
-LastLastLegOccurrencesPtr bbrc_join ( LastLastLegOccurrences &legoccsdata1, LastNodeId connectingnode, LastLastLegOccurrences &legoccsdata2 );
-LastLastLegOccurrencesPtr bbrc_join ( LastLastLegOccurrences &legoccsdata );
+LastLegOccurrencesPtr bbrc_join ( LastLegOccurrences &legoccsdata1, LastNodeId connectingnode, LastLegOccurrences &legoccsdata2 );
+LastLegOccurrencesPtr bbrc_join ( LastLegOccurrences &legoccsdata );
 
-extern vector<LastLastLegOccurrences> Lastcandidatelegsoccurrences; // for each frequent possible edge, the occurrences found, used by bbrc_extend
+extern vector<LastLegOccurrences> Lastcandidatelegsoccurrences; // for each frequent possible edge, the occurrences found, used by bbrc_extend
 extern vector<LastFrequency> Lastcandidatelegsfrequencies;
 
 void LastinitLastLegStatics ();
 
-void bbrc_extend ( LastLastLegOccurrences &legoccurrencesdata ); // fills the global arrays above
-void bbrc_extend ( LastLastLegOccurrences &legoccurrencesdata, LastEdgeLabel minlabel, LastEdgeLabel neglect );
+void bbrc_extend ( LastLegOccurrences &legoccurrencesdata ); // fills the global arrays above
+void bbrc_extend ( LastLegOccurrences &legoccurrencesdata, LastEdgeLabel minlabel, LastEdgeLabel neglect );
 
-void sanityCheck ( LastLastLegOccurrencesPtr legoccurrencesptr );
+void sanityCheck ( LastLegOccurrencesPtr legoccurrencesptr );
 
 #endif

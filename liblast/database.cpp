@@ -580,7 +580,7 @@ void LastDatabase::reorder () {
 
   //            cerr << "LastLeg Occurence for node " << nodelabel.inputlabel
   //                 << ": " << tree.tid << " " << nodelabel.occurrences.elements.size() << " " << j << " " << NONODE << endl;
-                nodelabel.occurrences.elements.push_back ( LastLastLegOccurrence ( tree.tid, (LastOccurrenceId) nodelabel.occurrences.elements.size (), j, NONODE )  );
+                nodelabel.occurrences.elements.push_back ( LastLegOccurrence ( tree.tid, (LastOccurrenceId) nodelabel.occurrences.elements.size (), j, NONODE )  );
                                                                                         // ...and push occurence in database
                 int k = 0;
   //            cerr << "node " << (int) node.nodelabel  << " (" << nodelabels[node.nodelabel].inputlabel << ")"  << endl;

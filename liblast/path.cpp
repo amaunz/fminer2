@@ -47,7 +47,7 @@ namespace fm {
     extern LastStatistics* statistics;
     extern LastGraphState* graphstate;
 
-    extern vector<LastLastLegOccurrences> Lastcandidatelegsoccurrences; 
+    extern vector<LastLegOccurrences> Lastcandidatelegsoccurrences; 
     extern int max_hops;
 }
 
@@ -120,7 +120,7 @@ LastPath::LastPath ( LastNodeLabel startnodelabel ) {
                 leg.occurrences.selfjoin++;
                 lastself[edgelabel] = tree.tid;
             }
-            vector_push_back ( LastLastLegOccurrence, leg.occurrences.elements, legoccurrence );
+            vector_push_back ( LastLegOccurrence, leg.occurrences.elements, legoccurrence );
             legoccurrence.tid = tree.tid;
             legoccurrence.occurrenceid = i;
             legoccurrence.tonodeid = datanode.edges[j].tonode;
@@ -270,7 +270,7 @@ LastPath::LastPath ( LastPath &parentpath, unsigned int legindex ) {
   }
 
   unsigned int i = 0;
-  LastLastLegOccurrencesPtr legoccurrencesptr;
+  LastLegOccurrencesPtr legoccurrencesptr;
   for ( ; i < legindex; i++ ) {
     LastPathLastLeg &leg2 = (*parentpath.legs[i]);
 

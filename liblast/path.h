@@ -43,7 +43,7 @@ struct LastPathLastTuple {
 
 struct LastPathLastLeg {
   LastPathLastTuple tuple;
-  LastLastLegOccurrences occurrences;
+  LastLegOccurrences occurrences;
 };
 
 typedef LastPathLastLeg *LastPathLastLegPtr;

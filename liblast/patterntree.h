@@ -57,7 +57,7 @@ struct LastTuple {
 
 struct LastLeg {
   LastTuple tuple;
-  LastLastLegOccurrences occurrences;
+  LastLegOccurrences occurrences;
 };
 
 typedef LastLeg *LastLegPtr;
@@ -70,8 +70,8 @@ class LastPatternTree {
     vector<LastLegPtr> legs; // pointers used to avoid copy-constructor during a resize of the vector
   private:
     void checkIfIndeedNormal ();
-    /* inline */ void addExtensionLastLegs ( LastTuple &tuple, LastLastLegOccurrences &legoccurrences );
-    /* inline */ void addLastLeg ( const LastNodeId connectingnode, const int depth, const LastEdgeLabel edgelabel, LastLastLegOccurrences &legoccurrences );
+    /* inline */ void addExtensionLastLegs ( LastTuple &tuple, LastLegOccurrences &legoccurrences );
+    /* inline */ void addLastLeg ( const LastNodeId connectingnode, const int depth, const LastEdgeLabel edgelabel, LastLegOccurrences &legoccurrences );
     /* inline */ void addLeftLastLegs ( LastPath &path, LastPathLastLeg &leg, int &i, LastDepth olddepth, LastEdgeLabel lowestlabel, int leftend, int edgesize2 );
     /* inline */ int addLeftLastLegs ( LastPath &path, LastPathLastLeg &leg, LastTuple &tuple, unsigned int legindex, int leftend, int edgesize2 );
     /* inline */ void addRightLastLegs ( LastPath &path, LastPathLastLeg &leg, int &i, LastDepth olddepth, LastEdgeLabel lowestlabel, int rightstart, int nodesize2 );

@@ -59,10 +59,10 @@ namespace fm {
     vector<string>* result=NULL;
 
 
-    LastLastLegOccurrences* legoccurrences=NULL;
-    CloseLastLastLegOccurrences* closelegoccurrences=NULL; 
-    vector<LastLastLegOccurrences> Lastcandidatelegsoccurrences;
-    vector<vector< CloseLastLastLegOccurrences> > candidatecloselegsoccs;
+    LastLegOccurrences* legoccurrences=NULL;
+    CloseLastLegOccurrences* closelegoccurrences=NULL; 
+    vector<LastLegOccurrences> Lastcandidatelegsoccurrences;
+    vector<vector< CloseLastLegOccurrences> > candidatecloselegsoccs;
     vector<bool> candidateLastcloselegsoccsused;
     KSConstraint* ks=NULL;
 

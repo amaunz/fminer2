@@ -110,7 +110,7 @@ struct LastDatabaseLastNodeLabel {
   LastFrequency frequency;
   LastTid lasttid;
 
-  LastLastLegOccurrences occurrences;
+  LastLegOccurrences occurrences;
   vector<LastEdgeLabel> frequentedgelabels;
 
   LastDatabaseLastNodeLabel (): frequency ( 1 ) { }
