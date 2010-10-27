@@ -1813,9 +1813,9 @@ int SWIG_Ruby_arity( VALUE proc, int minimal )
 
 /* -------- TYPES TABLE (BEGIN) -------- */
 
-#define SWIGTYPE_p_ChisqConstraint swig_types[0]
+#define SWIGTYPE_p_ChisqLastConstraint swig_types[0]
 #define SWIGTYPE_p_FILE swig_types[1]
-#define SWIGTYPE_p_KSConstraint swig_types[2]
+#define SWIGTYPE_p_KSLastConstraint swig_types[2]
 #define SWIGTYPE_p_Last swig_types[3]
 #define SWIGTYPE_p_allocator_type swig_types[4]
 #define SWIGTYPE_p_char swig_types[5]
@@ -8098,7 +8098,7 @@ SWIGINTERN VALUE
 _wrap_last_chisq_get(VALUE self) {
   VALUE _val;
   
-  _val = SWIG_NewPointerObj(SWIG_as_voidptr(fm::last_chisq), SWIGTYPE_p_ChisqConstraint,  0 );
+  _val = SWIG_NewPointerObj(SWIG_as_voidptr(fm::last_chisq), SWIGTYPE_p_ChisqLastConstraint,  0 );
   return _val;
 }
 
@@ -8107,11 +8107,11 @@ SWIGINTERN VALUE
 _wrap_last_chisq_set(VALUE self, VALUE _val) {
   {
     void *argp = 0;
-    int res = SWIG_ConvertPtr(_val, &argp, SWIGTYPE_p_ChisqConstraint,  0 );  
+    int res = SWIG_ConvertPtr(_val, &argp, SWIGTYPE_p_ChisqLastConstraint,  0 );  
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_chisq""' of type '""ChisqConstraint *""'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_chisq""' of type '""ChisqLastConstraint *""'");
     }
-    fm::last_chisq = reinterpret_cast< ChisqConstraint * >(argp);
+    fm::last_chisq = reinterpret_cast< ChisqLastConstraint * >(argp);
   }
   return _val;
 fail:
@@ -8123,7 +8123,7 @@ SWIGINTERN VALUE
 _wrap_last_ks_get(VALUE self) {
   VALUE _val;
   
-  _val = SWIG_NewPointerObj(SWIG_as_voidptr(fm::last_ks), SWIGTYPE_p_KSConstraint,  0 );
+  _val = SWIG_NewPointerObj(SWIG_as_voidptr(fm::last_ks), SWIGTYPE_p_KSLastConstraint,  0 );
   return _val;
 }
 
@@ -8132,11 +8132,11 @@ SWIGINTERN VALUE
 _wrap_last_ks_set(VALUE self, VALUE _val) {
   {
     void *argp = 0;
-    int res = SWIG_ConvertPtr(_val, &argp, SWIGTYPE_p_KSConstraint,  0 );  
+    int res = SWIG_ConvertPtr(_val, &argp, SWIGTYPE_p_KSLastConstraint,  0 );  
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_ks""' of type '""KSConstraint *""'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_ks""' of type '""KSLastConstraint *""'");
     }
-    fm::last_ks = reinterpret_cast< KSConstraint * >(argp);
+    fm::last_ks = reinterpret_cast< KSLastConstraint * >(argp);
   }
   return _val;
 fail:
@@ -9322,9 +9322,9 @@ fail:
 static void *_p_swig__IteratorTo_p_swig__ConstIterator(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((swig::ConstIterator *)  ((swig::Iterator *) x));
 }
-static swig_type_info _swigt__p_ChisqConstraint = {"_p_ChisqConstraint", "ChisqConstraint *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_ChisqLastConstraint = {"_p_ChisqLastConstraint", "ChisqLastConstraint *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_FILE = {"_p_FILE", "FILE *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_KSConstraint = {"_p_KSConstraint", "KSConstraint *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_KSLastConstraint = {"_p_KSLastConstraint", "KSLastConstraint *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Last = {"_p_Last", "Last *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_allocator_type = {"_p_allocator_type", "allocator_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
@@ -9340,9 +9340,9 @@ static swig_type_info _swigt__p_swig__Iterator = {"_p_swig__Iterator", "swig::It
 static swig_type_info _swigt__p_value_type = {"_p_value_type", "value_type *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
-  &_swigt__p_ChisqConstraint,
+  &_swigt__p_ChisqLastConstraint,
   &_swigt__p_FILE,
-  &_swigt__p_KSConstraint,
+  &_swigt__p_KSLastConstraint,
   &_swigt__p_Last,
   &_swigt__p_allocator_type,
   &_swigt__p_char,
@@ -9358,9 +9358,9 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_value_type,
 };
 
-static swig_cast_info _swigc__p_ChisqConstraint[] = {  {&_swigt__p_ChisqConstraint, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ChisqLastConstraint[] = {  {&_swigt__p_ChisqLastConstraint, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_FILE[] = {  {&_swigt__p_FILE, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_KSConstraint[] = {  {&_swigt__p_KSConstraint, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_KSLastConstraint[] = {  {&_swigt__p_KSLastConstraint, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Last[] = {  {&_swigt__p_Last, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_allocator_type[] = {  {&_swigt__p_allocator_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
@@ -9376,9 +9376,9 @@ static swig_cast_info _swigc__p_swig__Iterator[] = {  {&_swigt__p_swig__Iterator
 static swig_cast_info _swigc__p_value_type[] = {  {&_swigt__p_value_type, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
-  _swigc__p_ChisqConstraint,
+  _swigc__p_ChisqLastConstraint,
   _swigc__p_FILE,
-  _swigc__p_KSConstraint,
+  _swigc__p_KSLastConstraint,
   _swigc__p_Last,
   _swigc__p_allocator_type,
   _swigc__p_char,
