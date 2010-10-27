@@ -459,7 +459,7 @@ void GraphState::print ( unsigned int frequency ) {
           }
           else { 
               if (fm::do_yaml) { printf("%i", frequency); }
-              else { printf("%i\t", frequency); };
+              //else { printf("%i\t", frequency); };
           }
           // output occurrences
           if (fm::chisq->active) {

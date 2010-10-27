@@ -22,7 +22,7 @@ INCLUDE_OB  =  -I/usr/local/include/openbabel-2.0
 INCLUDE_GSL  =   
 LDFLAGS_OB  =  -L/usr/local/lib  
 LDFLAGS_GSL  =   
-INCLUDE_RB  = -I/usr/lib/ruby/1.8/i486-linux
+INCLUDE_RB  = -I/home/am/.gem/ruby/1.8/gems/rsruby-0.5.1.1/ext
 
 # EXAMPLES:
 # ADJUST COMPILER PATH TO OPENBABEL INCLUDE FILES (1st line Linux, 2nd line Windows):
