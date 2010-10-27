@@ -29,16 +29,16 @@
 
 
 namespace fm {
-    extern ChisqConstraint* chisq;
-    extern KSConstraint* ks;
-    extern bool console_out;
-    extern bool gsp_out;
-    extern bool do_yaml;
-    extern bool pvalues;
-    extern bool regression;
-    extern BbrcDatabase* database;
-    extern BbrcGraphState* graphstate;
-    extern bool no_aromatic;
+    extern ChisqConstraint* bbrc_chisq;
+    extern KSConstraint* bbrc_ks;
+    extern bool bbrc_console_out;
+    extern bool bbrc_gsp_out;
+    extern bool bbrc_do_yaml;
+    extern bool bbrc_pvalues;
+    extern bool bbrc_regression;
+    extern BbrcDatabase* bbrc_database;
+    extern BbrcGraphState* bbrc_graphstate;
+    extern bool bbrc_no_aromatic;
 }
 
 BbrcGraphState::BbrcGraphState () {
@@ -80,7 +80,7 @@ void BbrcGraphState::deleteStartNode () {
 
 void BbrcGraphState::insertNode ( int from, BbrcEdgeLabel edgelabel, short unsigned int maxdegree  ) {
   BbrcNodeLabel fromlabel = nodes[from].label, tolabel;
-  BbrcDatabaseBbrcEdgeLabel &dataedgelabel = fm::database->edgelabels[fm::database->edgelabelsindexes[edgelabel]];
+  BbrcDatabaseBbrcEdgeLabel &dataedgelabel = fm::bbrc_database->edgelabels[fm::bbrc_database->edgelabelsindexes[edgelabel]];
   if ( dataedgelabel.fromnodelabel == fromlabel )
     tolabel = dataedgelabel.tonodelabel;
   else
@@ -333,7 +333,7 @@ void BbrcGraphState::print ( FILE *f ) {
     putc ( ' ', f );
     puti ( f, (int) i );
     putc ( ' ', f );
-    puti ( f, (int) fm::database->nodelabels[nodes[i].label].inputlabel );
+    puti ( f, (int) fm::bbrc_database->nodelabels[nodes[i].label].inputlabel );
     putc ( '\n', f );
   }
   for ( int i = 0; i < (int) nodes.size (); i++ ) {
@@ -346,8 +346,8 @@ void BbrcGraphState::print ( FILE *f ) {
     putc ( ' ', f );
     puti ( f, (int) edge.tonode );
     putc ( ' ', f );
-    puti ( f, (int) fm::database->edgelabels[
-                 fm::database->edgelabelsindexes[edge.edgelabel]
+    puti ( f, (int) fm::bbrc_database->edgelabels[
+                 fm::bbrc_database->edgelabelsindexes[edge.edgelabel]
            ].inputedgelabel );
         putc ( '\n', f );
       }
@@ -360,7 +360,7 @@ void BbrcGraphState::print ( FILE *f ) {
 
 void BbrcGraphState::DfsOut(int cur_n, int from_n) {
 
-    InputBbrcNodeLabel inl = fm::database->nodelabels[nodes[cur_n].label].inputlabel;
+    InputBbrcNodeLabel inl = fm::bbrc_database->nodelabels[nodes[cur_n].label].inputlabel;
     putchar('[');
     putchar('#');
     if (inl<=150) {
@@ -379,18 +379,18 @@ void BbrcGraphState::DfsOut(int cur_n, int from_n) {
         BbrcGraphState::GSEdge &edge = nodes[cur_n].edges[j];
         if ( edge.tonode != from_n) {
             if (fanout>2) putchar ('(');
-            iel = fm::database->edgelabels[fm::database->edgelabelsindexes[edge.edgelabel]].inputedgelabel;
+            iel = fm::bbrc_database->edgelabels[fm::bbrc_database->edgelabelsindexes[edge.edgelabel]].inputedgelabel;
             switch (iel) {
             case 1:
-                if (!fm::no_aromatic) fputs("-,:",stdout);
+                if (!fm::bbrc_no_aromatic) fputs("-,:",stdout);
                 else fputs("-",stdout);
                 break;
             case 2:
-                if (!fm::no_aromatic) fputs("=,:",stdout);
+                if (!fm::bbrc_no_aromatic) fputs("=,:",stdout);
                 else fputs("=",stdout);
                 break;               
             case 3:
-                if (!fm::no_aromatic) fputs("#,:",stdout);
+                if (!fm::bbrc_no_aromatic) fputs("#,:",stdout);
                 else fputs("#",stdout);
                 break;
             case 4:
@@ -412,22 +412,22 @@ void BbrcGraphState::DfsOut(int cur_n, int from_n) {
 
 void BbrcGraphState::print ( unsigned int frequency ) {
     float p, sig;
-    if (fm::chisq->active) {
-        if (!fm::regression) {
-            p = fm::chisq->p;
-            sig = fm::chisq->sig;
+    if (fm::bbrc_chisq->active) {
+        if (!fm::bbrc_regression) {
+            p = fm::bbrc_chisq->p;
+            sig = fm::bbrc_chisq->sig;
         }
         else {
-            p = fm::ks->p;
-            sig = fm::ks->sig;
+            p = fm::bbrc_ks->p;
+            sig = fm::bbrc_ks->sig;
         }
     }
-    if (!fm::chisq->active || p >= sig) {
-        if (fm::gsp_out) { 
+    if (!fm::bbrc_chisq->active || p >= sig) {
+        if (fm::bbrc_gsp_out) { 
             print(stdout); 
         }
         else {
-          if (fm::do_yaml) {
+          if (fm::bbrc_do_yaml) {
             putchar('-');
             putchar(' ');
             putchar('[');
@@ -440,56 +440,56 @@ void BbrcGraphState::print ( unsigned int frequency ) {
               if (nodes[i].edges.size()==1) break;
           }
           DfsOut(i, i);
-          if (fm::do_yaml) {
+          if (fm::bbrc_do_yaml) {
             putchar('"');
             putchar(',');
             putchar(' ');
           }
           // output chisq
-          if (fm::chisq->active) {
-            if (fm::do_yaml) { 
-                if (!fm::pvalues || fm::regression) printf("%.4f, ", p); 
+          if (fm::bbrc_chisq->active) {
+            if (fm::bbrc_do_yaml) { 
+                if (!fm::bbrc_pvalues || fm::bbrc_regression) printf("%.4f, ", p); 
                 else printf("%.4f, ", gsl_cdf_chisq_P(p,1)); 
             }
             else putchar('\t');
           }
           // output freq
-          if (fm::chisq->active) {
-              if (!fm::regression && frequency != (fm::chisq->fa+fm::chisq->fi)) { cerr << "Error: wrong counts! " << frequency << "!=" << fm::chisq->fa + fm::chisq->fi << "(" << fm::chisq->fa << "+" << fm::chisq->fi << ")" << endl; }
+          if (fm::bbrc_chisq->active) {
+              if (!fm::bbrc_regression && frequency != (fm::bbrc_chisq->fa+fm::bbrc_chisq->fi)) { cerr << "Error: wrong counts! " << frequency << "!=" << fm::bbrc_chisq->fa + fm::bbrc_chisq->fi << "(" << fm::bbrc_chisq->fa << "+" << fm::bbrc_chisq->fi << ")" << endl; }
           }
           else { 
-              if (fm::do_yaml) { printf("%i", frequency); }
+              if (fm::bbrc_do_yaml) { printf("%i", frequency); }
               //else { printf("%i\t", frequency); };
           }
           // output occurrences
-          if (fm::chisq->active) {
+          if (fm::bbrc_chisq->active) {
 
               set<BbrcTid> fa_set, fi_set;
-              if (!fm::regression) { fa_set = fm::chisq->fa_set; fi_set = fm::chisq->fi_set; }
-              else { fa_set = fm::ks->fa_set; fi_set = fm::ks->fi_set; }
+              if (!fm::bbrc_regression) { fa_set = fm::bbrc_chisq->fa_set; fi_set = fm::bbrc_chisq->fi_set; }
+              else { fa_set = fm::bbrc_ks->fa_set; fi_set = fm::bbrc_ks->fi_set; }
 
               putchar ('[');
               set<BbrcTid>::iterator iter;
-              if (fm::do_yaml) {
+              if (fm::bbrc_do_yaml) {
                   for (iter = fa_set.begin(); iter != fa_set.end(); iter++) {
                       if (iter != fa_set.begin()) putchar (',');
                       putchar (' ');
                       printf("%i", (*iter)); 
                   }
-                  if (!fm::regression) {
+                  if (!fm::bbrc_regression) {
                       putchar (']');
                       putchar (',');
                       putchar (' ');
                       putchar ('[');
                   }
               }
-              if (fm::do_yaml) {
+              if (fm::bbrc_do_yaml) {
                   for (iter = fi_set.begin(); iter != fi_set.end(); iter++) {
                       if (iter != fi_set.begin()) putchar (',');
                       printf(" %i", (*iter)); 
                   }
               }
-              if (!fm::do_yaml) {
+              if (!fm::bbrc_do_yaml) {
                   set<BbrcTid> ids;
                   ids.insert(fa_set.begin(), fa_set.end());
                   ids.insert(fi_set.begin(), fi_set.end());
@@ -501,11 +501,11 @@ void BbrcGraphState::print ( unsigned int frequency ) {
               putchar(' ');
               putchar(']');
           }
-          if (fm::do_yaml) { 
+          if (fm::bbrc_do_yaml) { 
             putchar(' ');
             putchar(']');
           }
-          if(fm::console_out) putchar('\n');
+          if(fm::bbrc_console_out) putchar('\n');
        }
     }
 }
@@ -529,7 +529,7 @@ void BbrcGraphState::to_s ( string& oss ) {
     sprintf(x, "%i", i);
     oss.append( x);
     oss.append( " ");
-    sprintf(x, "%i", fm::database->nodelabels[nodes[i].label].inputlabel);
+    sprintf(x, "%i", fm::bbrc_database->nodelabels[nodes[i].label].inputlabel);
     oss.append( x);
     oss.append( "\n");
   }
@@ -545,7 +545,7 @@ void BbrcGraphState::to_s ( string& oss ) {
     sprintf(x, "%i", edge.tonode);
     oss.append(x);
     oss.append( " ");
-    sprintf(x, "%i", (int) fm::database->edgelabels[fm::database->edgelabelsindexes[edge.edgelabel]].inputedgelabel);
+    sprintf(x, "%i", (int) fm::bbrc_database->edgelabels[fm::bbrc_database->edgelabelsindexes[edge.edgelabel]].inputedgelabel);
     oss.append( x);
         oss.append( "\n");
       }
@@ -557,7 +557,7 @@ void BbrcGraphState::to_s ( string& oss ) {
 // PRINT SMARTS TO OSS
 
 void BbrcGraphState::DfsOut(int cur_n, string& oss, int from_n) {
-    InputBbrcNodeLabel inl = fm::database->nodelabels[nodes[cur_n].label].inputlabel;
+    InputBbrcNodeLabel inl = fm::bbrc_database->nodelabels[nodes[cur_n].label].inputlabel;
     oss.append("[#");
     if (inl<=150) {
         char s[3]; sprintf (s,"%d", inl);
@@ -574,19 +574,19 @@ void BbrcGraphState::DfsOut(int cur_n, string& oss, int from_n) {
         BbrcGraphState::GSEdge &edge = nodes[cur_n].edges[j];
         if ( edge.tonode != from_n) {
             if (fanout>2) oss.append ("(");
-            iel = fm::database->edgelabels[fm::database->edgelabelsindexes[edge.edgelabel]].inputedgelabel;
+            iel = fm::bbrc_database->edgelabels[fm::bbrc_database->edgelabelsindexes[edge.edgelabel]].inputedgelabel;
 
             switch (iel) {
             case 1:
-                if (!fm::no_aromatic) oss.append("-,:");
+                if (!fm::bbrc_no_aromatic) oss.append("-,:");
                 else oss.append("-");
                 break;
             case 2:
-                if (!fm::no_aromatic) oss.append("=,:");
+                if (!fm::bbrc_no_aromatic) oss.append("=,:");
                 else oss.append("=");
                 break;               
             case 3:
-                if (!fm::no_aromatic) oss.append("#,:");
+                if (!fm::bbrc_no_aromatic) oss.append("#,:");
                 else oss.append("#");
                 break;
             case 4:
@@ -609,51 +609,51 @@ void BbrcGraphState::DfsOut(int cur_n, string& oss, int from_n) {
 
 string BbrcGraphState::to_s ( unsigned int frequency ) {
     float p, sig;
-    if (fm::chisq->active) {
-        if (!fm::regression) {
-            p = fm::chisq->p;
-            sig = fm::chisq->sig;
+    if (fm::bbrc_chisq->active) {
+        if (!fm::bbrc_regression) {
+            p = fm::bbrc_chisq->p;
+            sig = fm::bbrc_chisq->sig;
         }
         else {
-            p = fm::ks->p;
-            sig = fm::ks->sig;
+            p = fm::bbrc_ks->p;
+            sig = fm::bbrc_ks->sig;
         }
     }
 
-    if (!fm::chisq->active || p >= sig) {
+    if (!fm::bbrc_chisq->active || p >= sig) {
 
         string oss;
 
-        if (fm::gsp_out) { 
+        if (fm::bbrc_gsp_out) { 
             to_s(oss); 
             return oss;
         }
 
         else {
-          if (fm::do_yaml) oss.append ("- [ ");
+          if (fm::bbrc_do_yaml) oss.append ("- [ ");
 
           // output smarts 
-          if (fm::do_yaml) oss.append ("\"");
+          if (fm::bbrc_do_yaml) oss.append ("\"");
           int i;
           for ( i = nodes.size()-1; i >= 0; i-- ) {   // edges
               if (nodes[i].edges.size()==1) break;
           }
           DfsOut(i, oss, i);
-          if (fm::do_yaml) oss.append ("\", ");
+          if (fm::bbrc_do_yaml) oss.append ("\", ");
           else oss.append("\t");
 
           // output chisq
-          if (fm::chisq->active) {
-            if (fm::do_yaml) { 
-                if (!fm::pvalues || fm::regression) { char x[20]; sprintf(x,"%.4f", p); (oss.append(x)).append(", "); }
+          if (fm::bbrc_chisq->active) {
+            if (fm::bbrc_do_yaml) { 
+                if (!fm::bbrc_pvalues || fm::bbrc_regression) { char x[20]; sprintf(x,"%.4f", p); (oss.append(x)).append(", "); }
                 else { char x[20]; sprintf(x,"%.4f", gsl_cdf_chisq_P(p, 1)); (oss.append(x)).append(", "); }
             }
 
           }
 
           // output freq
-          if (fm::chisq->active) {
-              if (!fm::regression && frequency != (fm::chisq->fa+fm::chisq->fi)) { cerr << "Notice: Wrong counts for frequency " << frequency << " [!=" << fm::chisq->fa << "(fa)+" << fm::chisq->fi << "(fi)]." << endl; }
+          if (fm::bbrc_chisq->active) {
+              if (!fm::bbrc_regression && frequency != (fm::bbrc_chisq->fa+fm::bbrc_chisq->fi)) { cerr << "Notice: Wrong counts for frequency " << frequency << " [!=" << fm::bbrc_chisq->fa << "(fa)+" << fm::bbrc_chisq->fi << "(fi)]." << endl; }
           }
           else { 
               char x[20]; sprintf(x,"%i", frequency); 
@@ -661,18 +661,18 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
           }
 
           // output occurrences
-          if (fm::chisq->active) {
+          if (fm::bbrc_chisq->active) {
 
               set<BbrcTid> fa_set, fi_set;
-              if (!fm::regression) { fa_set = fm::chisq->fa_set; fi_set = fm::chisq->fi_set; }
-              else { fa_set = fm::ks->fa_set; fi_set = fm::ks->fi_set; }
+              if (!fm::bbrc_regression) { fa_set = fm::bbrc_chisq->fa_set; fi_set = fm::bbrc_chisq->fi_set; }
+              else { fa_set = fm::bbrc_ks->fa_set; fi_set = fm::bbrc_ks->fi_set; }
 
               oss.append ("[");
 
               set<BbrcTid>::iterator iter;
               char x[20];
 
-              if (fm::do_yaml) {
+              if (fm::bbrc_do_yaml) {
                   set<BbrcTid>::iterator begin = fa_set.begin();
                   set<BbrcTid>::iterator end = fa_set.end();
                   set<BbrcTid>::iterator last = end; if (fa_set.size()) last = --(fa_set.end());
@@ -683,7 +683,7 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
                       sprintf(x,"%i", (*iter)); oss.append (x);
                       if ((last != end) && (iter == last)) oss.append (" ");
                   }
-                  if (!fm::regression) oss.append ("], [");
+                  if (!fm::bbrc_regression) oss.append ("], [");
 
                   begin = fi_set.begin();
                   end = fi_set.end();
@@ -697,7 +697,7 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
                   }
               }
 
-              if (!fm::do_yaml) {
+              if (!fm::bbrc_do_yaml) {
                   set<BbrcTid> ids;
                   ids.insert(fa_set.begin(), fa_set.end());
                   ids.insert(fi_set.begin(), fi_set.end());
@@ -706,13 +706,13 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
                       (oss.append (" ")).append(x);
                   }
               }
-              if (!fm::do_yaml) oss.append (" ]");
+              if (!fm::bbrc_do_yaml) oss.append (" ]");
               else oss.append ("]");
           }
 
-          if (fm::do_yaml) oss.append (" ]");
+          if (fm::bbrc_do_yaml) oss.append (" ]");
 
-          fm::console_out ? oss.append ("\n") : oss.append ("");
+          fm::bbrc_console_out ? oss.append ("\n") : oss.append ("");
 
 
           return oss;
@@ -723,8 +723,8 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
 }
   
 string BbrcGraphState::sep() {
-    if (fm::gsp_out) return "#";
-    else if (fm::do_yaml) return "---";
+    if (fm::bbrc_gsp_out) return "#";
+    else if (fm::bbrc_do_yaml) return "---";
     else return " ";
 }
 

@@ -26,48 +26,48 @@
 
 namespace fm {
     // switched by fminer binary
-    unsigned int minfreq; // fminer, set
-    int type;             // fminer, set
-    ChisqConstraint* chisq=NULL; // fminer, set (sig).
-    bool do_backbone; // fminer, set
-    bool adjust_ub; // fminer, set
-    bool do_pruning; // fminer, set
-    bool aromatic; // fminer, set
-    bool refine_singles; // fminer, set
-    bool do_output; // fminer, set
-    bool bbrc_sep; // fminer, set
-    bool regression; // fminer, set
+    unsigned int bbrc_minfreq; // fminer, set
+    int bbrc_type;             // fminer, set
+    ChisqConstraint* bbrc_chisq=NULL; // fminer, set (sig).
+    bool bbrc_do_backbone; // fminer, set
+    bool bbrc_adjust_ub; // fminer, set
+    bool bbrc_do_pruning; // fminer, set
+    bool bbrc_aromatic; // fminer, set
+    bool bbrc_refine_singles; // fminer, set
+    bool bbrc_do_output; // fminer, set
+    bool bbrc_bbrc_sep; // fminer, set
+    bool bbrc_regression; // fminer, set
 
     // internally controlled by Defaults()
-    bool updated; // demand
-    bool do_yaml; // ENV
-    bool pvalues; // ENV
-    bool gsp_out; // ENV
-    bool no_aromatic; // ENV
-    bool console_out; // set
-    bool db_built; // set
+    bool bbrc_updated; // demand
+    bool bbrc_do_yaml; // ENV
+    bool bbrc_pvalues; // ENV
+    bool bbrc_gsp_out; // ENV
+    bool bbrc_no_aromatic; // ENV
+    bool bbrc_console_out; // set
+    bool bbrc_db_built; // set
 
     // controlled by constructurs & destructor
-    bool instance_present;
+    bool bbrc_instance_present;
 
     // controlled by destructor and Reset()
-    BbrcDatabase* database=NULL;
-    BbrcStatistics* statistics=NULL;
-    BbrcGraphState* graphstate=NULL;
+    BbrcDatabase* bbrc_database=NULL;
+    BbrcStatistics* bbrc_statistics=NULL;
+    BbrcGraphState* bbrc_graphstate=NULL;
 
     // controlled by Reset()
-    vector<string>* result=NULL;
+    vector<string>* bbrc_result=NULL;
 
     // controlled by destructor & Reset()
-    BbrcLegOccurrences* legoccurrences=NULL; 
-    CloseBbrcLegOccurrences* closelegoccurrences=NULL; 
-    vector<BbrcLegOccurrences> Bbrccandidatelegsoccurrences;
-    vector<vector< CloseBbrcLegOccurrences> > candidatecloselegsoccs;
-    vector<bool> candidateBbrccloselegsoccsused;
-    KSConstraint* ks=NULL;
+    BbrcLegOccurrences* bbrc_legoccurrences=NULL; 
+    CloseBbrcLegOccurrences* bbrc_closelegoccurrences=NULL; 
+    vector<BbrcLegOccurrences> bbrc_Bbrccandidatelegsoccurrences;
+    vector<vector< CloseBbrcLegOccurrences> > bbrc_candidatecloselegsoccs;
+    vector<bool> bbrc_candidateBbrccloselegsoccsused;
+    KSConstraint* bbrc_ks=NULL;
 
     // controlled externally, set on demand
-    bool Bbrccloselegsoccsused; // demand
+    bool bbrc_Bbrccloselegsoccsused; // demand
 
 }
 

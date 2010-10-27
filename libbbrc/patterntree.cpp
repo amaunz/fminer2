@@ -23,26 +23,26 @@
 #include "graphstate.h"
 
 namespace fm {
-    extern unsigned int minfreq;
-    extern bool do_backbone;
-    extern bool updated;
-    extern bool adjust_ub;
-    extern bool do_pruning;
-    extern bool console_out;
-    extern bool refine_singles;
-    extern bool do_output;
-    extern bool bbrc_sep;
-    extern bool regression;
+    extern unsigned int bbrc_minfreq;
+    extern bool bbrc_do_backbone;
+    extern bool bbrc_updated;
+    extern bool bbrc_adjust_ub;
+    extern bool bbrc_do_pruning;
+    extern bool bbrc_console_out;
+    extern bool bbrc_refine_singles;
+    extern bool bbrc_do_output;
+    extern bool bbrc_bbrc_sep;
+    extern bool bbrc_regression;
 
-    extern BbrcDatabase* database;
-    extern ChisqConstraint* chisq;
-    extern KSConstraint* ks;
-    extern vector<string>* result;
-    extern BbrcStatistics* statistics;
-    extern BbrcGraphState* graphstate;
-    extern BbrcLegOccurrences* legoccurrences;
+    extern BbrcDatabase* bbrc_database;
+    extern ChisqConstraint* bbrc_chisq;
+    extern KSConstraint* bbrc_ks;
+    extern vector<string>* bbrc_result;
+    extern BbrcStatistics* bbrc_statistics;
+    extern BbrcGraphState* bbrc_graphstate;
+    extern BbrcLegOccurrences* bbrc_legoccurrences;
 
-    extern vector<BbrcLegOccurrences> Bbrccandidatelegsoccurrences; 
+    extern vector<BbrcLegOccurrences> bbrc_Bbrccandidatelegsoccurrences; 
 }
 
 int maxsize = ( 1 << ( sizeof(BbrcNodeId)*8 ) ) - 1; // safe default for the largest allowed pattern
@@ -107,13 +107,13 @@ void BbrcPatternTree::addExtensionBbrcLegs ( BbrcTuple &tuple, BbrcLegOccurrence
   else
     bbrc_extend ( legoccurrences );
 
-  if ( fm::Bbrccandidatelegsoccurrences[pathlowestlabel].frequency >= fm::minfreq )
+  if ( fm::bbrc_Bbrccandidatelegsoccurrences[pathlowestlabel].frequency >= fm::bbrc_minfreq )
     // this is the first possible extension, as we force this label to be the lowest!
-    addBbrcLeg ( fm::graphstate->lastNode (), tuple.depth + 1, pathlowestlabel, fm::Bbrccandidatelegsoccurrences[pathlowestlabel] );
+    addBbrcLeg ( fm::bbrc_graphstate->lastNode (), tuple.depth + 1, pathlowestlabel, fm::bbrc_Bbrccandidatelegsoccurrences[pathlowestlabel] );
 
-  for ( int i = 0; (unsigned) i < fm::Bbrccandidatelegsoccurrences.size (); i++ ) {
-    if ( fm::Bbrccandidatelegsoccurrences[i].frequency >= fm::minfreq && i != pathlowestlabel )
-      addBbrcLeg ( fm::graphstate->lastNode (), tuple.depth + 1, i, fm::Bbrccandidatelegsoccurrences[i] );
+  for ( int i = 0; (unsigned) i < fm::bbrc_Bbrccandidatelegsoccurrences.size (); i++ ) {
+    if ( fm::bbrc_Bbrccandidatelegsoccurrences[i].frequency >= fm::bbrc_minfreq && i != pathlowestlabel )
+      addBbrcLeg ( fm::bbrc_graphstate->lastNode (), tuple.depth + 1, i, fm::bbrc_Bbrccandidatelegsoccurrences[i] );
   }
 
   BbrcaddCloseExtensions ( closelegs, legoccurrences.number );
@@ -286,7 +286,7 @@ BbrcPatternTree::BbrcPatternTree ( BbrcPath &path, unsigned int legindex ) {
       // In this case, we assume that the left part is the first path,
       // furthermore the position of the extension determines to which path
       // it is added
-    fm::graphstate->nasty = ( leftwalk == -1 );
+    fm::bbrc_graphstate->nasty = ( leftwalk == -1 );
     if ( leftwalk == -1 || path.edgelabels[leftwalk] < path.edgelabels[rightwalk] ) {
       // left part of the path should be the first path in the tree
 
@@ -670,15 +670,15 @@ BbrcPatternTree::BbrcPatternTree ( BbrcPath &path, unsigned int legindex ) {
   }
   
   // ADDED
-  fm::graphstate->backbonelength = path.nodelabels.size ();
-  if ( fm::graphstate->backbonelength % 2 == 0 )
-    fm::graphstate->bicenterlabel = path.edgelabels [ fm::graphstate->backbonelength / 2 - 1 ];
+  fm::bbrc_graphstate->backbonelength = path.nodelabels.size ();
+  if ( fm::bbrc_graphstate->backbonelength % 2 == 0 )
+    fm::bbrc_graphstate->bicenterlabel = path.edgelabels [ fm::bbrc_graphstate->backbonelength / 2 - 1 ];
   else
-    fm::graphstate->centerlabel = path.nodelabels [ ( fm::graphstate->backbonelength - 1 ) / 2 ];
-  fm::graphstate->nasty = false;
-  fm::graphstate->treetuples = &treetuples;
-  fm::graphstate->closetuples = NULL;
-  fm::graphstate->startsecondpath = nextpathstart;
+    fm::bbrc_graphstate->centerlabel = path.nodelabels [ ( fm::bbrc_graphstate->backbonelength - 1 ) / 2 ];
+  fm::bbrc_graphstate->nasty = false;
+  fm::bbrc_graphstate->treetuples = &treetuples;
+  fm::bbrc_graphstate->closetuples = NULL;
+  fm::bbrc_graphstate->startsecondpath = nextpathstart;
 }
 
 BbrcPatternTree::BbrcPatternTree ( BbrcPatternTree &parenttree, unsigned int legindex ) {
@@ -761,9 +761,9 @@ BbrcPatternTree::BbrcPatternTree ( BbrcPatternTree &parenttree, unsigned int leg
   }
 
   // ADDED
-  fm::graphstate->treetuples = &treetuples;
-  fm::graphstate->closetuples = NULL;
-  fm::graphstate->startsecondpath = nextpathstart;
+  fm::bbrc_graphstate->treetuples = &treetuples;
+  fm::bbrc_graphstate->closetuples = NULL;
+  fm::bbrc_graphstate->startsecondpath = nextpathstart;
     
   if ( nextprefixindex == nextpathstart && symmetric == 1 ) {
     secondpathleg = 0; // THE BUG
@@ -828,29 +828,29 @@ BbrcPatternTree::BbrcPatternTree ( BbrcPatternTree &parenttree, unsigned int leg
 }
 
 void BbrcPatternTree::expand (pair<float, string> max) {
-  fm::statistics->patternsize++;
-  if ( fm::statistics->patternsize > (int) fm::statistics->frequenttreenumbers.size () ) {
-    fm::statistics->frequenttreenumbers.resize ( fm::statistics->patternsize, 0 );
-    fm::statistics->frequentpathnumbers.resize ( fm::statistics->patternsize, 0 );
-    fm::statistics->frequentgraphnumbers.resize ( fm::statistics->patternsize, 0 );
+  fm::bbrc_statistics->patternsize++;
+  if ( fm::bbrc_statistics->patternsize > (int) fm::bbrc_statistics->frequenttreenumbers.size () ) {
+    fm::bbrc_statistics->frequenttreenumbers.resize ( fm::bbrc_statistics->patternsize, 0 );
+    fm::bbrc_statistics->frequentpathnumbers.resize ( fm::bbrc_statistics->patternsize, 0 );
+    fm::bbrc_statistics->frequentgraphnumbers.resize ( fm::bbrc_statistics->patternsize, 0 );
   }
-  ++fm::statistics->frequenttreenumbers[fm::statistics->patternsize-1];
-  if ( fm::statistics->patternsize == ((1<<(sizeof(BbrcNodeId)*8))-1) ) {
-    fm::statistics->patternsize--;
+  ++fm::bbrc_statistics->frequenttreenumbers[fm::bbrc_statistics->patternsize-1];
+  if ( fm::bbrc_statistics->patternsize == ((1<<(sizeof(BbrcNodeId)*8))-1) ) {
+    fm::bbrc_statistics->patternsize--;
     return;
   }
     
-  if (fm::do_backbone && (legs.size()==0)) {
-    if (fm::updated)
-        if (fm::do_output) {
-            if (!fm::console_out) { 
-               (*fm::result) << max.second;
+  if (fm::bbrc_do_backbone && (legs.size()==0)) {
+    if (fm::bbrc_updated)
+        if (fm::bbrc_do_output) {
+            if (!fm::bbrc_console_out) { 
+               (*fm::bbrc_result) << max.second;
             }
             else {
                 cout << max.second;
             }
         }
-        fm::updated = false;
+        fm::bbrc_updated = false;
   }
 
   
@@ -858,72 +858,72 @@ void BbrcPatternTree::expand (pair<float, string> max) {
   for ( int i = legs.size()-1; i >= 0; i-- ) {
 
     // Calculate chisq
-    if (fm::chisq->active) { 
-        if (!fm::regression) fm::chisq->Calc(legs[i]->occurrences.elements);
-        else fm::ks->Calc(legs[i]->occurrences.elements);
+    if (fm::bbrc_chisq->active) { 
+        if (!fm::bbrc_regression) fm::bbrc_chisq->Calc(legs[i]->occurrences.elements);
+        else fm::bbrc_ks->Calc(legs[i]->occurrences.elements);
     }
 
     // GRAPHSTATE
-    fm::graphstate->insertNode ( legs[i]->tuple.connectingnode, legs[i]->tuple.label, legs[i]->occurrences.maxdegree );
+    fm::bbrc_graphstate->insertNode ( legs[i]->tuple.connectingnode, legs[i]->tuple.label, legs[i]->occurrences.maxdegree );
 
     // immediate output for all patterns
-    if (fm::do_output && !fm::do_backbone) {
-       if (!fm::console_out) (*fm::result) << fm::graphstate->to_s(legs[i]->occurrences.frequency);
-       else fm::graphstate->print(legs[i]->occurrences.frequency);
+    if (fm::bbrc_do_output && !fm::bbrc_do_backbone) {
+       if (!fm::bbrc_console_out) (*fm::bbrc_result) << fm::bbrc_graphstate->to_s(legs[i]->occurrences.frequency);
+       else fm::bbrc_graphstate->print(legs[i]->occurrences.frequency);
     }
 
     // RECURSE
-    float cmax = maxi ( maxi ( fm::chisq->sig, max.first ), fm::chisq->p );
+    float cmax = maxi ( maxi ( fm::bbrc_chisq->sig, max.first ), fm::bbrc_chisq->p );
 
-    if ( ( !fm::do_pruning || 
+    if ( ( !fm::bbrc_do_pruning || 
                (
-                 (  !fm::adjust_ub && (fm::chisq->u >= fm::chisq->sig) ) || 
-                 (   fm::adjust_ub && (fm::chisq->u >= cmax) )
+                 (  !fm::bbrc_adjust_ub && (fm::bbrc_chisq->u >= fm::bbrc_chisq->sig) ) || 
+                 (   fm::bbrc_adjust_ub && (fm::bbrc_chisq->u >= cmax) )
                )
              ) &&
          (
-            fm::refine_singles || (legs[i]->occurrences.frequency>1)
+            fm::bbrc_refine_singles || (legs[i]->occurrences.frequency>1)
          )
     
     ) {   // UB-PRUNING
 
         BbrcPatternTree p ( *this, i );
 
-        if (!fm::regression) {
-            if (fm::chisq->p > max.first) { fm::updated = true; p.expand (pair<float, string>(fm::chisq->p,fm::graphstate->to_s(legs[i]->occurrences.frequency))); }
+        if (!fm::bbrc_regression) {
+            if (fm::bbrc_chisq->p > max.first) { fm::bbrc_updated = true; p.expand (pair<float, string>(fm::bbrc_chisq->p,fm::bbrc_graphstate->to_s(legs[i]->occurrences.frequency))); }
             else p.expand (max);
         }
         else {
-            if (fm::ks->p > max.first) { fm::updated = true; p.expand (pair<float, string>(fm::ks->p,fm::graphstate->to_s(legs[i]->occurrences.frequency))); }
+            if (fm::bbrc_ks->p > max.first) { fm::bbrc_updated = true; p.expand (pair<float, string>(fm::bbrc_ks->p,fm::bbrc_graphstate->to_s(legs[i]->occurrences.frequency))); }
             else p.expand (max);
         }
     }
     else {
-        if (fm::do_backbone && fm::updated) {
-            if (fm::do_output) {
-                if (!fm::console_out) {
-                    (*fm::result) << max.second;
+        if (fm::bbrc_do_backbone && fm::bbrc_updated) {
+            if (fm::bbrc_do_output) {
+                if (!fm::bbrc_console_out) {
+                    (*fm::bbrc_result) << max.second;
                 }
                 else {
                     cout << max.second;
                 }
             }
-            fm::updated = false;
+            fm::bbrc_updated = false;
         }
     }
 
-    fm::graphstate->deleteNode ();
+    fm::bbrc_graphstate->deleteNode ();
 
   }
 
-  if (fm::bbrc_sep && !fm::do_backbone && (legs.size()==0)) {
-      if (fm::do_output) {
-          if (!fm::console_out && fm::result->size() && (fm::result->back()!=fm::graphstate->sep())) (*fm::result) << fm::graphstate->sep();
-          //else cout << fm::graphstate->sep() << endl;
+  if (fm::bbrc_bbrc_sep && !fm::bbrc_do_backbone && (legs.size()==0)) {
+      if (fm::bbrc_do_output) {
+          if (!fm::bbrc_console_out && fm::bbrc_result->size() && (fm::bbrc_result->back()!=fm::bbrc_graphstate->sep())) (*fm::bbrc_result) << fm::bbrc_graphstate->sep();
+          //else cout << fm::bbrc_graphstate->sep() << endl;
       }
   }
 
-  fm::statistics->patternsize--;
+  fm::bbrc_statistics->patternsize--;
 
 }
 
@@ -938,11 +938,11 @@ BbrcPatternTree::~BbrcPatternTree () {
 
 /*
 ostream &operator<< ( ostream &stream, BbrcTuple &tuple ) {
-  BbrcDatabaseBbrcEdgeLabel edgelabel = database->edgelabels[fm::database->edgelabelsindexes[tuple.label]];
+  BbrcDatabaseBbrcEdgeLabel edgelabel = database->edgelabels[fm::bbrc_database->edgelabelsindexes[tuple.label]];
   stream << "(" << tuple.depth << ","
-         << fm::database->nodelabels[edgelabel.fromnodelabel].inputlabel << "-"
+         << fm::bbrc_database->nodelabels[edgelabel.fromnodelabel].inputlabel << "-"
          << edgelabel.inputedgelabel << "-"
-         << fm::database->nodelabels[edgelabel.tonodelabel].inputlabel << "[" << (int) tuple.label << "])";
+         << fm::bbrc_database->nodelabels[edgelabel.tonodelabel].inputlabel << "[" << (int) tuple.label << "])";
 
   return stream;
 }

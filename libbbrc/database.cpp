@@ -25,8 +25,8 @@
 #include <iostream>
 
 namespace fm {
-    extern bool aromatic;
-    extern unsigned int minfreq;
+    extern bool bbrc_aromatic;
+    extern unsigned int bbrc_minfreq;
 }
 
 ostream &operator<< ( ostream &stream, BbrcDatabaseTreeEdge &databasetreeedge ) {
@@ -104,7 +104,7 @@ bool BbrcDatabase::readTreeSmi (string smi, BbrcTid tid, BbrcTid orig_tid, int l
 
         // set atom type as label
         // code for 'c' is set to -1 (aromatic carbon).
-        if (fm::aromatic) {
+        if (fm::bbrc_aromatic) {
             (*atom)->IsAromatic() ? inputnodelabel = (*atom)->GetAtomicNum()+150 : inputnodelabel = (*atom)->GetAtomicNum();
         }
         else inputnodelabel = (*atom)->GetAtomicNum();
@@ -177,7 +177,7 @@ bool BbrcDatabase::readTreeSmi (string smi, BbrcTid tid, BbrcTid orig_tid, int l
 
             // set input edge label
             inputedgelabel = bondorder;
-            if (fm::aromatic && (*bond)->IsAromatic()) inputedgelabel = 4;
+            if (fm::bbrc_aromatic && (*bond)->IsAromatic()) inputedgelabel = 4;
 
 //            cerr << nodeid1 << inputedgelabel << "(" << (*bond)->IsAromatic() << ")" << nodeid2 << " ";
             BbrcNodeLabel node1label = tree->nodes[nodeid1].nodelabel;
@@ -498,7 +498,7 @@ void BbrcDatabase::determineCycledNodes ( BbrcDatabaseTreePtr tree, vector<int> 
 
 void BbrcDatabase::edgecount () {
   for (unsigned int i = 0; i < edgelabels.size (); i++ ) {                              // DATABASE                    
-    if ( edgelabels[i].frequency >= fm::minfreq ) {                                         // if edge is frequent...      
+    if ( edgelabels[i].frequency >= fm::bbrc_minfreq ) {                                         // if edge is frequent...      
       nodelabels[edgelabels[i].tonodelabel].frequentedgelabels.push_back ( i );         // ... store it at the to-node 
       if ( edgelabels[i].fromnodelabel != edgelabels[i].tonodelabel )                   // ... and also (if different) 
         nodelabels[edgelabels[i].fromnodelabel].frequentedgelabels.push_back ( i );     // ... at the from-node        
@@ -529,7 +529,7 @@ void BbrcDatabase::reorder () {
     // gather frequent edgelabels and sort according to frequency
     edgelabelsindexes.reserve ( edgelabels.size () );
     for (unsigned int i = 0; i < edgelabels.size (); i++ ) {
-        if ( edgelabels[i].frequency >= fm::minfreq )
+        if ( edgelabels[i].frequency >= fm::bbrc_minfreq )
             edgelabelsindexes.push_back ( i );                                                              
     }
 
@@ -575,7 +575,7 @@ void BbrcDatabase::reorder () {
         for ( BbrcNodeId j = 0; j < tree.nodes.size (); j++ ) {                         // for every node j...
   //        cerr << endl;
             BbrcDatabaseTreeNode &node = tree.nodes[j];
-            if ( nodelabels[node.nodelabel].frequency >= fm::minfreq ) {                  // ...check its frequency...
+            if ( nodelabels[node.nodelabel].frequency >= fm::bbrc_minfreq ) {                  // ...check its frequency...
                 BbrcDatabaseBbrcNodeLabel &nodelabel = nodelabels[node.nodelabel];
 
   //            cerr << "BbrcLeg Occurence for node " << nodelabel.inputlabel
@@ -588,7 +588,7 @@ void BbrcDatabase::reorder () {
                     
                                         
                     BbrcEdgeLabel lab = node.edges[l].edgelabel;                            // ... (with label lab)...
-                    if ( edgelabels[lab].frequency >= fm::minfreq ) {                       // ... check its frequency...
+                    if ( edgelabels[lab].frequency >= fm::bbrc_minfreq ) {                       // ... check its frequency...
 
   //                    BbrcDatabaseTreeEdge& edge = node.edges[l];
   //                    cerr << "  edge " << (int) edge.edgelabel << " moved from " << l << " to " << k << endl;

@@ -26,15 +26,15 @@
 // 1. Constructors and Initializers
 
 Bbrc::Bbrc() : init_mining_done(false) {
-  if (!fm::instance_present) {
-      fm::database = NULL; fm::statistics = NULL; fm::chisq = NULL; fm::result = NULL;
+  if (!fm::bbrc_instance_present) {
+      fm::bbrc_database = NULL; fm::bbrc_statistics = NULL; fm::bbrc_chisq = NULL; fm::bbrc_result = NULL;
       Reset();
       Defaults();
-      fm::instance_present=true;
-      if (getenv("FMINER_LAZAR")) fm::do_yaml = false;
-      if (getenv("FMINER_SMARTS")) fm::gsp_out = false; 
-      if (getenv("FMINER_PVALUES")) fm::pvalues = true;
-      if (getenv("FMINER_NO_AROMATIC")) fm::no_aromatic = true;
+      fm::bbrc_instance_present=true;
+      if (getenv("FMINER_LAZAR")) fm::bbrc_do_yaml = false;
+      if (getenv("FMINER_SMARTS")) fm::bbrc_gsp_out = false; 
+      if (getenv("FMINER_PVALUES")) fm::bbrc_pvalues = true;
+      if (getenv("FMINER_NO_AROMATIC")) fm::bbrc_no_aromatic = true;
   }
   else {
     cerr << "Error! Cannot create more than 1 instance." << endl; 
@@ -43,17 +43,17 @@ Bbrc::Bbrc() : init_mining_done(false) {
 }
 
 Bbrc::Bbrc(int _type, unsigned int _minfreq) : init_mining_done(false) {
-  if (!fm::instance_present) {
-      fm::database = NULL; fm::statistics = NULL; fm::chisq = NULL; fm::result = NULL;
+  if (!fm::bbrc_instance_present) {
+      fm::bbrc_database = NULL; fm::bbrc_statistics = NULL; fm::bbrc_chisq = NULL; fm::bbrc_result = NULL;
       Reset();
       Defaults();
       SetType(_type);
       SetMinfreq(_minfreq);
-      fm::instance_present=true;
-      if (getenv("FMINER_LAZAR")) fm::do_yaml = false;
-      if (getenv("FMINER_SMARTS")) fm::gsp_out = false; 
-      if (getenv("FMINER_PVALUES")) fm::pvalues = true;
-      if (getenv("FMINER_NO_AROMATIC")) fm::no_aromatic = true;
+      fm::bbrc_instance_present=true;
+      if (getenv("FMINER_LAZAR")) fm::bbrc_do_yaml = false;
+      if (getenv("FMINER_SMARTS")) fm::bbrc_gsp_out = false; 
+      if (getenv("FMINER_PVALUES")) fm::bbrc_pvalues = true;
+      if (getenv("FMINER_NO_AROMATIC")) fm::bbrc_no_aromatic = true;
   }
   else {
     cerr << "Error! Cannot create more than 1 instance." << endl; 
@@ -63,19 +63,19 @@ Bbrc::Bbrc(int _type, unsigned int _minfreq) : init_mining_done(false) {
 }
 
 Bbrc::Bbrc(int _type, unsigned int _minfreq, float _chisq_val, bool _do_backbone) : init_mining_done(false) {
-  if (!fm::instance_present) {
-      fm::database = NULL; fm::statistics = NULL; fm::chisq = NULL; fm::result = NULL;
+  if (!fm::bbrc_instance_present) {
+      fm::bbrc_database = NULL; fm::bbrc_statistics = NULL; fm::bbrc_chisq = NULL; fm::bbrc_result = NULL;
       Reset();
       Defaults();
       SetType(_type);
       SetMinfreq(_minfreq);
       SetChisqSig(_chisq_val);
       SetBackbone(_do_backbone);
-      fm::instance_present=true;
-      if (getenv("FMINER_LAZAR")) fm::do_yaml = false;
-      if (getenv("FMINER_SMARTS")) fm::gsp_out = false; 
-      if (getenv("FMINER_PVALUES")) fm::pvalues = true;
-      if (getenv("FMINER_NO_AROMATIC")) fm::no_aromatic = true;
+      fm::bbrc_instance_present=true;
+      if (getenv("FMINER_LAZAR")) fm::bbrc_do_yaml = false;
+      if (getenv("FMINER_SMARTS")) fm::bbrc_gsp_out = false; 
+      if (getenv("FMINER_PVALUES")) fm::bbrc_pvalues = true;
+      if (getenv("FMINER_NO_AROMATIC")) fm::bbrc_no_aromatic = true;
 
   }
   else {
@@ -86,91 +86,91 @@ Bbrc::Bbrc(int _type, unsigned int _minfreq, float _chisq_val, bool _do_backbone
 }
 
 Bbrc::~Bbrc() {
-    if (fm::instance_present) {
-        delete fm::database;
-        delete fm::statistics; 
-        delete fm::chisq; 
-        delete fm::ks;
-        delete fm::graphstate;
-        delete fm::closelegoccurrences;
-        delete fm::legoccurrences;
+    if (fm::bbrc_instance_present) {
+        delete fm::bbrc_database;
+        delete fm::bbrc_statistics; 
+        delete fm::bbrc_chisq; 
+        delete fm::bbrc_ks;
+        delete fm::bbrc_graphstate;
+        delete fm::bbrc_closelegoccurrences;
+        delete fm::bbrc_legoccurrences;
 
-        fm::Bbrccandidatelegsoccurrences.clear();
-        fm::candidatecloselegsoccs.clear();
-        fm::candidateBbrccloselegsoccsused.clear();
+        fm::bbrc_Bbrccandidatelegsoccurrences.clear();
+        fm::bbrc_candidatecloselegsoccs.clear();
+        fm::bbrc_candidateBbrccloselegsoccsused.clear();
 
-        fm::instance_present=false;
+        fm::bbrc_instance_present=false;
     }
 }
 
 void Bbrc::Reset() { 
-    if (fm::instance_present) {
-        delete fm::database;
-        delete fm::statistics;
-        delete fm::chisq;
-        delete fm::ks;
-        delete fm::graphstate;
-        delete fm::closelegoccurrences;
-        delete fm::legoccurrences;
+    if (fm::bbrc_instance_present) {
+        delete fm::bbrc_database;
+        delete fm::bbrc_statistics;
+        delete fm::bbrc_chisq;
+        delete fm::bbrc_ks;
+        delete fm::bbrc_graphstate;
+        delete fm::bbrc_closelegoccurrences;
+        delete fm::bbrc_legoccurrences;
     }
-    fm::database = new BbrcDatabase();
-    fm::db_built = false;
-    fm::statistics = new BbrcStatistics();
-    fm::chisq = new ChisqConstraint(3.84146);
-    fm::ks = new KSConstraint(0.95);
-    fm::graphstate = new BbrcGraphState();
-    fm::closelegoccurrences = new CloseBbrcLegOccurrences();
-    fm::legoccurrences = new BbrcLegOccurrences();
+    fm::bbrc_database = new BbrcDatabase();
+    fm::bbrc_db_built = false;
+    fm::bbrc_statistics = new BbrcStatistics();
+    fm::bbrc_chisq = new ChisqConstraint(3.84146);
+    fm::bbrc_ks = new KSConstraint(0.95);
+    fm::bbrc_graphstate = new BbrcGraphState();
+    fm::bbrc_closelegoccurrences = new CloseBbrcLegOccurrences();
+    fm::bbrc_legoccurrences = new BbrcLegOccurrences();
 
-    fm::Bbrccandidatelegsoccurrences.clear();
-    fm::candidatecloselegsoccs.clear();
-    fm::candidateBbrccloselegsoccsused.clear();
+    fm::bbrc_Bbrccandidatelegsoccurrences.clear();
+    fm::bbrc_candidatecloselegsoccs.clear();
+    fm::bbrc_candidateBbrccloselegsoccsused.clear();
 
     SetChisqActive(true); 
-    fm::result = &r;
+    fm::bbrc_result = &r;
     comp_runner=0; 
     comp_no=0; 
     init_mining_done = false;
 }
 
 void Bbrc::Defaults() {
-    fm::minfreq = 2;
-    fm::type = 2;
-    fm::do_pruning = true;
-    fm::console_out = false;
-    fm::aromatic = true;
-    fm::refine_singles = false;
-    fm::do_output=true;
-    fm::bbrc_sep=false;
-    fm::updated = true;
-    fm::gsp_out=true;
+    fm::bbrc_minfreq = 2;
+    fm::bbrc_type = 2;
+    fm::bbrc_do_pruning = true;
+    fm::bbrc_console_out = false;
+    fm::bbrc_aromatic = true;
+    fm::bbrc_refine_singles = false;
+    fm::bbrc_do_output=true;
+    fm::bbrc_bbrc_sep=false;
+    fm::bbrc_updated = true;
+    fm::bbrc_gsp_out=true;
 
     // BBRC
-    fm::chisq->sig = 3.84146;
-    fm::do_backbone = true;
-    fm::adjust_ub = true;
-    fm::regression=false;
-    fm::do_yaml=true;
-    fm::pvalues=false;
-    fm::no_aromatic=false;
+    fm::bbrc_chisq->sig = 3.84146;
+    fm::bbrc_do_backbone = true;
+    fm::bbrc_adjust_ub = true;
+    fm::bbrc_regression=false;
+    fm::bbrc_do_yaml=true;
+    fm::bbrc_pvalues=false;
+    fm::bbrc_no_aromatic=false;
 }
 
 
 // 2. Getter methods
 
-int Bbrc::GetMinfreq(){return fm::minfreq;}
-int Bbrc::GetType(){return fm::type;}
-bool Bbrc::GetBackbone(){return fm::do_backbone;}
-bool Bbrc::GetDynamicUpperBound(){return fm::adjust_ub;}
-bool Bbrc::GetPruning() {return fm::do_pruning;}
-bool Bbrc::GetConsoleOut(){return fm::console_out;}
-bool Bbrc::GetAromatic() {return fm::aromatic;}
-bool Bbrc::GetRefineSingles() {return fm::refine_singles;}
-bool Bbrc::GetDoOutput() {return fm::do_output;}
-bool Bbrc::GetBbrcSep(){return fm::bbrc_sep;}
-bool Bbrc::GetChisqActive(){return fm::chisq->active;}
-float Bbrc::GetChisqSig(){if (!fm::regression) return fm::chisq->sig; else return fm::ks->sig; }
-bool Bbrc::GetRegression() {return fm::regression;}
+int Bbrc::GetMinfreq(){return fm::bbrc_minfreq;}
+int Bbrc::GetType(){return fm::bbrc_type;}
+bool Bbrc::GetBackbone(){return fm::bbrc_do_backbone;}
+bool Bbrc::GetDynamicUpperBound(){return fm::bbrc_adjust_ub;}
+bool Bbrc::GetPruning() {return fm::bbrc_do_pruning;}
+bool Bbrc::GetConsoleOut(){return fm::bbrc_console_out;}
+bool Bbrc::GetAromatic() {return fm::bbrc_aromatic;}
+bool Bbrc::GetRefineSingles() {return fm::bbrc_refine_singles;}
+bool Bbrc::GetDoOutput() {return fm::bbrc_do_output;}
+bool Bbrc::GetBbrcSep(){return fm::bbrc_bbrc_sep;}
+bool Bbrc::GetChisqActive(){return fm::bbrc_chisq->active;}
+float Bbrc::GetChisqSig(){if (!fm::bbrc_regression) return fm::bbrc_chisq->sig; else return fm::bbrc_ks->sig; }
+bool Bbrc::GetRegression() {return fm::bbrc_regression;}
 
 
 
@@ -180,13 +180,13 @@ void Bbrc::SetMinfreq(int val) {
     // parameters not regarded in integrity constraints
     if (val < 1) { cerr << "Error! Invalid value '" << val << "' for parameter minfreq." << endl; exit(1); }
     if (val > 1 && GetRefineSingles()) { cerr << "Warning! Minimum frequency of '" << val << "' could not be set due to activated single refinement." << endl;}
-    fm::minfreq = val;
+    fm::bbrc_minfreq = val;
 }
 
 bool Bbrc::SetType(int val) {
     // parameters not regarded in integrity constraints
     if ((val != 1) && (val != 2)) { cerr << "Error! Invalid value '" << val << "' for parameter type." << endl; exit(1); }
-    fm::type = val;
+    fm::bbrc_type = val;
     return 1;
 }
 
@@ -199,15 +199,15 @@ bool Bbrc::SetBackbone(bool val) {
     else if (!val && GetDynamicUpperBound()) {
         cerr << "Notice: Disabling dynamic upper bound pruning due to switched-off BBRC mining." << endl;
         SetDynamicUpperBound(false);
-        fm::do_backbone = val;
+        fm::bbrc_do_backbone = val;
     }
     // -------- r!b ---------
     else if (val && GetBbrcSep()) {
         cerr << "Notice: Disabling BBRC separator due to enabled BBRC mining." << endl;
         SetBbrcSep(false);
-        fm::do_backbone = val;
+        fm::bbrc_do_backbone = val;
     }
-    else fm::do_backbone = val;
+    else fm::bbrc_do_backbone = val;
     return 1;
 }
 
@@ -225,7 +225,7 @@ bool Bbrc::SetDynamicUpperBound(bool val) {
         cerr << "Warning! Dynamic upper bound pruning could not be enabled due to deactivated statistical metric pruning." << endl;
     }
     else {
-        fm::adjust_ub=val; 
+        fm::bbrc_adjust_ub=val; 
     }
     return 1;
 }
@@ -246,7 +246,7 @@ bool Bbrc::SetPruning(bool val) {
             cerr << "Notice: Disabling BBRC separator due to disabled static upper bound pruning." << endl;
             SetBbrcSep(false);
         }
-        fm::do_pruning=val;
+        fm::bbrc_do_pruning=val;
     }
     return 1;
 }
@@ -255,17 +255,17 @@ bool Bbrc::SetConsoleOut(bool val) {
     // console out not switched by fminer
     if (val) {
         if (GetBbrcSep()) cerr << "Warning! Console output could not be enabled due to enabled BBRC separator." << endl;
-        else fm::console_out=val;
+        else fm::bbrc_console_out=val;
     }
     return 1;
 }
 
 void Bbrc::SetAromatic(bool val) {
-    fm::aromatic = val;
+    fm::bbrc_aromatic = val;
 }
 
 bool Bbrc::SetRefineSingles(bool val) {
-    fm::refine_singles = val;
+    fm::bbrc_refine_singles = val;
     // parameters not regarded in integrity constraints
     if (GetRefineSingles() && GetMinfreq() > 1) {
         cerr << "Notice: Using minimum frequency of 1 to refine singles." << endl;
@@ -275,7 +275,7 @@ bool Bbrc::SetRefineSingles(bool val) {
 }
 
 void Bbrc::SetDoOutput(bool val) {
-    fm::do_output = val;
+    fm::bbrc_do_output = val;
 }
 
 bool Bbrc::SetBbrcSep(bool val) {
@@ -288,7 +288,7 @@ bool Bbrc::SetBbrcSep(bool val) {
         cerr << "Warning! BBRC separator could not be enabled due to disabled statistical metric pruning." << endl;
     }
     else {
-        fm::bbrc_sep=val;
+        fm::bbrc_bbrc_sep=val;
         if (GetBbrcSep()) {
             // console out not switched by fminer
             if (GetConsoleOut()) {
@@ -301,7 +301,7 @@ bool Bbrc::SetBbrcSep(bool val) {
 }
 
 bool Bbrc::SetChisqActive(bool val) {
-    fm::chisq->active = val;
+    fm::bbrc_chisq->active = val;
     // chisq active not switched by fminer
     if (!GetChisqActive()) {
         cerr << "Notice: Disabling dynamic upper bound pruning due to deactivated significance criterium." << endl;
@@ -318,13 +318,13 @@ bool Bbrc::SetChisqActive(bool val) {
 bool Bbrc::SetChisqSig(float _chisq_val) {
     // parameters not regarded in integrity constraints
     if (_chisq_val < 0.0 || _chisq_val > 1.0) { cerr << "Error! Invalid value '" << _chisq_val << "' for parameter chisq." << endl; exit(1); }
-    fm::chisq->sig = gsl_cdf_chisq_Pinv(_chisq_val, 1);
+    fm::bbrc_chisq->sig = gsl_cdf_chisq_Pinv(_chisq_val, 1);
     return 1;
 }
 
 bool Bbrc::SetRegression(bool val) {
-    fm::regression = val;
-    if (fm::regression) {
+    fm::bbrc_regression = val;
+    if (fm::bbrc_regression) {
          if (!GetBackbone()) {
     
             SetBackbone(true);
@@ -345,27 +345,27 @@ bool Bbrc::SetMaxHops(int val) {
 // 4. Other methods
 
 vector<string>* Bbrc::MineRoot(unsigned int j) {
-    fm::result->clear();
+    fm::bbrc_result->clear();
     if (!init_mining_done) {
-        if (!fm::db_built) {
+        if (!fm::bbrc_db_built) {
           AddDataCanonical();
         }
-        if (fm::chisq->active) {
-            each (fm::database->trees) {
-                if (fm::database->trees[i]->activity == -1) {
-                    cerr << "Error! ID " << fm::database->trees[i]->orig_tid << " is missing activity information." << endl;
+        if (fm::bbrc_chisq->active) {
+            each (fm::bbrc_database->trees) {
+                if (fm::bbrc_database->trees[i]->activity == -1) {
+                    cerr << "Error! ID " << fm::bbrc_database->trees[i]->orig_tid << " is missing activity information." << endl;
                     exit(1);
                 }
             }
         }
-        fm::database->edgecount (); 
-        fm::database->reorder (); 
+        fm::bbrc_database->edgecount (); 
+        fm::bbrc_database->reorder (); 
         BbrcinitBbrcLegStatics (); 
-        fm::graphstate->init (); 
-        if (fm::bbrc_sep && !fm::do_backbone && fm::do_output && !fm::console_out) (*fm::result) << fm::graphstate->sep();
+        fm::bbrc_graphstate->init (); 
+        if (fm::bbrc_bbrc_sep && !fm::bbrc_do_backbone && fm::bbrc_do_output && !fm::bbrc_console_out) (*fm::bbrc_result) << fm::bbrc_graphstate->sep();
         init_mining_done=true; 
 
-        if (!fm::regression) {
+        if (!fm::bbrc_regression) {
              cerr << "Settings:" << endl \
              << "---" << endl \
              << "Type:                                 " << GetType() << endl \
@@ -399,20 +399,20 @@ vector<string>* Bbrc::MineRoot(unsigned int j) {
     }
 
 
-    if (j >= fm::database->nodelabels.size()) { cerr << "Error! Root node " << j << " does not exist." << endl;  exit(1); }
-    if ( fm::database->nodelabels[j].frequency >= fm::minfreq && fm::database->nodelabels[j].frequentedgelabels.size () ) {
+    if (j >= fm::bbrc_database->nodelabels.size()) { cerr << "Error! Root node " << j << " does not exist." << endl;  exit(1); }
+    if ( fm::bbrc_database->nodelabels[j].frequency >= fm::bbrc_minfreq && fm::bbrc_database->nodelabels[j].frequentedgelabels.size () ) {
         BbrcPath path(j);
         path.expand(); // mining step
     }
-    return fm::result;
+    return fm::bbrc_result;
 }
 
 void Bbrc::ReadGsp(FILE* gsp){
-    fm::database->readGsp(gsp);
+    fm::bbrc_database->readGsp(gsp);
 }
 
 bool Bbrc::AddCompound(string smiles, unsigned int comp_id) {
-  if (fm::db_built) {
+  if (fm::bbrc_db_built) {
     cerr << "BbrcDatabase has been already processed! Please reset() and insert a new dataset." << endl;
     return false;
   }
@@ -454,7 +454,7 @@ bool Bbrc::AddCompound(string smiles, unsigned int comp_id) {
 }
 
 bool Bbrc::AddActivity(float act, unsigned int comp_id) {
-  if (fm::db_built) {
+  if (fm::bbrc_db_built) {
     cerr << "BbrcDatabase has been already processed! Please reset() and insert a new dataset." << endl;
     return false;
   }
@@ -497,14 +497,14 @@ bool Bbrc::AddDataCanonical() {
       AddCompoundCanonical(it->second.second, it->second.first); // smiles, comp_id
       AddActivityCanonical(activity_map[it->second.first], it->second.first); // act, comp_id
     }
-    fm::db_built=true;
+    fm::bbrc_db_built=true;
 }
 
 bool Bbrc::AddCompoundCanonical(string smiles, unsigned int comp_id) {
   bool insert_done=false;
   if (comp_id<=0) { cerr << "Error! IDs must be of type: Int > 0." << endl;}
   else {
-    if (fm::database->readTreeSmi (smiles, comp_no, comp_id, comp_runner)) {
+    if (fm::bbrc_database->readTreeSmi (smiles, comp_no, comp_id, comp_runner)) {
       insert_done=true;
       comp_no++;
     }
@@ -515,16 +515,16 @@ bool Bbrc::AddCompoundCanonical(string smiles, unsigned int comp_id) {
 }
 
 bool Bbrc::AddActivityCanonical(float act, unsigned int comp_id) {
-  if (fm::database->trees_map[comp_id] == NULL) { 
+  if (fm::bbrc_database->trees_map[comp_id] == NULL) { 
     cerr << "No structure for ID " << comp_id << ". Ignoring entry!" << endl; return false; 
   }
   else {
-    if (!fm::regression) {
-      if ((fm::database->trees_map[comp_id]->activity = act) == 1.0) AddChiSqNa();
+    if (!fm::bbrc_regression) {
+      if ((fm::bbrc_database->trees_map[comp_id]->activity = act) == 1.0) AddChiSqNa();
       else AddChiSqNi();
     }
     else {
-      if ((fm::database->trees_map[comp_id]->activity = act)) AddKS(act);
+      if ((fm::bbrc_database->trees_map[comp_id]->activity = act)) AddKS(act);
     }
     return true;
   }

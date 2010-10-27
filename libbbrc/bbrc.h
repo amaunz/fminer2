@@ -29,16 +29,16 @@
 
 namespace fm { 
 
-    extern bool adjust_ub;
-    extern bool do_pruning;
-    extern bool aromatic;
-    extern ChisqConstraint* chisq;
-    extern KSConstraint* ks;
-    extern bool do_yaml;
-    extern bool gsp_out;
-    extern bool bbrc_sep;
-    extern bool regression;
-    extern bool db_built;
+    extern bool bbrc_adjust_ub;
+    extern bool bbrc_do_pruning;
+    extern bool bbrc_aromatic;
+    extern ChisqConstraint* bbrc_chisq;
+    extern KSConstraint* bbrc_ks;
+    extern bool bbrc_do_yaml;
+    extern bool bbrc_gsp_out;
+    extern bool bbrc_bbrc_sep;
+    extern bool bbrc_regression;
+    extern bool bbrc_db_built;
 
 }
 
@@ -107,15 +107,15 @@ class Bbrc : public Fminer {
     // KS: bool AddActivity(bool act, unsigned int comp_id); //!< Add an activity to the database.
     // KS: recognize regr field
     bool AddActivity(float act, unsigned int comp_id); //!< Add an activity to the database.
-    int GetNoRootNodes() {if (!fm::db_built) AddDataCanonical() ; return fm::database->nodelabels.size();} //!< Get number of root nodes (different element types).
-    int GetNoCompounds() {if (!fm::db_built) AddDataCanonical() ; return fm::database->trees.size();} //!< Get number of compounds in the database.
+    int GetNoRootNodes() {if (!fm::bbrc_db_built) AddDataCanonical() ; return fm::bbrc_database->nodelabels.size();} //!< Get number of root nodes (different element types).
+    int GetNoCompounds() {if (!fm::bbrc_db_built) AddDataCanonical() ; return fm::bbrc_database->trees.size();} //!< Get number of compounds in the database.
     //@}
     
   private:
-    void AddChiSqNa(){fm::chisq->na++;fm::chisq->n++;}
-    void AddChiSqNi(){fm::chisq->ni++;fm::chisq->n++;}
+    void AddChiSqNa(){fm::bbrc_chisq->na++;fm::bbrc_chisq->n++;}
+    void AddChiSqNi(){fm::bbrc_chisq->ni++;fm::bbrc_chisq->n++;}
     // KS: Insert value into set of activities
-    void AddKS(float val){fm::ks->all.push_back(val);}
+    void AddKS(float val){fm::bbrc_ks->all.push_back(val);}
 
     bool init_mining_done;
     int comp_runner;

@@ -27,49 +27,49 @@
 #include "misc.h"
 
 namespace fm {
-    extern unsigned int minfreq;
-    extern bool adjust_ub;
-    extern bool do_pruning;
-    extern bool do_backbone;
-    extern bool updated;
-    extern int type;
-    extern bool console_out;
-    extern bool refine_singles;
-    extern bool do_output;
-    extern bool bbrc_sep;
-    extern bool regression;
+    extern unsigned int bbrc_minfreq;
+    extern bool bbrc_adjust_ub;
+    extern bool bbrc_do_pruning;
+    extern bool bbrc_do_backbone;
+    extern bool bbrc_updated;
+    extern int bbrc_type;
+    extern bool bbrc_console_out;
+    extern bool bbrc_refine_singles;
+    extern bool bbrc_do_output;
+    extern bool bbrc_bbrc_sep;
+    extern bool bbrc_regression;
 
-    extern BbrcDatabase* database;
-    extern ChisqConstraint* chisq;
-    extern KSConstraint* ks;
-    extern vector<string>* result;
-    extern BbrcStatistics* statistics;
-    extern BbrcGraphState* graphstate;
+    extern BbrcDatabase* bbrc_database;
+    extern ChisqConstraint* bbrc_chisq;
+    extern KSConstraint* bbrc_ks;
+    extern vector<string>* bbrc_result;
+    extern BbrcStatistics* bbrc_statistics;
+    extern BbrcGraphState* bbrc_graphstate;
 
-    extern vector<BbrcLegOccurrences> Bbrccandidatelegsoccurrences; 
+    extern vector<BbrcLegOccurrences> bbrc_Bbrccandidatelegsoccurrences; 
 }
 
 // for every database node...
 BbrcPath::BbrcPath ( BbrcNodeLabel startnodelabel ) {
   
-    fm::graphstate->insertStartNode ( startnodelabel );
+    fm::bbrc_graphstate->insertStartNode ( startnodelabel );
     nodelabels.push_back ( startnodelabel );
     frontsymmetry = backsymmetry = totalsymmetry = 0;
 
-    InputBbrcNodeLabel inl = fm::database->nodelabels[startnodelabel].inputlabel;
+    InputBbrcNodeLabel inl = fm::bbrc_database->nodelabels[startnodelabel].inputlabel;
     cerr << "Root: " << inl << endl;
 
-    BbrcDatabaseBbrcNodeLabel &databasenodelabel = fm::database->nodelabels[startnodelabel];
+    BbrcDatabaseBbrcNodeLabel &databasenodelabel = fm::bbrc_database->nodelabels[startnodelabel];
 
     // ...gather frequent edge labels
     vector<BbrcEdgeLabel> frequentedgelabels;
     for ( unsigned int i = 0; i < databasenodelabel.frequentedgelabels.size (); i++ )
-        frequentedgelabels.push_back ( fm::database->edgelabels[databasenodelabel.frequentedgelabels[i]].edgelabel );
+        frequentedgelabels.push_back ( fm::bbrc_database->edgelabels[databasenodelabel.frequentedgelabels[i]].edgelabel );
                                                                                                     //  ^^^^^^^^^ is frequency rank!
     sort ( frequentedgelabels.begin (), frequentedgelabels.end () );                                // restores the rank order
     
     BbrcTid lastself[frequentedgelabels.size ()];
-    vector<BbrcEdgeLabel> edgelabelorder ( fm::database->edgelabelsindexes.size () );
+    vector<BbrcEdgeLabel> edgelabelorder ( fm::bbrc_database->edgelabelsindexes.size () );
     BbrcEdgeLabel j = 0;
 
     // FOR ALL EDGES...
@@ -90,7 +90,7 @@ BbrcPath::BbrcPath ( BbrcNodeLabel startnodelabel ) {
         leg->occurrences.maxdegree = 0;
         leg->occurrences.selfjoin = 0;
 
-        BbrcDatabaseBbrcEdgeLabel &databaseedgelabel = fm::database->edgelabels[fm::database->edgelabelsindexes[frequentedgelabels[i]]];
+        BbrcDatabaseBbrcEdgeLabel &databaseedgelabel = fm::bbrc_database->edgelabels[fm::bbrc_database->edgelabelsindexes[frequentedgelabels[i]]];
         leg->occurrences.frequency = databaseedgelabel.frequency;
 
         if ( databaseedgelabel.fromnodelabel == startnodelabel ) {
@@ -107,7 +107,7 @@ BbrcPath::BbrcPath ( BbrcNodeLabel startnodelabel ) {
     
     // ... OCCURRENCES DESCRIBES LOCATION IN TREE (2)
     for ( unsigned int i = 0; i < databasenodelabel.occurrences.elements.size (); i++ ) {
-        BbrcDatabaseTree &tree = * (fm::database->trees[databasenodelabel.occurrences.elements[i].tid]);
+        BbrcDatabaseTree &tree = * (fm::bbrc_database->trees[databasenodelabel.occurrences.elements[i].tid]);
         BbrcDatabaseTreeNode &datanode = tree.nodes[databasenodelabel.occurrences.elements[i].tonodeid];
         for ( int j = 0; j < datanode.edges.size (); j++ ) {
             BbrcEdgeLabel edgelabel = edgelabelorder[datanode.edges[j].edgelabel];
@@ -200,19 +200,19 @@ BbrcPath::BbrcPath ( BbrcPath &parentpath, unsigned int legindex ) {
 
     // build OccurrenceLists
     bbrc_extend ( leg.occurrences );
-    for (unsigned int i = 0; i < fm::Bbrccandidatelegsoccurrences.size (); i++ ) {
-      if ( fm::Bbrccandidatelegsoccurrences[i].frequency >= fm::minfreq ) {
+    for (unsigned int i = 0; i < fm::bbrc_Bbrccandidatelegsoccurrences.size (); i++ ) {
+      if ( fm::bbrc_Bbrccandidatelegsoccurrences[i].frequency >= fm::bbrc_minfreq ) {
         BbrcPathBbrcLegPtr leg2 = new BbrcPathBbrcLeg;
         legs.push_back ( leg2 );
         leg2->tuple.edgelabel = i;
-    	leg2->tuple.connectingnode = fm::graphstate->lastNode ();
-        BbrcDatabaseBbrcEdgeLabel &databaseedgelabel = fm::database->edgelabels[fm::database->edgelabelsindexes[i]];
+    	leg2->tuple.connectingnode = fm::bbrc_graphstate->lastNode ();
+        BbrcDatabaseBbrcEdgeLabel &databaseedgelabel = fm::bbrc_database->edgelabels[fm::bbrc_database->edgelabelsindexes[i]];
         if ( databaseedgelabel.fromnodelabel == leg.tuple.nodelabel )
           leg2->tuple.nodelabel = databaseedgelabel.tonodelabel;
         else
           leg2->tuple.nodelabel = databaseedgelabel.fromnodelabel;
         leg2->tuple.depth = 0;
-        store ( leg2->occurrences, fm::Bbrccandidatelegsoccurrences[i] ); // avoid copying
+        store ( leg2->occurrences, fm::bbrc_Bbrccandidatelegsoccurrences[i] ); // avoid copying
       }
     }
 
@@ -312,19 +312,19 @@ BbrcPath::BbrcPath ( BbrcPath &parentpath, unsigned int legindex ) {
   }
 
   bbrc_extend ( leg.occurrences );
-  for ( unsigned int i = 0; i < fm::Bbrccandidatelegsoccurrences.size (); i++ ) {
-    if ( fm::Bbrccandidatelegsoccurrences[i].frequency >= fm::minfreq ) {
+  for ( unsigned int i = 0; i < fm::bbrc_Bbrccandidatelegsoccurrences.size (); i++ ) {
+    if ( fm::bbrc_Bbrccandidatelegsoccurrences[i].frequency >= fm::bbrc_minfreq ) {
       BbrcPathBbrcLegPtr leg2 = new BbrcPathBbrcLeg;
       legs.push_back ( leg2 );
       leg2->tuple.edgelabel = i;
-      leg2->tuple.connectingnode = fm::graphstate->lastNode ();
-      BbrcDatabaseBbrcEdgeLabel &databaseedgelabel = fm::database->edgelabels[fm::database->edgelabelsindexes[i]];
+      leg2->tuple.connectingnode = fm::bbrc_graphstate->lastNode ();
+      BbrcDatabaseBbrcEdgeLabel &databaseedgelabel = fm::bbrc_database->edgelabels[fm::bbrc_database->edgelabelsindexes[i]];
       if ( databaseedgelabel.fromnodelabel == leg.tuple.nodelabel )
         leg2->tuple.nodelabel = databaseedgelabel.tonodelabel;
       else
         leg2->tuple.nodelabel = databaseedgelabel.fromnodelabel;
       leg2->tuple.depth = leg.tuple.depth + 1;
-      store ( leg2->occurrences, fm::Bbrccandidatelegsoccurrences[i] ); // avoid copying
+      store ( leg2->occurrences, fm::bbrc_Bbrccandidatelegsoccurrences[i] ); // avoid copying
     }
   }
 
@@ -426,16 +426,16 @@ bool BbrcPath::is_normal ( BbrcEdgeLabel edgelabel ) {
 
 void BbrcPath::expand2 (pair<float,string> max) {
 
-  fm::statistics->patternsize++;
-  if ( (unsigned) fm::statistics->patternsize > fm::statistics->frequenttreenumbers.size () ) {
-    fm::statistics->frequenttreenumbers.push_back ( 0 );
-    fm::statistics->frequentpathnumbers.push_back ( 0 );
-    fm::statistics->frequentgraphnumbers.push_back ( 0 );
+  fm::bbrc_statistics->patternsize++;
+  if ( (unsigned) fm::bbrc_statistics->patternsize > fm::bbrc_statistics->frequenttreenumbers.size () ) {
+    fm::bbrc_statistics->frequenttreenumbers.push_back ( 0 );
+    fm::bbrc_statistics->frequentpathnumbers.push_back ( 0 );
+    fm::bbrc_statistics->frequentgraphnumbers.push_back ( 0 );
   }
-  ++fm::statistics->frequentpathnumbers[fm::statistics->patternsize-1];
+  ++fm::bbrc_statistics->frequentpathnumbers[fm::bbrc_statistics->patternsize-1];
   
-  if ( fm::statistics->patternsize == ((1<<(sizeof(BbrcNodeId)*8))-1) ) {
-    fm::statistics->patternsize--;
+  if ( fm::bbrc_statistics->patternsize == ((1<<(sizeof(BbrcNodeId)*8))-1) ) {
+    fm::bbrc_statistics->patternsize--;
     return;
   }
 
@@ -483,15 +483,15 @@ void BbrcPath::expand2 (pair<float,string> max) {
  
 
   // we have reached a leaf
-  if (fm::do_backbone && (pathlegs.size()==0)) { 
-     if (fm::updated) { 
-        if (fm::do_output) {
-            if (!fm::console_out) { 
-                (*fm::result) << max.second; 
+  if (fm::bbrc_do_backbone && (pathlegs.size()==0)) { 
+     if (fm::bbrc_updated) { 
+        if (fm::bbrc_do_output) {
+            if (!fm::bbrc_console_out) { 
+                (*fm::bbrc_result) << max.second; 
             }
             else cout << max.second;
         }
-        fm::updated = false;
+        fm::bbrc_updated = false;
      }
   }
 
@@ -504,58 +504,58 @@ void BbrcPath::expand2 (pair<float,string> max) {
 
 
     // Calculate chisq
-     if (fm::chisq->active) { 
-        if (!fm::regression) fm::chisq->Calc(legs[index]->occurrences.elements);
-        else fm::ks->Calc(legs[index]->occurrences.elements);
+     if (fm::bbrc_chisq->active) { 
+        if (!fm::bbrc_regression) fm::bbrc_chisq->Calc(legs[index]->occurrences.elements);
+        else fm::bbrc_ks->Calc(legs[index]->occurrences.elements);
       }
           
     // GRAPHSTATE AND OUTPUT
-    fm::graphstate->insertNode ( legs[index]->tuple.connectingnode, legs[index]->tuple.edgelabel, legs[index]->occurrences.maxdegree );
+    fm::bbrc_graphstate->insertNode ( legs[index]->tuple.connectingnode, legs[index]->tuple.edgelabel, legs[index]->occurrences.maxdegree );
 
 
     // immediate output
-    if (fm::do_output && !fm::do_backbone) {
-        if (!fm::console_out) (*fm::result) << fm::graphstate->to_s(legs[index]->occurrences.frequency);
-        else fm::graphstate->print(legs[index]->occurrences.frequency);
+    if (fm::bbrc_do_output && !fm::bbrc_do_backbone) {
+        if (!fm::bbrc_console_out) (*fm::bbrc_result) << fm::bbrc_graphstate->to_s(legs[index]->occurrences.frequency);
+        else fm::bbrc_graphstate->print(legs[index]->occurrences.frequency);
     }
 
 
     // RECURSE
-    float cmax = maxi ( maxi ( fm::chisq->sig, max.first ), fm::chisq->p );
+    float cmax = maxi ( maxi ( fm::bbrc_chisq->sig, max.first ), fm::bbrc_chisq->p );
     if ( (
-             !fm::do_pruning || 
+             !fm::bbrc_do_pruning || 
              (
-               (  !fm::adjust_ub && (fm::chisq->u >= fm::chisq->sig) ) || 
-               (   fm::adjust_ub && (fm::chisq->u >= cmax) )
+               (  !fm::bbrc_adjust_ub && (fm::bbrc_chisq->u >= fm::bbrc_chisq->sig) ) || 
+               (   fm::bbrc_adjust_ub && (fm::bbrc_chisq->u >= cmax) )
              )
          ) 
             &&
          (
-            fm::refine_singles || (legs[index]->occurrences.frequency>1)
+            fm::bbrc_refine_singles || (legs[index]->occurrences.frequency>1)
          )
       ){   // UB-PRUNING
 
       BbrcPath path ( *this, index );
-      if (!fm::regression) {
-          if (max.first<fm::chisq->p) { fm::updated = true; path.expand2 ( pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[index]->occurrences.frequency))); }
+      if (!fm::bbrc_regression) {
+          if (max.first<fm::bbrc_chisq->p) { fm::bbrc_updated = true; path.expand2 ( pair<float, string>(fm::bbrc_chisq->p, fm::bbrc_graphstate->to_s(legs[index]->occurrences.frequency))); }
           else path.expand2 (max);
       }
       else {
-          if (max.first<fm::ks->p) { fm::updated = true; path.expand2 ( pair<float, string>(fm::ks->p, fm::graphstate->to_s(legs[index]->occurrences.frequency))); }
+          if (max.first<fm::bbrc_ks->p) { fm::bbrc_updated = true; path.expand2 ( pair<float, string>(fm::bbrc_ks->p, fm::bbrc_graphstate->to_s(legs[index]->occurrences.frequency))); }
           else path.expand2 (max);
       }
     }
     else {
-        if (fm::do_backbone && fm::updated) {  // FREE STRUCTURES: search was pruned
-            if (fm::do_output) {
-                if (!fm::console_out) (*fm::result) << max.second;
+        if (fm::bbrc_do_backbone && fm::bbrc_updated) {  // FREE STRUCTURES: search was pruned
+            if (fm::bbrc_do_output) {
+                if (!fm::bbrc_console_out) (*fm::bbrc_result) << max.second;
                 else cout << max.second;
             }
-            fm::updated=false;
+            fm::bbrc_updated=false;
         }
     }
 
-    fm::graphstate->deleteNode ();
+    fm::bbrc_graphstate->deleteNode ();
   }
 
 
@@ -566,67 +566,67 @@ void BbrcPath::expand2 (pair<float,string> max) {
     
 
     // Calculate chisq
-    if (fm::chisq->active) { 
-        if (!fm::regression) fm::chisq->Calc(legs[index]->occurrences.elements);
-        else fm::ks->Calc(legs[index]->occurrences.elements);
+    if (fm::bbrc_chisq->active) { 
+        if (!fm::bbrc_regression) fm::bbrc_chisq->Calc(legs[index]->occurrences.elements);
+        else fm::bbrc_ks->Calc(legs[index]->occurrences.elements);
     }
 
 
     // GRAPHSTATE AND OUTPUT
-    fm::graphstate->insertNode ( legs[index]->tuple.connectingnode, legs[index]->tuple.edgelabel, legs[index]->occurrences.maxdegree );
+    fm::bbrc_graphstate->insertNode ( legs[index]->tuple.connectingnode, legs[index]->tuple.edgelabel, legs[index]->occurrences.maxdegree );
 
     // immediate output
-    if (fm::do_output && !fm::do_backbone) {
-        if (!fm::console_out) (*fm::result) << fm::graphstate->to_s(legs[index]->occurrences.frequency);
-        else fm::graphstate->print(legs[index]->occurrences.frequency);
+    if (fm::bbrc_do_output && !fm::bbrc_do_backbone) {
+        if (!fm::bbrc_console_out) (*fm::bbrc_result) << fm::bbrc_graphstate->to_s(legs[index]->occurrences.frequency);
+        else fm::bbrc_graphstate->print(legs[index]->occurrences.frequency);
     }
 
     // RECURSE
-    float cmax = maxi ( maxi ( fm::chisq->sig, max.first ), fm::chisq->p );
+    float cmax = maxi ( maxi ( fm::bbrc_chisq->sig, max.first ), fm::bbrc_chisq->p );
     if ( ( 
-             !fm::do_pruning || 
+             !fm::bbrc_do_pruning || 
              (
-               (  !fm::adjust_ub && (fm::chisq->u >= fm::chisq->sig) ) || 
-               (   fm::adjust_ub && (fm::chisq->u >= cmax) )
+               (  !fm::bbrc_adjust_ub && (fm::bbrc_chisq->u >= fm::bbrc_chisq->sig) ) || 
+               (   fm::bbrc_adjust_ub && (fm::bbrc_chisq->u >= cmax) )
              )
          ) 
             &&
          (
-            fm::refine_singles || (legs[index]->occurrences.frequency>1)
+            fm::bbrc_refine_singles || (legs[index]->occurrences.frequency>1)
          )
      ){   // UB-PRUNING
 
       BbrcPath path ( *this, index );
-      if (!fm::regression) {
-          if (max.first<fm::chisq->p) { fm::updated = true; path.expand2 ( pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[index]->occurrences.frequency))); }
+      if (!fm::bbrc_regression) {
+          if (max.first<fm::bbrc_chisq->p) { fm::bbrc_updated = true; path.expand2 ( pair<float, string>(fm::bbrc_chisq->p, fm::bbrc_graphstate->to_s(legs[index]->occurrences.frequency))); }
           else path.expand2 (max);
       }
       else {
-          if (max.first<fm::ks->p) { fm::updated = true; path.expand2 ( pair<float, string>(fm::ks->p, fm::graphstate->to_s(legs[index]->occurrences.frequency))); }
+          if (max.first<fm::bbrc_ks->p) { fm::bbrc_updated = true; path.expand2 ( pair<float, string>(fm::bbrc_ks->p, fm::bbrc_graphstate->to_s(legs[index]->occurrences.frequency))); }
           else path.expand2 (max);
       }
     }
     else {
-        if (fm::do_backbone && fm::updated) { // FREE STRUCTURES: search was pruned
-            if (fm::do_output) {
-                if (!fm::console_out) (*fm::result) << max.second;
-                else if (fm::do_output) cout << max.second;
+        if (fm::bbrc_do_backbone && fm::bbrc_updated) { // FREE STRUCTURES: search was pruned
+            if (fm::bbrc_do_output) {
+                if (!fm::bbrc_console_out) (*fm::bbrc_result) << max.second;
+                else if (fm::bbrc_do_output) cout << max.second;
             }
-            fm::updated=false;
+            fm::bbrc_updated=false;
         }
     }
 
-    fm::graphstate->deleteNode ();
+    fm::bbrc_graphstate->deleteNode ();
 
   }
 
 
 
-  bool uptmp = fm::updated;
+  bool uptmp = fm::bbrc_updated;
 
-  if (fm::bbrc_sep && !fm::do_backbone && legs.size() > 0) {
-      if (fm::do_output && !fm::console_out && fm::result->size() && (fm::result->back()!=fm::graphstate->sep())) (*fm::result) << fm::graphstate->sep();
-      //else cout << fm::graphstate->sep() << endl;
+  if (fm::bbrc_bbrc_sep && !fm::bbrc_do_backbone && legs.size() > 0) {
+      if (fm::bbrc_do_output && !fm::bbrc_console_out && fm::bbrc_result->size() && (fm::bbrc_result->back()!=fm::bbrc_graphstate->sep())) (*fm::bbrc_result) << fm::bbrc_graphstate->sep();
+      //else cout << fm::bbrc_graphstate->sep() << endl;
   }
 
   for ( unsigned int i = 0; i < legs.size (); i++ ) {
@@ -639,71 +639,71 @@ void BbrcPath::expand2 (pair<float,string> max) {
         if ( ( totalsymmetry || legs[i]->tuple.depth <= edgelabels.size () / 2 ) &&
  	      ( legs[i]->tuple.depth != 1 || legs[i]->tuple.edgelabel >= edgelabels[0] ) &&
 	      ( legs[i]->tuple.depth != nodelabels.size () - 2 || legs[i]->tuple.edgelabel >= edgelabels.back () ) &&
-	        fm::type > 1 ) {
+	        fm::bbrc_type > 1 ) {
           // Calculate chisq
-          if (fm::chisq->active) { 
-            if (!fm::regression) fm::chisq->Calc(legs[i]->occurrences.elements);
-            else fm::ks->Calc(legs[i]->occurrences.elements);
+          if (fm::bbrc_chisq->active) { 
+            if (!fm::bbrc_regression) fm::bbrc_chisq->Calc(legs[i]->occurrences.elements);
+            else fm::bbrc_ks->Calc(legs[i]->occurrences.elements);
           }
 
 
           // GRAPHSTATE
-          fm::graphstate->insertNode ( legs[i]->tuple.connectingnode, legs[i]->tuple.edgelabel, legs[i]->occurrences.maxdegree );
+          fm::bbrc_graphstate->insertNode ( legs[i]->tuple.connectingnode, legs[i]->tuple.edgelabel, legs[i]->occurrences.maxdegree );
 
           // immediate output
-          if (fm::do_output && !fm::do_backbone) {
-             if (!fm::console_out) (*fm::result) << fm::graphstate->to_s(legs[i]->occurrences.frequency);
-             else fm::graphstate->print(legs[i]->occurrences.frequency);
+          if (fm::bbrc_do_output && !fm::bbrc_do_backbone) {
+             if (!fm::bbrc_console_out) (*fm::bbrc_result) << fm::bbrc_graphstate->to_s(legs[i]->occurrences.frequency);
+             else fm::bbrc_graphstate->print(legs[i]->occurrences.frequency);
           }
 
           // RECURSE
-          float cmax = maxi ( maxi ( fm::chisq->sig, max.first ), fm::chisq->p );
+          float cmax = maxi ( maxi ( fm::bbrc_chisq->sig, max.first ), fm::bbrc_chisq->p );
 
-          if ( ( !fm::do_pruning || 
+          if ( ( !fm::bbrc_do_pruning || 
                (
-                 (  !fm::adjust_ub && (fm::chisq->u >= fm::chisq->sig) ) || 
-                 (   fm::adjust_ub && (fm::chisq->u >= cmax) )
+                 (  !fm::bbrc_adjust_ub && (fm::bbrc_chisq->u >= fm::bbrc_chisq->sig) ) || 
+                 (   fm::bbrc_adjust_ub && (fm::bbrc_chisq->u >= cmax) )
                )
              ) &&
              (
-                fm::refine_singles || (legs[i]->occurrences.frequency>1)
+                fm::bbrc_refine_singles || (legs[i]->occurrences.frequency>1)
              )
     
           ){   // UB-PRUNING
 
             BbrcPatternTree tree ( *this, i );
 
-            if (!fm::regression) {
-                if (max.first<fm::chisq->p) { fm::updated = true; tree.expand ( pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[i]->occurrences.frequency))); }
+            if (!fm::bbrc_regression) {
+                if (max.first<fm::bbrc_chisq->p) { fm::bbrc_updated = true; tree.expand ( pair<float, string>(fm::bbrc_chisq->p, fm::bbrc_graphstate->to_s(legs[i]->occurrences.frequency))); }
                 else tree.expand (max);
             }
             else {
-                if (max.first<fm::ks->p) { fm::updated = true; tree.expand ( pair<float, string>(fm::ks->p, fm::graphstate->to_s(legs[i]->occurrences.frequency))); }
+                if (max.first<fm::bbrc_ks->p) { fm::bbrc_updated = true; tree.expand ( pair<float, string>(fm::bbrc_ks->p, fm::bbrc_graphstate->to_s(legs[i]->occurrences.frequency))); }
                 else tree.expand (max);
             }
 
           }
 
           else {
-            if (fm::do_backbone && fm::updated) { 
-              if (fm::do_output) {
-                  if (!fm::console_out) (*fm::result) << max.second;
+            if (fm::bbrc_do_backbone && fm::bbrc_updated) { 
+              if (fm::bbrc_do_output) {
+                  if (!fm::bbrc_console_out) (*fm::bbrc_result) << max.second;
                   else  cout << max.second;
               }
-              fm::updated=false;
+              fm::bbrc_updated=false;
             }
           }
 
-	      fm::graphstate->deleteNode ();
+	      fm::bbrc_graphstate->deleteNode ();
         }
       }
     }
   }
 
 
-  fm::updated=uptmp;
+  fm::bbrc_updated=uptmp;
     
-  fm::statistics->patternsize--;
+  fm::bbrc_statistics->patternsize--;
 
 
 //  cerr << "backtracking p" << endl;
@@ -722,27 +722,27 @@ void BbrcPath::expand () {
     BbrcPathBbrcTuple &tuple = legs[i]->tuple;
     if ( tuple.nodelabel >= nodelabels[0] ) {
         
-      if (fm::chisq->active) { 
-        if (!fm::regression) fm::chisq->Calc(legs[i]->occurrences.elements);
-        else fm::ks->Calc(legs[i]->occurrences.elements);
+      if (fm::bbrc_chisq->active) { 
+        if (!fm::bbrc_regression) fm::bbrc_chisq->Calc(legs[i]->occurrences.elements);
+        else fm::bbrc_ks->Calc(legs[i]->occurrences.elements);
       }
 
       // GRAPHSTATE AND OUTPUT
-      fm::graphstate->insertNode ( tuple.connectingnode, tuple.edgelabel, legs[i]->occurrences.maxdegree );
-      if (fm::do_output && !fm::do_backbone && legs[i]->occurrences.frequency>=fm::minfreq) { 
-          if (!fm::console_out) (*fm::result) << fm::graphstate->to_s(legs[i]->occurrences.frequency);
-          else fm::graphstate->print(legs[i]->occurrences.frequency);
+      fm::bbrc_graphstate->insertNode ( tuple.connectingnode, tuple.edgelabel, legs[i]->occurrences.maxdegree );
+      if (fm::bbrc_do_output && !fm::bbrc_do_backbone && legs[i]->occurrences.frequency>=fm::bbrc_minfreq) { 
+          if (!fm::bbrc_console_out) (*fm::bbrc_result) << fm::bbrc_graphstate->to_s(legs[i]->occurrences.frequency);
+          else fm::bbrc_graphstate->print(legs[i]->occurrences.frequency);
       }
 
       // RECURSE
       BbrcPath path (*this, i);
-      fm::updated = true;
-      path.expand2 (pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[i]->occurrences.frequency)));
-      fm::graphstate->deleteNode ();
+      fm::bbrc_updated = true;
+      path.expand2 (pair<float, string>(fm::bbrc_chisq->p, fm::bbrc_graphstate->to_s(legs[i]->occurrences.frequency)));
+      fm::bbrc_graphstate->deleteNode ();
 
     }
   }
-  fm::graphstate->deleteStartNode ();
+  fm::bbrc_graphstate->deleteStartNode ();
 
 
 //  cerr << "backtracking p" << endl;
