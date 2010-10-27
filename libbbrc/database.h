@@ -110,7 +110,7 @@ struct BbrcDatabaseBbrcNodeLabel {
   BbrcFrequency frequency;
   BbrcTid lasttid;
 
-  BbrcBbrcLegOccurrences occurrences;
+  BbrcLegOccurrences occurrences;
   vector<BbrcEdgeLabel> frequentedgelabels;
 
   BbrcDatabaseBbrcNodeLabel (): frequency ( 1 ) { }

@@ -46,7 +46,7 @@ namespace fm {
     extern BbrcStatistics* statistics;
     extern BbrcGraphState* graphstate;
 
-    extern vector<BbrcBbrcLegOccurrences> Bbrccandidatelegsoccurrences; 
+    extern vector<BbrcLegOccurrences> Bbrccandidatelegsoccurrences; 
 }
 
 // for every database node...
@@ -118,7 +118,7 @@ BbrcPath::BbrcPath ( BbrcNodeLabel startnodelabel ) {
                 leg.occurrences.selfjoin++;
                 lastself[edgelabel] = tree.tid;
             }
-            vector_push_back ( BbrcBbrcLegOccurrence, leg.occurrences.elements, legoccurrence );
+            vector_push_back ( BbrcLegOccurrence, leg.occurrences.elements, legoccurrence );
             legoccurrence.tid = tree.tid;
             legoccurrence.occurrenceid = i;
             legoccurrence.tonodeid = datanode.edges[j].tonode;
@@ -268,7 +268,7 @@ BbrcPath::BbrcPath ( BbrcPath &parentpath, unsigned int legindex ) {
   }
 
   unsigned int i = 0;
-  BbrcBbrcLegOccurrencesPtr legoccurrencesptr;
+  BbrcLegOccurrencesPtr legoccurrencesptr;
   for ( ; i < legindex; i++ ) {
     BbrcPathBbrcLeg &leg2 = (*parentpath.legs[i]);
 

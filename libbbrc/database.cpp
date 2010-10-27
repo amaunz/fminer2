@@ -580,7 +580,7 @@ void BbrcDatabase::reorder () {
 
   //            cerr << "BbrcLeg Occurence for node " << nodelabel.inputlabel
   //                 << ": " << tree.tid << " " << nodelabel.occurrences.elements.size() << " " << j << " " << NONODE << endl;
-                nodelabel.occurrences.elements.push_back ( BbrcBbrcLegOccurrence ( tree.tid, (BbrcOccurrenceId) nodelabel.occurrences.elements.size (), j, NONODE )  );
+                nodelabel.occurrences.elements.push_back ( BbrcLegOccurrence ( tree.tid, (BbrcOccurrenceId) nodelabel.occurrences.elements.size (), j, NONODE )  );
                                                                                         // ...and push occurence in database
                 int k = 0;
   //            cerr << "node " << (int) node.nodelabel  << " (" << nodelabels[node.nodelabel].inputlabel << ")"  << endl;

@@ -30,46 +30,46 @@ using namespace std;
 
 typedef unsigned int BbrcOccurrenceId;
 
-struct BbrcBbrcLegOccurrence {
+struct BbrcLegOccurrence {
   BbrcTid tid;
   BbrcOccurrenceId occurrenceid;
   BbrcNodeId tonodeid, fromnodeid;
 
-  BbrcBbrcLegOccurrence ( BbrcTid tid, BbrcOccurrenceId occurrenceid, BbrcNodeId tonodeid, BbrcNodeId fromnodeid ): tid ( tid ), occurrenceid ( occurrenceid ), tonodeid ( tonodeid ), fromnodeid ( fromnodeid ) { }
-  BbrcBbrcLegOccurrence () {}
+  BbrcLegOccurrence ( BbrcTid tid, BbrcOccurrenceId occurrenceid, BbrcNodeId tonodeid, BbrcNodeId fromnodeid ): tid ( tid ), occurrenceid ( occurrenceid ), tonodeid ( tonodeid ), fromnodeid ( fromnodeid ) { }
+  BbrcLegOccurrence () {}
 
-  friend ostream &operator<< ( ostream &stream, BbrcBbrcLegOccurrence &occ );
+  friend ostream &operator<< ( ostream &stream, BbrcLegOccurrence &occ );
 };
 
-struct BbrcBbrcLegOccurrences;
-typedef BbrcBbrcLegOccurrences *BbrcBbrcLegOccurrencesPtr;
+struct BbrcLegOccurrences;
+typedef BbrcLegOccurrences *BbrcLegOccurrencesPtr;
 
-struct BbrcBbrcLegOccurrences {
-  vector<BbrcBbrcLegOccurrence> elements;
-  BbrcBbrcLegOccurrencesPtr parent;
+struct BbrcLegOccurrences {
+  vector<BbrcLegOccurrence> elements;
+  BbrcLegOccurrencesPtr parent;
   int number;
   BbrcFrequency selfjoin;
   short unsigned int maxdegree;
   BbrcFrequency frequency;
-  BbrcBbrcLegOccurrences () : selfjoin ( 0 ), frequency ( 0 ) { }
+  BbrcLegOccurrences () : selfjoin ( 0 ), frequency ( 0 ) { }
 };
 
-ostream &operator<< ( ostream &stream, vector<BbrcBbrcLegOccurrence> &occs );
+ostream &operator<< ( ostream &stream, vector<BbrcLegOccurrence> &occs );
 
-//extern BbrcBbrcLegOccurrences legoccurrences;
+//extern BbrcLegOccurrences legoccurrences;
 
 // returns the bbrc_join if this bbrc_join is frequent. The returned array may be swapped.
-BbrcBbrcLegOccurrencesPtr bbrc_join ( BbrcBbrcLegOccurrences &legoccsdata1, BbrcNodeId connectingnode, BbrcBbrcLegOccurrences &legoccsdata2 );
-BbrcBbrcLegOccurrencesPtr bbrc_join ( BbrcBbrcLegOccurrences &legoccsdata );
+BbrcLegOccurrencesPtr bbrc_join ( BbrcLegOccurrences &legoccsdata1, BbrcNodeId connectingnode, BbrcLegOccurrences &legoccsdata2 );
+BbrcLegOccurrencesPtr bbrc_join ( BbrcLegOccurrences &legoccsdata );
 
-extern vector<BbrcBbrcLegOccurrences> Bbrccandidatelegsoccurrences; // for each frequent possible edge, the occurrences found, used by bbrc_extend
+extern vector<BbrcLegOccurrences> Bbrccandidatelegsoccurrences; // for each frequent possible edge, the occurrences found, used by bbrc_extend
 extern vector<BbrcFrequency> Bbrccandidatelegsfrequencies;
 
 void BbrcinitBbrcLegStatics ();
 
-void bbrc_extend ( BbrcBbrcLegOccurrences &legoccurrencesdata ); // fills the global arrays above
-void bbrc_extend ( BbrcBbrcLegOccurrences &legoccurrencesdata, BbrcEdgeLabel minlabel, BbrcEdgeLabel neglect );
+void bbrc_extend ( BbrcLegOccurrences &legoccurrencesdata ); // fills the global arrays above
+void bbrc_extend ( BbrcLegOccurrences &legoccurrencesdata, BbrcEdgeLabel minlabel, BbrcEdgeLabel neglect );
 
-void sanityCheck ( BbrcBbrcLegOccurrencesPtr legoccurrencesptr );
+void sanityCheck ( BbrcLegOccurrencesPtr legoccurrencesptr );
 
 #endif

@@ -40,7 +40,7 @@ struct BbrcPathBbrcTuple {
 
 struct BbrcPathBbrcLeg {
   BbrcPathBbrcTuple tuple;
-  BbrcBbrcLegOccurrences occurrences;
+  BbrcLegOccurrences occurrences;
 };
 
 typedef BbrcPathBbrcLeg *BbrcPathBbrcLegPtr;

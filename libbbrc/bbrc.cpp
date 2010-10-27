@@ -119,8 +119,8 @@ void Bbrc::Reset() {
     fm::chisq = new ChisqConstraint(3.84146);
     fm::ks = new KSConstraint(0.95);
     fm::graphstate = new BbrcGraphState();
-    fm::closelegoccurrences = new CloseBbrcBbrcLegOccurrences();
-    fm::legoccurrences = new BbrcBbrcLegOccurrences();
+    fm::closelegoccurrences = new CloseBbrcLegOccurrences();
+    fm::legoccurrences = new BbrcLegOccurrences();
 
     fm::Bbrccandidatelegsoccurrences.clear();
     fm::candidatecloselegsoccs.clear();

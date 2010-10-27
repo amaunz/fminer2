@@ -53,7 +53,7 @@ struct BbrcTuple {
 
 struct BbrcLeg {
   BbrcTuple tuple;
-  BbrcBbrcLegOccurrences occurrences;
+  BbrcLegOccurrences occurrences;
 };
 
 typedef BbrcLeg *BbrcLegPtr;
@@ -66,8 +66,8 @@ class BbrcPatternTree {
     vector<BbrcLegPtr> legs; // pointers used to avoid copy-constructor during a resize of the vector
   private:
     void checkIfIndeedNormal ();
-    /* inline */ void addExtensionBbrcLegs ( BbrcTuple &tuple, BbrcBbrcLegOccurrences &legoccurrences );
-    /* inline */ void addBbrcLeg ( const BbrcNodeId connectingnode, const int depth, const BbrcEdgeLabel edgelabel, BbrcBbrcLegOccurrences &legoccurrences );
+    /* inline */ void addExtensionBbrcLegs ( BbrcTuple &tuple, BbrcLegOccurrences &legoccurrences );
+    /* inline */ void addBbrcLeg ( const BbrcNodeId connectingnode, const int depth, const BbrcEdgeLabel edgelabel, BbrcLegOccurrences &legoccurrences );
     /* inline */ void addLeftBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, int &i, BbrcDepth olddepth, BbrcEdgeLabel lowestlabel, int leftend, int edgesize2 );
     /* inline */ int addLeftBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, BbrcTuple &tuple, unsigned int legindex, int leftend, int edgesize2 );
     /* inline */ void addRightBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, int &i, BbrcDepth olddepth, BbrcEdgeLabel lowestlabel, int rightstart, int nodesize2 );

@@ -38,26 +38,26 @@ struct BbrcCloseBbrcTuple {
   }
 };
 
-struct CloseBbrcBbrcLegOccurrence {
+struct CloseBbrcLegOccurrence {
   BbrcTid tid;
   BbrcOccurrenceId occurrenceid;
 
-  CloseBbrcBbrcLegOccurrence ( BbrcTid tid, BbrcOccurrenceId occurrenceid ): tid ( tid ), occurrenceid ( occurrenceid ) { }
-  CloseBbrcBbrcLegOccurrence () { }
+  CloseBbrcLegOccurrence ( BbrcTid tid, BbrcOccurrenceId occurrenceid ): tid ( tid ), occurrenceid ( occurrenceid ) { }
+  CloseBbrcLegOccurrence () { }
 };
 
-struct CloseBbrcBbrcLegOccurrences {
+struct CloseBbrcLegOccurrences {
   BbrcFrequency frequency;
-  vector<CloseBbrcBbrcLegOccurrence> elements;
-  CloseBbrcBbrcLegOccurrences () : frequency ( 0 ) { }
+  vector<CloseBbrcLegOccurrence> elements;
+  CloseBbrcLegOccurrences () : frequency ( 0 ) { }
 };
 
-typedef CloseBbrcBbrcLegOccurrences *CloseBbrcBbrcLegOccurrencesPtr;
+typedef CloseBbrcLegOccurrences *CloseBbrcLegOccurrencesPtr;
 
 struct BbrcCloseBbrcLeg {
   bool copy;
   BbrcCloseBbrcTuple tuple;
-  CloseBbrcBbrcLegOccurrences occurrences;
+  CloseBbrcLegOccurrences occurrences;
   BbrcCloseBbrcLeg (): copy ( true ) { }
 };
 
@@ -69,8 +69,8 @@ class BbrcLeg;
 typedef BbrcLeg *BbrcLegPtr;
 
 void BbrcaddCloseExtensions ( vector<BbrcCloseBbrcLegPtr> &targetcloselegs, int number );
-void BbrcaddCloseExtensions ( vector<BbrcCloseBbrcLegPtr> &targetcloselegs, vector<BbrcCloseBbrcLegPtr> &sourcecloselegs, BbrcBbrcLegOccurrences &sourceoccs );
-CloseBbrcBbrcLegOccurrencesPtr bbrc_join ( BbrcBbrcLegOccurrences &legoccsdata, CloseBbrcBbrcLegOccurrences &closelegoccsdata );
-CloseBbrcBbrcLegOccurrencesPtr bbrc_join ( CloseBbrcBbrcLegOccurrences &closelegoccsdata1, CloseBbrcBbrcLegOccurrences &closelegoccsdata2 );
+void BbrcaddCloseExtensions ( vector<BbrcCloseBbrcLegPtr> &targetcloselegs, vector<BbrcCloseBbrcLegPtr> &sourcecloselegs, BbrcLegOccurrences &sourceoccs );
+CloseBbrcLegOccurrencesPtr bbrc_join ( BbrcLegOccurrences &legoccsdata, CloseBbrcLegOccurrences &closelegoccsdata );
+CloseBbrcLegOccurrencesPtr bbrc_join ( CloseBbrcLegOccurrences &closelegoccsdata1, CloseBbrcLegOccurrences &closelegoccsdata2 );
 
 #endif

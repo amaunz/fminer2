@@ -59,10 +59,10 @@ namespace fm {
     vector<string>* result=NULL;
 
     // controlled by destructor & Reset()
-    BbrcBbrcLegOccurrences* legoccurrences=NULL; 
-    CloseBbrcBbrcLegOccurrences* closelegoccurrences=NULL; 
-    vector<BbrcBbrcLegOccurrences> Bbrccandidatelegsoccurrences;
-    vector<vector< CloseBbrcBbrcLegOccurrences> > candidatecloselegsoccs;
+    BbrcLegOccurrences* legoccurrences=NULL; 
+    CloseBbrcLegOccurrences* closelegoccurrences=NULL; 
+    vector<BbrcLegOccurrences> Bbrccandidatelegsoccurrences;
+    vector<vector< CloseBbrcLegOccurrences> > candidatecloselegsoccs;
     vector<bool> candidateBbrccloselegsoccsused;
     KSConstraint* ks=NULL;
 
