@@ -37,44 +37,44 @@ using namespace std;
 extern bool updated;
 extern unsigned int minfreq;
 
-struct Tuple {
-  Depth depth;
-  EdgeLabel label;
-  NodeId connectingnode;
+struct BbrcTuple {
+  BbrcDepth depth;
+  BbrcEdgeLabel label;
+  BbrcNodeId connectingnode;
   
-  Tuple ( Depth depth, EdgeLabel label, NodeId connectingnode ): 
+  BbrcTuple ( BbrcDepth depth, BbrcEdgeLabel label, BbrcNodeId connectingnode ): 
     depth ( depth ), label ( label ), connectingnode ( connectingnode ) { }
-  Tuple () { }
+  BbrcTuple () { }
 
-  friend bool operator< ( Tuple &a, Tuple &b ) { return a.depth > b.depth || ( a.depth == b.depth && a.label < b.label ); }
-  friend bool operator== ( Tuple &a, Tuple &b ) { return a.depth == b.depth && a.label == b.label; }
-  friend ostream &operator<< ( ostream &stream, Tuple &tuple );
+  friend bool operator< ( BbrcTuple &a, BbrcTuple &b ) { return a.depth > b.depth || ( a.depth == b.depth && a.label < b.label ); }
+  friend bool operator== ( BbrcTuple &a, BbrcTuple &b ) { return a.depth == b.depth && a.label == b.label; }
+  friend ostream &operator<< ( ostream &stream, BbrcTuple &tuple );
 };
 
-struct Leg {
-  Tuple tuple;
-  LegOccurrences occurrences;
+struct BbrcLeg {
+  BbrcTuple tuple;
+  BbrcBbrcLegOccurrences occurrences;
 };
 
-typedef Leg *LegPtr;
+typedef BbrcLeg *BbrcLegPtr;
 
-class PatternTree {
+class BbrcPatternTree {
   public:
-    PatternTree ( Path &path, unsigned int legindex );
-    ~PatternTree ();
+    BbrcPatternTree ( BbrcPath &path, unsigned int legindex );
+    ~BbrcPatternTree ();
     void expand (pair<float, string> max);
-    vector<LegPtr> legs; // pointers used to avoid copy-constructor during a resize of the vector
+    vector<BbrcLegPtr> legs; // pointers used to avoid copy-constructor during a resize of the vector
   private:
     void checkIfIndeedNormal ();
-    /* inline */ void addExtensionLegs ( Tuple &tuple, LegOccurrences &legoccurrences );
-    /* inline */ void addLeg ( const NodeId connectingnode, const int depth, const EdgeLabel edgelabel, LegOccurrences &legoccurrences );
-    /* inline */ void addLeftLegs ( Path &path, PathLeg &leg, int &i, Depth olddepth, EdgeLabel lowestlabel, int leftend, int edgesize2 );
-    /* inline */ int addLeftLegs ( Path &path, PathLeg &leg, Tuple &tuple, unsigned int legindex, int leftend, int edgesize2 );
-    /* inline */ void addRightLegs ( Path &path, PathLeg &leg, int &i, Depth olddepth, EdgeLabel lowestlabel, int rightstart, int nodesize2 );
-    /* inline */ int addRightLegs ( Path &path, PathLeg &leg, Tuple &tuple, unsigned int legindex, int rightstart, int nodesize2 );
-    PatternTree ( PatternTree &parenttree, unsigned int legindex );
-    vector<Tuple> treetuples;
-    vector<NodeId> rightmostindexes;
+    /* inline */ void addExtensionBbrcLegs ( BbrcTuple &tuple, BbrcBbrcLegOccurrences &legoccurrences );
+    /* inline */ void addBbrcLeg ( const BbrcNodeId connectingnode, const int depth, const BbrcEdgeLabel edgelabel, BbrcBbrcLegOccurrences &legoccurrences );
+    /* inline */ void addLeftBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, int &i, BbrcDepth olddepth, BbrcEdgeLabel lowestlabel, int leftend, int edgesize2 );
+    /* inline */ int addLeftBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, BbrcTuple &tuple, unsigned int legindex, int leftend, int edgesize2 );
+    /* inline */ void addRightBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, int &i, BbrcDepth olddepth, BbrcEdgeLabel lowestlabel, int rightstart, int nodesize2 );
+    /* inline */ int addRightBbrcLegs ( BbrcPath &path, BbrcPathBbrcLeg &leg, BbrcTuple &tuple, unsigned int legindex, int rightstart, int nodesize2 );
+    BbrcPatternTree ( BbrcPatternTree &parenttree, unsigned int legindex );
+    vector<BbrcTuple> treetuples;
+    vector<BbrcNodeId> rightmostindexes;
     vector<short> rootpathrelations;
     unsigned int nextprefixindex;
     unsigned int rootpathstart;
@@ -82,13 +82,13 @@ class PatternTree {
     unsigned int maxdepth;
     int symmetric; // 0 == not symmetric, 1 == symmetric, even length path, 2 == symmetric, odd length path
     int secondpathleg;
-    vector<CloseLegPtr> closelegs;
-    friend ostream &operator<< ( ostream &stream, PatternTree &patterntree );
+    vector<BbrcCloseBbrcLegPtr> closelegs;
+    friend ostream &operator<< ( ostream &stream, BbrcPatternTree &patterntree );
 #ifdef GRAPH_OUTPUT
-    friend void fillMatrix ( int **A, int &nextnode, int rootnode, NodeLabel rootlabel, 
-                  int startpos, int endpos, PatternTree &patterntree );
-    NodeLabel tree1rootlabel, tree2rootlabel;
-    EdgeLabel rootpathlabel;
+    friend void fillMatrix ( int **A, int &nextnode, int rootnode, BbrcNodeLabel rootlabel, 
+                  int startpos, int endpos, BbrcPatternTree &patterntree );
+    BbrcNodeLabel tree1rootlabel, tree2rootlabel;
+    BbrcEdgeLabel rootpathlabel;
 #endif
 };
 

@@ -26,51 +26,51 @@
 #include "misc.h"
 #include "legoccurrence.h"
 
-struct CloseTuple {
-  EdgeLabel label;
+struct BbrcCloseBbrcTuple {
+  BbrcEdgeLabel label;
   int from;
   int to;
-  friend bool operator< ( CloseTuple &a, CloseTuple &b ) { return a.from < b.from || ( a.from == b.from && ( a.to < b.to || ( a.to == b.to && a.label < b.label ) ) ); }
-  friend bool operator> ( CloseTuple &a, CloseTuple &b ) { return a.from > b.from || ( a.from == b.from && ( a.to > b.to || ( a.to == b.to && a.label > b.label ) ) ); }
-  friend ostream &operator<< ( ostream &stream, CloseTuple &tuple ) { 
+  friend bool operator< ( BbrcCloseBbrcTuple &a, BbrcCloseBbrcTuple &b ) { return a.from < b.from || ( a.from == b.from && ( a.to < b.to || ( a.to == b.to && a.label < b.label ) ) ); }
+  friend bool operator> ( BbrcCloseBbrcTuple &a, BbrcCloseBbrcTuple &b ) { return a.from > b.from || ( a.from == b.from && ( a.to > b.to || ( a.to == b.to && a.label > b.label ) ) ); }
+  friend ostream &operator<< ( ostream &stream, BbrcCloseBbrcTuple &tuple ) { 
     stream << (int) tuple.from << " " << tuple.to << " " << (int) tuple.label << endl;
     return stream;
   }
 };
 
-struct CloseLegOccurrence {
-  Tid tid;
-  OccurrenceId occurrenceid;
+struct CloseBbrcBbrcLegOccurrence {
+  BbrcTid tid;
+  BbrcOccurrenceId occurrenceid;
 
-  CloseLegOccurrence ( Tid tid, OccurrenceId occurrenceid ): tid ( tid ), occurrenceid ( occurrenceid ) { }
-  CloseLegOccurrence () { }
+  CloseBbrcBbrcLegOccurrence ( BbrcTid tid, BbrcOccurrenceId occurrenceid ): tid ( tid ), occurrenceid ( occurrenceid ) { }
+  CloseBbrcBbrcLegOccurrence () { }
 };
 
-struct CloseLegOccurrences {
-  Frequency frequency;
-  vector<CloseLegOccurrence> elements;
-  CloseLegOccurrences () : frequency ( 0 ) { }
+struct CloseBbrcBbrcLegOccurrences {
+  BbrcFrequency frequency;
+  vector<CloseBbrcBbrcLegOccurrence> elements;
+  CloseBbrcBbrcLegOccurrences () : frequency ( 0 ) { }
 };
 
-typedef CloseLegOccurrences *CloseLegOccurrencesPtr;
+typedef CloseBbrcBbrcLegOccurrences *CloseBbrcBbrcLegOccurrencesPtr;
 
-struct CloseLeg {
+struct BbrcCloseBbrcLeg {
   bool copy;
-  CloseTuple tuple;
-  CloseLegOccurrences occurrences;
-  CloseLeg (): copy ( true ) { }
+  BbrcCloseBbrcTuple tuple;
+  CloseBbrcBbrcLegOccurrences occurrences;
+  BbrcCloseBbrcLeg (): copy ( true ) { }
 };
 
-typedef CloseLeg *CloseLegPtr;
+typedef BbrcCloseBbrcLeg *BbrcCloseBbrcLegPtr;
 
-extern bool closelegsoccsused;
+extern bool Bbrccloselegsoccsused;
 
-class Leg;
-typedef Leg *LegPtr;
+class BbrcLeg;
+typedef BbrcLeg *BbrcLegPtr;
 
-void addCloseExtensions ( vector<CloseLegPtr> &targetcloselegs, int number );
-void addCloseExtensions ( vector<CloseLegPtr> &targetcloselegs, vector<CloseLegPtr> &sourcecloselegs, LegOccurrences &sourceoccs );
-CloseLegOccurrencesPtr join ( LegOccurrences &legoccsdata, CloseLegOccurrences &closelegoccsdata );
-CloseLegOccurrencesPtr join ( CloseLegOccurrences &closelegoccsdata1, CloseLegOccurrences &closelegoccsdata2 );
+void BbrcaddCloseExtensions ( vector<BbrcCloseBbrcLegPtr> &targetcloselegs, int number );
+void BbrcaddCloseExtensions ( vector<BbrcCloseBbrcLegPtr> &targetcloselegs, vector<BbrcCloseBbrcLegPtr> &sourcecloselegs, BbrcBbrcLegOccurrences &sourceoccs );
+CloseBbrcBbrcLegOccurrencesPtr join ( BbrcBbrcLegOccurrences &legoccsdata, CloseBbrcBbrcLegOccurrences &closelegoccsdata );
+CloseBbrcBbrcLegOccurrencesPtr join ( CloseBbrcBbrcLegOccurrences &closelegoccsdata1, CloseBbrcBbrcLegOccurrences &closelegoccsdata2 );
 
 #endif

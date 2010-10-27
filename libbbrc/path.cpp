@@ -39,38 +39,38 @@ namespace fm {
     extern bool bbrc_sep;
     extern bool regression;
 
-    extern Database* database;
+    extern BbrcDatabase* database;
     extern ChisqConstraint* chisq;
     extern KSConstraint* ks;
     extern vector<string>* result;
-    extern Statistics* statistics;
-    extern GraphState* graphstate;
+    extern BbrcStatistics* statistics;
+    extern BbrcGraphState* graphstate;
 
-    extern vector<LegOccurrences> candidatelegsoccurrences; 
+    extern vector<BbrcBbrcLegOccurrences> Bbrccandidatelegsoccurrences; 
 }
 
 // for every database node...
-Path::Path ( NodeLabel startnodelabel ) {
+BbrcPath::BbrcPath ( BbrcNodeLabel startnodelabel ) {
   
     fm::graphstate->insertStartNode ( startnodelabel );
     nodelabels.push_back ( startnodelabel );
     frontsymmetry = backsymmetry = totalsymmetry = 0;
 
-    InputNodeLabel inl = fm::database->nodelabels[startnodelabel].inputlabel;
+    InputBbrcNodeLabel inl = fm::database->nodelabels[startnodelabel].inputlabel;
     cerr << "Root: " << inl << endl;
 
-    DatabaseNodeLabel &databasenodelabel = fm::database->nodelabels[startnodelabel];
+    BbrcDatabaseBbrcNodeLabel &databasenodelabel = fm::database->nodelabels[startnodelabel];
 
     // ...gather frequent edge labels
-    vector<EdgeLabel> frequentedgelabels;
+    vector<BbrcEdgeLabel> frequentedgelabels;
     for ( unsigned int i = 0; i < databasenodelabel.frequentedgelabels.size (); i++ )
         frequentedgelabels.push_back ( fm::database->edgelabels[databasenodelabel.frequentedgelabels[i]].edgelabel );
                                                                                                     //  ^^^^^^^^^ is frequency rank!
     sort ( frequentedgelabels.begin (), frequentedgelabels.end () );                                // restores the rank order
     
-    Tid lastself[frequentedgelabels.size ()];
-    vector<EdgeLabel> edgelabelorder ( fm::database->edgelabelsindexes.size () );
-    EdgeLabel j = 0;
+    BbrcTid lastself[frequentedgelabels.size ()];
+    vector<BbrcEdgeLabel> edgelabelorder ( fm::database->edgelabelsindexes.size () );
+    BbrcEdgeLabel j = 0;
 
     // FOR ALL EDGES...
     for ( unsigned int i = 0; i < frequentedgelabels.size (); i++ ) {
@@ -78,7 +78,7 @@ Path::Path ( NodeLabel startnodelabel ) {
         j++;
     
         // ...CREATE LEGS
-        PathLegPtr leg = new PathLeg;
+        BbrcPathBbrcLegPtr leg = new BbrcPathBbrcLeg;
         legs.push_back ( leg );
 
         leg->tuple.depth = 0;                                           // TUPLE  DESCRIBES STRUCTURE...
@@ -90,7 +90,7 @@ Path::Path ( NodeLabel startnodelabel ) {
         leg->occurrences.maxdegree = 0;
         leg->occurrences.selfjoin = 0;
 
-        DatabaseEdgeLabel &databaseedgelabel = fm::database->edgelabels[fm::database->edgelabelsindexes[frequentedgelabels[i]]];
+        BbrcDatabaseBbrcEdgeLabel &databaseedgelabel = fm::database->edgelabels[fm::database->edgelabelsindexes[frequentedgelabels[i]]];
         leg->occurrences.frequency = databaseedgelabel.frequency;
 
         if ( databaseedgelabel.fromnodelabel == startnodelabel ) {
@@ -107,18 +107,18 @@ Path::Path ( NodeLabel startnodelabel ) {
     
     // ... OCCURRENCES DESCRIBES LOCATION IN TREE (2)
     for ( unsigned int i = 0; i < databasenodelabel.occurrences.elements.size (); i++ ) {
-        DatabaseTree &tree = * (fm::database->trees[databasenodelabel.occurrences.elements[i].tid]);
-        DatabaseTreeNode &datanode = tree.nodes[databasenodelabel.occurrences.elements[i].tonodeid];
+        BbrcDatabaseTree &tree = * (fm::database->trees[databasenodelabel.occurrences.elements[i].tid]);
+        BbrcDatabaseTreeNode &datanode = tree.nodes[databasenodelabel.occurrences.elements[i].tonodeid];
         for ( int j = 0; j < datanode.edges.size (); j++ ) {
-            EdgeLabel edgelabel = edgelabelorder[datanode.edges[j].edgelabel];
-            PathLeg &leg = * ( legs[edgelabel] );
+            BbrcEdgeLabel edgelabel = edgelabelorder[datanode.edges[j].edgelabel];
+            BbrcPathBbrcLeg &leg = * ( legs[edgelabel] );
             if ( !leg.occurrences.elements.empty () &&
                   leg.occurrences.elements.back ().occurrenceid == i &&
                   lastself[edgelabel] != tree.tid ) {
                 leg.occurrences.selfjoin++;
                 lastself[edgelabel] = tree.tid;
             }
-            vector_push_back ( LegOccurrence, leg.occurrences.elements, legoccurrence );
+            vector_push_back ( BbrcBbrcLegOccurrence, leg.occurrences.elements, legoccurrence );
             legoccurrence.tid = tree.tid;
             legoccurrence.occurrenceid = i;
             legoccurrence.tonodeid = datanode.edges[j].tonode;
@@ -128,8 +128,8 @@ Path::Path ( NodeLabel startnodelabel ) {
   
 }
 
-Path::Path ( Path &parentpath, unsigned int legindex ) {
-  PathLeg &leg = (*parentpath.legs[legindex]);
+BbrcPath::BbrcPath ( BbrcPath &parentpath, unsigned int legindex ) {
+  BbrcPathBbrcLeg &leg = (*parentpath.legs[legindex]);
   int positionshift;
   
   // fill in normalisation information, it seems a lot of code, but in fact it's just a walk through the edge/nodelabels arrays.
@@ -137,7 +137,7 @@ Path::Path ( Path &parentpath, unsigned int legindex ) {
   nodelabels.resize ( parentpath.nodelabels.size () + 1 );
   edgelabels.resize ( parentpath.edgelabels.size () + 1 );
 
-  addCloseExtensions ( closelegs, parentpath.closelegs, leg.occurrences );
+  BbrcaddCloseExtensions ( closelegs, parentpath.closelegs, leg.occurrences );
 
   if ( parentpath.nodelabels.size () == 1 ) {
     totalsymmetry = parentpath.nodelabels[0] - leg.tuple.nodelabel;
@@ -200,19 +200,19 @@ Path::Path ( Path &parentpath, unsigned int legindex ) {
 
     // build OccurrenceLists
     extend ( leg.occurrences );
-    for (unsigned int i = 0; i < fm::candidatelegsoccurrences.size (); i++ ) {
-      if ( fm::candidatelegsoccurrences[i].frequency >= fm::minfreq ) {
-        PathLegPtr leg2 = new PathLeg;
+    for (unsigned int i = 0; i < fm::Bbrccandidatelegsoccurrences.size (); i++ ) {
+      if ( fm::Bbrccandidatelegsoccurrences[i].frequency >= fm::minfreq ) {
+        BbrcPathBbrcLegPtr leg2 = new BbrcPathBbrcLeg;
         legs.push_back ( leg2 );
         leg2->tuple.edgelabel = i;
     	leg2->tuple.connectingnode = fm::graphstate->lastNode ();
-        DatabaseEdgeLabel &databaseedgelabel = fm::database->edgelabels[fm::database->edgelabelsindexes[i]];
+        BbrcDatabaseBbrcEdgeLabel &databaseedgelabel = fm::database->edgelabels[fm::database->edgelabelsindexes[i]];
         if ( databaseedgelabel.fromnodelabel == leg.tuple.nodelabel )
           leg2->tuple.nodelabel = databaseedgelabel.tonodelabel;
         else
           leg2->tuple.nodelabel = databaseedgelabel.fromnodelabel;
         leg2->tuple.depth = 0;
-        store ( leg2->occurrences, fm::candidatelegsoccurrences[i] ); // avoid copying
+        store ( leg2->occurrences, fm::Bbrccandidatelegsoccurrences[i] ); // avoid copying
       }
     }
 
@@ -268,12 +268,12 @@ Path::Path ( Path &parentpath, unsigned int legindex ) {
   }
 
   unsigned int i = 0;
-  LegOccurrencesPtr legoccurrencesptr;
+  BbrcBbrcLegOccurrencesPtr legoccurrencesptr;
   for ( ; i < legindex; i++ ) {
-    PathLeg &leg2 = (*parentpath.legs[i]);
+    BbrcPathBbrcLeg &leg2 = (*parentpath.legs[i]);
 
     if ( (legoccurrencesptr = join ( leg.occurrences, leg2.tuple.connectingnode, leg2.occurrences )) ) { // JOIN OCCURRENCES
-      PathLegPtr leg3 = new PathLeg;
+      BbrcPathBbrcLegPtr leg3 = new BbrcPathBbrcLeg;
       legs.push_back ( leg3 );
       leg3->tuple.connectingnode = leg2.tuple.connectingnode;
       leg3->tuple.edgelabel = leg2.tuple.edgelabel;
@@ -284,7 +284,7 @@ Path::Path ( Path &parentpath, unsigned int legindex ) {
   }
 
   if ( (legoccurrencesptr = join ( leg.occurrences )) ) {
-    PathLegPtr leg3 = new PathLeg;
+    BbrcPathBbrcLegPtr leg3 = new BbrcPathBbrcLeg;
     legs.push_back ( leg3 );
     leg3->tuple.connectingnode = leg.tuple.connectingnode;
     leg3->tuple.edgelabel = leg.tuple.edgelabel;
@@ -294,9 +294,9 @@ Path::Path ( Path &parentpath, unsigned int legindex ) {
   }
 
   for ( i++; i < parentpath.legs.size (); i++ ) {
-    PathLeg &leg2 = (*parentpath.legs[i]);
+    BbrcPathBbrcLeg &leg2 = (*parentpath.legs[i]);
     if ( (legoccurrencesptr = join ( leg.occurrences, leg2.tuple.connectingnode, leg2.occurrences )) ) {
-      PathLegPtr leg3 = new PathLeg;
+      BbrcPathBbrcLegPtr leg3 = new BbrcPathBbrcLeg;
       legs.push_back ( leg3 );
       leg3->tuple.connectingnode = leg2.tuple.connectingnode;
       leg3->tuple.edgelabel = leg2.tuple.edgelabel;
@@ -307,31 +307,31 @@ Path::Path ( Path &parentpath, unsigned int legindex ) {
   }
 
   if ( positionshift ) {
-    addCloseExtensions ( closelegs, leg.occurrences.number ); // stored separately
+    BbrcaddCloseExtensions ( closelegs, leg.occurrences.number ); // stored separately
     return;
   }
 
   extend ( leg.occurrences );
-  for ( unsigned int i = 0; i < fm::candidatelegsoccurrences.size (); i++ ) {
-    if ( fm::candidatelegsoccurrences[i].frequency >= fm::minfreq ) {
-      PathLegPtr leg2 = new PathLeg;
+  for ( unsigned int i = 0; i < fm::Bbrccandidatelegsoccurrences.size (); i++ ) {
+    if ( fm::Bbrccandidatelegsoccurrences[i].frequency >= fm::minfreq ) {
+      BbrcPathBbrcLegPtr leg2 = new BbrcPathBbrcLeg;
       legs.push_back ( leg2 );
       leg2->tuple.edgelabel = i;
       leg2->tuple.connectingnode = fm::graphstate->lastNode ();
-      DatabaseEdgeLabel &databaseedgelabel = fm::database->edgelabels[fm::database->edgelabelsindexes[i]];
+      BbrcDatabaseBbrcEdgeLabel &databaseedgelabel = fm::database->edgelabels[fm::database->edgelabelsindexes[i]];
       if ( databaseedgelabel.fromnodelabel == leg.tuple.nodelabel )
         leg2->tuple.nodelabel = databaseedgelabel.tonodelabel;
       else
         leg2->tuple.nodelabel = databaseedgelabel.fromnodelabel;
       leg2->tuple.depth = leg.tuple.depth + 1;
-      store ( leg2->occurrences, fm::candidatelegsoccurrences[i] ); // avoid copying
+      store ( leg2->occurrences, fm::Bbrccandidatelegsoccurrences[i] ); // avoid copying
     }
   }
 
-  addCloseExtensions ( closelegs, leg.occurrences.number );
+  BbrcaddCloseExtensions ( closelegs, leg.occurrences.number );
 }
 
-Path::~Path () {
+BbrcPath::~BbrcPath () {
   for ( unsigned int i = 0; i < legs.size (); i++ )
     delete legs[i];
   for ( unsigned int i = 0; i < closelegs.size (); i++ )
@@ -339,7 +339,7 @@ Path::~Path () {
 }
 
 // ADDED
-bool Path::is_normal ( EdgeLabel edgelabel ) {
+bool BbrcPath::is_normal ( BbrcEdgeLabel edgelabel ) {
   // symplistic quadratic algorithm
   int nodelabelssize = nodelabels.size (), step, add, start;
   
@@ -424,7 +424,7 @@ bool Path::is_normal ( EdgeLabel edgelabel ) {
 
 
 
-void Path::expand2 (pair<float,string> max) {
+void BbrcPath::expand2 (pair<float,string> max) {
 
   fm::statistics->patternsize++;
   if ( (unsigned) fm::statistics->patternsize > fm::statistics->frequenttreenumbers.size () ) {
@@ -434,7 +434,7 @@ void Path::expand2 (pair<float,string> max) {
   }
   ++fm::statistics->frequentpathnumbers[fm::statistics->patternsize-1];
   
-  if ( fm::statistics->patternsize == ((1<<(sizeof(NodeId)*8))-1) ) {
+  if ( fm::statistics->patternsize == ((1<<(sizeof(BbrcNodeId)*8))-1) ) {
     fm::statistics->patternsize--;
     return;
   }
@@ -445,7 +445,7 @@ void Path::expand2 (pair<float,string> max) {
 
   for ( unsigned int i = 0; i < legs.size (); i++ ) {
 
-    PathTuple &tuple = legs[i]->tuple;
+    BbrcPathBbrcTuple &tuple = legs[i]->tuple;
     if ( tuple.depth == nodelabels.size () - 1 ) {
 
       if ( tuple.nodelabel > nodelabels[0] ||
@@ -462,7 +462,7 @@ void Path::expand2 (pair<float,string> max) {
   }
 
   for ( unsigned int i = 0; i < legs.size (); i++ ) {
-    PathTuple &tuple = legs[i]->tuple;
+    BbrcPathBbrcTuple &tuple = legs[i]->tuple;
     if ( tuple.depth != nodelabels.size () - 1 ) {
 
 
@@ -498,7 +498,7 @@ void Path::expand2 (pair<float,string> max) {
   
   
   
-  // Grow Path forw
+  // Grow BbrcPath forw
   for (unsigned int j=0; j<forwpathlegs.size() ; j++ ) {
     unsigned int index = forwpathlegs[j];
 
@@ -535,7 +535,7 @@ void Path::expand2 (pair<float,string> max) {
          )
       ){   // UB-PRUNING
 
-      Path path ( *this, index );
+      BbrcPath path ( *this, index );
       if (!fm::regression) {
           if (max.first<fm::chisq->p) { fm::updated = true; path.expand2 ( pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[index]->occurrences.frequency))); }
           else path.expand2 (max);
@@ -560,7 +560,7 @@ void Path::expand2 (pair<float,string> max) {
 
 
 
-  // Grow Path backw
+  // Grow BbrcPath backw
   for (unsigned int j=0; j<backwpathlegs.size() ; j++ ) {
     unsigned int index = backwpathlegs[j];
     
@@ -596,7 +596,7 @@ void Path::expand2 (pair<float,string> max) {
          )
      ){   // UB-PRUNING
 
-      Path path ( *this, index );
+      BbrcPath path ( *this, index );
       if (!fm::regression) {
           if (max.first<fm::chisq->p) { fm::updated = true; path.expand2 ( pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[index]->occurrences.frequency))); }
           else path.expand2 (max);
@@ -630,7 +630,7 @@ void Path::expand2 (pair<float,string> max) {
   }
 
   for ( unsigned int i = 0; i < legs.size (); i++ ) {
-    PathTuple &tuple = legs[i]->tuple;
+    BbrcPathBbrcTuple &tuple = legs[i]->tuple;
     if ( tuple.depth != nodelabels.size () - 1 ) {
 
 
@@ -671,7 +671,7 @@ void Path::expand2 (pair<float,string> max) {
     
           ){   // UB-PRUNING
 
-            PatternTree tree ( *this, i );
+            BbrcPatternTree tree ( *this, i );
 
             if (!fm::regression) {
                 if (max.first<fm::chisq->p) { fm::updated = true; tree.expand ( pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[i]->occurrences.frequency))); }
@@ -716,10 +716,10 @@ void Path::expand2 (pair<float,string> max) {
 
 
 
-void Path::expand () {
+void BbrcPath::expand () {
 
   for ( unsigned int i = 0; i < legs.size (); i++ ) {
-    PathTuple &tuple = legs[i]->tuple;
+    BbrcPathBbrcTuple &tuple = legs[i]->tuple;
     if ( tuple.nodelabel >= nodelabels[0] ) {
         
       if (fm::chisq->active) { 
@@ -735,7 +735,7 @@ void Path::expand () {
       }
 
       // RECURSE
-      Path path (*this, i);
+      BbrcPath path (*this, i);
       fm::updated = true;
       path.expand2 (pair<float, string>(fm::chisq->p, fm::graphstate->to_s(legs[i]->occurrences.frequency)));
       fm::graphstate->deleteNode ();
@@ -753,7 +753,7 @@ void Path::expand () {
 
 
 
-ostream &operator<< ( ostream &stream, Path &path ) {
+ostream &operator<< ( ostream &stream, BbrcPath &path ) {
   stream << /* database->nodelabels[ */ (int) path.nodelabels[0] /* ].inputlabel; */ << " ";
   for ( unsigned int i = 0; i < path.edgelabels.size (); i++ ) {
     //stream << (char) ( path.edgelabels[i] + 'A' ) << path.nodelabels[i+1];

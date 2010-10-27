@@ -95,9 +95,9 @@ Bbrc::~Bbrc() {
         delete fm::closelegoccurrences;
         delete fm::legoccurrences;
 
-        fm::candidatelegsoccurrences.clear();
+        fm::Bbrccandidatelegsoccurrences.clear();
         fm::candidatecloselegsoccs.clear();
-        fm::candidatecloselegsoccsused.clear();
+        fm::candidateBbrccloselegsoccsused.clear();
 
         fm::instance_present=false;
     }
@@ -113,18 +113,18 @@ void Bbrc::Reset() {
         delete fm::closelegoccurrences;
         delete fm::legoccurrences;
     }
-    fm::database = new Database();
+    fm::database = new BbrcDatabase();
     fm::db_built = false;
-    fm::statistics = new Statistics();
+    fm::statistics = new BbrcStatistics();
     fm::chisq = new ChisqConstraint(3.84146);
     fm::ks = new KSConstraint(0.95);
-    fm::graphstate = new GraphState();
-    fm::closelegoccurrences = new CloseLegOccurrences();
-    fm::legoccurrences = new LegOccurrences();
+    fm::graphstate = new BbrcGraphState();
+    fm::closelegoccurrences = new CloseBbrcBbrcLegOccurrences();
+    fm::legoccurrences = new BbrcBbrcLegOccurrences();
 
-    fm::candidatelegsoccurrences.clear();
+    fm::Bbrccandidatelegsoccurrences.clear();
     fm::candidatecloselegsoccs.clear();
-    fm::candidatecloselegsoccsused.clear();
+    fm::candidateBbrccloselegsoccsused.clear();
 
     SetChisqActive(true); 
     fm::result = &r;
@@ -360,7 +360,7 @@ vector<string>* Bbrc::MineRoot(unsigned int j) {
         }
         fm::database->edgecount (); 
         fm::database->reorder (); 
-        initLegStatics (); 
+        BbrcinitBbrcLegStatics (); 
         fm::graphstate->init (); 
         if (fm::bbrc_sep && !fm::do_backbone && fm::do_output && !fm::console_out) (*fm::result) << fm::graphstate->sep();
         init_mining_done=true; 
@@ -401,7 +401,7 @@ vector<string>* Bbrc::MineRoot(unsigned int j) {
 
     if (j >= fm::database->nodelabels.size()) { cerr << "Error! Root node " << j << " does not exist." << endl;  exit(1); }
     if ( fm::database->nodelabels[j].frequency >= fm::minfreq && fm::database->nodelabels[j].frequentedgelabels.size () ) {
-        Path path(j);
+        BbrcPath path(j);
         path.expand(); // mining step
     }
     return fm::result;
@@ -413,7 +413,7 @@ void Bbrc::ReadGsp(FILE* gsp){
 
 bool Bbrc::AddCompound(string smiles, unsigned int comp_id) {
   if (fm::db_built) {
-    cerr << "Database has been already processed! Please reset() and insert a new dataset." << endl;
+    cerr << "BbrcDatabase has been already processed! Please reset() and insert a new dataset." << endl;
     return false;
   }
   stringstream ss(smiles);
@@ -455,7 +455,7 @@ bool Bbrc::AddCompound(string smiles, unsigned int comp_id) {
 
 bool Bbrc::AddActivity(float act, unsigned int comp_id) {
   if (fm::db_built) {
-    cerr << "Database has been already processed! Please reset() and insert a new dataset." << endl;
+    cerr << "BbrcDatabase has been already processed! Please reset() and insert a new dataset." << endl;
     return false;
   }
   activity_map.insert(make_pair(comp_id, act));

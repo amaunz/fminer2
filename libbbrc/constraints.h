@@ -30,7 +30,7 @@
 #include "database.h"
 
 namespace fm {
-    extern Database* database;
+    extern BbrcDatabase* database;
 }
 
 class Constraint {};
@@ -41,7 +41,7 @@ class ChisqConstraint : public Constraint {
     unsigned int fa, fi;
     float sig, chisq, p, u;
     bool active;
-    set<Tid> fa_set, fi_set;
+    set<BbrcTid> fa_set, fi_set;
 
     ChisqConstraint (float sig) : na(0), ni(0), n(0), fa(0), fi(0), sig(sig), chisq(0.0), p(0.0), u(0.0), active(0) {}
 
@@ -51,7 +51,7 @@ class ChisqConstraint : public Constraint {
 
         chisq = 0.0; p = 0.0; u = 0.0;
 
-        LegActivityOccurrence(legocc);
+        BbrcLegActivityOccurrence(legocc);
         fa = fa_set.size(); // fa is y(I) in Morishita and Sese
         fi = fi_set.size(); // fi is x(I)-y(I)  in Morishita and Sese
 
@@ -74,7 +74,7 @@ class ChisqConstraint : public Constraint {
 
     //!< Counts occurrences of legs in active and inactive compounds
     template <typename OccurrenceType>
-    void LegActivityOccurrence(vector<OccurrenceType>& legocc) {
+    void BbrcLegActivityOccurrence(vector<OccurrenceType>& legocc) {
 
       fa_set.clear();
       fi_set.clear();
@@ -102,13 +102,13 @@ class KSConstraint : public Constraint {
     vector<float> all;
     vector<float> feat;
     float sig, p;
-    set<Tid> fa_set, fi_set;
+    set<BbrcTid> fa_set, fi_set;
 
     KSConstraint (float sig) : sig(sig), p(0.0) {}
 
     template <typename OccurrenceType>
     void Calc(vector<OccurrenceType>& legocc) {
-        LegActivityOccurrence(legocc);
+        BbrcLegActivityOccurrence(legocc);
         p = KS(all,feat);
     }
 
@@ -118,7 +118,7 @@ class KSConstraint : public Constraint {
 
     //!< Stores activities of occurrences of legs
     template <typename OccurrenceType>
-    void LegActivityOccurrence(vector<OccurrenceType>& legocc) {
+    void BbrcLegActivityOccurrence(vector<OccurrenceType>& legocc) {
       fa_set.clear();
       fi_set.clear();
 

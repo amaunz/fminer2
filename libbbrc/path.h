@@ -31,39 +31,39 @@
 
 using namespace std;
 
-struct PathTuple {
-  Depth depth;
-  NodeId connectingnode;
-  EdgeLabel edgelabel;
-  NodeLabel nodelabel;
+struct BbrcPathBbrcTuple {
+  BbrcDepth depth;
+  BbrcNodeId connectingnode;
+  BbrcEdgeLabel edgelabel;
+  BbrcNodeLabel nodelabel;
 };
 
-struct PathLeg {
-  PathTuple tuple;
-  LegOccurrences occurrences;
+struct BbrcPathBbrcLeg {
+  BbrcPathBbrcTuple tuple;
+  BbrcBbrcLegOccurrences occurrences;
 };
 
-typedef PathLeg *PathLegPtr;
+typedef BbrcPathBbrcLeg *BbrcPathBbrcLegPtr;
 
-class Path {
+class BbrcPath {
   public:
-    Path ( NodeLabel startnodelabel );
-    ~Path ();
+    BbrcPath ( BbrcNodeLabel startnodelabel );
+    ~BbrcPath ();
     void expand ();
   private:
-    friend class PatternTree;
-    bool is_normal ( EdgeLabel edgelabel ); // ADDED
+    friend class BbrcPatternTree;
+    bool is_normal ( BbrcEdgeLabel edgelabel ); // ADDED
     void expand2 (pair<float, string> max);
-    Path ( Path &parentpath, unsigned int legindex );
-    vector<PathLegPtr> legs; // pointers used to avoid copy-constructor during a resize of the vector
-    vector<CloseLegPtr> closelegs;
-    vector<NodeLabel> nodelabels;
-    vector<EdgeLabel> edgelabels;
+    BbrcPath ( BbrcPath &parentpath, unsigned int legindex );
+    vector<BbrcPathBbrcLegPtr> legs; // pointers used to avoid copy-constructor during a resize of the vector
+    vector<BbrcCloseBbrcLegPtr> closelegs;
+    vector<BbrcNodeLabel> nodelabels;
+    vector<BbrcEdgeLabel> edgelabels;
     int frontsymmetry; // which is lower, the front or front reverse?
     int backsymmetry; // which is lower, the back or back reverse?
     int totalsymmetry; // which is lower, from left to right, or the reverse?
 
-    friend ostream &operator<< ( ostream &stream, Path &path );
+    friend ostream &operator<< ( ostream &stream, BbrcPath &path );
 };
 
 #endif

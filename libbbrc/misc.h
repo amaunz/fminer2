@@ -28,22 +28,22 @@
 
 using namespace std;
 
-typedef unsigned char EdgeLabel; // combined node-edge label of the input file.
-typedef unsigned char NodeLabel;
-typedef unsigned short NodeId;
-typedef unsigned int Depth; // unsigned int is more efficient than short, but requires more memory...
-typedef unsigned int Tid;
-typedef unsigned int Frequency;
+typedef unsigned char BbrcEdgeLabel; // combined node-edge label of the input file.
+typedef unsigned char BbrcNodeLabel;
+typedef unsigned short BbrcNodeId;
+typedef unsigned int BbrcDepth; // unsigned int is more efficient than short, but requires more memory...
+typedef unsigned int BbrcTid;
+typedef unsigned int BbrcFrequency;
 
-//extern Frequency minfreq;
+//extern BbrcFrequency minfreq;
 
-#define NOTID ((Tid) -1)
-#define NOEDGELABEL ((EdgeLabel) -1)
+#define NOTID ((BbrcTid) -1)
+#define NOEDGELABEL ((BbrcEdgeLabel) -1)
 #define MAXEDGELABEL NOEDGELABEL
-#define NONODELABEL ((NodeLabel) -1)
-#define NODEPTH ((Depth) -1)
+#define NONODELABEL ((BbrcNodeLabel) -1)
+#define NODEPTH ((BbrcDepth) -1)
 #define NOLEG (-1)
-#define NONODE ((NodeId) -1)
+#define NONODE ((BbrcNodeId) -1)
 
 // this macro can be used when push_back-ing large structures. In stead of first allocating a local
 // variable and pushing this, one first pushes and defines a reference to the space in the vector.
@@ -58,14 +58,14 @@ typedef unsigned int Frequency;
 #define each(_vector) for (int i = 0 ; i < (int) ( _vector ).size() ; i++ )
 #define maxi(a, b) ( (a)>(b) ? (a) : (b) )
 
-extern int level; // 3 : all, 2 : paths and trees, 1 : paths
+extern int Bbrclevel; // 3 : all, 2 : paths and trees, 1 : paths
 //extern int maxsize; // maximal size
 
-inline void setmax ( short unsigned int &a, short unsigned int b ) { if ( b > a ) a = b; }
+inline void Bbrcsetmax ( short unsigned int &a, short unsigned int b ) { if ( b > a ) a = b; }
 
-class Statistics {
+class BbrcStatistics {
   public:
-    Statistics() : patternsize(0) {}
+    BbrcStatistics() : patternsize(0) {}
     vector<unsigned int> frequenttreenumbers;
     vector<unsigned int> frequentpathnumbers;
     vector<unsigned int> frequentgraphnumbers;
@@ -89,7 +89,7 @@ class Statistics {
 
 
 
-//extern Statistics statistics;
+//extern BbrcStatistics statistics;
 
 
 inline vector<string>& operator<<(vector<string>& res, string s) {

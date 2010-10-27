@@ -51,23 +51,23 @@ namespace fm {
     bool instance_present;
 
     // controlled by destructor and Reset()
-    Database* database=NULL;
-    Statistics* statistics=NULL;
-    GraphState* graphstate=NULL;
+    BbrcDatabase* database=NULL;
+    BbrcStatistics* statistics=NULL;
+    BbrcGraphState* graphstate=NULL;
 
     // controlled by Reset()
     vector<string>* result=NULL;
 
     // controlled by destructor & Reset()
-    LegOccurrences* legoccurrences=NULL; 
-    CloseLegOccurrences* closelegoccurrences=NULL; 
-    vector<LegOccurrences> candidatelegsoccurrences;
-    vector<vector< CloseLegOccurrences> > candidatecloselegsoccs;
-    vector<bool> candidatecloselegsoccsused;
+    BbrcBbrcLegOccurrences* legoccurrences=NULL; 
+    CloseBbrcBbrcLegOccurrences* closelegoccurrences=NULL; 
+    vector<BbrcBbrcLegOccurrences> Bbrccandidatelegsoccurrences;
+    vector<vector< CloseBbrcBbrcLegOccurrences> > candidatecloselegsoccs;
+    vector<bool> candidateBbrccloselegsoccsused;
     KSConstraint* ks=NULL;
 
     // controlled externally, set on demand
-    bool closelegsoccsused; // demand
+    bool Bbrccloselegsoccsused; // demand
 
 }
 
