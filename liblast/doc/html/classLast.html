@@ -35,7 +35,7 @@
 <tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="amgrpd09ee22b71f622faf903c5cda9dcd541"></a> Initializer functions. </p>
 </div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLast.html#a0c3fef1f249450ef678cdd46bd88e3a7">Last</a> ()</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor for standard settings: 95% significance level, minimum frequency 2, type trees, dynamic upper bound, BBRC.  <a href="#a0c3fef1f249450ef678cdd46bd88e3a7"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor for standard settings: 95% significance Lastlevel, minimum frequency 2, type trees, dynamic upper bound, BBRC.  <a href="#a0c3fef1f249450ef678cdd46bd88e3a7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLast.html#ad3a25f17998fc8f8c7cb79ec80852b51">~Last</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLast.html#a372de693ad40b3f42839c8ec6ac845f4">Reset</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Use this to clear the database before feeding new compounds and activities.  <a href="#a372de693ad40b3f42839c8ec6ac845f4"></a><br/></td></tr>
@@ -118,6 +118,10 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get number of root nodes (different element types).  <a href="#abc7291463c89c905f4371f3d9ba12f47"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLast.html#a9b74deeffd380f1269c906f4178a8ab0">GetNoCompounds</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get number of compounds in the database.  <a href="#a9b74deeffd380f1269c906f4178a8ab0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">float&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLast.html#a8ea34f589398a1407d93875433a5690e">ChisqTest</a> (unsigned int x, unsigned int y, unsigned int n_active, unsigned int n_inactive)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Calculate a chi-square p-value on the fly- just use it. x: active occurrences, y: occurrences, n_(in)active: #(in)actives in database. Returns (negative) positive sign, if (de)activating.  <a href="#a8ea34f589398a1407d93875433a5690e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">float&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLast.html#a7d97f054bc781f91b0bd2ea6c035de8f">KSTest</a> (vector&lt; float &gt; all, vector&lt; float &gt; feat)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Calculate a KS p-value on the fly- just use it. all (feat): all (feature) database activities. Returns (negative) positive sign, if (de)activating.  <a href="#a7d97f054bc781f91b0bd2ea6c035de8f"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a0c3fef1f249450ef678cdd46bd88e3a7"></a><!-- doxytag: member="Last::Last" ref="a0c3fef1f249450ef678cdd46bd88e3a7" args="()" -->
@@ -135,17 +139,17 @@
 </div>
 <div class="memdoc">
 
-<p>Constructor for standard settings: 95% significance level, minimum frequency 2, type trees, dynamic upper bound, BBRC. </p>
+<p>Constructor for standard settings: 95% significance Lastlevel, minimum frequency 2, type trees, dynamic upper bound, BBRC. </p>
 
-<p>References <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>, <a class="el" href="last_8cpp_source.html#l00124">Defaults()</a>, <a class="el" href="namespacefm.html#ab121ac08f2cdaf32be0af36a5ae79755">fm::gsp_out</a>, and <a class="el" href="last_8cpp_source.html#l00096">Reset()</a>.</p>
+<p>References <a class="el" href="last_8cpp_source.html#l00124">Defaults()</a>, <a class="el" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>, <a class="el" href="namespacefm.html#ad28161c04495429767e648bdafe6832f">fm::last_gsp_out</a>, and <a class="el" href="last_8cpp_source.html#l00096">Reset()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00028"></a>00028            : init_mining_done(<span class="keyword">false</span>) {
-<a name="l00029"></a>00029   <span class="keywordflow">if</span> (!fm::instance_present) {
-<a name="l00030"></a>00030       fm::database = NULL; fm::statistics = NULL; <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a> = NULL; fm::result = NULL;
+<a name="l00029"></a>00029   <span class="keywordflow">if</span> (!fm::last_instance_present) {
+<a name="l00030"></a>00030       fm::last_database = NULL; fm::last_statistics = NULL; <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a> = NULL; fm::last_result = NULL;
 <a name="l00031"></a>00031       <a class="code" href="classLast.html#a372de693ad40b3f42839c8ec6ac845f4" title="Use this to clear the database before feeding new compounds and activities.">Reset</a>();
 <a name="l00032"></a>00032       <a class="code" href="classLast.html#a9f4ebfcbb62fb16b57c5bcdfaacd451f" title="Use this to set default parameters as in default constructor.">Defaults</a>();
-<a name="l00033"></a>00033       fm::instance_present=<span class="keyword">true</span>;
-<a name="l00034"></a>00034       <a class="code" href="namespacefm.html#ab121ac08f2cdaf32be0af36a5ae79755">fm::gsp_out</a> = <span class="keyword">false</span>; 
+<a name="l00033"></a>00033       fm::last_instance_present=<span class="keyword">true</span>;
+<a name="l00034"></a>00034       <a class="code" href="namespacefm.html#ad28161c04495429767e648bdafe6832f">fm::last_gsp_out</a> = <span class="keyword">false</span>; 
 <a name="l00035"></a>00035   }
 <a name="l00036"></a>00036   <span class="keywordflow">else</span> {
 <a name="l00037"></a>00037     cerr &lt;&lt; <span class="stringliteral">&quot;Error! Cannot create more than 1 instance.&quot;</span> &lt;&lt; endl; 
@@ -171,23 +175,23 @@
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>, and <a class="el" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>, and <a class="el" href="namespacefm.html#a9045169d260713cb913fcfbf7811089a">fm::last_ks</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00078"></a>00078             {
-<a name="l00079"></a>00079     <span class="keywordflow">if</span> (fm::instance_present) {
-<a name="l00080"></a>00080         <span class="keyword">delete</span> fm::database;
-<a name="l00081"></a>00081         <span class="keyword">delete</span> fm::statistics; 
-<a name="l00082"></a>00082         <span class="keyword">delete</span> <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>; 
-<a name="l00083"></a>00083         <span class="keyword">delete</span> <a class="code" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>;
-<a name="l00084"></a>00084         <span class="keyword">delete</span> fm::graphstate;
-<a name="l00085"></a>00085         <span class="keyword">delete</span> fm::closelegoccurrences;
-<a name="l00086"></a>00086         <span class="keyword">delete</span> fm::legoccurrences;
+<a name="l00079"></a>00079     <span class="keywordflow">if</span> (fm::last_instance_present) {
+<a name="l00080"></a>00080         <span class="keyword">delete</span> fm::last_database;
+<a name="l00081"></a>00081         <span class="keyword">delete</span> fm::last_statistics; 
+<a name="l00082"></a>00082         <span class="keyword">delete</span> <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>; 
+<a name="l00083"></a>00083         <span class="keyword">delete</span> <a class="code" href="namespacefm.html#a9045169d260713cb913fcfbf7811089a">fm::last_ks</a>;
+<a name="l00084"></a>00084         <span class="keyword">delete</span> fm::last_graphstate;
+<a name="l00085"></a>00085         <span class="keyword">delete</span> fm::last_closelegoccurrences;
+<a name="l00086"></a>00086         <span class="keyword">delete</span> fm::last_legoccurrences;
 <a name="l00087"></a>00087 
-<a name="l00088"></a>00088         fm::candidatelegsoccurrences.clear();
-<a name="l00089"></a>00089         fm::candidatecloselegsoccs.clear();
-<a name="l00090"></a>00090         fm::candidatecloselegsoccsused.clear();
+<a name="l00088"></a>00088         fm::last_Lastcandidatelegsoccurrences.clear();
+<a name="l00089"></a>00089         fm::last_candidatecloselegsoccs.clear();
+<a name="l00090"></a>00090         fm::last_candidateLastcloselegsoccsused.clear();
 <a name="l00091"></a>00091 
-<a name="l00092"></a>00092         fm::instance_present=<span class="keyword">false</span>;
+<a name="l00092"></a>00092         fm::last_instance_present=<span class="keyword">false</span>;
 <a name="l00093"></a>00093     }
 <a name="l00094"></a>00094 }
 </pre></div></p>
@@ -222,16 +226,16 @@
 
 <p>Add an activity to the database. </p>
 
-<p>References <a class="el" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">fm::last_db_built</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00367"></a>00367                                                       {
-<a name="l00368"></a>00368   <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>) {
-<a name="l00369"></a>00369     cerr &lt;&lt; <span class="stringliteral">&quot;Database has been already processed! Please reset() and insert a new dataset.&quot;</span> &lt;&lt; endl;
-<a name="l00370"></a>00370     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00371"></a>00371   }
-<a name="l00372"></a>00372   activity_map.insert(make_pair(comp_id, act));
-<a name="l00373"></a>00373   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00374"></a>00374 }
+<p><div class="fragment"><pre class="fragment"><a name="l00361"></a>00361                                                       {
+<a name="l00362"></a>00362   <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">fm::last_db_built</a>) {
+<a name="l00363"></a>00363     cerr &lt;&lt; <span class="stringliteral">&quot;LastDatabase has been already processed! Please reset() and insert a new dataset.&quot;</span> &lt;&lt; endl;
+<a name="l00364"></a>00364     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00365"></a>00365   }
+<a name="l00366"></a>00366   activity_map.insert(make_pair(comp_id, act));
+<a name="l00367"></a>00367   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00368"></a>00368 }
 </pre></div></p>
 
 </div>
@@ -263,40 +267,91 @@
 
 <p>Add a compound to the database. </p>
 
-<p>References <a class="el" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">fm::last_db_built</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00321"></a>00321                                                           {
-<a name="l00322"></a>00322   <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>) {
-<a name="l00323"></a>00323     cerr &lt;&lt; <span class="stringliteral">&quot;Database has been already processed! Please reset() and insert a new dataset.&quot;</span> &lt;&lt; endl;
+<a name="l00322"></a>00322   <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">fm::last_db_built</a>) {
+<a name="l00323"></a>00323     cerr &lt;&lt; <span class="stringliteral">&quot;LastDatabase has been already processed! Please reset() and insert a new dataset.&quot;</span> &lt;&lt; endl;
 <a name="l00324"></a>00324     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00325"></a>00325   }
 <a name="l00326"></a>00326   stringstream ss(smiles);
-<a name="l00327"></a>00327   ostringstream strstrm;
-<a name="l00328"></a>00328   OBConversion conv(&amp;ss, &amp;strstrm);
-<a name="l00329"></a>00329   <span class="keywordflow">if</span>(!conv.SetInAndOutFormats(<span class="stringliteral">&quot;SMI&quot;</span>,<span class="stringliteral">&quot;INCHI&quot;</span>)) {
-<a name="l00330"></a>00330     cerr &lt;&lt; <span class="stringliteral">&quot;Formats not available&quot;</span> &lt;&lt; endl;
-<a name="l00331"></a>00331     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00332"></a>00332   }
-<a name="l00333"></a>00333   OBMol mol;
-<a name="l00334"></a>00334   <span class="keywordflow">if</span> (!conv.Read(&amp;mol)) {
-<a name="l00335"></a>00335     cerr &lt;&lt; <span class="stringliteral">&quot;Could not convert &#39;&quot;</span> &lt;&lt; smiles &lt;&lt; <span class="stringliteral">&quot;&#39; (leaving out).&quot;</span> &lt;&lt; endl;
-<a name="l00336"></a>00336   }
-<a name="l00337"></a>00337   conv.SetOptions(<span class="stringliteral">&quot;w&quot;</span>,OBConversion::OUTOPTIONS);
-<a name="l00338"></a>00338   <span class="keywordtype">string</span> inchi = conv.WriteString(&amp;mol);
-<a name="l00339"></a>00339   <span class="comment">// remove newline</span>
-<a name="l00340"></a>00340   string::size_type pos = inchi.find_last_not_of(<span class="stringliteral">&quot;\n&quot;</span>);
-<a name="l00341"></a>00341   <span class="keywordflow">if</span> (pos != string::npos) {
-<a name="l00342"></a>00342     inchi = inchi.substr(0, pos+1);
-<a name="l00343"></a>00343   }
-<a name="l00344"></a>00344   <span class="comment">//cerr &lt;&lt; &quot;Inchi: &#39;&quot; &lt;&lt; inchi &lt;&lt; &quot;&#39;&quot; &lt;&lt; endl;</span>
-<a name="l00345"></a>00345   pair&lt;unsigned int, string&gt; ori = make_pair(comp_id, smiles);
-<a name="l00346"></a>00346   pair&lt; map&lt;string,pair&lt;unsigned int, string&gt; &gt;::iterator, <span class="keywordtype">bool</span>&gt; res = inchi_compound_map.insert(make_pair(inchi,ori));
-<a name="l00347"></a>00347   <span class="keywordflow">if</span> (!res.second) {
-<a name="l00348"></a>00348     cerr &lt;&lt; <span class="stringliteral">&quot;Warning: Leaving out compound &#39;&quot;</span> &lt;&lt; smiles &lt;&lt; <span class="stringliteral">&quot;&#39; (already inserted).&quot;</span> &lt;&lt; endl;
-<a name="l00349"></a>00349   }
-<a name="l00350"></a>00350   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00351"></a>00351 }
+<a name="l00327"></a>00327   OBConversion conv(&amp;ss, &amp;cout);
+<a name="l00328"></a>00328   <span class="keywordflow">if</span>(!conv.SetInAndOutFormats(<span class="stringliteral">&quot;SMI&quot;</span>,<span class="stringliteral">&quot;INCHI&quot;</span>)) {
+<a name="l00329"></a>00329     cerr &lt;&lt; <span class="stringliteral">&quot;Formats not available&quot;</span> &lt;&lt; endl;
+<a name="l00330"></a>00330     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00331"></a>00331   }
+<a name="l00332"></a>00332   OBMol mol;
+<a name="l00333"></a>00333   <span class="keywordflow">if</span> (!conv.Read(&amp;mol)) {
+<a name="l00334"></a>00334     cerr &lt;&lt; <span class="stringliteral">&quot;Could not convert &#39;&quot;</span> &lt;&lt; smiles &lt;&lt; <span class="stringliteral">&quot;&#39; (leaving out).&quot;</span> &lt;&lt; endl;
+<a name="l00335"></a>00335   }
+<a name="l00336"></a>00336   conv.SetOptions(<span class="stringliteral">&quot;w&quot;</span>,OBConversion::OUTOPTIONS);
+<a name="l00337"></a>00337   <span class="keywordtype">string</span> inchi = conv.WriteString(&amp;mol);
+<a name="l00338"></a>00338   <span class="comment">// remove newline</span>
+<a name="l00339"></a>00339   string::size_type pos = inchi.find_last_not_of(<span class="stringliteral">&quot;\n&quot;</span>);
+<a name="l00340"></a>00340   <span class="keywordflow">if</span> (pos != string::npos) {
+<a name="l00341"></a>00341     inchi = inchi.substr(0, pos+1);
+<a name="l00342"></a>00342   }
+<a name="l00343"></a>00343   <span class="comment">//cerr &lt;&lt; &quot;Inchi: &#39;&quot; &lt;&lt; inchi &lt;&lt; &quot;&#39;&quot; &lt;&lt; endl;</span>
+<a name="l00344"></a>00344   pair&lt;unsigned int, string&gt; ori = make_pair(comp_id, smiles);
+<a name="l00345"></a>00345   pair&lt; map&lt;string,pair&lt;unsigned int, string&gt; &gt;::iterator, <span class="keywordtype">bool</span>&gt; res = inchi_compound_map.insert(make_pair(inchi,ori));
+<a name="l00346"></a>00346   <span class="keywordflow">if</span> (!res.second) {
+<a name="l00347"></a>00347     cerr &lt;&lt; <span class="stringliteral">&quot;Note: structure of &#39;&quot;</span> &lt;&lt; smiles &lt;&lt; <span class="stringliteral">&quot;&#39; has been already inserted, inserting anyway...&quot;</span> &lt;&lt; endl;
+<a name="l00348"></a>00348   }
+<a name="l00349"></a>00349 
+<a name="l00350"></a>00350   <span class="comment">// insert into actual map augmented by number</span>
+<a name="l00351"></a>00351   <span class="keywordtype">string</span> inchi_no = inchi;
+<a name="l00352"></a>00352   inchi_no += <span class="stringliteral">&quot;-&quot;</span>;
+<a name="l00353"></a>00353   comp_runner++;
+<a name="l00354"></a>00354   stringstream out; out &lt;&lt; comp_runner;
+<a name="l00355"></a>00355   <span class="keywordtype">string</span> comp_runner_s = out.str();
+<a name="l00356"></a>00356   inchi_no += comp_runner_s;
+<a name="l00357"></a>00357   pair&lt; map&lt;string,pair&lt;unsigned int, string&gt; &gt;::iterator, <span class="keywordtype">bool</span>&gt; resmm = inchi_compound_mmap.insert(make_pair(inchi_no,ori));
+<a name="l00358"></a>00358   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00359"></a>00359 }
 </pre></div></p>
+
+</div>
+</div>
+<a class="anchor" id="a8ea34f589398a1407d93875433a5690e"></a><!-- doxytag: member="Last::ChisqTest" ref="a8ea34f589398a1407d93875433a5690e" args="(unsigned int x, unsigned int y, unsigned int n_active, unsigned int n_inactive)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float ChisqTest </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>n_active</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&nbsp;</td>
+          <td class="paramname"> <em>n_inactive</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Calculate a chi-square p-value on the fly- just use it. x: active occurrences, y: occurrences, n_(in)active: #(in)actives in database. Returns (negative) positive sign, if (de)activating. </p>
+
+<p>References <a class="el" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>.</p>
 
 </div>
 </div>
@@ -317,28 +372,28 @@
 
 <p>Use this to set default parameters as in default constructor. </p>
 
-<p>References <a class="el" href="namespacefm.html#a5b3dab8ff08516a4daa7bb804b6dd368">fm::aromatic</a>, <a class="el" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a>, <a class="el" href="namespacefm.html#ae3778362791642453eccdf44001942c4">fm::do_pruning</a>, <a class="el" href="namespacefm.html#ab121ac08f2cdaf32be0af36a5ae79755">fm::gsp_out</a>, <a class="el" href="namespacefm.html#ad74ecd9dc54a218daef6a2c64ea762c2">fm::max_hops</a>, and <a class="el" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>.</p>
+<p>References <a class="el" href="namespacefm.html#ad27ffdf391cc29d15979aeeb75c945b6">fm::last_aromatic</a>, <a class="el" href="namespacefm.html#a000c16be030b42394fdc227420275d47">fm::last_bbrc_sep</a>, <a class="el" href="namespacefm.html#af3b3bf0444f0ae73a133a21809f5a7cb">fm::last_do_pruning</a>, <a class="el" href="namespacefm.html#ad28161c04495429767e648bdafe6832f">fm::last_gsp_out</a>, <a class="el" href="namespacefm.html#a632a588a9fe5568066bc1e8b21cff094">fm::last_max_hops</a>, and <a class="el" href="namespacefm.html#a4495ad5dc6d2104ca73b0c5414ce42ef">fm::last_regression</a>.</p>
 
 <p>Referenced by <a class="el" href="last_8cpp_source.html#l00028">Last()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00124"></a>00124                     {
-<a name="l00125"></a>00125     fm::minfreq = 2;
-<a name="l00126"></a>00126     fm::type = 2;
-<a name="l00127"></a>00127     <a class="code" href="namespacefm.html#ae3778362791642453eccdf44001942c4">fm::do_pruning</a> = <span class="keyword">true</span>;
-<a name="l00128"></a>00128     fm::console_out = <span class="keyword">true</span>;
-<a name="l00129"></a>00129     <a class="code" href="namespacefm.html#a5b3dab8ff08516a4daa7bb804b6dd368">fm::aromatic</a> = <span class="keyword">true</span>;
-<a name="l00130"></a>00130     fm::refine_singles = <span class="keyword">false</span>;
-<a name="l00131"></a>00131     fm::do_output=<span class="keyword">true</span>;
-<a name="l00132"></a>00132     <a class="code" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a>=<span class="keyword">false</span>;
-<a name="l00133"></a>00133     fm::updated = <span class="keyword">true</span>;
-<a name="l00134"></a>00134     <a class="code" href="namespacefm.html#ab121ac08f2cdaf32be0af36a5ae79755">fm::gsp_out</a>=<span class="keyword">true</span>;
-<a name="l00135"></a>00135     <a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>=<span class="keyword">false</span>;
+<a name="l00125"></a>00125     fm::last_minfreq = 2;
+<a name="l00126"></a>00126     fm::last_type = 2;
+<a name="l00127"></a>00127     <a class="code" href="namespacefm.html#af3b3bf0444f0ae73a133a21809f5a7cb">fm::last_do_pruning</a> = <span class="keyword">true</span>;
+<a name="l00128"></a>00128     fm::last_console_out = <span class="keyword">true</span>;
+<a name="l00129"></a>00129     <a class="code" href="namespacefm.html#ad27ffdf391cc29d15979aeeb75c945b6">fm::last_aromatic</a> = <span class="keyword">true</span>;
+<a name="l00130"></a>00130     fm::last_refine_singles = <span class="keyword">false</span>;
+<a name="l00131"></a>00131     fm::last_do_output=<span class="keyword">true</span>;
+<a name="l00132"></a>00132     <a class="code" href="namespacefm.html#a000c16be030b42394fdc227420275d47">fm::last_bbrc_sep</a>=<span class="keyword">false</span>;
+<a name="l00133"></a>00133     fm::last_updated = <span class="keyword">true</span>;
+<a name="l00134"></a>00134     <a class="code" href="namespacefm.html#ad28161c04495429767e648bdafe6832f">fm::last_gsp_out</a>=<span class="keyword">true</span>;
+<a name="l00135"></a>00135     <a class="code" href="namespacefm.html#a4495ad5dc6d2104ca73b0c5414ce42ef">fm::last_regression</a>=<span class="keyword">false</span>;
 <a name="l00136"></a>00136 
 <a name="l00137"></a>00137     <span class="comment">// LAST</span>
-<a name="l00138"></a>00138     fm::do_last=<span class="keyword">true</span>;
+<a name="l00138"></a>00138     fm::last_do_last=<span class="keyword">true</span>;
 <a name="l00139"></a>00139     fm::last_hops=0;
-<a name="l00140"></a>00140     fm::die = 0;
-<a name="l00141"></a>00141     <a class="code" href="namespacefm.html#ad74ecd9dc54a218daef6a2c64ea762c2">fm::max_hops</a> = 50;
+<a name="l00140"></a>00140     fm::last_die = 0;
+<a name="l00141"></a>00141     <a class="code" href="namespacefm.html#a632a588a9fe5568066bc1e8b21cff094">fm::last_max_hops</a> = 50;
 <a name="l00142"></a>00142 }
 </pre></div></p>
 
@@ -361,11 +416,11 @@
 
 <p>Get whether aromatic rings should be perceived instead of Kekule notation. </p>
 
-<p>References <a class="el" href="namespacefm.html#a5b3dab8ff08516a4daa7bb804b6dd368">fm::aromatic</a>.</p>
+<p>References <a class="el" href="namespacefm.html#ad27ffdf391cc29d15979aeeb75c945b6">fm::last_aromatic</a>.</p>
 
 <p>Referenced by <a class="el" href="last_8cpp_source.html#l00233">MineRoot()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00153"></a>00153 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a5b3dab8ff08516a4daa7bb804b6dd368">fm::aromatic</a>;}
+<p><div class="fragment"><pre class="fragment"><a name="l00153"></a>00153 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#ad27ffdf391cc29d15979aeeb75c945b6">fm::last_aromatic</a>;}
 </pre></div></p>
 
 </div>
@@ -409,9 +464,9 @@
 
 <p>Get whether BBRCs should be separated in the output. </p>
 
-<p>References <a class="el" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a000c16be030b42394fdc227420275d47">fm::last_bbrc_sep</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00156"></a>00156 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a>;}
+<p><div class="fragment"><pre class="fragment"><a name="l00156"></a>00156 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a000c16be030b42394fdc227420275d47">fm::last_bbrc_sep</a>;}
 </pre></div></p>
 
 </div>
@@ -433,11 +488,11 @@
 
 <p>Get whether chi-square filter is active. </p>
 
-<p>References <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>.</p>
 
 <p>Referenced by <a class="el" href="last_8cpp_source.html#l00233">MineRoot()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00157"></a>00157 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;active;}
+<p><div class="fragment"><pre class="fragment"><a name="l00157"></a>00157 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;active;}
 </pre></div></p>
 
 </div>
@@ -459,11 +514,11 @@
 
 <p>Get significance threshold. </p>
 
-<p>References <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>, <a class="el" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>, and <a class="el" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>, <a class="el" href="namespacefm.html#a9045169d260713cb913fcfbf7811089a">fm::last_ks</a>, and <a class="el" href="namespacefm.html#a4495ad5dc6d2104ca73b0c5414ce42ef">fm::last_regression</a>.</p>
 
 <p>Referenced by <a class="el" href="last_8cpp_source.html#l00233">MineRoot()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00158"></a>00158 {<span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>) <span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;sig; <span class="keywordflow">else</span> <span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>-&gt;sig;}
+<p><div class="fragment"><pre class="fragment"><a name="l00158"></a>00158 {<span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#a4495ad5dc6d2104ca73b0c5414ce42ef">fm::last_regression</a>) <span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;sig; <span class="keywordflow">else</span> <span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a9045169d260713cb913fcfbf7811089a">fm::last_ks</a>-&gt;sig;}
 </pre></div></p>
 
 </div>
@@ -485,7 +540,7 @@
 
 <p>Get whether output should be directed to the console. </p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00152"></a>00152 {<span class="keywordflow">return</span> fm::console_out;}
+<p><div class="fragment"><pre class="fragment"><a name="l00152"></a>00152 {<span class="keywordflow">return</span> fm::last_console_out;}
 </pre></div></p>
 
 </div>
@@ -509,7 +564,7 @@
 
 <p>Referenced by <a class="el" href="last_8cpp_source.html#l00233">MineRoot()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00155"></a>00155 {<span class="keywordflow">return</span> fm::do_output;}
+<p><div class="fragment"><pre class="fragment"><a name="l00155"></a>00155 {<span class="keywordflow">return</span> fm::last_do_output;}
 </pre></div></p>
 
 </div>
@@ -553,11 +608,11 @@
 
 <p>Get maximum number of hops. </p>
 
-<p>References <a class="el" href="namespacefm.html#ad74ecd9dc54a218daef6a2c64ea762c2">fm::max_hops</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a632a588a9fe5568066bc1e8b21cff094">fm::last_max_hops</a>.</p>
 
 <p>Referenced by <a class="el" href="last_8cpp_source.html#l00233">MineRoot()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00160"></a>00160 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#ad74ecd9dc54a218daef6a2c64ea762c2">fm::max_hops</a>;}
+<p><div class="fragment"><pre class="fragment"><a name="l00160"></a>00160 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a632a588a9fe5568066bc1e8b21cff094">fm::last_max_hops</a>;}
 </pre></div></p>
 
 </div>
@@ -581,7 +636,7 @@
 
 <p>Referenced by <a class="el" href="last_8cpp_source.html#l00233">MineRoot()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00147"></a>00147 {<span class="keywordflow">return</span> fm::minfreq;}
+<p><div class="fragment"><pre class="fragment"><a name="l00147"></a>00147 {<span class="keywordflow">return</span> fm::last_minfreq;}
 </pre></div></p>
 
 </div>
@@ -603,7 +658,7 @@
 
 <p>Get number of compounds in the database. </p>
 
-<p>References <a class="el" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">fm::last_db_built</a>.</p>
 
 </div>
 </div>
@@ -624,7 +679,7 @@
 
 <p>Get number of root nodes (different element types). </p>
 
-<p>References <a class="el" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">fm::last_db_built</a>.</p>
 
 <p>Referenced by <a class="el" href="last_8cpp_source.html#l00233">MineRoot()</a>.</p>
 
@@ -647,11 +702,11 @@
 
 <p>Get whether statistical metric pruning should be used. </p>
 
-<p>References <a class="el" href="namespacefm.html#ae3778362791642453eccdf44001942c4">fm::do_pruning</a>.</p>
+<p>References <a class="el" href="namespacefm.html#af3b3bf0444f0ae73a133a21809f5a7cb">fm::last_do_pruning</a>.</p>
 
 <p>Referenced by <a class="el" href="last_8cpp_source.html#l00233">MineRoot()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00151"></a>00151 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#ae3778362791642453eccdf44001942c4">fm::do_pruning</a>;}
+<p><div class="fragment"><pre class="fragment"><a name="l00151"></a>00151 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#af3b3bf0444f0ae73a133a21809f5a7cb">fm::last_do_pruning</a>;}
 </pre></div></p>
 
 </div>
@@ -675,7 +730,7 @@
 
 <p>Referenced by <a class="el" href="last_8cpp_source.html#l00165">SetMinfreq()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00154"></a>00154 {<span class="keywordflow">return</span> fm::refine_singles;}
+<p><div class="fragment"><pre class="fragment"><a name="l00154"></a>00154 {<span class="keywordflow">return</span> fm::last_refine_singles;}
 </pre></div></p>
 
 </div>
@@ -697,11 +752,11 @@
 
 <p>Dummy method for regression (only used for bbrcs). </p>
 
-<p>References <a class="el" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a4495ad5dc6d2104ca73b0c5414ce42ef">fm::last_regression</a>.</p>
 
 <p>Referenced by <a class="el" href="last_8cpp_source.html#l00233">MineRoot()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00159"></a>00159 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>;}
+<p><div class="fragment"><pre class="fragment"><a name="l00159"></a>00159 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a4495ad5dc6d2104ca73b0c5414ce42ef">fm::last_regression</a>;}
 </pre></div></p>
 
 </div>
@@ -725,8 +780,39 @@
 
 <p>Referenced by <a class="el" href="last_8cpp_source.html#l00233">MineRoot()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00148"></a>00148 {<span class="keywordflow">return</span> fm::type;}
+<p><div class="fragment"><pre class="fragment"><a name="l00148"></a>00148 {<span class="keywordflow">return</span> fm::last_type;}
 </pre></div></p>
+
+</div>
+</div>
+<a class="anchor" id="a7d97f054bc781f91b0bd2ea6c035de8f"></a><!-- doxytag: member="Last::KSTest" ref="a7d97f054bc781f91b0bd2ea6c035de8f" args="(vector&lt; float &gt; all, vector&lt; float &gt; feat)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float KSTest </td>
+          <td>(</td>
+          <td class="paramtype">vector&lt; float &gt;&nbsp;</td>
+          <td class="paramname"> <em>all</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">vector&lt; float &gt;&nbsp;</td>
+          <td class="paramname"> <em>feat</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Calculate a KS p-value on the fly- just use it. all (feat): all (feature) database activities. Returns (negative) positive sign, if (de)activating. </p>
+
+<p>References <a class="el" href="namespacefm.html#a9045169d260713cb913fcfbf7811089a">fm::last_ks</a>.</p>
 
 </div>
 </div>
@@ -748,30 +834,30 @@
 
 <p>Mine fragments rooted at the j-th root node (element type). </p>
 
-<p>References <a class="el" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a>, <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>, <a class="el" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>, <a class="el" href="last_8cpp_source.html#l00153">GetAromatic()</a>, <a class="el" href="last_8cpp_source.html#l00157">GetChisqActive()</a>, <a class="el" href="last_8cpp_source.html#l00158">GetChisqSig()</a>, <a class="el" href="last_8cpp_source.html#l00155">GetDoOutput()</a>, <a class="el" href="last_8cpp_source.html#l00160">GetMaxHops()</a>, <a class="el" href="last_8cpp_source.html#l00147">GetMinfreq()</a>, <a class="el" href="last_8h_source.html#l00111">GetNoRootNodes()</a>, <a class="el" href="last_8cpp_source.html#l00151">GetPruning()</a>, <a class="el" href="last_8cpp_source.html#l00159">GetRegression()</a>, <a class="el" href="last_8cpp_source.html#l00148">GetType()</a>, and <a class="el" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>.</p>
+<p>References <a class="el" href="last_8cpp_source.html#l00153">GetAromatic()</a>, <a class="el" href="last_8cpp_source.html#l00157">GetChisqActive()</a>, <a class="el" href="last_8cpp_source.html#l00158">GetChisqSig()</a>, <a class="el" href="last_8cpp_source.html#l00155">GetDoOutput()</a>, <a class="el" href="last_8cpp_source.html#l00160">GetMaxHops()</a>, <a class="el" href="last_8cpp_source.html#l00147">GetMinfreq()</a>, <a class="el" href="last_8h_source.html#l00111">GetNoRootNodes()</a>, <a class="el" href="last_8cpp_source.html#l00151">GetPruning()</a>, <a class="el" href="last_8cpp_source.html#l00159">GetRegression()</a>, <a class="el" href="last_8cpp_source.html#l00148">GetType()</a>, <a class="el" href="namespacefm.html#a000c16be030b42394fdc227420275d47">fm::last_bbrc_sep</a>, <a class="el" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>, <a class="el" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">fm::last_db_built</a>, and <a class="el" href="namespacefm.html#a4495ad5dc6d2104ca73b0c5414ce42ef">fm::last_regression</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00233"></a>00233                                              {
-<a name="l00234"></a>00234     fm::result-&gt;clear();
+<a name="l00234"></a>00234     fm::last_result-&gt;clear();
 <a name="l00235"></a>00235     <span class="keywordflow">if</span> (!init_mining_done) {
-<a name="l00236"></a>00236         <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>) {
+<a name="l00236"></a>00236         <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">fm::last_db_built</a>) {
 <a name="l00237"></a>00237           AddDataCanonical();
 <a name="l00238"></a>00238         }
-<a name="l00239"></a>00239         <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;active) {
-<a name="l00240"></a>00240             each (fm::database-&gt;trees) {
-<a name="l00241"></a>00241                 <span class="keywordflow">if</span> (fm::database-&gt;trees[i]-&gt;activity == -1) {
-<a name="l00242"></a>00242                     cerr &lt;&lt; <span class="stringliteral">&quot;Error! ID &quot;</span> &lt;&lt; fm::database-&gt;trees[i]-&gt;orig_tid &lt;&lt; <span class="stringliteral">&quot; is missing activity information.&quot;</span> &lt;&lt; endl;
+<a name="l00239"></a>00239         <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;active) {
+<a name="l00240"></a>00240             each (fm::last_database-&gt;trees) {
+<a name="l00241"></a>00241                 <span class="keywordflow">if</span> (fm::last_database-&gt;trees[i]-&gt;activity == -1) {
+<a name="l00242"></a>00242                     cerr &lt;&lt; <span class="stringliteral">&quot;Error! ID &quot;</span> &lt;&lt; fm::last_database-&gt;trees[i]-&gt;orig_tid &lt;&lt; <span class="stringliteral">&quot; is missing activity information.&quot;</span> &lt;&lt; endl;
 <a name="l00243"></a>00243                     exit(1);
 <a name="l00244"></a>00244                 }
 <a name="l00245"></a>00245             }
 <a name="l00246"></a>00246         }
-<a name="l00247"></a>00247         fm::database-&gt;edgecount (); 
-<a name="l00248"></a>00248         fm::database-&gt;reorder (); 
-<a name="l00249"></a>00249         initLegStatics (); 
-<a name="l00250"></a>00250         fm::graphstate-&gt;init (); 
-<a name="l00251"></a>00251         <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a> &amp;&amp; fm::do_output &amp;&amp; !fm::console_out) (*fm::result) &lt;&lt; fm::graphstate-&gt;sep();
+<a name="l00247"></a>00247         fm::last_database-&gt;edgecount (); 
+<a name="l00248"></a>00248         fm::last_database-&gt;reorder (); 
+<a name="l00249"></a>00249         LastinitLastLegStatics (); 
+<a name="l00250"></a>00250         fm::last_graphstate-&gt;init (); 
+<a name="l00251"></a>00251         <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#a000c16be030b42394fdc227420275d47">fm::last_bbrc_sep</a> &amp;&amp; fm::last_do_output &amp;&amp; !fm::last_console_out) (*fm::last_result) &lt;&lt; fm::last_graphstate-&gt;sep();
 <a name="l00252"></a>00252         init_mining_done=<span class="keyword">true</span>; 
 <a name="l00253"></a>00253 
-<a name="l00254"></a>00254         <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>) {
+<a name="l00254"></a>00254         <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#a4495ad5dc6d2104ca73b0c5414ce42ef">fm::last_regression</a>) {
 <a name="l00255"></a>00255             cerr &lt;&lt; <span class="stringliteral">&quot;Settings:&quot;</span> &lt;&lt; endl \
 <a name="l00256"></a>00256                  &lt;&lt; <span class="stringliteral">&quot;---&quot;</span> &lt;&lt; endl \
 <a name="l00257"></a>00257                  &lt;&lt; <span class="stringliteral">&quot;Type:                                 &quot;</span> &lt;&lt; <a class="code" href="classLast.html#a00c83761de7dca2e16d741650b41f1ef" title="Get type.">GetType</a>() &lt;&lt; endl \
@@ -800,7 +886,7 @@
 <a name="l00280"></a>00280 
 <a name="l00281"></a>00281 
 <a name="l00282"></a>00282 
-<a name="l00283"></a>00283         <span class="keywordflow">if</span> (fm::do_output) {
+<a name="l00283"></a>00283         <span class="keywordflow">if</span> (fm::last_do_output) {
 <a name="l00284"></a>00284 
 <a name="l00285"></a>00285           <span class="keywordtype">string</span> xml_header = 
 <a name="l00286"></a>00286 <span class="stringliteral">&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;\n\</span>
@@ -817,21 +903,21 @@
 <a name="l00297"></a>00297 <span class="stringliteral">&lt;key id=\&quot;weight\&quot; for=\&quot;edge\&quot; attr.name=\&quot;edge_weight\&quot; attr.type=\&quot;int\&quot; /&gt;\n\</span>
 <a name="l00298"></a>00298 <span class="stringliteral">&lt;key id=\&quot;del\&quot; for=\&quot;edge\&quot; attr.name=\&quot;edge_deleted\&quot; attr.type=\&quot;boolean\&quot; /&gt;\n\n&quot;</span>;
 <a name="l00299"></a>00299 
-<a name="l00300"></a>00300          <span class="keywordflow">if</span> (!fm::console_out) (*fm::result) &lt;&lt; xml_header;
+<a name="l00300"></a>00300          <span class="keywordflow">if</span> (!fm::last_console_out) (*fm::last_result) &lt;&lt; xml_header;
 <a name="l00301"></a>00301          <span class="keywordflow">else</span> cout &lt;&lt; xml_header;
 <a name="l00302"></a>00302       }
 <a name="l00303"></a>00303     }
 <a name="l00304"></a>00304 
-<a name="l00305"></a>00305     <span class="keywordflow">if</span> (j &gt;= fm::database-&gt;nodelabels.size()) { cerr &lt;&lt; <span class="stringliteral">&quot;Error! Root node &quot;</span> &lt;&lt; j &lt;&lt; <span class="stringliteral">&quot; does not exist.&quot;</span> &lt;&lt; endl;  exit(1); }
-<a name="l00306"></a>00306     <span class="keywordflow">if</span> ( fm::database-&gt;nodelabels[j].frequency &gt;= fm::minfreq &amp;&amp; fm::database-&gt;nodelabels[j].frequentedgelabels.size () ) {
-<a name="l00307"></a>00307         Path path(j);
+<a name="l00305"></a>00305     <span class="keywordflow">if</span> (j &gt;= fm::last_database-&gt;nodelabels.size()) { cerr &lt;&lt; <span class="stringliteral">&quot;Error! Root node &quot;</span> &lt;&lt; j &lt;&lt; <span class="stringliteral">&quot; does not exist.&quot;</span> &lt;&lt; endl;  exit(1); }
+<a name="l00306"></a>00306     <span class="keywordflow">if</span> ( fm::last_database-&gt;nodelabels[j].frequency &gt;= fm::last_minfreq &amp;&amp; fm::last_database-&gt;nodelabels[j].frequentedgelabels.size () ) {
+<a name="l00307"></a>00307         LastPath path(j);
 <a name="l00308"></a>00308         path.expand(); <span class="comment">// mining step</span>
 <a name="l00309"></a>00309     }
-<a name="l00310"></a>00310     <span class="keywordflow">if</span> (j==<a class="code" href="classLast.html#abc7291463c89c905f4371f3d9ba12f47" title="Get number of root nodes (different element types).">GetNoRootNodes</a>()-1 &amp;&amp; fm::do_output) {
-<a name="l00311"></a>00311       <span class="keywordflow">if</span> (!fm::console_out) (*fm::result) &lt;&lt; <span class="stringliteral">&quot;&lt;/graphml&gt;\n&quot;</span>;
+<a name="l00310"></a>00310     <span class="keywordflow">if</span> (j==<a class="code" href="classLast.html#abc7291463c89c905f4371f3d9ba12f47" title="Get number of root nodes (different element types).">GetNoRootNodes</a>()-1 &amp;&amp; fm::last_do_output) {
+<a name="l00311"></a>00311       <span class="keywordflow">if</span> (!fm::last_console_out) (*fm::last_result) &lt;&lt; <span class="stringliteral">&quot;&lt;/graphml&gt;\n&quot;</span>;
 <a name="l00312"></a>00312       <span class="keywordflow">else</span> cout &lt;&lt; <span class="stringliteral">&quot;&lt;/graphml&gt;&quot;</span> &lt;&lt; endl;
 <a name="l00313"></a>00313     }
-<a name="l00314"></a>00314     <span class="keywordflow">return</span> fm::result;
+<a name="l00314"></a>00314     <span class="keywordflow">return</span> fm::last_result;
 <a name="l00315"></a>00315 }
 </pre></div></p>
 
@@ -856,7 +942,7 @@
 <p>Read in a gSpan file. </p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00317"></a>00317                            {
-<a name="l00318"></a>00318     fm::database-&gt;readGsp(gsp);
+<a name="l00318"></a>00318     fm::last_database-&gt;readGsp(gsp);
 <a name="l00319"></a>00319 }
 </pre></div></p>
 
@@ -879,33 +965,33 @@
 
 <p>Use this to clear the database before feeding new compounds and activities. </p>
 
-<p>References <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>, <a class="el" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>, and <a class="el" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>, <a class="el" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">fm::last_db_built</a>, and <a class="el" href="namespacefm.html#a9045169d260713cb913fcfbf7811089a">fm::last_ks</a>.</p>
 
 <p>Referenced by <a class="el" href="last_8cpp_source.html#l00028">Last()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00096"></a>00096                  { 
-<a name="l00097"></a>00097     <span class="keywordflow">if</span> (fm::instance_present) {
-<a name="l00098"></a>00098         <span class="keyword">delete</span> fm::database;
-<a name="l00099"></a>00099         <span class="keyword">delete</span> fm::statistics;
-<a name="l00100"></a>00100         <span class="keyword">delete</span> <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>;
-<a name="l00101"></a>00101         <span class="keyword">delete</span> <a class="code" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>;
-<a name="l00102"></a>00102         <span class="keyword">delete</span> fm::graphstate;
-<a name="l00103"></a>00103         <span class="keyword">delete</span> fm::closelegoccurrences;
-<a name="l00104"></a>00104         <span class="keyword">delete</span> fm::legoccurrences;
+<a name="l00097"></a>00097     <span class="keywordflow">if</span> (fm::last_instance_present) {
+<a name="l00098"></a>00098         <span class="keyword">delete</span> fm::last_database;
+<a name="l00099"></a>00099         <span class="keyword">delete</span> fm::last_statistics;
+<a name="l00100"></a>00100         <span class="keyword">delete</span> <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>;
+<a name="l00101"></a>00101         <span class="keyword">delete</span> <a class="code" href="namespacefm.html#a9045169d260713cb913fcfbf7811089a">fm::last_ks</a>;
+<a name="l00102"></a>00102         <span class="keyword">delete</span> fm::last_graphstate;
+<a name="l00103"></a>00103         <span class="keyword">delete</span> fm::last_closelegoccurrences;
+<a name="l00104"></a>00104         <span class="keyword">delete</span> fm::last_legoccurrences;
 <a name="l00105"></a>00105     }
-<a name="l00106"></a>00106     fm::database = <span class="keyword">new</span> Database();
-<a name="l00107"></a>00107     <a class="code" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a> = <span class="keyword">false</span>;
-<a name="l00108"></a>00108     fm::statistics = <span class="keyword">new</span> Statistics();
-<a name="l00109"></a>00109     <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a> = <span class="keyword">new</span> ChisqConstraint(3.84146);
-<a name="l00110"></a>00110     <a class="code" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a> = <span class="keyword">new</span> KSConstraint(0.95);
-<a name="l00111"></a>00111     fm::graphstate = <span class="keyword">new</span> GraphState();
-<a name="l00112"></a>00112     fm::closelegoccurrences = <span class="keyword">new</span> CloseLegOccurrences();
-<a name="l00113"></a>00113     fm::legoccurrences = <span class="keyword">new</span> LegOccurrences();
+<a name="l00106"></a>00106     fm::last_database = <span class="keyword">new</span> LastDatabase();
+<a name="l00107"></a>00107     <a class="code" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">fm::last_db_built</a> = <span class="keyword">false</span>;
+<a name="l00108"></a>00108     fm::last_statistics = <span class="keyword">new</span> LastStatistics();
+<a name="l00109"></a>00109     <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a> = <span class="keyword">new</span> ChisqLastConstraint(3.84146);
+<a name="l00110"></a>00110     <a class="code" href="namespacefm.html#a9045169d260713cb913fcfbf7811089a">fm::last_ks</a> = <span class="keyword">new</span> KSLastConstraint(0.95);
+<a name="l00111"></a>00111     fm::last_graphstate = <span class="keyword">new</span> LastGraphState();
+<a name="l00112"></a>00112     fm::last_closelegoccurrences = <span class="keyword">new</span> CloseLastLegOccurrences();
+<a name="l00113"></a>00113     fm::last_legoccurrences = <span class="keyword">new</span> LastLegOccurrences();
 <a name="l00114"></a>00114 
-<a name="l00115"></a>00115     fm::candidatecloselegsoccsused.clear();
+<a name="l00115"></a>00115     fm::last_candidateLastcloselegsoccsused.clear();
 <a name="l00116"></a>00116 
-<a name="l00117"></a>00117     <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;active=<span class="keyword">true</span>; 
-<a name="l00118"></a>00118     fm::result = &amp;r;
+<a name="l00117"></a>00117     <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;active=<span class="keyword">true</span>; 
+<a name="l00118"></a>00118     fm::last_result = &amp;r;
 <a name="l00119"></a>00119     comp_runner=0; 
 <a name="l00120"></a>00120     comp_no=0; 
 <a name="l00121"></a>00121     init_mining_done = <span class="keyword">false</span>;
@@ -932,10 +1018,10 @@
 
 <p>Pass 'true' here to enable aromatic rings and use Kekule notation. IMPORTANT! SET THIS BEFORE CALLING <a class="el" href="classLast.html#a7ae3274987947421c41022918f48378d" title="Add a compound to the database.">AddCompound()</a>! </p>
 
-<p>References <a class="el" href="namespacefm.html#a5b3dab8ff08516a4daa7bb804b6dd368">fm::aromatic</a>.</p>
+<p>References <a class="el" href="namespacefm.html#ad27ffdf391cc29d15979aeeb75c945b6">fm::last_aromatic</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00195"></a>00195                                {
-<a name="l00196"></a>00196     <a class="code" href="namespacefm.html#a5b3dab8ff08516a4daa7bb804b6dd368">fm::aromatic</a> = val;
+<a name="l00196"></a>00196     <a class="code" href="namespacefm.html#ad27ffdf391cc29d15979aeeb75c945b6">fm::last_aromatic</a> = val;
 <a name="l00197"></a>00197 }
 </pre></div></p>
 
@@ -1061,7 +1147,7 @@
 
 <p><div class="fragment"><pre class="fragment"><a name="l00189"></a>00189                                  {
 <a name="l00190"></a>00190     <span class="comment">// console out not switched by fminer</span>
-<a name="l00191"></a>00191     fm::console_out=val;
+<a name="l00191"></a>00191     fm::last_console_out=val;
 <a name="l00192"></a>00192     <span class="keywordflow">return</span> 1;
 <a name="l00193"></a>00193 }
 </pre></div></p>
@@ -1087,7 +1173,7 @@
 <p>Pass 'false' here to disable output. </p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00203"></a>00203                                {
-<a name="l00204"></a>00204     fm::do_output = val;
+<a name="l00204"></a>00204     fm::last_do_output = val;
 <a name="l00205"></a>00205 }
 </pre></div></p>
 
@@ -1136,10 +1222,10 @@
 
 <p>Set maximum number of hops. </p>
 
-<p>References <a class="el" href="namespacefm.html#ad74ecd9dc54a218daef6a2c64ea762c2">fm::max_hops</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a632a588a9fe5568066bc1e8b21cff094">fm::last_max_hops</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00226"></a>00226                              {
-<a name="l00227"></a>00227     <a class="code" href="namespacefm.html#ad74ecd9dc54a218daef6a2c64ea762c2">fm::max_hops</a>=val;
+<a name="l00227"></a>00227     <a class="code" href="namespacefm.html#a632a588a9fe5568066bc1e8b21cff094">fm::last_max_hops</a>=val;
 <a name="l00228"></a>00228     <span class="keywordflow">return</span> 1;
 <a name="l00229"></a>00229 }
 </pre></div></p>
@@ -1169,7 +1255,7 @@
 <p><div class="fragment"><pre class="fragment"><a name="l00165"></a>00165                              {
 <a name="l00166"></a>00166     <span class="keywordflow">if</span> (val &lt; 1) { cerr &lt;&lt; <span class="stringliteral">&quot;Error! Invalid value &#39;&quot;</span> &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot;&#39; for parameter minfreq.&quot;</span> &lt;&lt; endl; exit(1); }
 <a name="l00167"></a>00167     <span class="keywordflow">if</span> (val &gt; 1 &amp;&amp; <a class="code" href="classLast.html#a43b57f5108e2a25ae8b08ab91179dfb5" title="Get whether fragments with frequency 1 should be refined.">GetRefineSingles</a>()) { cerr &lt;&lt; <span class="stringliteral">&quot;Warning! Minimum frequency of &#39;&quot;</span> &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot;&#39; could not be set due to activated single refinement.&quot;</span> &lt;&lt; endl;}
-<a name="l00168"></a>00168     fm::minfreq = val;
+<a name="l00168"></a>00168     fm::last_minfreq = val;
 <a name="l00169"></a>00169 }
 </pre></div></p>
 
@@ -1243,12 +1329,12 @@
 
 <p>Dummy method for regression (only used for bbrcs). </p>
 
-<p>References <a class="el" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a4495ad5dc6d2104ca73b0c5414ce42ef">fm::last_regression</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00219"></a>00219                                  {
 <a name="l00220"></a>00220     <span class="comment">// return 0;</span>
 <a name="l00221"></a>00221     <span class="comment">// TODO: enable regression</span>
-<a name="l00222"></a>00222     <a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>=val;
+<a name="l00222"></a>00222     <a class="code" href="namespacefm.html#a4495ad5dc6d2104ca73b0c5414ce42ef">fm::last_regression</a>=val;
 <a name="l00223"></a>00223     <span class="keywordflow">return</span> 1;
 <a name="l00224"></a>00224 }
 </pre></div></p>
@@ -1285,7 +1371,7 @@
 <li><a class="el" href="last_8cpp.html">last.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 22 13:28:19 2010 for liblast by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Thu Oct 28 11:00:25 2010 for liblast by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

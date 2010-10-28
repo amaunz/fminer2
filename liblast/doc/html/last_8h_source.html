@@ -54,15 +54,15 @@
 <a name="l00029"></a>00029 
 <a name="l00030"></a><a class="code" href="namespacefm.html">00030</a> <span class="keyword">namespace </span>fm { 
 <a name="l00031"></a>00031 
-<a name="l00032"></a>00032     <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespacefm.html#ae3778362791642453eccdf44001942c4">do_pruning</a>;
-<a name="l00033"></a>00033     <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespacefm.html#a5b3dab8ff08516a4daa7bb804b6dd368">aromatic</a>;
-<a name="l00034"></a>00034     <span class="keyword">extern</span> ChisqConstraint* <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">chisq</a>;
-<a name="l00035"></a>00035     <span class="keyword">extern</span> KSConstraint* <a class="code" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">ks</a>;
-<a name="l00036"></a>00036     <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespacefm.html#ab121ac08f2cdaf32be0af36a5ae79755">gsp_out</a>;
-<a name="l00037"></a>00037     <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">bbrc_sep</a>;
-<a name="l00038"></a>00038     <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">regression</a>;
-<a name="l00039"></a>00039     <span class="keyword">extern</span> <span class="keywordtype">int</span> <a class="code" href="namespacefm.html#ad74ecd9dc54a218daef6a2c64ea762c2">max_hops</a>;
-<a name="l00040"></a>00040     <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">db_built</a>;
+<a name="l00032"></a>00032     <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespacefm.html#af3b3bf0444f0ae73a133a21809f5a7cb">last_do_pruning</a>;
+<a name="l00033"></a>00033     <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespacefm.html#ad27ffdf391cc29d15979aeeb75c945b6">last_aromatic</a>;
+<a name="l00034"></a>00034     <span class="keyword">extern</span> ChisqLastConstraint* <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">last_chisq</a>;
+<a name="l00035"></a>00035     <span class="keyword">extern</span> KSLastConstraint* <a class="code" href="namespacefm.html#a9045169d260713cb913fcfbf7811089a">last_ks</a>;
+<a name="l00036"></a>00036     <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespacefm.html#ad28161c04495429767e648bdafe6832f">last_gsp_out</a>;
+<a name="l00037"></a>00037     <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespacefm.html#a000c16be030b42394fdc227420275d47">last_bbrc_sep</a>;
+<a name="l00038"></a>00038     <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespacefm.html#a4495ad5dc6d2104ca73b0c5414ce42ef">last_regression</a>;
+<a name="l00039"></a>00039     <span class="keyword">extern</span> <span class="keywordtype">int</span> <a class="code" href="namespacefm.html#a632a588a9fe5568066bc1e8b21cff094">last_max_hops</a>;
+<a name="l00040"></a>00040     <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">last_db_built</a>;
 <a name="l00041"></a>00041 
 <a name="l00042"></a>00042 }
 <a name="l00043"></a>00043 
@@ -70,10 +70,10 @@
 <a name="l00045"></a>00045 
 <a name="l00046"></a>00046   <span class="keyword">public</span>:
 <a name="l00047"></a>00047 
-<a name="l00052"></a>00052     <a class="code" href="classLast.html#a0c3fef1f249450ef678cdd46bd88e3a7" title="Constructor for standard settings: 95% significance level, minimum frequency 2, type...">Last</a> (); 
+<a name="l00052"></a>00052     <a class="code" href="classLast.html#a0c3fef1f249450ef678cdd46bd88e3a7" title="Constructor for standard settings: 95% significance Lastlevel, minimum frequency...">Last</a> (); 
 <a name="l00053"></a>00053     <span class="comment">/*</span>
 <a name="l00054"></a>00054 <span class="comment">    Last (int _type, unsigned int _minfreq); //!&lt; Like standard constructor, but type and minimum frequency configurable.</span>
-<a name="l00055"></a>00055 <span class="comment">    Last (int _type, unsigned int _minfreq, float chisq_val, bool _do_backbone); //!&lt; Like standard constructor, but type, minimum frequency, significance level and BBRC configurable.</span>
+<a name="l00055"></a>00055 <span class="comment">    Last (int _type, unsigned int _minfreq, float chisq_val, bool _do_backbone); //!&lt; Like standard constructor, but type, minimum frequency, significance Lastlevel and BBRC configurable.</span>
 <a name="l00056"></a>00056 <span class="comment">    */</span>
 <a name="l00057"></a>00057     <a class="code" href="classLast.html#ad3a25f17998fc8f8c7cb79ec80852b51">~Last</a>();
 <a name="l00058"></a>00058     <span class="keywordtype">void</span> <a class="code" href="classLast.html#a372de693ad40b3f42839c8ec6ac845f4" title="Use this to clear the database before feeding new compounds and activities.">Reset</a>(); 
@@ -116,33 +116,36 @@
 <a name="l00108"></a>00108     <span class="keywordtype">void</span> <a class="code" href="classLast.html#af877482dbaf9aa27fbe9524479758c9c" title="Read in a gSpan file.">ReadGsp</a>(FILE* gsp); 
 <a name="l00109"></a>00109     <span class="keywordtype">bool</span> <a class="code" href="classLast.html#a7ae3274987947421c41022918f48378d" title="Add a compound to the database.">AddCompound</a>(<span class="keywordtype">string</span> smiles, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> comp_id); 
 <a name="l00110"></a>00110     <span class="keywordtype">bool</span> <a class="code" href="classLast.html#a864483449b0171b7e7c33851471c9087" title="Add an activity to the database.">AddActivity</a>(<span class="keywordtype">float</span> act, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> comp_id); 
-<a name="l00111"></a><a class="code" href="classLast.html#abc7291463c89c905f4371f3d9ba12f47">00111</a>     <span class="keywordtype">int</span> <a class="code" href="classLast.html#abc7291463c89c905f4371f3d9ba12f47" title="Get number of root nodes (different element types).">GetNoRootNodes</a>() {<span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>) AddDataCanonical() ; <span class="keywordflow">return</span> fm::database-&gt;nodelabels.size();} 
-<a name="l00112"></a><a class="code" href="classLast.html#a9b74deeffd380f1269c906f4178a8ab0">00112</a>     <span class="keywordtype">int</span> <a class="code" href="classLast.html#a9b74deeffd380f1269c906f4178a8ab0" title="Get number of compounds in the database.">GetNoCompounds</a>() {<span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>) AddDataCanonical() ; <span class="keywordflow">return</span> fm::database-&gt;trees.size();} 
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114     
-<a name="l00115"></a>00115   <span class="keyword">private</span>:
-<a name="l00116"></a>00116     <span class="keywordtype">void</span> AddChiSqNa(){<a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;na++;<a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;n++;}
-<a name="l00117"></a>00117     <span class="keywordtype">void</span> AddChiSqNi(){<a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;ni++;<a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;n++;}
-<a name="l00118"></a>00118     <span class="comment">// KS: Insert value into set of activities</span>
-<a name="l00119"></a>00119     <span class="keywordtype">void</span> AddKS(<span class="keywordtype">float</span> val){<a class="code" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>-&gt;all.push_back(val);}
-<a name="l00120"></a>00120 
-<a name="l00121"></a>00121     <span class="keywordtype">bool</span> init_mining_done;
-<a name="l00122"></a>00122     <span class="keywordtype">int</span> comp_runner;
-<a name="l00123"></a>00123     <span class="keywordtype">int</span> comp_no;
-<a name="l00124"></a>00124 
-<a name="l00125"></a>00125     vector&lt;string&gt; r;
-<a name="l00126"></a>00126     <span class="comment">// ONLY FOR INTERNAL USE. DO NOT MAKE PUBLIC!</span>
-<a name="l00127"></a>00127     map&lt;string, pair&lt;unsigned int, string&gt; &gt; inchi_compound_map; <span class="comment">// AM: structure inchi =&gt; (id, smi) for canonical input</span>
-<a name="l00128"></a>00128     map&lt;unsigned int, float&gt; activity_map;                       <span class="comment">// AM: structure inchi =&gt; (id, smi) for canonical input</span>
-<a name="l00129"></a>00129     <span class="keywordtype">bool</span> AddDataCanonical();                                        
-<a name="l00130"></a>00130     <span class="keywordtype">bool</span> AddCompoundCanonical(<span class="keywordtype">string</span> smiles, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> comp_id); 
-<a name="l00131"></a>00131     <span class="keywordtype">bool</span> AddActivityCanonical(<span class="keywordtype">float</span> act, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> comp_id);     
-<a name="l00132"></a>00132 
-<a name="l00133"></a>00133 };
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135 <span class="preprocessor">#endif</span>
+<a name="l00111"></a><a class="code" href="classLast.html#abc7291463c89c905f4371f3d9ba12f47">00111</a>     <span class="keywordtype">int</span> <a class="code" href="classLast.html#abc7291463c89c905f4371f3d9ba12f47" title="Get number of root nodes (different element types).">GetNoRootNodes</a>() {<span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">fm::last_db_built</a>) AddDataCanonical() ; <span class="keywordflow">return</span> fm::last_database-&gt;nodelabels.size();} 
+<a name="l00112"></a><a class="code" href="classLast.html#a9b74deeffd380f1269c906f4178a8ab0">00112</a>     <span class="keywordtype">int</span> <a class="code" href="classLast.html#a9b74deeffd380f1269c906f4178a8ab0" title="Get number of compounds in the database.">GetNoCompounds</a>() {<span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">fm::last_db_built</a>) AddDataCanonical() ; <span class="keywordflow">return</span> fm::last_database-&gt;trees.size();} 
+<a name="l00113"></a><a class="code" href="classLast.html#a8ea34f589398a1407d93875433a5690e">00113</a>     <span class="keywordtype">float</span> <a class="code" href="classLast.html#a8ea34f589398a1407d93875433a5690e" title="Calculate a chi-square p-value on the fly- just use it. x: active occurrences, y:...">ChisqTest</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> x, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> y, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> n_active, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> n_inactive) {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;ChiSqTest(x,y,n_active,n_inactive);} 
+<a name="l00114"></a><a class="code" href="classLast.html#a7d97f054bc781f91b0bd2ea6c035de8f">00114</a>     <span class="keywordtype">float</span> <a class="code" href="classLast.html#a7d97f054bc781f91b0bd2ea6c035de8f" title="Calculate a KS p-value on the fly- just use it. all (feat): all (feature) database...">KSTest</a>(vector&lt;float&gt; all, vector&lt;float&gt; feat) {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a9045169d260713cb913fcfbf7811089a">fm::last_ks</a>-&gt;KSTest(all, feat);} 
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116     
+<a name="l00117"></a>00117   <span class="keyword">private</span>:
+<a name="l00118"></a>00118     <span class="keywordtype">void</span> AddChiSqNa(){<a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;na++;<a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;n++;}
+<a name="l00119"></a>00119     <span class="keywordtype">void</span> AddChiSqNi(){<a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;ni++;<a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;n++;}
+<a name="l00120"></a>00120     <span class="comment">// KS: Insert value into set of activities</span>
+<a name="l00121"></a>00121     <span class="keywordtype">void</span> AddKS(<span class="keywordtype">float</span> val){<a class="code" href="namespacefm.html#a9045169d260713cb913fcfbf7811089a">fm::last_ks</a>-&gt;all.push_back(val);}
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123     <span class="keywordtype">bool</span> init_mining_done;
+<a name="l00124"></a>00124     <span class="keywordtype">int</span> comp_runner;
+<a name="l00125"></a>00125     <span class="keywordtype">int</span> comp_no;
+<a name="l00126"></a>00126 
+<a name="l00127"></a>00127     vector&lt;string&gt; r;
+<a name="l00128"></a>00128     <span class="comment">// ONLY FOR INTERNAL USE. DO NOT MAKE PUBLIC!</span>
+<a name="l00129"></a>00129     map&lt;string, pair&lt;unsigned int, string&gt; &gt; inchi_compound_map;    <span class="comment">// AM: structure inchi =&gt; (id, smi) for canonical input to check for double structures</span>
+<a name="l00130"></a>00130     map&lt;string, pair&lt;unsigned int, string&gt; &gt; inchi_compound_mmap;   <span class="comment">// AM: structure inchi =&gt; (id, smi) for canonical input to use for actual storage</span>
+<a name="l00131"></a>00131     map&lt;unsigned int, float&gt; activity_map;                          <span class="comment">// AM: structure inchi =&gt; (id, smi) for canonical input</span>
+<a name="l00132"></a>00132     <span class="keywordtype">bool</span> AddDataCanonical();                                        
+<a name="l00133"></a>00133     <span class="keywordtype">bool</span> AddCompoundCanonical(<span class="keywordtype">string</span> smiles, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> comp_id); 
+<a name="l00134"></a>00134     <span class="keywordtype">bool</span> AddActivityCanonical(<span class="keywordtype">float</span> act, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> comp_id);     
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136 };
+<a name="l00137"></a>00137 
+<a name="l00138"></a>00138 <span class="preprocessor">#endif</span>
 </pre></div></div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 22 13:28:19 2010 for liblast by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Thu Oct 28 11:00:25 2010 for liblast by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>
