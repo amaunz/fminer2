@@ -110,7 +110,7 @@ class Last : public Fminer {
     bool AddActivity(float act, unsigned int comp_id); //!< Add an activity to the database.
     int GetNoRootNodes() {if (!fm::last_db_built) AddDataCanonical() ; return fm::last_database->nodelabels.size();} //!< Get number of root nodes (different element types).
     int GetNoCompounds() {if (!fm::last_db_built) AddDataCanonical() ; return fm::last_database->trees.size();} //!< Get number of compounds in the database.
-    float ChisqTestP(unsigned int x, unsigned int y, unsigned int n_active, unsigned int n_inactive) {return gsl_cdf_chisq_P(fm::last_chisq->ChiSq(x,y,n_active,n_inactive),1);} //!< Calculate a chi square value on the fly- just use it. x: #active occurrences, y: #occurrences, n_(in)active: #(in)actives in database.
+    float ChisqTestP(unsigned int x, unsigned int y, unsigned int n_active, unsigned int n_inactive) {return fm::last_chisq->ChiSqTest(x,y,n_active,n_inactive);} //!< Calculate a p-value on the fly- just use it. x: #active occurrences, y: #occurrences, n_(in)active: #(in)actives in database. Returns (negative) positive sign, if (de)activating.
     //@}
     
   private:

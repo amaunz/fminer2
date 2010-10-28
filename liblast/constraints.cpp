@@ -21,17 +21,26 @@
 #include "constraints.h"
 #include "stats.h"
 
-float ChisqLastConstraint::ChiSq(float x, float y, unsigned int n_active, unsigned int n_inactive) {
+float ChisqLastConstraint::ChiSqTest(float x, float y, unsigned int n_active, unsigned int n_inactive) {
+  
+  // backup
   unsigned int na_tmp = na;
   unsigned int ni_tmp = ni;
   unsigned int n_tmp = n;
+  bool activating_tmp=activating;
+  
   na=n_active;
   ni=n_inactive;
   n=na+ni;
-  float res = ChiSq(x,y,true); // Always decide activating in this mode
+  float res = gsl_cdf_chisq_P(ChiSq(x,y,true),1); // Always decide activating in this mode
+  if (!activating) res*=-1.0;
+
+  // restore
   na=na_tmp;
   ni=ni_tmp;
   n=n_tmp;
+  activating=activating_tmp;
+ 
   return res;
 }
 
@@ -56,6 +65,8 @@ float ChisqLastConstraint::ChiSq(float x, float y, bool decide_activating) {
         return(chisq);
 
 }
+
+
 
 float KSLastConstraint::KS(vector<float> all_activities, vector<float> feat_activities, bool decide_activating) {
 
