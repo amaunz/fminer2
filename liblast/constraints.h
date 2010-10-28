@@ -115,15 +115,11 @@ class KSLastConstraint : public LastConstraint {
     KSLastConstraint (float sig) : sig(sig), p(0.0), activating(0) {}
 
     template <typename OccurrenceType>
-      void Calc(vector<OccurrenceType>& legocc) {
-        LastLegActivityOccurrence(legocc);
-        p = KS(all,feat,1);
-      }
+    void Calc(vector<OccurrenceType>& legocc) { LastLegActivityOccurrence(legocc); p = KS(all,feat,1); }
+    float KSTest(vector<float> all, vector<float> feat);
 
   private:
-    //!< Calculates KS values
     float KS(vector<float> all_activities, vector<float> feat_activities, bool decide_activating);
-
     //!< Stores activities of occurrences of legs
     template <typename OccurrenceType>
       void LastLegActivityOccurrence(vector<OccurrenceType>& legocc) {

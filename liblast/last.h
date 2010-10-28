@@ -110,7 +110,8 @@ class Last : public Fminer {
     bool AddActivity(float act, unsigned int comp_id); //!< Add an activity to the database.
     int GetNoRootNodes() {if (!fm::last_db_built) AddDataCanonical() ; return fm::last_database->nodelabels.size();} //!< Get number of root nodes (different element types).
     int GetNoCompounds() {if (!fm::last_db_built) AddDataCanonical() ; return fm::last_database->trees.size();} //!< Get number of compounds in the database.
-    float ChisqTestP(unsigned int x, unsigned int y, unsigned int n_active, unsigned int n_inactive) {return fm::last_chisq->ChiSqTest(x,y,n_active,n_inactive);} //!< Calculate a p-value on the fly- just use it. x: #active occurrences, y: #occurrences, n_(in)active: #(in)actives in database. Returns (negative) positive sign, if (de)activating.
+    float ChisqTest(unsigned int x, unsigned int y, unsigned int n_active, unsigned int n_inactive) {return fm::last_chisq->ChiSqTest(x,y,n_active,n_inactive);} //!< Calculate a chi-square p-value on the fly- just use it. x: #active occurrences, y: #occurrences, n_(in)active: #(in)actives in database. Returns (negative) positive sign, if (de)activating.
+    float KSTest(vector<float> all, vector<float> feat) {return fm::last_ks->KSTest(all, feat);} //!< Calculate a KS p-value on the fly- just use it. all (feat): all (feature) database activities. Returns (negative) positive sign, if (de)activating.
     //@}
     
   private:

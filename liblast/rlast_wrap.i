@@ -10,5 +10,6 @@ using namespace std;
 
 %include "std_vector.i"
 %template(SVector) std::vector<std::string>;
+%template(FVector) std::vector<float>;
 
 %include "last.h"

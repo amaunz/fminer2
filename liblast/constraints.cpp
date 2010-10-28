@@ -45,28 +45,30 @@ float ChisqLastConstraint::ChiSqTest(float x, float y, unsigned int n_active, un
 }
 
 float ChisqLastConstraint::ChiSq(float x, float y, bool decide_activating) {
-
         float ea = 0.0, ei = 0.0, impact = 0.0;
-        
         cerr << "x: '" << x << "' y: '" << y << "' na: '" << na << "' ni: '" << ni << "' n: '" << n << "'" << endl;
-
         impact = x/(float)n;
         ea = na * impact; 
         ei = ni * impact; 
-
         cerr << "impact: '" << impact << "' ea: '" << ea << "' ei: '" << ei << "'" << endl;
-
         if (decide_activating) {
-            if (y>ea) activating=1; else activating=0;
+            (y>ea) ? activating=1 : activating=0;
         }
-
         if (ea>0 && ei>0) chisq = (y-ea-0.5)*(y-ea-0.5)/ea + (x-y-ei-0.5)*(x-y-ei-0.5)/ei;
-
         return(chisq);
-
 }
 
 
+
+float KSLastConstraint::KSTest(vector<float> all, vector<float> feat) {
+  bool activating_tmp=activating;
+  float res = KS(all, feat, 1);
+  if (!activating) res*=-1.0;
+  cerr << "Activating was '" << activating << "'" << endl;
+  activating=activating_tmp;
+  cerr << "Activating is '" << activating << "'" << endl;
+  return res;
+}
 
 float KSLastConstraint::KS(vector<float> all_activities, vector<float> feat_activities, bool decide_activating) {
 
