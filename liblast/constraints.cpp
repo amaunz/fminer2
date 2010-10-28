@@ -39,9 +39,13 @@ float ChisqLastConstraint::ChiSq(float x, float y, bool decide_activating) {
 
         float ea = 0.0, ei = 0.0, impact = 0.0;
         
+        cerr << "x: '" << x << "' y: '" << y << "' na: '" << na << "' ni: '" << ni << "' n: '" << n << "'" << endl;
+
         impact = x/(float)n;
         ea = na * impact; 
         ei = ni * impact; 
+
+        cerr << "impact: '" << impact << "' ea: '" << ea << "' ei: '" << ei << "'" << endl;
 
         if (decide_activating) {
             if (y>ea) activating=1; else activating=0;

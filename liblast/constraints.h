@@ -68,12 +68,12 @@ class ChisqLastConstraint : public LastConstraint {
         u = u1; if (u2>u1) u = u2;                            //      chisq (x(I)-y(I),0) }
     
     }
+    float ChiSq(float x, float y, unsigned int n_active, unsigned int n_inactive); // on-the-fly test
 
     private:
 
     //!< Calculates chi^2 value
     float ChiSq(float x, float y, bool decide_activating);
-    float ChiSq(float x, float y, unsigned int n_active, unsigned int n_inactive);
 
     //!< Counts occurrences of legs in active and inactive compounds
     template <typename OccurrenceType>
