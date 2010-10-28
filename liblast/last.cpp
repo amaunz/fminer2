@@ -434,3 +434,23 @@ bool Last::AddActivityCanonical(float act, unsigned int comp_id) {
   }
 }
 
+float Last::ChisqTest(vector<float> all, vector<float> feat) {
+  int x=0; int y=0; int m=0; int n=0;
+  each(all) {
+    if ((all[i] != 0.0) && (all[i] != 1.0)) {
+      cerr << "liblast: got invalid values for chi-square test." << endl;
+      exit(1);
+    }
+    if (all[i] == 1.0) m++;
+    n++;
+  }
+  each(feat) {
+    if ((feat[i] != 0.0) && (feat[i] != 1.0)) {
+      cerr << "liblast: got invalid values for chi-square test." << endl;
+      exit(1);
+    }
+    if (feat[i] == 1.0) y++;
+    x++;
+  }
+  return fm::last_chisq->ChiSqTest(x,y,m,n-m);
+}
