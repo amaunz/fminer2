@@ -4,11 +4,11 @@ This repository includes graph mining software based on Gaston (see http://www.l
 
 1) BBRC: Backbone Refinement Class mining
 Subdirectory libbbrc/
-Go here: http://www.maunz.de/libfminer2-bbrc-doc/
+Go here: http://bbrc.maunz.de
 
 2) LAST-PM: LAtent STructure Pattern Mining
 Subdirectory liblast/
-Go here: http://www.maunz.de/libfminer2-last-doc/
+Go here: http://lastpm.maunz.de
 
 3) Frontend App for 1) and 2).
 Subdirectory fminer/
