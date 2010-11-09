@@ -82,20 +82,20 @@ class Bbrc : public Fminer {
      *  Setter functions.
      */
     //@{
-    void SetMinfreq(int val); //!< Set minimum frequency (>=1 here).
-    bool SetType(int val); //!< Set type 1 (paths) or 2 (trees) here.
-    bool SetBackbone(bool val); //!< Pass 'false' here to switch off mining for BBRC representatives.
-    bool SetDynamicUpperBound(bool val); //!< Pass 'false' here to disable dynamic upper bound pruning (e.g. for performance measures).
-    bool SetPruning(bool val); //!< Pass 'false' here to disable statistical metrical pruning completely.
+    void SetMinfreq(int val); //!< Set minimum frequency (>=1 here). Same as '-f'.
+    bool SetType(int val); //!< Set type 1 (paths) or 2 (trees) here. Same as '-l'.
+    bool SetBackbone(bool val); //!< Pass 'false' here to switch off mining for BBRC representatives. Same as '-b'.
+    bool SetDynamicUpperBound(bool val); //!< Pass 'false' here to disable dynamic upper bound pruning (e.g. for performance measures). Same as '-d'.
+    bool SetPruning(bool val); //!< Pass 'false' here to disable statistical metrical pruning completely. Same as '-u'.
     bool SetConsoleOut(bool val); //!< Pass 'true' here to disable usage of result vector and directly print each fragment to the console (saves memory).
-    void SetAromatic(bool val); //!< Pass 'true' here to enable aromatic rings and use Kekule notation. IMPORTANT! SET THIS BEFORE CALLING AddCompound()!
-    bool SetRefineSingles(bool val); //!< Pass 'true' here to enable refinement of fragments with frequency 1.
-    void SetDoOutput(bool val); //!< Pass 'false' here to disable output.
+    void SetAromatic(bool val); //!< Pass 'true' here to enable aromatic rings and use Kekule notation. IMPORTANT! SET THIS BEFORE CALLING AddCompound()! Same as '-a'.
+    bool SetRefineSingles(bool val); //!< Pass 'true' here to enable refinement of fragments with frequency 1. Same as '-s'.
+    void SetDoOutput(bool val); //!< Pass 'false' here to disable output. Same as '-o'.
     bool SetBbrcSep(bool val); //!< Set this to 'true' to enable BBRC separators in output.
     bool SetChisqActive(bool val); //!< Set this to 'true' to enable chi-square filter.
-    bool SetChisqSig(float _chisq_val); //!< Set significance threshold here (between 0 and 1).
-    bool SetRegression(bool val); //!< Set 'true' here to enable continuous activity values.
-    bool SetMaxHops(int val); //!< Dummy method for max hops (only used in LAST-PM).
+    bool SetChisqSig(float _chisq_val); //!< Set significance threshold here (between 0 and 1). Same as '-p'.
+    bool SetRegression(bool val); //!< Set 'true' here to enable continuous activity values. Same as '-g'.
+    bool SetMaxHops(int val); //!< Dummy method for max hops (only used in LAST-PM). Same as '-m'.
     //@}
     /** @name Others
      *  Other functions.

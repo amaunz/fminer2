@@ -35,11 +35,11 @@
 <tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="amgrpd09ee22b71f622faf903c5cda9dcd541"></a> Initializer functions. </p>
 </div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#a7dc3a2ad35ff8cff98f5f4fd3a8b58f0">Bbrc</a> ()</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor for standard settings: 95% significance level, minimum frequency 2, type trees, dynamic upper bound, BBRC.  <a href="#a7dc3a2ad35ff8cff98f5f4fd3a8b58f0"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor for standard settings: 95% significance Bbrclevel, minimum frequency 2, type trees, dynamic upper bound, BBRC.  <a href="#a7dc3a2ad35ff8cff98f5f4fd3a8b58f0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#a07e24eacc8b4e4e20ee3a9f8b45c1aed">Bbrc</a> (int _type, unsigned int _minfreq)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Like standard constructor, but type and minimum frequency configurable.  <a href="#a07e24eacc8b4e4e20ee3a9f8b45c1aed"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#acf4a3c86256aa7848295d1e78665e38d">Bbrc</a> (int _type, unsigned int _minfreq, float chisq_val, bool _do_backbone)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Like standard constructor, but type, minimum frequency, significance level and BBRC configurable.  <a href="#acf4a3c86256aa7848295d1e78665e38d"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Like standard constructor, but type, minimum frequency, significance Bbrclevel and BBRC configurable.  <a href="#acf4a3c86256aa7848295d1e78665e38d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#acc3764b3ca93376c439bb1a2326df061">~Bbrc</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#a372de693ad40b3f42839c8ec6ac845f4">Reset</a> ()</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Use this to clear the database before feeding new compounds and activities.  <a href="#a372de693ad40b3f42839c8ec6ac845f4"></a><br/></td></tr>
@@ -78,33 +78,33 @@
 <tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="amgrp6e47466b75bb957a603aa54c079ac8bf"></a> Setter functions. </p>
 </div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#a1943edc900a48af0fc9498f5d0579d80">SetMinfreq</a> (int val)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set minimum frequency (&gt;=1 here).  <a href="#a1943edc900a48af0fc9498f5d0579d80"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set minimum frequency (&gt;=1 here). Same as '-f'.  <a href="#a1943edc900a48af0fc9498f5d0579d80"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#abc2a46f77095216632a268a9417f1174">SetType</a> (int val)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set type 1 (paths) or 2 (trees) here.  <a href="#abc2a46f77095216632a268a9417f1174"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set type 1 (paths) or 2 (trees) here. Same as '-l'.  <a href="#abc2a46f77095216632a268a9417f1174"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#a7a001c8c0f5014435e1a28ba57a5d5f2">SetBackbone</a> (bool val)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pass 'false' here to switch off mining for BBRC representatives.  <a href="#a7a001c8c0f5014435e1a28ba57a5d5f2"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pass 'false' here to switch off mining for BBRC representatives. Same as '-b'.  <a href="#a7a001c8c0f5014435e1a28ba57a5d5f2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#a273df5b815f6f9318aa65db134283b0e">SetDynamicUpperBound</a> (bool val)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pass 'false' here to disable dynamic upper bound pruning (e.g. for performance measures).  <a href="#a273df5b815f6f9318aa65db134283b0e"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pass 'false' here to disable dynamic upper bound pruning (e.g. for performance measures). Same as '-d'.  <a href="#a273df5b815f6f9318aa65db134283b0e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#a3eef7a8547f2a4940fd0f4b7d1b70861">SetPruning</a> (bool val)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pass 'false' here to disable statistical metrical pruning completely.  <a href="#a3eef7a8547f2a4940fd0f4b7d1b70861"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pass 'false' here to disable statistical metrical pruning completely. Same as '-u'.  <a href="#a3eef7a8547f2a4940fd0f4b7d1b70861"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#a3dfd23b477755e3b2156185b2f73878b">SetConsoleOut</a> (bool val)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pass 'true' here to disable usage of result vector and directly print each fragment to the console (saves memory).  <a href="#a3dfd23b477755e3b2156185b2f73878b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#ab5195d37511301667fcc1a341f0888bf">SetAromatic</a> (bool val)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pass 'true' here to enable aromatic rings and use Kekule notation. IMPORTANT! SET THIS BEFORE CALLING <a class="el" href="classBbrc.html#a7ae3274987947421c41022918f48378d" title="Add a compound to the database.">AddCompound()</a>!  <a href="#ab5195d37511301667fcc1a341f0888bf"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pass 'true' here to enable aromatic rings and use Kekule notation. IMPORTANT! SET THIS BEFORE CALLING <a class="el" href="classBbrc.html#a7ae3274987947421c41022918f48378d" title="Add a compound to the database.">AddCompound()</a>! Same as '-a'.  <a href="#ab5195d37511301667fcc1a341f0888bf"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#a799653965569b70a7dd88ef16d56f569">SetRefineSingles</a> (bool val)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pass 'true' here to enable refinement of fragments with frequency 1.  <a href="#a799653965569b70a7dd88ef16d56f569"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pass 'true' here to enable refinement of fragments with frequency 1. Same as '-s'.  <a href="#a799653965569b70a7dd88ef16d56f569"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#a5ba23af2c3f5f549da20c6def6e0c554">SetDoOutput</a> (bool val)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pass 'false' here to disable output.  <a href="#a5ba23af2c3f5f549da20c6def6e0c554"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Pass 'false' here to disable output. Same as '-o'.  <a href="#a5ba23af2c3f5f549da20c6def6e0c554"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#ac569ce6ce6150f0efc5ac9e13293b517">SetBbrcSep</a> (bool val)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set this to 'true' to enable BBRC separators in output.  <a href="#ac569ce6ce6150f0efc5ac9e13293b517"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#a3040636e6d4456e59fa925ddad8d4eb4">SetChisqActive</a> (bool val)</td></tr>
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set this to 'true' to enable chi-square filter.  <a href="#a3040636e6d4456e59fa925ddad8d4eb4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#a2ffe9fadf7a96e7d3f83cbd977004278">SetChisqSig</a> (float _chisq_val)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set significance threshold here (between 0 and 1).  <a href="#a2ffe9fadf7a96e7d3f83cbd977004278"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set significance threshold here (between 0 and 1). Same as '-p'.  <a href="#a2ffe9fadf7a96e7d3f83cbd977004278"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#a7b8900193deba5c64f10fe35d8bc5875">SetRegression</a> (bool val)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set 'true' here to enable continuous activity values.  <a href="#a7b8900193deba5c64f10fe35d8bc5875"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set 'true' here to enable continuous activity values. Same as '-g'.  <a href="#a7b8900193deba5c64f10fe35d8bc5875"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBbrc.html#aa9adc28f882e96fc942e52eaed3db0f6">SetMaxHops</a> (int val)</td></tr>
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Dummy method for max hops (only used in LAST-PM).  <a href="#aa9adc28f882e96fc942e52eaed3db0f6"></a><br/></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Dummy method for max hops (only used in LAST-PM). Same as '-m'.  <a href="#aa9adc28f882e96fc942e52eaed3db0f6"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Others</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p><a class="anchor" id="amgrp52ef9633d88a7480b3a938ff9eaa2a25"></a> Other functions. </p>
 </div></td></tr>
@@ -137,20 +137,20 @@
 </div>
 <div class="memdoc">
 
-<p>Constructor for standard settings: 95% significance level, minimum frequency 2, type trees, dynamic upper bound, BBRC. </p>
+<p>Constructor for standard settings: 95% significance Bbrclevel, minimum frequency 2, type trees, dynamic upper bound, BBRC. </p>
 
-<p>References <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>, <a class="el" href="bbrc_8cpp_source.html#l00136">Defaults()</a>, <a class="el" href="namespacefm.html#aee69f339ddfd42d20d7608e9561ac678">fm::do_yaml</a>, <a class="el" href="namespacefm.html#ab121ac08f2cdaf32be0af36a5ae79755">fm::gsp_out</a>, and <a class="el" href="bbrc_8cpp_source.html#l00106">Reset()</a>.</p>
+<p>References <a class="el" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>, <a class="el" href="namespacefm.html#a3a54a7a86272cba229f517a0bedb5de6">fm::bbrc_do_yaml</a>, <a class="el" href="namespacefm.html#a3f3c59e7f3f3f26fa807cd3863df17cb">fm::bbrc_gsp_out</a>, <a class="el" href="bbrc_8cpp_source.html#l00136">Defaults()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00106">Reset()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00028"></a>00028            : init_mining_done(<span class="keyword">false</span>) {
-<a name="l00029"></a>00029   <span class="keywordflow">if</span> (!fm::instance_present) {
-<a name="l00030"></a>00030       fm::database = NULL; fm::statistics = NULL; <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a> = NULL; fm::result = NULL;
+<a name="l00029"></a>00029   <span class="keywordflow">if</span> (!fm::bbrc_instance_present) {
+<a name="l00030"></a>00030       fm::bbrc_database = NULL; fm::bbrc_statistics = NULL; <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a> = NULL; fm::bbrc_result = NULL;
 <a name="l00031"></a>00031       <a class="code" href="classBbrc.html#a372de693ad40b3f42839c8ec6ac845f4" title="Use this to clear the database before feeding new compounds and activities.">Reset</a>();
 <a name="l00032"></a>00032       <a class="code" href="classBbrc.html#a9f4ebfcbb62fb16b57c5bcdfaacd451f" title="Use this to set default parameters as in default constructor.">Defaults</a>();
-<a name="l00033"></a>00033       fm::instance_present=<span class="keyword">true</span>;
-<a name="l00034"></a>00034       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_LAZAR&quot;</span>)) <a class="code" href="namespacefm.html#aee69f339ddfd42d20d7608e9561ac678">fm::do_yaml</a> = <span class="keyword">false</span>;
-<a name="l00035"></a>00035       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_SMARTS&quot;</span>)) <a class="code" href="namespacefm.html#ab121ac08f2cdaf32be0af36a5ae79755">fm::gsp_out</a> = <span class="keyword">false</span>; 
-<a name="l00036"></a>00036       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_PVALUES&quot;</span>)) fm::pvalues = <span class="keyword">true</span>;
-<a name="l00037"></a>00037       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_NO_AROMATIC&quot;</span>)) fm::no_aromatic = <span class="keyword">true</span>;
+<a name="l00033"></a>00033       fm::bbrc_instance_present=<span class="keyword">true</span>;
+<a name="l00034"></a>00034       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_LAZAR&quot;</span>)) <a class="code" href="namespacefm.html#a3a54a7a86272cba229f517a0bedb5de6">fm::bbrc_do_yaml</a> = <span class="keyword">false</span>;
+<a name="l00035"></a>00035       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_SMARTS&quot;</span>)) <a class="code" href="namespacefm.html#a3f3c59e7f3f3f26fa807cd3863df17cb">fm::bbrc_gsp_out</a> = <span class="keyword">false</span>; 
+<a name="l00036"></a>00036       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_PVALUES&quot;</span>)) fm::bbrc_pvalues = <span class="keyword">true</span>;
+<a name="l00037"></a>00037       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_NO_AROMATIC&quot;</span>)) fm::bbrc_no_aromatic = <span class="keyword">true</span>;
 <a name="l00038"></a>00038   }
 <a name="l00039"></a>00039   <span class="keywordflow">else</span> {
 <a name="l00040"></a>00040     cerr &lt;&lt; <span class="stringliteral">&quot;Error! Cannot create more than 1 instance.&quot;</span> &lt;&lt; endl; 
@@ -188,20 +188,20 @@
 
 <p>Like standard constructor, but type and minimum frequency configurable. </p>
 
-<p>References <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>, <a class="el" href="bbrc_8cpp_source.html#l00136">Defaults()</a>, <a class="el" href="namespacefm.html#aee69f339ddfd42d20d7608e9561ac678">fm::do_yaml</a>, <a class="el" href="namespacefm.html#ab121ac08f2cdaf32be0af36a5ae79755">fm::gsp_out</a>, <a class="el" href="bbrc_8cpp_source.html#l00106">Reset()</a>, <a class="el" href="bbrc_8cpp_source.html#l00179">SetMinfreq()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00186">SetType()</a>.</p>
+<p>References <a class="el" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>, <a class="el" href="namespacefm.html#a3a54a7a86272cba229f517a0bedb5de6">fm::bbrc_do_yaml</a>, <a class="el" href="namespacefm.html#a3f3c59e7f3f3f26fa807cd3863df17cb">fm::bbrc_gsp_out</a>, <a class="el" href="bbrc_8cpp_source.html#l00136">Defaults()</a>, <a class="el" href="bbrc_8cpp_source.html#l00106">Reset()</a>, <a class="el" href="bbrc_8cpp_source.html#l00179">SetMinfreq()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00186">SetType()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00045"></a>00045                                            : init_mining_done(<span class="keyword">false</span>) {
-<a name="l00046"></a>00046   <span class="keywordflow">if</span> (!fm::instance_present) {
-<a name="l00047"></a>00047       fm::database = NULL; fm::statistics = NULL; <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a> = NULL; fm::result = NULL;
+<a name="l00046"></a>00046   <span class="keywordflow">if</span> (!fm::bbrc_instance_present) {
+<a name="l00047"></a>00047       fm::bbrc_database = NULL; fm::bbrc_statistics = NULL; <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a> = NULL; fm::bbrc_result = NULL;
 <a name="l00048"></a>00048       <a class="code" href="classBbrc.html#a372de693ad40b3f42839c8ec6ac845f4" title="Use this to clear the database before feeding new compounds and activities.">Reset</a>();
 <a name="l00049"></a>00049       <a class="code" href="classBbrc.html#a9f4ebfcbb62fb16b57c5bcdfaacd451f" title="Use this to set default parameters as in default constructor.">Defaults</a>();
-<a name="l00050"></a>00050       <a class="code" href="classBbrc.html#abc2a46f77095216632a268a9417f1174" title="Set type 1 (paths) or 2 (trees) here.">SetType</a>(_type);
-<a name="l00051"></a>00051       <a class="code" href="classBbrc.html#a1943edc900a48af0fc9498f5d0579d80" title="Set minimum frequency (&amp;gt;=1 here).">SetMinfreq</a>(_minfreq);
-<a name="l00052"></a>00052       fm::instance_present=<span class="keyword">true</span>;
-<a name="l00053"></a>00053       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_LAZAR&quot;</span>)) <a class="code" href="namespacefm.html#aee69f339ddfd42d20d7608e9561ac678">fm::do_yaml</a> = <span class="keyword">false</span>;
-<a name="l00054"></a>00054       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_SMARTS&quot;</span>)) <a class="code" href="namespacefm.html#ab121ac08f2cdaf32be0af36a5ae79755">fm::gsp_out</a> = <span class="keyword">false</span>; 
-<a name="l00055"></a>00055       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_PVALUES&quot;</span>)) fm::pvalues = <span class="keyword">true</span>;
-<a name="l00056"></a>00056       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_NO_AROMATIC&quot;</span>)) fm::no_aromatic = <span class="keyword">true</span>;
+<a name="l00050"></a>00050       <a class="code" href="classBbrc.html#abc2a46f77095216632a268a9417f1174" title="Set type 1 (paths) or 2 (trees) here. Same as &amp;#39;-l&amp;#39;.">SetType</a>(_type);
+<a name="l00051"></a>00051       <a class="code" href="classBbrc.html#a1943edc900a48af0fc9498f5d0579d80" title="Set minimum frequency (&amp;gt;=1 here). Same as &amp;#39;-f&amp;#39;.">SetMinfreq</a>(_minfreq);
+<a name="l00052"></a>00052       fm::bbrc_instance_present=<span class="keyword">true</span>;
+<a name="l00053"></a>00053       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_LAZAR&quot;</span>)) <a class="code" href="namespacefm.html#a3a54a7a86272cba229f517a0bedb5de6">fm::bbrc_do_yaml</a> = <span class="keyword">false</span>;
+<a name="l00054"></a>00054       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_SMARTS&quot;</span>)) <a class="code" href="namespacefm.html#a3f3c59e7f3f3f26fa807cd3863df17cb">fm::bbrc_gsp_out</a> = <span class="keyword">false</span>; 
+<a name="l00055"></a>00055       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_PVALUES&quot;</span>)) fm::bbrc_pvalues = <span class="keyword">true</span>;
+<a name="l00056"></a>00056       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_NO_AROMATIC&quot;</span>)) fm::bbrc_no_aromatic = <span class="keyword">true</span>;
 <a name="l00057"></a>00057   }
 <a name="l00058"></a>00058   <span class="keywordflow">else</span> {
 <a name="l00059"></a>00059     cerr &lt;&lt; <span class="stringliteral">&quot;Error! Cannot create more than 1 instance.&quot;</span> &lt;&lt; endl; 
@@ -250,24 +250,24 @@
 </div>
 <div class="memdoc">
 
-<p>Like standard constructor, but type, minimum frequency, significance level and BBRC configurable. </p>
+<p>Like standard constructor, but type, minimum frequency, significance Bbrclevel and BBRC configurable. </p>
 
-<p>References <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>, <a class="el" href="bbrc_8cpp_source.html#l00136">Defaults()</a>, <a class="el" href="namespacefm.html#aee69f339ddfd42d20d7608e9561ac678">fm::do_yaml</a>, <a class="el" href="namespacefm.html#ab121ac08f2cdaf32be0af36a5ae79755">fm::gsp_out</a>, <a class="el" href="bbrc_8cpp_source.html#l00106">Reset()</a>, <a class="el" href="bbrc_8cpp_source.html#l00193">SetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00318">SetChisqSig()</a>, <a class="el" href="bbrc_8cpp_source.html#l00179">SetMinfreq()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00186">SetType()</a>.</p>
+<p>References <a class="el" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>, <a class="el" href="namespacefm.html#a3a54a7a86272cba229f517a0bedb5de6">fm::bbrc_do_yaml</a>, <a class="el" href="namespacefm.html#a3f3c59e7f3f3f26fa807cd3863df17cb">fm::bbrc_gsp_out</a>, <a class="el" href="bbrc_8cpp_source.html#l00136">Defaults()</a>, <a class="el" href="bbrc_8cpp_source.html#l00106">Reset()</a>, <a class="el" href="bbrc_8cpp_source.html#l00193">SetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00318">SetChisqSig()</a>, <a class="el" href="bbrc_8cpp_source.html#l00179">SetMinfreq()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00186">SetType()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00065"></a>00065                                                                                 : init_mining_done(<span class="keyword">false</span>) {
-<a name="l00066"></a>00066   <span class="keywordflow">if</span> (!fm::instance_present) {
-<a name="l00067"></a>00067       fm::database = NULL; fm::statistics = NULL; <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a> = NULL; fm::result = NULL;
+<a name="l00066"></a>00066   <span class="keywordflow">if</span> (!fm::bbrc_instance_present) {
+<a name="l00067"></a>00067       fm::bbrc_database = NULL; fm::bbrc_statistics = NULL; <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a> = NULL; fm::bbrc_result = NULL;
 <a name="l00068"></a>00068       <a class="code" href="classBbrc.html#a372de693ad40b3f42839c8ec6ac845f4" title="Use this to clear the database before feeding new compounds and activities.">Reset</a>();
 <a name="l00069"></a>00069       <a class="code" href="classBbrc.html#a9f4ebfcbb62fb16b57c5bcdfaacd451f" title="Use this to set default parameters as in default constructor.">Defaults</a>();
-<a name="l00070"></a>00070       <a class="code" href="classBbrc.html#abc2a46f77095216632a268a9417f1174" title="Set type 1 (paths) or 2 (trees) here.">SetType</a>(_type);
-<a name="l00071"></a>00071       <a class="code" href="classBbrc.html#a1943edc900a48af0fc9498f5d0579d80" title="Set minimum frequency (&amp;gt;=1 here).">SetMinfreq</a>(_minfreq);
-<a name="l00072"></a>00072       <a class="code" href="classBbrc.html#a2ffe9fadf7a96e7d3f83cbd977004278" title="Set significance threshold here (between 0 and 1).">SetChisqSig</a>(_chisq_val);
-<a name="l00073"></a>00073       <a class="code" href="classBbrc.html#a7a001c8c0f5014435e1a28ba57a5d5f2" title="Pass &amp;#39;false&amp;#39; here to switch off mining for BBRC representatives.">SetBackbone</a>(_do_backbone);
-<a name="l00074"></a>00074       fm::instance_present=<span class="keyword">true</span>;
-<a name="l00075"></a>00075       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_LAZAR&quot;</span>)) <a class="code" href="namespacefm.html#aee69f339ddfd42d20d7608e9561ac678">fm::do_yaml</a> = <span class="keyword">false</span>;
-<a name="l00076"></a>00076       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_SMARTS&quot;</span>)) <a class="code" href="namespacefm.html#ab121ac08f2cdaf32be0af36a5ae79755">fm::gsp_out</a> = <span class="keyword">false</span>; 
-<a name="l00077"></a>00077       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_PVALUES&quot;</span>)) fm::pvalues = <span class="keyword">true</span>;
-<a name="l00078"></a>00078       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_NO_AROMATIC&quot;</span>)) fm::no_aromatic = <span class="keyword">true</span>;
+<a name="l00070"></a>00070       <a class="code" href="classBbrc.html#abc2a46f77095216632a268a9417f1174" title="Set type 1 (paths) or 2 (trees) here. Same as &amp;#39;-l&amp;#39;.">SetType</a>(_type);
+<a name="l00071"></a>00071       <a class="code" href="classBbrc.html#a1943edc900a48af0fc9498f5d0579d80" title="Set minimum frequency (&amp;gt;=1 here). Same as &amp;#39;-f&amp;#39;.">SetMinfreq</a>(_minfreq);
+<a name="l00072"></a>00072       <a class="code" href="classBbrc.html#a2ffe9fadf7a96e7d3f83cbd977004278" title="Set significance threshold here (between 0 and 1). Same as &amp;#39;-p&amp;#39;.">SetChisqSig</a>(_chisq_val);
+<a name="l00073"></a>00073       <a class="code" href="classBbrc.html#a7a001c8c0f5014435e1a28ba57a5d5f2" title="Pass &amp;#39;false&amp;#39; here to switch off mining for BBRC representatives. Same as...">SetBackbone</a>(_do_backbone);
+<a name="l00074"></a>00074       fm::bbrc_instance_present=<span class="keyword">true</span>;
+<a name="l00075"></a>00075       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_LAZAR&quot;</span>)) <a class="code" href="namespacefm.html#a3a54a7a86272cba229f517a0bedb5de6">fm::bbrc_do_yaml</a> = <span class="keyword">false</span>;
+<a name="l00076"></a>00076       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_SMARTS&quot;</span>)) <a class="code" href="namespacefm.html#a3f3c59e7f3f3f26fa807cd3863df17cb">fm::bbrc_gsp_out</a> = <span class="keyword">false</span>; 
+<a name="l00077"></a>00077       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_PVALUES&quot;</span>)) fm::bbrc_pvalues = <span class="keyword">true</span>;
+<a name="l00078"></a>00078       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_NO_AROMATIC&quot;</span>)) fm::bbrc_no_aromatic = <span class="keyword">true</span>;
 <a name="l00079"></a>00079 
 <a name="l00080"></a>00080   }
 <a name="l00081"></a>00081   <span class="keywordflow">else</span> {
@@ -295,23 +295,23 @@
 </div>
 <div class="memdoc">
 
-<p>References <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>, and <a class="el" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>.</p>
+<p>References <a class="el" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>, and <a class="el" href="namespacefm.html#a9b68c84f7d4ae031114cbc2e3d9a9000">fm::bbrc_ks</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00088"></a>00088             {
-<a name="l00089"></a>00089     <span class="keywordflow">if</span> (fm::instance_present) {
-<a name="l00090"></a>00090         <span class="keyword">delete</span> fm::database;
-<a name="l00091"></a>00091         <span class="keyword">delete</span> fm::statistics; 
-<a name="l00092"></a>00092         <span class="keyword">delete</span> <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>; 
-<a name="l00093"></a>00093         <span class="keyword">delete</span> <a class="code" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>;
-<a name="l00094"></a>00094         <span class="keyword">delete</span> fm::graphstate;
-<a name="l00095"></a>00095         <span class="keyword">delete</span> fm::closelegoccurrences;
-<a name="l00096"></a>00096         <span class="keyword">delete</span> fm::legoccurrences;
+<a name="l00089"></a>00089     <span class="keywordflow">if</span> (fm::bbrc_instance_present) {
+<a name="l00090"></a>00090         <span class="keyword">delete</span> fm::bbrc_database;
+<a name="l00091"></a>00091         <span class="keyword">delete</span> fm::bbrc_statistics; 
+<a name="l00092"></a>00092         <span class="keyword">delete</span> <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>; 
+<a name="l00093"></a>00093         <span class="keyword">delete</span> <a class="code" href="namespacefm.html#a9b68c84f7d4ae031114cbc2e3d9a9000">fm::bbrc_ks</a>;
+<a name="l00094"></a>00094         <span class="keyword">delete</span> fm::bbrc_graphstate;
+<a name="l00095"></a>00095         <span class="keyword">delete</span> fm::bbrc_closelegoccurrences;
+<a name="l00096"></a>00096         <span class="keyword">delete</span> fm::bbrc_legoccurrences;
 <a name="l00097"></a>00097 
-<a name="l00098"></a>00098         fm::candidatelegsoccurrences.clear();
-<a name="l00099"></a>00099         fm::candidatecloselegsoccs.clear();
-<a name="l00100"></a>00100         fm::candidatecloselegsoccsused.clear();
+<a name="l00098"></a>00098         fm::bbrc_Bbrccandidatelegsoccurrences.clear();
+<a name="l00099"></a>00099         fm::bbrc_candidatecloselegsoccs.clear();
+<a name="l00100"></a>00100         fm::bbrc_candidateBbrccloselegsoccsused.clear();
 <a name="l00101"></a>00101 
-<a name="l00102"></a>00102         fm::instance_present=<span class="keyword">false</span>;
+<a name="l00102"></a>00102         fm::bbrc_instance_present=<span class="keyword">false</span>;
 <a name="l00103"></a>00103     }
 <a name="l00104"></a>00104 }
 </pre></div></p>
@@ -346,16 +346,16 @@
 
 <p>Add an activity to the database. </p>
 
-<p>References <a class="el" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a2cb541e14ccf5ec58d5bedc184620635">fm::bbrc_db_built</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00446"></a>00446                                                       {
-<a name="l00447"></a>00447   <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>) {
-<a name="l00448"></a>00448     cerr &lt;&lt; <span class="stringliteral">&quot;Database has been already processed! Please reset() and insert a new dataset.&quot;</span> &lt;&lt; endl;
-<a name="l00449"></a>00449     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00450"></a>00450   }
-<a name="l00451"></a>00451   activity_map.insert(make_pair(comp_id, act));
-<a name="l00452"></a>00452   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00453"></a>00453 }
+<p><div class="fragment"><pre class="fragment"><a name="l00456"></a>00456                                                       {
+<a name="l00457"></a>00457   <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#a2cb541e14ccf5ec58d5bedc184620635">fm::bbrc_db_built</a>) {
+<a name="l00458"></a>00458     cerr &lt;&lt; <span class="stringliteral">&quot;BbrcDatabase has been already processed! Please reset() and insert a new dataset.&quot;</span> &lt;&lt; endl;
+<a name="l00459"></a>00459     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00460"></a>00460   }
+<a name="l00461"></a>00461   activity_map.insert(make_pair(comp_id, act));
+<a name="l00462"></a>00462   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00463"></a>00463 }
 </pre></div></p>
 
 </div>
@@ -387,11 +387,11 @@
 
 <p>Add a compound to the database. </p>
 
-<p>References <a class="el" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a2cb541e14ccf5ec58d5bedc184620635">fm::bbrc_db_built</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00414"></a>00414                                                           {
-<a name="l00415"></a>00415   <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>) {
-<a name="l00416"></a>00416     cerr &lt;&lt; <span class="stringliteral">&quot;Database has been already processed! Please reset() and insert a new dataset.&quot;</span> &lt;&lt; endl;
+<a name="l00415"></a>00415   <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#a2cb541e14ccf5ec58d5bedc184620635">fm::bbrc_db_built</a>) {
+<a name="l00416"></a>00416     cerr &lt;&lt; <span class="stringliteral">&quot;BbrcDatabase has been already processed! Please reset() and insert a new dataset.&quot;</span> &lt;&lt; endl;
 <a name="l00417"></a>00417     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00418"></a>00418   }
 <a name="l00419"></a>00419   stringstream ss(smiles);
@@ -413,13 +413,23 @@
 <a name="l00435"></a>00435   }
 <a name="l00436"></a>00436   <span class="comment">//cerr &lt;&lt; &quot;Inchi: &#39;&quot; &lt;&lt; inchi &lt;&lt; &quot;&#39;&quot; &lt;&lt; endl;</span>
 <a name="l00437"></a>00437 
-<a name="l00438"></a>00438   pair&lt;unsigned int, string&gt; ori = make_pair(comp_id, smiles);
-<a name="l00439"></a>00439   pair&lt; map&lt;string,pair&lt;unsigned int, string&gt; &gt;::iterator, <span class="keywordtype">bool</span>&gt; res = inchi_compound_map.insert(make_pair(inchi,ori));
-<a name="l00440"></a>00440   <span class="keywordflow">if</span> (!res.second) {
-<a name="l00441"></a>00441     cerr &lt;&lt; <span class="stringliteral">&quot;Warning: Leaving out compound &#39;&quot;</span> &lt;&lt; smiles &lt;&lt; <span class="stringliteral">&quot;&#39; (already inserted).&quot;</span> &lt;&lt; endl;
-<a name="l00442"></a>00442   }
-<a name="l00443"></a>00443   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00444"></a>00444 }
+<a name="l00438"></a>00438   <span class="comment">// insert into map to check doubles</span>
+<a name="l00439"></a>00439   pair&lt;unsigned int, string&gt; ori = make_pair(comp_id, smiles);
+<a name="l00440"></a>00440   pair&lt; map&lt;string,pair&lt;unsigned int, string&gt; &gt;::iterator, <span class="keywordtype">bool</span>&gt; res = inchi_compound_map.insert(make_pair(inchi,ori));
+<a name="l00441"></a>00441   <span class="keywordflow">if</span> (!res.second) {
+<a name="l00442"></a>00442     cerr &lt;&lt; <span class="stringliteral">&quot;Note: structure of &#39;&quot;</span> &lt;&lt; smiles &lt;&lt; <span class="stringliteral">&quot;&#39; has been already inserted, inserting anyway...&quot;</span> &lt;&lt; endl;
+<a name="l00443"></a>00443   }
+<a name="l00444"></a>00444 
+<a name="l00445"></a>00445   <span class="comment">// insert into actual map augmented by number</span>
+<a name="l00446"></a>00446   <span class="keywordtype">string</span> inchi_no = inchi;
+<a name="l00447"></a>00447   inchi_no += <span class="stringliteral">&quot;-&quot;</span>;
+<a name="l00448"></a>00448   comp_runner++;
+<a name="l00449"></a>00449   stringstream out; out &lt;&lt; comp_runner;
+<a name="l00450"></a>00450   <span class="keywordtype">string</span> comp_runner_s = out.str();
+<a name="l00451"></a>00451   inchi_no += comp_runner_s;
+<a name="l00452"></a>00452   pair&lt; map&lt;string,pair&lt;unsigned int, string&gt; &gt;::iterator, <span class="keywordtype">bool</span>&gt; resmm = inchi_compound_mmap.insert(make_pair(inchi_no,ori));
+<a name="l00453"></a>00453   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00454"></a>00454 }
 </pre></div></p>
 
 </div>
@@ -441,30 +451,30 @@
 
 <p>Use this to set default parameters as in default constructor. </p>
 
-<p>References <a class="el" href="namespacefm.html#ad86ff64e72ff4a9586fcc43187d49b01">fm::adjust_ub</a>, <a class="el" href="namespacefm.html#a5b3dab8ff08516a4daa7bb804b6dd368">fm::aromatic</a>, <a class="el" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a>, <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>, <a class="el" href="namespacefm.html#ae3778362791642453eccdf44001942c4">fm::do_pruning</a>, <a class="el" href="namespacefm.html#aee69f339ddfd42d20d7608e9561ac678">fm::do_yaml</a>, <a class="el" href="namespacefm.html#ab121ac08f2cdaf32be0af36a5ae79755">fm::gsp_out</a>, and <a class="el" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a21a0641580cd5298ca5de10a4d49fa55">fm::bbrc_adjust_ub</a>, <a class="el" href="namespacefm.html#a013923a480be378f7314671d8e928021">fm::bbrc_aromatic</a>, <a class="el" href="namespacefm.html#a6568285f7fe9aea42d379ed0a56c0c2c">fm::bbrc_bbrc_sep</a>, <a class="el" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>, <a class="el" href="namespacefm.html#ac55ccca7f65f2b5da31575e6cca89a23">fm::bbrc_do_pruning</a>, <a class="el" href="namespacefm.html#a3a54a7a86272cba229f517a0bedb5de6">fm::bbrc_do_yaml</a>, <a class="el" href="namespacefm.html#a3f3c59e7f3f3f26fa807cd3863df17cb">fm::bbrc_gsp_out</a>, and <a class="el" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a>.</p>
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00028">Bbrc()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00136"></a>00136                     {
-<a name="l00137"></a>00137     fm::minfreq = 2;
-<a name="l00138"></a>00138     fm::type = 2;
-<a name="l00139"></a>00139     <a class="code" href="namespacefm.html#ae3778362791642453eccdf44001942c4">fm::do_pruning</a> = <span class="keyword">true</span>;
-<a name="l00140"></a>00140     fm::console_out = <span class="keyword">false</span>;
-<a name="l00141"></a>00141     <a class="code" href="namespacefm.html#a5b3dab8ff08516a4daa7bb804b6dd368">fm::aromatic</a> = <span class="keyword">true</span>;
-<a name="l00142"></a>00142     fm::refine_singles = <span class="keyword">false</span>;
-<a name="l00143"></a>00143     fm::do_output=<span class="keyword">true</span>;
-<a name="l00144"></a>00144     <a class="code" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a>=<span class="keyword">false</span>;
-<a name="l00145"></a>00145     fm::updated = <span class="keyword">true</span>;
-<a name="l00146"></a>00146     <a class="code" href="namespacefm.html#ab121ac08f2cdaf32be0af36a5ae79755">fm::gsp_out</a>=<span class="keyword">true</span>;
+<a name="l00137"></a>00137     fm::bbrc_minfreq = 2;
+<a name="l00138"></a>00138     fm::bbrc_type = 2;
+<a name="l00139"></a>00139     <a class="code" href="namespacefm.html#ac55ccca7f65f2b5da31575e6cca89a23">fm::bbrc_do_pruning</a> = <span class="keyword">true</span>;
+<a name="l00140"></a>00140     fm::bbrc_console_out = <span class="keyword">false</span>;
+<a name="l00141"></a>00141     <a class="code" href="namespacefm.html#a013923a480be378f7314671d8e928021">fm::bbrc_aromatic</a> = <span class="keyword">true</span>;
+<a name="l00142"></a>00142     fm::bbrc_refine_singles = <span class="keyword">false</span>;
+<a name="l00143"></a>00143     fm::bbrc_do_output=<span class="keyword">true</span>;
+<a name="l00144"></a>00144     <a class="code" href="namespacefm.html#a6568285f7fe9aea42d379ed0a56c0c2c">fm::bbrc_bbrc_sep</a>=<span class="keyword">false</span>;
+<a name="l00145"></a>00145     fm::bbrc_updated = <span class="keyword">true</span>;
+<a name="l00146"></a>00146     <a class="code" href="namespacefm.html#a3f3c59e7f3f3f26fa807cd3863df17cb">fm::bbrc_gsp_out</a>=<span class="keyword">true</span>;
 <a name="l00147"></a>00147 
 <a name="l00148"></a>00148     <span class="comment">// BBRC</span>
-<a name="l00149"></a>00149     <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;sig = 3.84146;
-<a name="l00150"></a>00150     fm::do_backbone = <span class="keyword">true</span>;
-<a name="l00151"></a>00151     <a class="code" href="namespacefm.html#ad86ff64e72ff4a9586fcc43187d49b01">fm::adjust_ub</a> = <span class="keyword">true</span>;
-<a name="l00152"></a>00152     <a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>=<span class="keyword">false</span>;
-<a name="l00153"></a>00153     <a class="code" href="namespacefm.html#aee69f339ddfd42d20d7608e9561ac678">fm::do_yaml</a>=<span class="keyword">true</span>;
-<a name="l00154"></a>00154     fm::pvalues=<span class="keyword">false</span>;
-<a name="l00155"></a>00155     fm::no_aromatic=<span class="keyword">false</span>;
+<a name="l00149"></a>00149     <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;sig = 3.84146;
+<a name="l00150"></a>00150     fm::bbrc_do_backbone = <span class="keyword">true</span>;
+<a name="l00151"></a>00151     <a class="code" href="namespacefm.html#a21a0641580cd5298ca5de10a4d49fa55">fm::bbrc_adjust_ub</a> = <span class="keyword">true</span>;
+<a name="l00152"></a>00152     <a class="code" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a>=<span class="keyword">false</span>;
+<a name="l00153"></a>00153     <a class="code" href="namespacefm.html#a3a54a7a86272cba229f517a0bedb5de6">fm::bbrc_do_yaml</a>=<span class="keyword">true</span>;
+<a name="l00154"></a>00154     fm::bbrc_pvalues=<span class="keyword">false</span>;
+<a name="l00155"></a>00155     fm::bbrc_no_aromatic=<span class="keyword">false</span>;
 <a name="l00156"></a>00156 }
 </pre></div></p>
 
@@ -487,11 +497,11 @@
 
 <p>Get whether aromatic rings should be perceived instead of Kekule notation. </p>
 
-<p>References <a class="el" href="namespacefm.html#a5b3dab8ff08516a4daa7bb804b6dd368">fm::aromatic</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a013923a480be378f7314671d8e928021">fm::bbrc_aromatic</a>.</p>
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00347">MineRoot()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00167"></a>00167 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a5b3dab8ff08516a4daa7bb804b6dd368">fm::aromatic</a>;}
+<p><div class="fragment"><pre class="fragment"><a name="l00167"></a>00167 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a013923a480be378f7314671d8e928021">fm::bbrc_aromatic</a>;}
 </pre></div></p>
 
 </div>
@@ -515,7 +525,7 @@
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00347">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00281">SetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00214">SetDynamicUpperBound()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00325">SetRegression()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00163"></a>00163 {<span class="keywordflow">return</span> fm::do_backbone;}
+<p><div class="fragment"><pre class="fragment"><a name="l00163"></a>00163 {<span class="keywordflow">return</span> fm::bbrc_do_backbone;}
 </pre></div></p>
 
 </div>
@@ -537,11 +547,11 @@
 
 <p>Get whether BBRCs should be separated in the output. </p>
 
-<p>References <a class="el" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a6568285f7fe9aea42d379ed0a56c0c2c">fm::bbrc_bbrc_sep</a>.</p>
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00347">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00193">SetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00281">SetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00254">SetConsoleOut()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00233">SetPruning()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00170"></a>00170 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a>;}
+<p><div class="fragment"><pre class="fragment"><a name="l00170"></a>00170 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a6568285f7fe9aea42d379ed0a56c0c2c">fm::bbrc_bbrc_sep</a>;}
 </pre></div></p>
 
 </div>
@@ -563,11 +573,11 @@
 
 <p>Get whether chi-square filter is active. </p>
 
-<p>References <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>.</p>
+<p>References <a class="el" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>.</p>
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00347">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00193">SetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00303">SetChisqActive()</a>, <a class="el" href="bbrc_8cpp_source.html#l00214">SetDynamicUpperBound()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00233">SetPruning()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00171"></a>00171 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;active;}
+<p><div class="fragment"><pre class="fragment"><a name="l00171"></a>00171 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;active;}
 </pre></div></p>
 
 </div>
@@ -589,11 +599,11 @@
 
 <p>Get significance threshold. </p>
 
-<p>References <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>, <a class="el" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>, and <a class="el" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>.</p>
+<p>References <a class="el" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>, <a class="el" href="namespacefm.html#a9b68c84f7d4ae031114cbc2e3d9a9000">fm::bbrc_ks</a>, and <a class="el" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a>.</p>
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00347">MineRoot()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00172"></a>00172 {<span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>) <span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;sig; <span class="keywordflow">else</span> <span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>-&gt;sig; }
+<p><div class="fragment"><pre class="fragment"><a name="l00172"></a>00172 {<span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a>) <span class="keywordflow">return</span> <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;sig; <span class="keywordflow">else</span> <span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a9b68c84f7d4ae031114cbc2e3d9a9000">fm::bbrc_ks</a>-&gt;sig; }
 </pre></div></p>
 
 </div>
@@ -617,7 +627,7 @@
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00281">SetBbrcSep()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00166"></a>00166 {<span class="keywordflow">return</span> fm::console_out;}
+<p><div class="fragment"><pre class="fragment"><a name="l00166"></a>00166 {<span class="keywordflow">return</span> fm::bbrc_console_out;}
 </pre></div></p>
 
 </div>
@@ -641,7 +651,7 @@
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00347">MineRoot()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00169"></a>00169 {<span class="keywordflow">return</span> fm::do_output;}
+<p><div class="fragment"><pre class="fragment"><a name="l00169"></a>00169 {<span class="keywordflow">return</span> fm::bbrc_do_output;}
 </pre></div></p>
 
 </div>
@@ -663,11 +673,11 @@
 
 <p>Get whether dynamic upper bound pruning is used. </p>
 
-<p>References <a class="el" href="namespacefm.html#ad86ff64e72ff4a9586fcc43187d49b01">fm::adjust_ub</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a21a0641580cd5298ca5de10a4d49fa55">fm::bbrc_adjust_ub</a>.</p>
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00347">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00193">SetBackbone()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00233">SetPruning()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00164"></a>00164 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#ad86ff64e72ff4a9586fcc43187d49b01">fm::adjust_ub</a>;}
+<p><div class="fragment"><pre class="fragment"><a name="l00164"></a>00164 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a21a0641580cd5298ca5de10a4d49fa55">fm::bbrc_adjust_ub</a>;}
 </pre></div></p>
 
 </div>
@@ -691,7 +701,7 @@
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00347">MineRoot()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00267">SetRefineSingles()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00161"></a>00161 {<span class="keywordflow">return</span> fm::minfreq;}
+<p><div class="fragment"><pre class="fragment"><a name="l00161"></a>00161 {<span class="keywordflow">return</span> fm::bbrc_minfreq;}
 </pre></div></p>
 
 </div>
@@ -713,7 +723,7 @@
 
 <p>Get number of compounds in the database. </p>
 
-<p>References <a class="el" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a2cb541e14ccf5ec58d5bedc184620635">fm::bbrc_db_built</a>.</p>
 
 </div>
 </div>
@@ -734,7 +744,7 @@
 
 <p>Get number of root nodes (different element types). </p>
 
-<p>References <a class="el" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a2cb541e14ccf5ec58d5bedc184620635">fm::bbrc_db_built</a>.</p>
 
 </div>
 </div>
@@ -755,11 +765,11 @@
 
 <p>Get whether statistical metric pruning should be used. </p>
 
-<p>References <a class="el" href="namespacefm.html#ae3778362791642453eccdf44001942c4">fm::do_pruning</a>.</p>
+<p>References <a class="el" href="namespacefm.html#ac55ccca7f65f2b5da31575e6cca89a23">fm::bbrc_do_pruning</a>.</p>
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00347">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00281">SetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00214">SetDynamicUpperBound()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00325">SetRegression()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00165"></a>00165 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#ae3778362791642453eccdf44001942c4">fm::do_pruning</a>;}
+<p><div class="fragment"><pre class="fragment"><a name="l00165"></a>00165 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#ac55ccca7f65f2b5da31575e6cca89a23">fm::bbrc_do_pruning</a>;}
 </pre></div></p>
 
 </div>
@@ -783,7 +793,7 @@
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00347">MineRoot()</a>, <a class="el" href="bbrc_8cpp_source.html#l00179">SetMinfreq()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00267">SetRefineSingles()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00168"></a>00168 {<span class="keywordflow">return</span> fm::refine_singles;}
+<p><div class="fragment"><pre class="fragment"><a name="l00168"></a>00168 {<span class="keywordflow">return</span> fm::bbrc_refine_singles;}
 </pre></div></p>
 
 </div>
@@ -805,11 +815,11 @@
 
 <p>Get whether continuous activity values should be used. </p>
 
-<p>References <a class="el" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a>.</p>
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00347">MineRoot()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00173"></a>00173 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>;}
+<p><div class="fragment"><pre class="fragment"><a name="l00173"></a>00173 {<span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a>;}
 </pre></div></p>
 
 </div>
@@ -833,7 +843,7 @@
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00347">MineRoot()</a>.</p>
 
-<p><div class="fragment"><pre class="fragment"><a name="l00162"></a>00162 {<span class="keywordflow">return</span> fm::type;}
+<p><div class="fragment"><pre class="fragment"><a name="l00162"></a>00162 {<span class="keywordflow">return</span> fm::bbrc_type;}
 </pre></div></p>
 
 </div>
@@ -856,30 +866,30 @@
 
 <p>Mine fragments rooted at the j-th root node (element type). </p>
 
-<p>References <a class="el" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a>, <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>, <a class="el" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>, <a class="el" href="bbrc_8cpp_source.html#l00167">GetAromatic()</a>, <a class="el" href="bbrc_8cpp_source.html#l00163">GetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00170">GetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00171">GetChisqActive()</a>, <a class="el" href="bbrc_8cpp_source.html#l00172">GetChisqSig()</a>, <a class="el" href="bbrc_8cpp_source.html#l00169">GetDoOutput()</a>, <a class="el" href="bbrc_8cpp_source.html#l00164">GetDynamicUpperBound()</a>, <a class="el" href="bbrc_8cpp_source.html#l00161">GetMinfreq()</a>, <a class="el" href="bbrc_8cpp_source.html#l00165">GetPruning()</a>, <a class="el" href="bbrc_8cpp_source.html#l00168">GetRefineSingles()</a>, <a class="el" href="bbrc_8cpp_source.html#l00173">GetRegression()</a>, <a class="el" href="bbrc_8cpp_source.html#l00162">GetType()</a>, and <a class="el" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a6568285f7fe9aea42d379ed0a56c0c2c">fm::bbrc_bbrc_sep</a>, <a class="el" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>, <a class="el" href="namespacefm.html#a2cb541e14ccf5ec58d5bedc184620635">fm::bbrc_db_built</a>, <a class="el" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a>, <a class="el" href="bbrc_8cpp_source.html#l00167">GetAromatic()</a>, <a class="el" href="bbrc_8cpp_source.html#l00163">GetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00170">GetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00171">GetChisqActive()</a>, <a class="el" href="bbrc_8cpp_source.html#l00172">GetChisqSig()</a>, <a class="el" href="bbrc_8cpp_source.html#l00169">GetDoOutput()</a>, <a class="el" href="bbrc_8cpp_source.html#l00164">GetDynamicUpperBound()</a>, <a class="el" href="bbrc_8cpp_source.html#l00161">GetMinfreq()</a>, <a class="el" href="bbrc_8cpp_source.html#l00165">GetPruning()</a>, <a class="el" href="bbrc_8cpp_source.html#l00168">GetRefineSingles()</a>, <a class="el" href="bbrc_8cpp_source.html#l00173">GetRegression()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00162">GetType()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00347"></a>00347                                              {
-<a name="l00348"></a>00348     fm::result-&gt;clear();
+<a name="l00348"></a>00348     fm::bbrc_result-&gt;clear();
 <a name="l00349"></a>00349     <span class="keywordflow">if</span> (!init_mining_done) {
-<a name="l00350"></a>00350         <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>) {
+<a name="l00350"></a>00350         <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#a2cb541e14ccf5ec58d5bedc184620635">fm::bbrc_db_built</a>) {
 <a name="l00351"></a>00351           AddDataCanonical();
 <a name="l00352"></a>00352         }
-<a name="l00353"></a>00353         <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;active) {
-<a name="l00354"></a>00354             each (fm::database-&gt;trees) {
-<a name="l00355"></a>00355                 <span class="keywordflow">if</span> (fm::database-&gt;trees[i]-&gt;activity == -1) {
-<a name="l00356"></a>00356                     cerr &lt;&lt; <span class="stringliteral">&quot;Error! ID &quot;</span> &lt;&lt; fm::database-&gt;trees[i]-&gt;orig_tid &lt;&lt; <span class="stringliteral">&quot; is missing activity information.&quot;</span> &lt;&lt; endl;
+<a name="l00353"></a>00353         <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;active) {
+<a name="l00354"></a>00354             each (fm::bbrc_database-&gt;trees) {
+<a name="l00355"></a>00355                 <span class="keywordflow">if</span> (fm::bbrc_database-&gt;trees[i]-&gt;activity == -1) {
+<a name="l00356"></a>00356                     cerr &lt;&lt; <span class="stringliteral">&quot;Error! ID &quot;</span> &lt;&lt; fm::bbrc_database-&gt;trees[i]-&gt;orig_tid &lt;&lt; <span class="stringliteral">&quot; is missing activity information.&quot;</span> &lt;&lt; endl;
 <a name="l00357"></a>00357                     exit(1);
 <a name="l00358"></a>00358                 }
 <a name="l00359"></a>00359             }
 <a name="l00360"></a>00360         }
-<a name="l00361"></a>00361         fm::database-&gt;edgecount (); 
-<a name="l00362"></a>00362         fm::database-&gt;reorder (); 
-<a name="l00363"></a>00363         initLegStatics (); 
-<a name="l00364"></a>00364         fm::graphstate-&gt;init (); 
-<a name="l00365"></a>00365         <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a> &amp;&amp; !fm::do_backbone &amp;&amp; fm::do_output &amp;&amp; !fm::console_out) (*fm::result) &lt;&lt; fm::graphstate-&gt;sep();
+<a name="l00361"></a>00361         fm::bbrc_database-&gt;edgecount (); 
+<a name="l00362"></a>00362         fm::bbrc_database-&gt;reorder (); 
+<a name="l00363"></a>00363         BbrcinitBbrcLegStatics (); 
+<a name="l00364"></a>00364         fm::bbrc_graphstate-&gt;init (); 
+<a name="l00365"></a>00365         <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#a6568285f7fe9aea42d379ed0a56c0c2c">fm::bbrc_bbrc_sep</a> &amp;&amp; !fm::bbrc_do_backbone &amp;&amp; fm::bbrc_do_output &amp;&amp; !fm::bbrc_console_out) (*fm::bbrc_result) &lt;&lt; fm::bbrc_graphstate-&gt;sep();
 <a name="l00366"></a>00366         init_mining_done=<span class="keyword">true</span>; 
 <a name="l00367"></a>00367 
-<a name="l00368"></a>00368         <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>) {
+<a name="l00368"></a>00368         <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a>) {
 <a name="l00369"></a>00369              cerr &lt;&lt; <span class="stringliteral">&quot;Settings:&quot;</span> &lt;&lt; endl \
 <a name="l00370"></a>00370              &lt;&lt; <span class="stringliteral">&quot;---&quot;</span> &lt;&lt; endl \
 <a name="l00371"></a>00371              &lt;&lt; <span class="stringliteral">&quot;Type:                                 &quot;</span> &lt;&lt; <a class="code" href="classBbrc.html#a00c83761de7dca2e16d741650b41f1ef" title="Get type.">GetType</a>() &lt;&lt; endl \
@@ -913,12 +923,12 @@
 <a name="l00399"></a>00399     }
 <a name="l00400"></a>00400 
 <a name="l00401"></a>00401 
-<a name="l00402"></a>00402     <span class="keywordflow">if</span> (j &gt;= fm::database-&gt;nodelabels.size()) { cerr &lt;&lt; <span class="stringliteral">&quot;Error! Root node &quot;</span> &lt;&lt; j &lt;&lt; <span class="stringliteral">&quot; does not exist.&quot;</span> &lt;&lt; endl;  exit(1); }
-<a name="l00403"></a>00403     <span class="keywordflow">if</span> ( fm::database-&gt;nodelabels[j].frequency &gt;= fm::minfreq &amp;&amp; fm::database-&gt;nodelabels[j].frequentedgelabels.size () ) {
-<a name="l00404"></a>00404         Path path(j);
+<a name="l00402"></a>00402     <span class="keywordflow">if</span> (j &gt;= fm::bbrc_database-&gt;nodelabels.size()) { cerr &lt;&lt; <span class="stringliteral">&quot;Error! Root node &quot;</span> &lt;&lt; j &lt;&lt; <span class="stringliteral">&quot; does not exist.&quot;</span> &lt;&lt; endl;  exit(1); }
+<a name="l00403"></a>00403     <span class="keywordflow">if</span> ( fm::bbrc_database-&gt;nodelabels[j].frequency &gt;= fm::bbrc_minfreq &amp;&amp; fm::bbrc_database-&gt;nodelabels[j].frequentedgelabels.size () ) {
+<a name="l00404"></a>00404         BbrcPath path(j);
 <a name="l00405"></a>00405         path.expand(); <span class="comment">// mining step</span>
 <a name="l00406"></a>00406     }
-<a name="l00407"></a>00407     <span class="keywordflow">return</span> fm::result;
+<a name="l00407"></a>00407     <span class="keywordflow">return</span> fm::bbrc_result;
 <a name="l00408"></a>00408 }
 </pre></div></p>
 
@@ -943,7 +953,7 @@
 <p>Read in a gSpan file. </p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00410"></a>00410                            {
-<a name="l00411"></a>00411     fm::database-&gt;readGsp(gsp);
+<a name="l00411"></a>00411     fm::bbrc_database-&gt;readGsp(gsp);
 <a name="l00412"></a>00412 }
 </pre></div></p>
 
@@ -966,35 +976,35 @@
 
 <p>Use this to clear the database before feeding new compounds and activities. </p>
 
-<p>References <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>, <a class="el" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a>, <a class="el" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>, and <a class="el" href="bbrc_8cpp_source.html#l00303">SetChisqActive()</a>.</p>
+<p>References <a class="el" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>, <a class="el" href="namespacefm.html#a2cb541e14ccf5ec58d5bedc184620635">fm::bbrc_db_built</a>, <a class="el" href="namespacefm.html#a9b68c84f7d4ae031114cbc2e3d9a9000">fm::bbrc_ks</a>, and <a class="el" href="bbrc_8cpp_source.html#l00303">SetChisqActive()</a>.</p>
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00028">Bbrc()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00106"></a>00106                  { 
-<a name="l00107"></a>00107     <span class="keywordflow">if</span> (fm::instance_present) {
-<a name="l00108"></a>00108         <span class="keyword">delete</span> fm::database;
-<a name="l00109"></a>00109         <span class="keyword">delete</span> fm::statistics;
-<a name="l00110"></a>00110         <span class="keyword">delete</span> <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>;
-<a name="l00111"></a>00111         <span class="keyword">delete</span> <a class="code" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a>;
-<a name="l00112"></a>00112         <span class="keyword">delete</span> fm::graphstate;
-<a name="l00113"></a>00113         <span class="keyword">delete</span> fm::closelegoccurrences;
-<a name="l00114"></a>00114         <span class="keyword">delete</span> fm::legoccurrences;
+<a name="l00107"></a>00107     <span class="keywordflow">if</span> (fm::bbrc_instance_present) {
+<a name="l00108"></a>00108         <span class="keyword">delete</span> fm::bbrc_database;
+<a name="l00109"></a>00109         <span class="keyword">delete</span> fm::bbrc_statistics;
+<a name="l00110"></a>00110         <span class="keyword">delete</span> <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>;
+<a name="l00111"></a>00111         <span class="keyword">delete</span> <a class="code" href="namespacefm.html#a9b68c84f7d4ae031114cbc2e3d9a9000">fm::bbrc_ks</a>;
+<a name="l00112"></a>00112         <span class="keyword">delete</span> fm::bbrc_graphstate;
+<a name="l00113"></a>00113         <span class="keyword">delete</span> fm::bbrc_closelegoccurrences;
+<a name="l00114"></a>00114         <span class="keyword">delete</span> fm::bbrc_legoccurrences;
 <a name="l00115"></a>00115     }
-<a name="l00116"></a>00116     fm::database = <span class="keyword">new</span> Database();
-<a name="l00117"></a>00117     <a class="code" href="namespacefm.html#abb1a5116469746f84fca6aa86594c27b">fm::db_built</a> = <span class="keyword">false</span>;
-<a name="l00118"></a>00118     fm::statistics = <span class="keyword">new</span> Statistics();
-<a name="l00119"></a>00119     <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a> = <span class="keyword">new</span> ChisqConstraint(3.84146);
-<a name="l00120"></a>00120     <a class="code" href="namespacefm.html#a466debae3ec67c57c7d420a870d11df9">fm::ks</a> = <span class="keyword">new</span> KSConstraint(0.95);
-<a name="l00121"></a>00121     fm::graphstate = <span class="keyword">new</span> GraphState();
-<a name="l00122"></a>00122     fm::closelegoccurrences = <span class="keyword">new</span> CloseLegOccurrences();
-<a name="l00123"></a>00123     fm::legoccurrences = <span class="keyword">new</span> LegOccurrences();
+<a name="l00116"></a>00116     fm::bbrc_database = <span class="keyword">new</span> BbrcDatabase();
+<a name="l00117"></a>00117     <a class="code" href="namespacefm.html#a2cb541e14ccf5ec58d5bedc184620635">fm::bbrc_db_built</a> = <span class="keyword">false</span>;
+<a name="l00118"></a>00118     fm::bbrc_statistics = <span class="keyword">new</span> BbrcStatistics();
+<a name="l00119"></a>00119     <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a> = <span class="keyword">new</span> ChisqBbrcConstraint(3.84146);
+<a name="l00120"></a>00120     <a class="code" href="namespacefm.html#a9b68c84f7d4ae031114cbc2e3d9a9000">fm::bbrc_ks</a> = <span class="keyword">new</span> KSBbrcConstraint(0.95);
+<a name="l00121"></a>00121     fm::bbrc_graphstate = <span class="keyword">new</span> BbrcGraphState();
+<a name="l00122"></a>00122     fm::bbrc_closelegoccurrences = <span class="keyword">new</span> CloseBbrcLegOccurrences();
+<a name="l00123"></a>00123     fm::bbrc_legoccurrences = <span class="keyword">new</span> BbrcLegOccurrences();
 <a name="l00124"></a>00124 
-<a name="l00125"></a>00125     fm::candidatelegsoccurrences.clear();
-<a name="l00126"></a>00126     fm::candidatecloselegsoccs.clear();
-<a name="l00127"></a>00127     fm::candidatecloselegsoccsused.clear();
+<a name="l00125"></a>00125     fm::bbrc_Bbrccandidatelegsoccurrences.clear();
+<a name="l00126"></a>00126     fm::bbrc_candidatecloselegsoccs.clear();
+<a name="l00127"></a>00127     fm::bbrc_candidateBbrccloselegsoccsused.clear();
 <a name="l00128"></a>00128 
 <a name="l00129"></a>00129     <a class="code" href="classBbrc.html#a3040636e6d4456e59fa925ddad8d4eb4" title="Set this to &amp;#39;true&amp;#39; to enable chi-square filter.">SetChisqActive</a>(<span class="keyword">true</span>); 
-<a name="l00130"></a>00130     fm::result = &amp;r;
+<a name="l00130"></a>00130     fm::bbrc_result = &amp;r;
 <a name="l00131"></a>00131     comp_runner=0; 
 <a name="l00132"></a>00132     comp_no=0; 
 <a name="l00133"></a>00133     init_mining_done = <span class="keyword">false</span>;
@@ -1019,12 +1029,12 @@
 </div>
 <div class="memdoc">
 
-<p>Pass 'true' here to enable aromatic rings and use Kekule notation. IMPORTANT! SET THIS BEFORE CALLING <a class="el" href="classBbrc.html#a7ae3274987947421c41022918f48378d" title="Add a compound to the database.">AddCompound()</a>! </p>
+<p>Pass 'true' here to enable aromatic rings and use Kekule notation. IMPORTANT! SET THIS BEFORE CALLING <a class="el" href="classBbrc.html#a7ae3274987947421c41022918f48378d" title="Add a compound to the database.">AddCompound()</a>! Same as '-a'. </p>
 
-<p>References <a class="el" href="namespacefm.html#a5b3dab8ff08516a4daa7bb804b6dd368">fm::aromatic</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a013923a480be378f7314671d8e928021">fm::bbrc_aromatic</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00263"></a>00263                                {
-<a name="l00264"></a>00264     <a class="code" href="namespacefm.html#a5b3dab8ff08516a4daa7bb804b6dd368">fm::aromatic</a> = val;
+<a name="l00264"></a>00264     <a class="code" href="namespacefm.html#a013923a480be378f7314671d8e928021">fm::bbrc_aromatic</a> = val;
 <a name="l00265"></a>00265 }
 </pre></div></p>
 
@@ -1046,7 +1056,7 @@
 </div>
 <div class="memdoc">
 
-<p>Pass 'false' here to switch off mining for BBRC representatives. </p>
+<p>Pass 'false' here to switch off mining for BBRC representatives. Same as '-b'. </p>
 
 <p>References <a class="el" href="bbrc_8cpp_source.html#l00170">GetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00171">GetChisqActive()</a>, <a class="el" href="bbrc_8cpp_source.html#l00164">GetDynamicUpperBound()</a>, <a class="el" href="bbrc_8cpp_source.html#l00281">SetBbrcSep()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00214">SetDynamicUpperBound()</a>.</p>
 
@@ -1061,15 +1071,15 @@
 <a name="l00199"></a>00199     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!val &amp;&amp; <a class="code" href="classBbrc.html#ab0cbbc3a50704734e46986234dbc68ce" title="Get whether dynamic upper bound pruning is used.">GetDynamicUpperBound</a>()) {
 <a name="l00200"></a>00200         cerr &lt;&lt; <span class="stringliteral">&quot;Notice: Disabling dynamic upper bound pruning due to switched-off BBRC mining.&quot;</span> &lt;&lt; endl;
 <a name="l00201"></a>00201         <a class="code" href="classBbrc.html#a273df5b815f6f9318aa65db134283b0e" title="Pass &amp;#39;false&amp;#39; here to disable dynamic upper bound pruning (e.g. for performance...">SetDynamicUpperBound</a>(<span class="keyword">false</span>);
-<a name="l00202"></a>00202         fm::do_backbone = val;
+<a name="l00202"></a>00202         fm::bbrc_do_backbone = val;
 <a name="l00203"></a>00203     }
 <a name="l00204"></a>00204     <span class="comment">// -------- r!b ---------</span>
 <a name="l00205"></a>00205     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (val &amp;&amp; <a class="code" href="classBbrc.html#a84f3001cb532d71e4edce28fc0f83ec2" title="Get whether BBRCs should be separated in the output.">GetBbrcSep</a>()) {
 <a name="l00206"></a>00206         cerr &lt;&lt; <span class="stringliteral">&quot;Notice: Disabling BBRC separator due to enabled BBRC mining.&quot;</span> &lt;&lt; endl;
 <a name="l00207"></a>00207         <a class="code" href="classBbrc.html#ac569ce6ce6150f0efc5ac9e13293b517" title="Set this to &amp;#39;true&amp;#39; to enable BBRC separators in output.">SetBbrcSep</a>(<span class="keyword">false</span>);
-<a name="l00208"></a>00208         fm::do_backbone = val;
+<a name="l00208"></a>00208         fm::bbrc_do_backbone = val;
 <a name="l00209"></a>00209     }
-<a name="l00210"></a>00210     <span class="keywordflow">else</span> fm::do_backbone = val;
+<a name="l00210"></a>00210     <span class="keywordflow">else</span> fm::bbrc_do_backbone = val;
 <a name="l00211"></a>00211     <span class="keywordflow">return</span> 1;
 <a name="l00212"></a>00212 }
 </pre></div></p>
@@ -1094,7 +1104,7 @@
 
 <p>Set this to 'true' to enable BBRC separators in output. </p>
 
-<p>References <a class="el" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a>, <a class="el" href="bbrc_8cpp_source.html#l00163">GetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00170">GetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00166">GetConsoleOut()</a>, <a class="el" href="bbrc_8cpp_source.html#l00165">GetPruning()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00254">SetConsoleOut()</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a6568285f7fe9aea42d379ed0a56c0c2c">fm::bbrc_bbrc_sep</a>, <a class="el" href="bbrc_8cpp_source.html#l00163">GetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00170">GetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00166">GetConsoleOut()</a>, <a class="el" href="bbrc_8cpp_source.html#l00165">GetPruning()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00254">SetConsoleOut()</a>.</p>
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00193">SetBackbone()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00233">SetPruning()</a>.</p>
 
@@ -1108,7 +1118,7 @@
 <a name="l00288"></a>00288         cerr &lt;&lt; <span class="stringliteral">&quot;Warning! BBRC separator could not be enabled due to disabled statistical metric pruning.&quot;</span> &lt;&lt; endl;
 <a name="l00289"></a>00289     }
 <a name="l00290"></a>00290     <span class="keywordflow">else</span> {
-<a name="l00291"></a>00291         <a class="code" href="namespacefm.html#aa0ba1526464d76d5791dedd050c1fc18">fm::bbrc_sep</a>=val;
+<a name="l00291"></a>00291         <a class="code" href="namespacefm.html#a6568285f7fe9aea42d379ed0a56c0c2c">fm::bbrc_bbrc_sep</a>=val;
 <a name="l00292"></a>00292         <span class="keywordflow">if</span> (<a class="code" href="classBbrc.html#a84f3001cb532d71e4edce28fc0f83ec2" title="Get whether BBRCs should be separated in the output.">GetBbrcSep</a>()) {
 <a name="l00293"></a>00293             <span class="comment">// console out not switched by fminer</span>
 <a name="l00294"></a>00294             <span class="keywordflow">if</span> (<a class="code" href="classBbrc.html#a91c37ee435171e92c4efe49e084d6130" title="Get whether output should be directed to the console.">GetConsoleOut</a>()) {
@@ -1141,21 +1151,21 @@
 
 <p>Set this to 'true' to enable chi-square filter. </p>
 
-<p>References <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>, <a class="el" href="bbrc_8cpp_source.html#l00171">GetChisqActive()</a>, <a class="el" href="bbrc_8cpp_source.html#l00193">SetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00214">SetDynamicUpperBound()</a>, <a class="el" href="bbrc_8cpp_source.html#l00233">SetPruning()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00325">SetRegression()</a>.</p>
+<p>References <a class="el" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>, <a class="el" href="bbrc_8cpp_source.html#l00171">GetChisqActive()</a>, <a class="el" href="bbrc_8cpp_source.html#l00193">SetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00214">SetDynamicUpperBound()</a>, <a class="el" href="bbrc_8cpp_source.html#l00233">SetPruning()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00325">SetRegression()</a>.</p>
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00106">Reset()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00303"></a>00303                                   {
-<a name="l00304"></a>00304     <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;active = val;
+<a name="l00304"></a>00304     <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;active = val;
 <a name="l00305"></a>00305     <span class="comment">// chisq active not switched by fminer</span>
 <a name="l00306"></a>00306     <span class="keywordflow">if</span> (!<a class="code" href="classBbrc.html#af23472dda234c80fdc244494cd4f09cc" title="Get whether chi-square filter is active.">GetChisqActive</a>()) {
 <a name="l00307"></a>00307         cerr &lt;&lt; <span class="stringliteral">&quot;Notice: Disabling dynamic upper bound pruning due to deactivated significance criterium.&quot;</span> &lt;&lt; endl;
 <a name="l00308"></a>00308         <a class="code" href="classBbrc.html#a273df5b815f6f9318aa65db134283b0e" title="Pass &amp;#39;false&amp;#39; here to disable dynamic upper bound pruning (e.g. for performance...">SetDynamicUpperBound</a>(<span class="keyword">false</span>); <span class="comment">//order important</span>
 <a name="l00309"></a>00309         cerr &lt;&lt; <span class="stringliteral">&quot;Notice: Disabling BBRC mining due to deactivated significance criterium.&quot;</span> &lt;&lt; endl;
-<a name="l00310"></a>00310         <a class="code" href="classBbrc.html#a7a001c8c0f5014435e1a28ba57a5d5f2" title="Pass &amp;#39;false&amp;#39; here to switch off mining for BBRC representatives.">SetBackbone</a>(<span class="keyword">false</span>);
+<a name="l00310"></a>00310         <a class="code" href="classBbrc.html#a7a001c8c0f5014435e1a28ba57a5d5f2" title="Pass &amp;#39;false&amp;#39; here to switch off mining for BBRC representatives. Same as...">SetBackbone</a>(<span class="keyword">false</span>);
 <a name="l00311"></a>00311         cerr &lt;&lt; <span class="stringliteral">&quot;Notice: Disabling statistical metric pruning due to deactivated significance criterium.&quot;</span> &lt;&lt; endl;
-<a name="l00312"></a>00312         <a class="code" href="classBbrc.html#a3eef7a8547f2a4940fd0f4b7d1b70861" title="Pass &amp;#39;false&amp;#39; here to disable statistical metrical pruning completely.">SetPruning</a>(<span class="keyword">false</span>);
-<a name="l00313"></a>00313         <a class="code" href="classBbrc.html#a7b8900193deba5c64f10fe35d8bc5875" title="Set &amp;#39;true&amp;#39; here to enable continuous activity values.">SetRegression</a>(<span class="keyword">false</span>);
+<a name="l00312"></a>00312         <a class="code" href="classBbrc.html#a3eef7a8547f2a4940fd0f4b7d1b70861" title="Pass &amp;#39;false&amp;#39; here to disable statistical metrical pruning completely. Same...">SetPruning</a>(<span class="keyword">false</span>);
+<a name="l00313"></a>00313         <a class="code" href="classBbrc.html#a7b8900193deba5c64f10fe35d8bc5875" title="Set &amp;#39;true&amp;#39; here to enable continuous activity values. Same as &amp;#39;-g&amp;#39;...">SetRegression</a>(<span class="keyword">false</span>);
 <a name="l00314"></a>00314     }
 <a name="l00315"></a>00315     <span class="keywordflow">return</span> 1;
 <a name="l00316"></a>00316 }
@@ -1179,16 +1189,16 @@
 </div>
 <div class="memdoc">
 
-<p>Set significance threshold here (between 0 and 1). </p>
+<p>Set significance threshold here (between 0 and 1). Same as '-p'. </p>
 
-<p>References <a class="el" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>.</p>
+<p>References <a class="el" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>.</p>
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00065">Bbrc()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00318"></a>00318                                        {
 <a name="l00319"></a>00319     <span class="comment">// parameters not regarded in integrity constraints</span>
 <a name="l00320"></a>00320     <span class="keywordflow">if</span> (_chisq_val &lt; 0.0 || _chisq_val &gt; 1.0) { cerr &lt;&lt; <span class="stringliteral">&quot;Error! Invalid value &#39;&quot;</span> &lt;&lt; _chisq_val &lt;&lt; <span class="stringliteral">&quot;&#39; for parameter chisq.&quot;</span> &lt;&lt; endl; exit(1); }
-<a name="l00321"></a>00321     <a class="code" href="namespacefm.html#a69498865fc6c644fcf39babbeb314794">fm::chisq</a>-&gt;sig = gsl_cdf_chisq_Pinv(_chisq_val, 1);
+<a name="l00321"></a>00321     <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;sig = gsl_cdf_chisq_Pinv(_chisq_val, 1);
 <a name="l00322"></a>00322     <span class="keywordflow">return</span> 1;
 <a name="l00323"></a>00323 }
 </pre></div></p>
@@ -1221,7 +1231,7 @@
 <a name="l00255"></a>00255     <span class="comment">// console out not switched by fminer</span>
 <a name="l00256"></a>00256     <span class="keywordflow">if</span> (val) {
 <a name="l00257"></a>00257         <span class="keywordflow">if</span> (<a class="code" href="classBbrc.html#a84f3001cb532d71e4edce28fc0f83ec2" title="Get whether BBRCs should be separated in the output.">GetBbrcSep</a>()) cerr &lt;&lt; <span class="stringliteral">&quot;Warning! Console output could not be enabled due to enabled BBRC separator.&quot;</span> &lt;&lt; endl;
-<a name="l00258"></a>00258         <span class="keywordflow">else</span> fm::console_out=val;
+<a name="l00258"></a>00258         <span class="keywordflow">else</span> fm::bbrc_console_out=val;
 <a name="l00259"></a>00259     }
 <a name="l00260"></a>00260     <span class="keywordflow">return</span> 1;
 <a name="l00261"></a>00261 }
@@ -1245,10 +1255,10 @@
 </div>
 <div class="memdoc">
 
-<p>Pass 'false' here to disable output. </p>
+<p>Pass 'false' here to disable output. Same as '-o'. </p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00277"></a>00277                                {
-<a name="l00278"></a>00278     fm::do_output = val;
+<a name="l00278"></a>00278     fm::bbrc_do_output = val;
 <a name="l00279"></a>00279 }
 </pre></div></p>
 
@@ -1270,9 +1280,9 @@
 </div>
 <div class="memdoc">
 
-<p>Pass 'false' here to disable dynamic upper bound pruning (e.g. for performance measures). </p>
+<p>Pass 'false' here to disable dynamic upper bound pruning (e.g. for performance measures). Same as '-d'. </p>
 
-<p>References <a class="el" href="namespacefm.html#ad86ff64e72ff4a9586fcc43187d49b01">fm::adjust_ub</a>, <a class="el" href="bbrc_8cpp_source.html#l00163">GetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00171">GetChisqActive()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00165">GetPruning()</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a21a0641580cd5298ca5de10a4d49fa55">fm::bbrc_adjust_ub</a>, <a class="el" href="bbrc_8cpp_source.html#l00163">GetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00171">GetChisqActive()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00165">GetPruning()</a>.</p>
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00193">SetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00303">SetChisqActive()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00233">SetPruning()</a>.</p>
 
@@ -1290,7 +1300,7 @@
 <a name="l00225"></a>00225         cerr &lt;&lt; <span class="stringliteral">&quot;Warning! Dynamic upper bound pruning could not be enabled due to deactivated statistical metric pruning.&quot;</span> &lt;&lt; endl;
 <a name="l00226"></a>00226     }
 <a name="l00227"></a>00227     <span class="keywordflow">else</span> {
-<a name="l00228"></a>00228         <a class="code" href="namespacefm.html#ad86ff64e72ff4a9586fcc43187d49b01">fm::adjust_ub</a>=val; 
+<a name="l00228"></a>00228         <a class="code" href="namespacefm.html#a21a0641580cd5298ca5de10a4d49fa55">fm::bbrc_adjust_ub</a>=val; 
 <a name="l00229"></a>00229     }
 <a name="l00230"></a>00230     <span class="keywordflow">return</span> 1;
 <a name="l00231"></a>00231 }
@@ -1314,7 +1324,7 @@
 </div>
 <div class="memdoc">
 
-<p>Dummy method for max hops (only used in LAST-PM). </p>
+<p>Dummy method for max hops (only used in LAST-PM). Same as '-m'. </p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00341"></a>00341                              {
 <a name="l00342"></a>00342     <span class="keywordflow">return</span> 0;
@@ -1339,7 +1349,7 @@
 </div>
 <div class="memdoc">
 
-<p>Set minimum frequency (&gt;=1 here). </p>
+<p>Set minimum frequency (&gt;=1 here). Same as '-f'. </p>
 
 <p>References <a class="el" href="bbrc_8cpp_source.html#l00168">GetRefineSingles()</a>.</p>
 
@@ -1349,7 +1359,7 @@
 <a name="l00180"></a>00180     <span class="comment">// parameters not regarded in integrity constraints</span>
 <a name="l00181"></a>00181     <span class="keywordflow">if</span> (val &lt; 1) { cerr &lt;&lt; <span class="stringliteral">&quot;Error! Invalid value &#39;&quot;</span> &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot;&#39; for parameter minfreq.&quot;</span> &lt;&lt; endl; exit(1); }
 <a name="l00182"></a>00182     <span class="keywordflow">if</span> (val &gt; 1 &amp;&amp; <a class="code" href="classBbrc.html#a43b57f5108e2a25ae8b08ab91179dfb5" title="Get whether fragments with frequency 1 should be refined.">GetRefineSingles</a>()) { cerr &lt;&lt; <span class="stringliteral">&quot;Warning! Minimum frequency of &#39;&quot;</span> &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot;&#39; could not be set due to activated single refinement.&quot;</span> &lt;&lt; endl;}
-<a name="l00183"></a>00183     fm::minfreq = val;
+<a name="l00183"></a>00183     fm::bbrc_minfreq = val;
 <a name="l00184"></a>00184 }
 </pre></div></p>
 
@@ -1371,9 +1381,9 @@
 </div>
 <div class="memdoc">
 
-<p>Pass 'false' here to disable statistical metrical pruning completely. </p>
+<p>Pass 'false' here to disable statistical metrical pruning completely. Same as '-u'. </p>
 
-<p>References <a class="el" href="namespacefm.html#ae3778362791642453eccdf44001942c4">fm::do_pruning</a>, <a class="el" href="bbrc_8cpp_source.html#l00170">GetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00171">GetChisqActive()</a>, <a class="el" href="bbrc_8cpp_source.html#l00164">GetDynamicUpperBound()</a>, <a class="el" href="bbrc_8cpp_source.html#l00281">SetBbrcSep()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00214">SetDynamicUpperBound()</a>.</p>
+<p>References <a class="el" href="namespacefm.html#ac55ccca7f65f2b5da31575e6cca89a23">fm::bbrc_do_pruning</a>, <a class="el" href="bbrc_8cpp_source.html#l00170">GetBbrcSep()</a>, <a class="el" href="bbrc_8cpp_source.html#l00171">GetChisqActive()</a>, <a class="el" href="bbrc_8cpp_source.html#l00164">GetDynamicUpperBound()</a>, <a class="el" href="bbrc_8cpp_source.html#l00281">SetBbrcSep()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00214">SetDynamicUpperBound()</a>.</p>
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00303">SetChisqActive()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00325">SetRegression()</a>.</p>
 
@@ -1393,7 +1403,7 @@
 <a name="l00246"></a>00246             cerr &lt;&lt; <span class="stringliteral">&quot;Notice: Disabling BBRC separator due to disabled static upper bound pruning.&quot;</span> &lt;&lt; endl;
 <a name="l00247"></a>00247             <a class="code" href="classBbrc.html#ac569ce6ce6150f0efc5ac9e13293b517" title="Set this to &amp;#39;true&amp;#39; to enable BBRC separators in output.">SetBbrcSep</a>(<span class="keyword">false</span>);
 <a name="l00248"></a>00248         }
-<a name="l00249"></a>00249         <a class="code" href="namespacefm.html#ae3778362791642453eccdf44001942c4">fm::do_pruning</a>=val;
+<a name="l00249"></a>00249         <a class="code" href="namespacefm.html#ac55ccca7f65f2b5da31575e6cca89a23">fm::bbrc_do_pruning</a>=val;
 <a name="l00250"></a>00250     }
 <a name="l00251"></a>00251     <span class="keywordflow">return</span> 1;
 <a name="l00252"></a>00252 }
@@ -1417,16 +1427,16 @@
 </div>
 <div class="memdoc">
 
-<p>Pass 'true' here to enable refinement of fragments with frequency 1. </p>
+<p>Pass 'true' here to enable refinement of fragments with frequency 1. Same as '-s'. </p>
 
 <p>References <a class="el" href="bbrc_8cpp_source.html#l00161">GetMinfreq()</a>, <a class="el" href="bbrc_8cpp_source.html#l00168">GetRefineSingles()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00179">SetMinfreq()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00267"></a>00267                                     {
-<a name="l00268"></a>00268     fm::refine_singles = val;
+<a name="l00268"></a>00268     fm::bbrc_refine_singles = val;
 <a name="l00269"></a>00269     <span class="comment">// parameters not regarded in integrity constraints</span>
 <a name="l00270"></a>00270     <span class="keywordflow">if</span> (<a class="code" href="classBbrc.html#a43b57f5108e2a25ae8b08ab91179dfb5" title="Get whether fragments with frequency 1 should be refined.">GetRefineSingles</a>() &amp;&amp; <a class="code" href="classBbrc.html#a6b73a9fcdd27d073f4ba6686c9cca02f" title="Get minimum frequency.">GetMinfreq</a>() &gt; 1) {
 <a name="l00271"></a>00271         cerr &lt;&lt; <span class="stringliteral">&quot;Notice: Using minimum frequency of 1 to refine singles.&quot;</span> &lt;&lt; endl;
-<a name="l00272"></a>00272         <a class="code" href="classBbrc.html#a1943edc900a48af0fc9498f5d0579d80" title="Set minimum frequency (&amp;gt;=1 here).">SetMinfreq</a>(1);
+<a name="l00272"></a>00272         <a class="code" href="classBbrc.html#a1943edc900a48af0fc9498f5d0579d80" title="Set minimum frequency (&amp;gt;=1 here). Same as &amp;#39;-f&amp;#39;.">SetMinfreq</a>(1);
 <a name="l00273"></a>00273     }
 <a name="l00274"></a>00274     <span class="keywordflow">return</span> 1;
 <a name="l00275"></a>00275 }
@@ -1450,22 +1460,22 @@
 </div>
 <div class="memdoc">
 
-<p>Set 'true' here to enable continuous activity values. </p>
+<p>Set 'true' here to enable continuous activity values. Same as '-g'. </p>
 
-<p>References <a class="el" href="bbrc_8cpp_source.html#l00163">GetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00165">GetPruning()</a>, <a class="el" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>, <a class="el" href="bbrc_8cpp_source.html#l00193">SetBackbone()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00233">SetPruning()</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a>, <a class="el" href="bbrc_8cpp_source.html#l00163">GetBackbone()</a>, <a class="el" href="bbrc_8cpp_source.html#l00165">GetPruning()</a>, <a class="el" href="bbrc_8cpp_source.html#l00193">SetBackbone()</a>, and <a class="el" href="bbrc_8cpp_source.html#l00233">SetPruning()</a>.</p>
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00303">SetChisqActive()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00325"></a>00325                                  {
-<a name="l00326"></a>00326     <a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a> = val;
-<a name="l00327"></a>00327     <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#aa7be7514b81483a097075a905ed20553">fm::regression</a>) {
+<a name="l00326"></a>00326     <a class="code" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a> = val;
+<a name="l00327"></a>00327     <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a>) {
 <a name="l00328"></a>00328          <span class="keywordflow">if</span> (!<a class="code" href="classBbrc.html#a4dd6282e6926b0e7a926036127042030" title="Get whether BBRC representatives should be mined.">GetBackbone</a>()) {
 <a name="l00329"></a>00329     
-<a name="l00330"></a>00330             <a class="code" href="classBbrc.html#a7a001c8c0f5014435e1a28ba57a5d5f2" title="Pass &amp;#39;false&amp;#39; here to switch off mining for BBRC representatives.">SetBackbone</a>(<span class="keyword">true</span>);
+<a name="l00330"></a>00330             <a class="code" href="classBbrc.html#a7a001c8c0f5014435e1a28ba57a5d5f2" title="Pass &amp;#39;false&amp;#39; here to switch off mining for BBRC representatives. Same as...">SetBackbone</a>(<span class="keyword">true</span>);
 <a name="l00331"></a>00331          }
 <a name="l00332"></a>00332          <span class="keywordflow">if</span> (<a class="code" href="classBbrc.html#ae89056d89e3847cce0172baea6a37b26" title="Get whether statistical metric pruning should be used.">GetPruning</a>()) {
 <a name="l00333"></a>00333             cerr &lt;&lt; <span class="stringliteral">&quot;Notice: Disabling statistical metric pruning due to activated regression.&quot;</span> &lt;&lt; endl;
-<a name="l00334"></a>00334             <a class="code" href="classBbrc.html#a3eef7a8547f2a4940fd0f4b7d1b70861" title="Pass &amp;#39;false&amp;#39; here to disable statistical metrical pruning completely.">SetPruning</a>(<span class="keyword">false</span>);
+<a name="l00334"></a>00334             <a class="code" href="classBbrc.html#a3eef7a8547f2a4940fd0f4b7d1b70861" title="Pass &amp;#39;false&amp;#39; here to disable statistical metrical pruning completely. Same...">SetPruning</a>(<span class="keyword">false</span>);
 <a name="l00335"></a>00335          }
 <a name="l00336"></a>00336     }
 <a name="l00337"></a>00337     <span class="keywordflow">return</span> 1;
@@ -1490,14 +1500,14 @@
 </div>
 <div class="memdoc">
 
-<p>Set type 1 (paths) or 2 (trees) here. </p>
+<p>Set type 1 (paths) or 2 (trees) here. Same as '-l'. </p>
 
 <p>Referenced by <a class="el" href="bbrc_8cpp_source.html#l00045">Bbrc()</a>.</p>
 
 <p><div class="fragment"><pre class="fragment"><a name="l00186"></a>00186                           {
 <a name="l00187"></a>00187     <span class="comment">// parameters not regarded in integrity constraints</span>
 <a name="l00188"></a>00188     <span class="keywordflow">if</span> ((val != 1) &amp;&amp; (val != 2)) { cerr &lt;&lt; <span class="stringliteral">&quot;Error! Invalid value &#39;&quot;</span> &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot;&#39; for parameter type.&quot;</span> &lt;&lt; endl; exit(1); }
-<a name="l00189"></a>00189     fm::type = val;
+<a name="l00189"></a>00189     fm::bbrc_type = val;
 <a name="l00190"></a>00190     <span class="keywordflow">return</span> 1;
 <a name="l00191"></a>00191 }
 </pre></div></p>
@@ -1509,7 +1519,7 @@
 <li><a class="el" href="bbrc_8cpp.html">bbrc.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 22 14:28:18 2010 for libbbrc by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Nov 9 14:14:22 2010 for libbbrc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>

@@ -484,7 +484,7 @@ extern "C" void usage() {
     cerr << "       [-f minfreq] [-l type] [-s] [-a] [-o] [-g] [-d [-b [-u]]] [-p p_value]" << endl;
     cerr << endl;
     cerr << "Options for Usage 2 (Frequent subgraph mining): " << endl;
-    cerr << "       [-f minfreq] [-l type] [-s] [-a] [-o] [-r]" << endl;
+    cerr << "       [-f minfreq] [-l type] [-s] [-a] [-o]" << endl;
     cerr << endl;
 }
 

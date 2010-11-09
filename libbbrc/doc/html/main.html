@@ -152,8 +152,8 @@ C++</a></h4>
  <span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[], <span class="keywordtype">char</span> *envp) {
    MyFminer= <span class="keyword">new</span> <a class="code" href="classBbrc.html">Bbrc</a>();
    <span class="comment">// Toy example: special settings for mining all fragments</span>
-   MyFminer-&gt;<a class="code" href="classBbrc.html#a2ffe9fadf7a96e7d3f83cbd977004278" title="Set significance threshold here (between 0 and 1).">SetChisqSig</a>(0); <span class="comment">// use no significance constraint</span>
-   MyFminer-&gt;<a class="code" href="classBbrc.html#a799653965569b70a7dd88ef16d56f569" title="Pass &amp;#39;true&amp;#39; here to enable refinement of fragments with frequency 1.">SetRefineSingles</a>(<span class="keyword">true</span>); <span class="comment">// refine structures with support 1</span>
+   MyFminer-&gt;<a class="code" href="classBbrc.html#a2ffe9fadf7a96e7d3f83cbd977004278" title="Set significance threshold here (between 0 and 1). Same as &amp;#39;-p&amp;#39;.">SetChisqSig</a>(0); <span class="comment">// use no significance constraint</span>
+   MyFminer-&gt;<a class="code" href="classBbrc.html#a799653965569b70a7dd88ef16d56f569" title="Pass &amp;#39;true&amp;#39; here to enable refinement of fragments with frequency 1. Same...">SetRefineSingles</a>(<span class="keyword">true</span>); <span class="comment">// refine structures with support 1</span>
    MyFminer-&gt;<a class="code" href="classBbrc.html#a3dfd23b477755e3b2156185b2f73878b" title="Pass &amp;#39;true&amp;#39; here to disable usage of result vector and directly print each...">SetConsoleOut</a>(<span class="keyword">false</span>);
    <span class="comment">// Add compounds below. IMPORTANT! Do not change settings after adding compounds!</span>
    MyFminer-&gt;<a class="code" href="classBbrc.html#a7ae3274987947421c41022918f48378d" title="Add a compound to the database.">AddCompound</a> (<span class="stringliteral">&quot;COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4&quot;</span> , 1);
@@ -176,7 +176,7 @@ C++</a></h4>
 Python</a></h4>
 <p>This example assumes that you have created python bindings using <code>make python</code>. </p>
 <div class="fragment"><pre class="fragment"> <span class="keyword">import</span> bbrc
- MyFminer = bbrc.<a class="code" href="classBbrc.html#a7dc3a2ad35ff8cff98f5f4fd3a8b58f0" title="Constructor for standard settings: 95% significance level, minimum frequency 2, type...">Bbrc</a>()
+ MyFminer = bbrc.<a class="code" href="classBbrc.html#a7dc3a2ad35ff8cff98f5f4fd3a8b58f0" title="Constructor for standard settings: 95% significance Bbrclevel, minimum frequency...">Bbrc</a>()
 <span class="preprocessor"> # Toy example: special settings for mining all fragments</span>
 <span class="preprocessor"></span><span class="preprocessor"> # use no significance constraint</span>
 <span class="preprocessor"></span> MyFminer.SetChisqSig(0) 
@@ -200,7 +200,7 @@ Python</a></h4>
 Ruby</a></h4>
 <p>This example assumes that you have created ruby bindings using <code>make ruby</code>. </p>
 <div class="fragment"><pre class="fragment"> require <span class="stringliteral">&#39;bbrc&#39;</span>
- MyFminer = <a class="code" href="classBbrc.html#a7dc3a2ad35ff8cff98f5f4fd3a8b58f0" title="Constructor for standard settings: 95% significance level, minimum frequency 2, type...">Bbrc::Bbrc</a>.new()
+ MyFminer = <a class="code" href="classBbrc.html#a7dc3a2ad35ff8cff98f5f4fd3a8b58f0" title="Constructor for standard settings: 95% significance Bbrclevel, minimum frequency...">Bbrc::Bbrc</a>.new()
 <span class="preprocessor"> # Toy example: special settings for mining all fragments</span>
 <span class="preprocessor"></span><span class="preprocessor"> # use no significance constraint</span>
 <span class="preprocessor"></span> MyFminer.SetChisqSig(0) 
@@ -270,7 +270,7 @@ Contact</a></h2>
  Web: <a href="http://cs.maunz.de">http://cs.maunz.de</a></p>
 <dl class="author"><dt><b>Author:</b></dt><dd>(c) 2010 by Andreas Maunz, 2010 </dd></dl>
 </div>
-<hr class="footer"/><address style="text-align: right;"><small>Generated on Fri Oct 22 14:28:18 2010 for libbbrc by&nbsp;
+<hr class="footer"/><address style="text-align: right;"><small>Generated on Tue Nov 9 14:14:22 2010 for libbbrc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.3 </small></address>
 </body>
