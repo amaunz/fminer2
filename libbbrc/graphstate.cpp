@@ -369,7 +369,7 @@ void BbrcGraphState::DfsOut(int cur_n, int from_n) {
     } 
     else {
         char s[3]; sprintf (s,"%d", inl-150);
-        cout << s;
+        cout << s << "&a";
     }
     putchar(']');
 
@@ -566,6 +566,7 @@ void BbrcGraphState::DfsOut(int cur_n, string& oss, int from_n) {
     else {
         char s[3]; sprintf (s,"%d", inl-150);
         oss.append(s);
+        oss.append("&a");
     }
     oss.append("]");
     int fanout = (int) nodes[cur_n].edges.size ();

@@ -18,12 +18,12 @@ end
 
 
 status=false
-if $*.size!=2
+if $*.size!=4
   status=true
 end
 
 if status
-  puts "Usage: #{$0} /path/to/smi-file /path/to/class-file"
+  puts "Usage: #{$0} {msa|nls|nop} /path/to/smi-file /path/to/class-file minfreq"
   exit
 end
 
@@ -31,18 +31,18 @@ MyFminer = Last::Last.new()
 # Adjust settings
 MyFminer.SetMaxHops(50)
 MyFminer.SetConsoleOut(false)
-MyFminer.SetMinfreq(25)
+MyFminer.SetMinfreq($*[3].to_i)
 
 
 # Add compounds below. IMPORTANT! DO NOT CHANGE SETTINGS AFTER ADDING COMPOUNDS!
 smi_h = {} 
-smi=read_tab_file($*[0])
+smi=read_tab_file($*[1])
 smi.each do |s|
   MyFminer.AddCompound(s[1].to_s , s[0].to_i)
   smi_h[s[0].to_i] = s[1].to_s
 end
 
-cla=read_tab_file($*[1])
+cla=read_tab_file($*[2])
 all_hash = Hash.new
 cla.each do |c|
   id=c[0].to_i
@@ -62,7 +62,7 @@ end
 
 lu = LU.new 
 dom=lu.read(xml) 
-smarts=lu.smarts_rb(dom,'msa') 
+smarts=lu.smarts_rb(dom,$*[0]) 
 instances=lu.match_rb_hash(smi_h,smarts) 
 
 instances.each do |smarts, ids|
