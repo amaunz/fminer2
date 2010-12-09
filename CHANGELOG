@@ -1,0 +1,12 @@
+Dec 09, 2010 [c7e089621fe38e0408f9d834e9b283ef739dafee]
+Concerns: libbbrc.
+
+1. Default behavior is now: aromatic wildcarding is switched off.
+Accordingly removed environment variable FMINER_NO_AROMATIC and added FMINER_AROMATIC (set to an arbitrary value to enable aromatic wildcarding).
+Therefore, users that had FMINER_NO_AROMATIC *not* set will see no more aromatic wildcarding in the output.
+Users that had previously set FMINER_NO_AROMATIC will still see no aromatic wildcarding.
+
+2. Aromatic atoms are annotated with '&a' (see SMARTS documentation at http://www.daylight.com/dayhtml_tutorials/languages/smarts/index.html) to fix issue https://github.com/amaunz/fminer2/issues/closed#issue/2.
+This is relevant when aromatic perception is activated (-a switch *not* set, not to be confused with aromatic wildcarding above).
+
+For more information on switches and environment variables, see http://www.maunz.de/libfminer2-bbrc-doc/main.html.

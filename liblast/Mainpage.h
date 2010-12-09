@@ -71,7 +71,7 @@
  *
  *  The Makefile features a target that creates <b>python</b> bindings. On Ubuntu, you can e.g. do this:
  *  - Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_PY = ...</code> so that the directory contains file <code>Python.h</code>. Also, let <code>PYTHON = ...</code> point to the right executable.
- *  - Run <code>make python</code>. Use <code>make pytest</code> to test. The configuration was tested with swig 1.3.40 and Python 2.5. There is an unsolved issue with Python 2.6, not being able to find OpenBabel libraries for conversion.
+ *  - Run <code>make python</code>. Use <code>make pytest</code> to test. The configuration was tested with swig 1.3.40 and Python 2.5.
  *
  * <b>Important:</b> There are swig interface files (<code>*.i</code>) and pre-configured swig output files (<code>*.cxx</code>). You need to re-create those output files if you are deploying for newer versions of the target languages, and you can find the necessary swig calls in the Makefile (commented out).
  *
@@ -239,8 +239,7 @@
  *  <li>Aromatic perception: <b>true</b></li>
  *  <li>Refine Singles: <b>false</b></li>
  *  <li>Do Output: <b>true</b></li>
- *  <li>Separate BBRCs in output by blank line/vector: <b>false</b></li>
- *  <li>Maximum hops: <b>1000</b></li>
+ *  <li>Maximum hops: <b>50</b></li>
  * </ul>
  *
  * \code
