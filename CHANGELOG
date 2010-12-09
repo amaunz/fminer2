@@ -2,7 +2,7 @@ Dec 09, 2010 [e1f26998baf8f3bba529d7932c89b17c67d9ad99]
 Concerns: libbbrc.
 
 1. Default behavior is now: aromatic wildcarding is switched off.
-Accordingly removed environment variable FMINER_NO_AROMATIC and added FMINER_AROMATIC (set to an arbitrary value to enable aromatic wildcarding).
+Accordingly removed environment variable FMINER_NO_AROMATIC and added FMINER_AROMATIC_WC (set to an arbitrary value to enable aromatic wildcarding).
 Therefore, users that had FMINER_NO_AROMATIC *not* set will see no more aromatic wildcarding in the output.
 Users that had previously set FMINER_NO_AROMATIC will still see no aromatic wildcarding.
 
