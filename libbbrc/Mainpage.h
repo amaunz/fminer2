@@ -145,7 +145,7 @@
  * Documentation for YAML can be found at: http://yaml.org/spec/cvs/current.html# (e.g. export FMINER_SMARTS=1).<br />
  * <b>FMINER_LAZAR</b>: Produce output in linfrag format which can be used as input to <code><a href="http://lazar.in-silico.de" target="_blank">Lazar</a></code> (e.g. export FMINER_LAZAR=1).<br />
  * <b>FMINER_PVALUES</b>: Produce p-values instead of chi-square values (e.g. export FMINER_PVALUES=1).<br />
- * <b>FMINER_NO_AROMATIC</b>: Disallow aromatic bonds on non-aromatic bonds (e.g. export FMINER_NO_AROMATIC=1).
+ * <b>FMINER_AROMATIC_WC</b>: Disallow aromatic bonds on non-aromatic bonds (e.g. export FMINER_AROMATIC_WC=1).
  *
  * Note: The value you set the environment variables to is irrelevant. Use <code>unset</code> to disable the environment variables, e.g. <code>unset FMINER_LAZAR</code>.
  *

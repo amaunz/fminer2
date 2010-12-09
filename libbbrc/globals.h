@@ -43,7 +43,7 @@ namespace fm {
     bool bbrc_do_yaml; // ENV
     bool bbrc_pvalues; // ENV
     bool bbrc_gsp_out; // ENV
-    bool bbrc_no_aromatic; // ENV
+    bool bbrc_aromatic_wc; // ENV
     bool bbrc_console_out; // set
     bool bbrc_db_built; // set
 
