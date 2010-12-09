@@ -382,15 +382,15 @@ void BbrcGraphState::DfsOut(int cur_n, int from_n) {
             iel = fm::bbrc_database->edgelabels[fm::bbrc_database->edgelabelsindexes[edge.edgelabel]].inputedgelabel;
             switch (iel) {
             case 1:
-                if (!fm::bbrc_no_aromatic) fputs("-,:",stdout);
+                if (fm::bbrc_no_aromatic) fputs("-,:",stdout);
                 else fputs("-",stdout);
                 break;
             case 2:
-                if (!fm::bbrc_no_aromatic) fputs("=,:",stdout);
+                if (fm::bbrc_no_aromatic) fputs("=,:",stdout);
                 else fputs("=",stdout);
                 break;               
             case 3:
-                if (!fm::bbrc_no_aromatic) fputs("#,:",stdout);
+                if (fm::bbrc_no_aromatic) fputs("#,:",stdout);
                 else fputs("#",stdout);
                 break;
             case 4:
@@ -579,15 +579,15 @@ void BbrcGraphState::DfsOut(int cur_n, string& oss, int from_n) {
 
             switch (iel) {
             case 1:
-                if (!fm::bbrc_no_aromatic) oss.append("-,:");
+                if (fm::bbrc_no_aromatic) oss.append("-,:");
                 else oss.append("-");
                 break;
             case 2:
-                if (!fm::bbrc_no_aromatic) oss.append("=,:");
+                if (fm::bbrc_no_aromatic) oss.append("=,:");
                 else oss.append("=");
                 break;               
             case 3:
-                if (!fm::bbrc_no_aromatic) oss.append("#,:");
+                if (fm::bbrc_no_aromatic) oss.append("#,:");
                 else oss.append("#");
                 break;
             case 4:
