@@ -365,7 +365,7 @@ void BbrcGraphState::DfsOut(int cur_n, int from_n) {
     putchar('#');
     if (inl<=150) {
         char s[3]; sprintf (s,"%d", inl);
-        cout << s;
+        cout << s << "&A";
     } 
     else {
         char s[3]; sprintf (s,"%d", inl-150);
@@ -562,6 +562,7 @@ void BbrcGraphState::DfsOut(int cur_n, string& oss, int from_n) {
     if (inl<=150) {
         char s[3]; sprintf (s,"%d", inl);
         oss.append(s);
+        oss.append("&A");
     } 
     else {
         char s[3]; sprintf (s,"%d", inl-150);
