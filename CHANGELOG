@@ -10,3 +10,10 @@ Users that had previously set FMINER_NO_AROMATIC will still see no aromatic wild
 This is relevant when aromatic perception is activated (-a switch *not* set, not to be confused with aromatic wildcarding above).
 
 For more information on switches and environment variables, see http://www.maunz.de/libfminer2-bbrc-doc/main.html.
+
+
+Jan 24, 2011 [d82caab357ae3aed4aa15ef888a8ab277dd4b58a]
+Concerns: libbbrc.
+
+1. Aliphatic atoms are annotated with '&A'. This is relevant when matching back the SMARTS fragments- when the annotation is not set, there are match positions with ambiguous cases.
+
