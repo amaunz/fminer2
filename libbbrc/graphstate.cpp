@@ -39,6 +39,7 @@ namespace fm {
     extern BbrcDatabase* bbrc_database;
     extern BbrcGraphState* bbrc_graphstate;
     extern bool bbrc_aromatic_wc;
+    extern bool bbrc_aromatic;
 }
 
 BbrcGraphState::BbrcGraphState () {
@@ -365,7 +366,7 @@ void BbrcGraphState::DfsOut(int cur_n, int from_n) {
     putchar('#');
     if (inl<=150) {
         char s[3]; sprintf (s,"%d", inl);
-        cout << s << "&A";
+        if (fm::bbrc_aromatic) cout << s << "&A";
     } 
     else {
         char s[3]; sprintf (s,"%d", inl-150);
@@ -562,7 +563,7 @@ void BbrcGraphState::DfsOut(int cur_n, string& oss, int from_n) {
     if (inl<=150) {
         char s[3]; sprintf (s,"%d", inl);
         oss.append(s);
-        oss.append("&A");
+        if (fm::bbrc_aromatic) oss.append("&A");
     } 
     else {
         char s[3]; sprintf (s,"%d", inl-150);
