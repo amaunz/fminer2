@@ -48,7 +48,7 @@
 
 
  LAST-PM exclusive options:
- -m  --max-hops               Set maximum nr of hops, i.e. threshold for nr of ground features per patch. Note: There may occur latent structures with more hops (default: 50).
+ -m  --max-hops               Set maximum nr of hops, i.e. threshold for nr of ground features per patch. Note: There may occur latent structures with more hops (default: 25).
 
 
  USAGE
