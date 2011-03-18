@@ -50,7 +50,7 @@
  *    apt-get install build-essential             # development tools
  *    apt-get install libgsl0-dev                 # GSL binary lib and headers
  *    \endcode
- *  - OpenBabel: follow the installation instrucations at http://openbabel.org/wiki/Install_(source_code) to build yourself after doing:
+ *  - OpenBabel: follow the <a href="http://openbabel.org/wiki/Get_Open_Babel">installation instrucations</a> to build yourself after doing:
  *    \code
  *    apt-get build-dep libopenbabel-dev          # build dependencies for OB
  *    apt-get source libopenbabel-dev             # extracts OB source to the current dir
