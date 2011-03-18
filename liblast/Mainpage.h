@@ -59,6 +59,7 @@
  *    \code
  *    apt-get install libopenbabel-dev            # OB binary lib and headers
  *    \endcode
+ *    Note: you will need the former if you want to use <a href="https://github.com/amaunz/last-utils">LAST-UTILS</a>, see the <a href="https://github.com/amaunz/last-utils/blob/master/INSTALL">INSTALL there</a>.
  *  - <a href="http://github.com/amaunz/fminer2/tree" target="_blank">Download the library source code</a> by clicking on "Download Source". (with git: <code>git clone git://github.com/amaunz/fminer2.git</code>) and cd to <code>liblast</code> subdirectory. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.
  *  - Cd to <code>fminer</code> subdirectory. Use <code>./configure</code> to configure the Makefile automatically or, in the <code>Makefile</code>, adjust the include (-I) and linker (-L) flags. Run <code>make</code>.
  *  - To create this documentation with doxygen, type 'make doc'. The documentation explains API, constructor usage and options.
@@ -239,7 +240,7 @@
  *  <li>Aromatic perception: <b>true</b></li>
  *  <li>Refine Singles: <b>false</b></li>
  *  <li>Do Output: <b>true</b></li>
- *  <li>Maximum hops: <b>50</b></li>
+ *  <li>Maximum hops: <b>25</b></li>
  * </ul>
  *
  * \code
