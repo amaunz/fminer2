@@ -82,10 +82,10 @@
 
  Affects the output. By default, output consists of blocks of gSpan graphs.
 
- - FMINER_SMARTS       : produce output in SMARTS format (e.g. export FMINER_SMARTS=1).
- - FMINER_LAZAR        : produce output in linfrag format which can be used as input to Lazar (e.g. export FMINER_LAZAR=1).
- - FMINER_PVALUES      : produce p-values instead of chi-square values (e.g. export FMINER_PVALUES=1).
- - FMINER_NO_AROMATIC  : disallow aromatic bonds on non-aromatic bonds (e.g. export FMINER_NO_AROMATIC=1).
+ - FMINER_SMARTS          : Produce output in SMARTS format (e.g. export FMINER_SMARTS=1).
+ - FMINER_LAZAR           : Produce output in linfrag format which can be used as input to Lazar (e.g. export FMINER_LAZAR=1).
+ - FMINER_PVALUES         : Produce p-values instead of chi-square values (e.g. export FMINER_PVALUES=1).
+ - FMINER_NO_AROMATIC_WC  : Disallow aromatic wildcard bonds on aliphatic bonds, when aromatic perception was switched off ('-a') (e.g. export FMINER_NO_AROMATIC_WC=1).
 
 
  EXAMPLES

@@ -34,7 +34,7 @@ Bbrc::Bbrc() : init_mining_done(false) {
       if (getenv("FMINER_LAZAR")) fm::bbrc_do_yaml = false;
       if (getenv("FMINER_SMARTS")) fm::bbrc_gsp_out = false; 
       if (getenv("FMINER_PVALUES")) fm::bbrc_pvalues = true;
-      if (getenv("FMINER_AROMATIC_WC")) fm::bbrc_aromatic_wc = true;
+      if (getenv("FMINER_NO_AROMATIC_WC")) fm::bbrc_aromatic_wc = false;
   }
   else {
     cerr << "Error! Cannot create more than 1 instance." << endl; 
@@ -53,7 +53,7 @@ Bbrc::Bbrc(int _type, unsigned int _minfreq) : init_mining_done(false) {
       if (getenv("FMINER_LAZAR")) fm::bbrc_do_yaml = false;
       if (getenv("FMINER_SMARTS")) fm::bbrc_gsp_out = false; 
       if (getenv("FMINER_PVALUES")) fm::bbrc_pvalues = true;
-      if (getenv("FMINER_AROMATIC_WC")) fm::bbrc_aromatic_wc = true;
+      if (getenv("FMINER_NO_AROMATIC_WC")) fm::bbrc_aromatic_wc = false;
   }
   else {
     cerr << "Error! Cannot create more than 1 instance." << endl; 
@@ -75,7 +75,7 @@ Bbrc::Bbrc(int _type, unsigned int _minfreq, float _chisq_val, bool _do_backbone
       if (getenv("FMINER_LAZAR")) fm::bbrc_do_yaml = false;
       if (getenv("FMINER_SMARTS")) fm::bbrc_gsp_out = false; 
       if (getenv("FMINER_PVALUES")) fm::bbrc_pvalues = true;
-      if (getenv("FMINER_AROMATIC_WC")) fm::bbrc_aromatic_wc = true;
+      if (getenv("FMINER_NO_AROMATIC_WC")) fm::bbrc_aromatic_wc = false;
 
   }
   else {
@@ -152,7 +152,7 @@ void Bbrc::Defaults() {
     fm::bbrc_regression=false;
     fm::bbrc_do_yaml=true;
     fm::bbrc_pvalues=false;
-    fm::bbrc_aromatic_wc=false;
+    fm::bbrc_aromatic_wc=true;
 }
 
 

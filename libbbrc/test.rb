@@ -6,6 +6,7 @@ require 'bbrc'
  # refine structures with support 1
  MyFminer.SetRefineSingles(true) 
  MyFminer.SetConsoleOut(false)
+# MyFminer.SetAromatic(false)
  # Add compounds below. IMPORTANT! DO NOT CHANGE SETTINGS AFTER ADDING COMPOUNDS!
  MyFminer.AddCompound("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4" , 1)
  MyFminer.AddCompound("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2)
