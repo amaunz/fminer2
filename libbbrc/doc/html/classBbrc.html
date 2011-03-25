@@ -155,7 +155,7 @@ Public Member Functions</h2></td></tr>
       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_LAZAR&quot;</span>)) <a class="code" href="namespacefm.html#a3a54a7a86272cba229f517a0bedb5de6">fm::bbrc_do_yaml</a> = <span class="keyword">false</span>;
       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_SMARTS&quot;</span>)) <a class="code" href="namespacefm.html#a3f3c59e7f3f3f26fa807cd3863df17cb">fm::bbrc_gsp_out</a> = <span class="keyword">false</span>; 
       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_PVALUES&quot;</span>)) fm::bbrc_pvalues = <span class="keyword">true</span>;
-      <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_AROMATIC_WC&quot;</span>)) fm::bbrc_aromatic_wc = <span class="keyword">true</span>;
+      <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_NO_AROMATIC_WC&quot;</span>)) fm::bbrc_aromatic_wc = <span class="keyword">false</span>;
   }
   <span class="keywordflow">else</span> {
     cerr &lt;&lt; <span class="stringliteral">&quot;Error! Cannot create more than 1 instance.&quot;</span> &lt;&lt; endl; 
@@ -206,7 +206,7 @@ Public Member Functions</h2></td></tr>
       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_LAZAR&quot;</span>)) <a class="code" href="namespacefm.html#a3a54a7a86272cba229f517a0bedb5de6">fm::bbrc_do_yaml</a> = <span class="keyword">false</span>;
       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_SMARTS&quot;</span>)) <a class="code" href="namespacefm.html#a3f3c59e7f3f3f26fa807cd3863df17cb">fm::bbrc_gsp_out</a> = <span class="keyword">false</span>; 
       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_PVALUES&quot;</span>)) fm::bbrc_pvalues = <span class="keyword">true</span>;
-      <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_AROMATIC_WC&quot;</span>)) fm::bbrc_aromatic_wc = <span class="keyword">true</span>;
+      <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_NO_AROMATIC_WC&quot;</span>)) fm::bbrc_aromatic_wc = <span class="keyword">false</span>;
   }
   <span class="keywordflow">else</span> {
     cerr &lt;&lt; <span class="stringliteral">&quot;Error! Cannot create more than 1 instance.&quot;</span> &lt;&lt; endl; 
@@ -272,7 +272,7 @@ Public Member Functions</h2></td></tr>
       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_LAZAR&quot;</span>)) <a class="code" href="namespacefm.html#a3a54a7a86272cba229f517a0bedb5de6">fm::bbrc_do_yaml</a> = <span class="keyword">false</span>;
       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_SMARTS&quot;</span>)) <a class="code" href="namespacefm.html#a3f3c59e7f3f3f26fa807cd3863df17cb">fm::bbrc_gsp_out</a> = <span class="keyword">false</span>; 
       <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_PVALUES&quot;</span>)) fm::bbrc_pvalues = <span class="keyword">true</span>;
-      <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_AROMATIC_WC&quot;</span>)) fm::bbrc_aromatic_wc = <span class="keyword">true</span>;
+      <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_NO_AROMATIC_WC&quot;</span>)) fm::bbrc_aromatic_wc = <span class="keyword">false</span>;
 
   }
   <span class="keywordflow">else</span> {
@@ -479,7 +479,7 @@ Public Member Functions</h2></td></tr>
     <a class="code" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a>=<span class="keyword">false</span>;
     <a class="code" href="namespacefm.html#a3a54a7a86272cba229f517a0bedb5de6">fm::bbrc_do_yaml</a>=<span class="keyword">true</span>;
     fm::bbrc_pvalues=<span class="keyword">false</span>;
-    fm::bbrc_aromatic_wc=<span class="keyword">false</span>;
+    fm::bbrc_aromatic_wc=<span class="keyword">true</span>;
 }
 </pre></div></p>
 
@@ -1524,7 +1524,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="bbrc_8cpp.html">bbrc.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 15 2011 11:02:27 for libbbrc by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 25 2011 14:24:12 for libbbrc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

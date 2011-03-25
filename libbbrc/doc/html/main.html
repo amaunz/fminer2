@@ -136,9 +136,10 @@ Environment Variables</h3>
 <p><b>FMINER_SMARTS</b>: Produce output in SMARTS format. In this case, each line is a YAML sequence, containing SMARTS fragment, <em>p</em>-value, and two sequences denoting positive and negative class occurrences (line numbers in Smiles file):</p>
 <div class="fragment"><pre class="fragment">  - [ smarts,    p_chisq,    occ_list_active,    occ_list_inactive ]
 </pre></div><p>Documentation for YAML can be found at: <a href="http://yaml.org/spec/cvs/current.html#">http://yaml.org/spec/cvs/current.html#</a> (e.g. export FMINER_SMARTS=1).<br/>
- <b>FMINER_LAZAR</b>: Produce output in linfrag format which can be used as input to <code><a href="http://lazar.in-silico.de" target="_blank">Lazar</a></code> (e.g. export FMINER_LAZAR=1).<br/>
- <b>FMINER_PVALUES</b>: Produce p-values instead of chi-square values (e.g. export FMINER_PVALUES=1).<br/>
- <b>FMINER_AROMATIC_WC</b>: Allow aromatic bonds on non-aromatic bonds, i.e. aromatic wildcarding (e.g. export FMINER_AROMATIC_WC=1).</p>
+ <b>FMINER_SMARTS</b> : Produce output in SMARTS format (e.g. export FMINER_SMARTS=1).<br/>
+ <b>FMINER_LAZAR</b> : Produce output in linfrag format which can be used as input to Lazar (e.g. export FMINER_LAZAR=1).<br/>
+ <b>FMINER_PVALUES</b> : Produce p-values instead of chi-square values (e.g. export FMINER_PVALUES=1).<br/>
+ <b>FMINER_NO_AROMATIC_WC</b>: Disallow aromatic wildcard bonds on aliphatic bonds, when aromatic perception was switched off ('-a') (e.g. export FMINER_NO_AROMATIC_WC=1).</p>
 <p>Note: The value you set the environment variables to is irrelevant. Use <code>unset</code> to disable the environment variables, e.g. <code>unset FMINER_LAZAR</code>.</p>
 <h3><a class="anchor" id="sec3"></a>
 Examples using the LibBbrc API</h3>
@@ -274,7 +275,7 @@ Contact</h2>
  Web: <a href="http://cs.maunz.de">http://cs.maunz.de</a></p>
 <dl class="author"><dt><b>Author:</b></dt><dd>(c) 2010 by Andreas Maunz, 2010 </dd></dl>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Tue Mar 15 2011 11:02:27 for libbbrc by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 25 2011 14:24:12 for libbbrc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
