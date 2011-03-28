@@ -11,12 +11,11 @@ end
 
 
 class TestSimpleNumber < Test::Unit::TestCase
-
     
   def test_ruby_fminer
     @smi_file=File.dirname(__FILE__) + "/hamster_carcinogenicity.smi"
     @class_file=File.dirname(__FILE__) + "/hamster_carcinogenicity.class"
-    @md5_yaml_file=File.dirname(__FILE__) + "/fminer_default_md5.yaml"
+    @md5_yaml_file=File.dirname(__FILE__) + "/fminer_md5.yaml"
 
     #assert true
     #puts @smi_file

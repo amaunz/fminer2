@@ -35,6 +35,9 @@ Bbrc::Bbrc() : init_mining_done(false) {
       if (getenv("FMINER_SMARTS")) fm::bbrc_gsp_out = false; 
       if (getenv("FMINER_PVALUES")) fm::bbrc_pvalues = true;
       if (getenv("FMINER_NO_AROMATIC_WC")) fm::bbrc_aromatic_wc = false;
+      if (getenv("FMINER_SILENT")) {
+        FILE* fp = freopen ("fminer_debug.txt","w",stderr);
+      }
   }
   else {
     cerr << "Error! Cannot create more than 1 instance." << endl; 
@@ -54,6 +57,10 @@ Bbrc::Bbrc(int _type, unsigned int _minfreq) : init_mining_done(false) {
       if (getenv("FMINER_SMARTS")) fm::bbrc_gsp_out = false; 
       if (getenv("FMINER_PVALUES")) fm::bbrc_pvalues = true;
       if (getenv("FMINER_NO_AROMATIC_WC")) fm::bbrc_aromatic_wc = false;
+      if (getenv("FMINER_SILENT")) {
+        FILE* fp = freopen ("fminer_debug.txt","w",stderr);
+      }
+
   }
   else {
     cerr << "Error! Cannot create more than 1 instance." << endl; 
@@ -76,6 +83,9 @@ Bbrc::Bbrc(int _type, unsigned int _minfreq, float _chisq_val, bool _do_backbone
       if (getenv("FMINER_SMARTS")) fm::bbrc_gsp_out = false; 
       if (getenv("FMINER_PVALUES")) fm::bbrc_pvalues = true;
       if (getenv("FMINER_NO_AROMATIC_WC")) fm::bbrc_aromatic_wc = false;
+      if (getenv("FMINER_SILENT")) {
+        FILE* fp = freopen ("fminer_bbrc_debug.txt","w",stderr);
+      }
 
   }
   else {
@@ -403,6 +413,9 @@ vector<string>* Bbrc::MineRoot(unsigned int j) {
     if ( fm::bbrc_database->nodelabels[j].frequency >= fm::bbrc_minfreq && fm::bbrc_database->nodelabels[j].frequentedgelabels.size () ) {
         BbrcPath path(j);
         path.expand(); // mining step
+    }
+    if (getenv("FMINER_SILENT")) {
+      fclose (stderr);
     }
     return fm::bbrc_result;
 }

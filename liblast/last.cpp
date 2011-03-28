@@ -32,6 +32,9 @@ Last::Last() : init_mining_done(false) {
       Defaults();
       fm::last_instance_present=true;
       fm::last_gsp_out = false; 
+      if (getenv("FMINER_SILENT")) {
+        FILE* fp = freopen ("fminer_last_debug.txt","w",stderr);
+      }
   }
   else {
     cerr << "Error! Cannot create more than 1 instance." << endl; 
@@ -310,6 +313,9 @@ xsi:noNamespaceSchemaLocation=\"graphml.xsd\">\n\
     if (j==GetNoRootNodes()-1 && fm::last_do_output) {
       if (!fm::last_console_out) (*fm::last_result) << "</graphml>\n";
       else cout << "</graphml>" << endl;
+    }
+    if (getenv("FMINER_SILENT")) {
+      fclose (stderr);
     }
     return fm::last_result;
 }
