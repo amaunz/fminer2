@@ -3,9 +3,9 @@
 # TODO mode, minfreq
 
 begin
-  require File.dirname(__FILE__) +  "/../bbrc.so"
+  require File.dirname(__FILE__) +  "/../last.so"
 rescue
-  puts "bbrc not found!"
+  puts "last not found!"
   exit false
 end
 
@@ -21,7 +21,7 @@ end
 class RubyFminer
 
   def initialize
-    @myFminer = Bbrc::Bbrc.new()
+    @myFminer = Last::Last.new()
   end
 
   # Fminer/BBRC re-implementation in Ruby
