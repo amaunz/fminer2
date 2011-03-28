@@ -89,6 +89,11 @@
  *
  *  The following code demonstrate the use of the Last API from C++, python, and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a set of latent fragments and prints them out. Every root node corresponds to a single chemical element. The output consists of <a href="http://graphml.graphdrawing.org">GraphML</a> which can be postprocessed to SMARTS patterns using the <a href="http://github.com/amaunz/last-utils" target="_blank">LAST-UTILS</a>.
  *
+ *  @subsection sec33 Environment Variables
+ * <b>FMINER_SILENT          : Redirect STDERR (debug output) of fminer to local file 'fminer-last-debug.txt'
+ *
+ * Note: The value you set the environment variables to is irrelevant. Use <code>unset</code> to disable the environment variables, e.g. <code>unset FMINER_LAZAR</code>.
+ *
  * \subsubsection CPP C++
  *
  * This example uses libLast in a C++ program.

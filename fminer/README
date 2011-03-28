@@ -86,6 +86,7 @@
  - FMINER_LAZAR           : Produce output in linfrag format which can be used as input to Lazar (e.g. export FMINER_LAZAR=1).
  - FMINER_PVALUES         : Produce p-values instead of chi-square values (e.g. export FMINER_PVALUES=1).
  - FMINER_NO_AROMATIC_WC  : Disallow aromatic wildcard bonds on aliphatic bonds, when aromatic perception was switched off ('-a') (e.g. export FMINER_NO_AROMATIC_WC=1).
+ - FMINER_SILENT          : Redirect STDERR (debug output) of fminer to local file 'fminer-[bbrc|last]-debug.txt'
 
 
  EXAMPLES

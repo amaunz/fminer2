@@ -154,6 +154,9 @@ Public Member Functions</h2></td></tr>
       <a class="code" href="classLast.html#a9f4ebfcbb62fb16b57c5bcdfaacd451f" title="Use this to set default parameters as in default constructor.">Defaults</a>();
       fm::last_instance_present=<span class="keyword">true</span>;
       <a class="code" href="namespacefm.html#ad28161c04495429767e648bdafe6832f">fm::last_gsp_out</a> = <span class="keyword">false</span>; 
+      <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_SILENT&quot;</span>)) {
+        FILE* fp = freopen (<span class="stringliteral">&quot;fminer_last_debug.txt&quot;</span>,<span class="stringliteral">&quot;w&quot;</span>,stderr);
+      }
   }
   <span class="keywordflow">else</span> {
     cerr &lt;&lt; <span class="stringliteral">&quot;Error! Cannot create more than 1 instance.&quot;</span> &lt;&lt; endl; 
@@ -929,6 +932,9 @@ Public Member Functions</h2></td></tr>
       <span class="keywordflow">if</span> (!fm::last_console_out) (*fm::last_result) &lt;&lt; <span class="stringliteral">&quot;&lt;/graphml&gt;\n&quot;</span>;
       <span class="keywordflow">else</span> cout &lt;&lt; <span class="stringliteral">&quot;&lt;/graphml&gt;&quot;</span> &lt;&lt; endl;
     }
+    <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_SILENT&quot;</span>)) {
+      fclose (stderr);
+    }
     <span class="keywordflow">return</span> fm::last_result;
 }
 </pre></div></p>
@@ -1383,7 +1389,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="last_8cpp.html">last.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 18 2011 14:50:19 for liblast by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 28 2011 10:09:17 for liblast by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

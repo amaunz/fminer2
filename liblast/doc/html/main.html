@@ -108,9 +108,15 @@ Guidance on Using (Lib)Last</h2>
 Examples using the LibLast API</h3>
 <p>LibLast uses the 'singleton' design pattern known from software engineering, i.e., class instantiation is restricted to one object. To empty the database after a run to feed new compounds, use the <a class="el" href="classLast.html#a372de693ad40b3f42839c8ec6ac845f4" title="Use this to clear the database before feeding new compounds and activities.">Last::Reset()</a> routine.</p>
 <p>The following code demonstrate the use of the <a class="el" href="classLast.html">Last</a> API from C++, python, and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a set of latent fragments and prints them out. Every root node corresponds to a single chemical element. The output consists of <a href="http://graphml.graphdrawing.org">GraphML</a> which can be postprocessed to SMARTS patterns using the <a href="http://github.com/amaunz/last-utils" target="_blank">LAST-UTILS</a>.</p>
+<h3><a class="anchor" id="sec33"></a>
+Environment Variables</h3>
+<p><b>FMINER_SILENT : Redirect STDERR (debug output) of fminer to local file 'fminer-last-debug.txt'</b></p>
+<p><b> Note: The value you set the environment variables to is irrelevant. Use <code>unset</code> to disable the environment variables, e.g. <code>unset FMINER_LAZAR</code>.</b></p>
+<p><b> </b></p>
 <h4><a class="anchor" id="CPP"></a>
 C++</h4>
-<p>This example uses libLast in a C++ program. The example assumes that you have created the C++ library using <code>make</code>.</p>
+<p><b> This example uses libLast in a C++ program. The example assumes that you have created the C++ library using <code>make</code>.</b></p>
+<p><b> </p>
 <div class="fragment"><pre class="fragment"><span class="preprocessor"> #include &quot;<a class="code" href="last_8h.html">last.h</a>&quot;</span>
 <span class="preprocessor"> #include &lt;iostream&gt;</span>
 <span class="preprocessor"> #include &lt;string.h&gt;</span>
@@ -155,9 +161,12 @@ C++</h4>
      }
      <span class="keyword">delete</span> MyFminer;
  }
-</pre></div><h4><a class="anchor" id="Python"></a>
+</pre></div><p></b></p>
+<p><b> </b></p>
+<h4><a class="anchor" id="Python"></a>
 Python</h4>
-<p>This example assumes that you have created python bindings using <code>make python</code>.</p>
+<p><b> This example assumes that you have created python bindings using <code>make python</code>.</b></p>
+<p><b> </p>
 <div class="fragment"><pre class="fragment"> <span class="keyword">import</span> liblast
  MyFminer = liblast.Last()
  MyFminer.SetMaxHops(25)
@@ -191,9 +200,11 @@ Python</h4>
     result = MyFminer.MineRoot(j);
     <span class="keywordflow">for</span> i in range(0, result.size()-1):
         print result[i];
-</pre></div><h4><a class="anchor" id="Ruby"></a>
+</pre></div><p></b></p>
+<p><b> </b></p>
+<h4><a class="anchor" id="Ruby"></a>
 Ruby</h4>
-<p>This example assumes that you have created ruby bindings using <code>make ruby</code>. </p>
+<p><b> This example assumes that you have created ruby bindings using <code>make ruby</code>. </p>
 <div class="fragment"><pre class="fragment"> require <span class="stringliteral">&#39;last&#39;</span>
  MyFminer = <a class="code" href="classLast.html#a0c3fef1f249450ef678cdd46bd88e3a7" title="Constructor for standard settings: 95% significance Lastlevel, minimum frequency 2, type trees, dynamic upper bound, BBRC.">Last::Last</a>.new()
  MyFminer.SetMaxHops(25)
@@ -231,9 +242,12 @@ Ruby</h4>
         puts res
    end
  end
-</pre></div><h4><a class="anchor" id="Const"></a>
+</pre></div><p></b></p>
+<p><b> </b></p>
+<h4><a class="anchor" id="Const"></a>
 Description of Constructors and Options</h4>
-<p>For the purpose of demonstration we used a toy database of two compounds and an unusual parameter configuration. Please note, that in general the defaults set by the standard constructor are sensible for most databases. They switch on LAST-PM for 95% significance and a minimum frequency of 2. The complete standard settings are:</p>
+<p><b> For the purpose of demonstration we used a toy database of two compounds and an unusual parameter configuration. Please note, that in general the defaults set by the standard constructor are sensible for most databases. They switch on LAST-PM for 95% significance and a minimum frequency of 2. The complete standard settings are:</b></p>
+<p><b> </p>
 <ul>
 <li>
 Minimum frequency: <b>2</b> </li>
@@ -250,24 +264,29 @@ Do Output: <b>true</b> </li>
 <li>
 Maximum hops: <b>25</b> </li>
 </ul>
+<p></b></p>
+<p><b> </p>
 <div class="fragment"><pre class="fragment">
   <a class="code" href="classLast.html">Last</a> ();
-</pre></div><p>It is recommended to set the maximum number of hops as a first step when too many features are generated or calculation takes too long.</p>
-<p><br/>
+</pre></div><p></b></p>
+<p><b> It is recommended to set the maximum number of hops as a first step when too many features are generated or calculation takes too long.</b></p>
+<p><b> <br/>
 <br/>
- </p>
+ </b></p>
 <h2><a class="anchor" id="Contact"></a>
 Contact</h2>
-<p>Dipl.-Inf. Andreas Maunz<br/>
+<p><b> Dipl.-Inf. Andreas Maunz<br/>
  Freiburg Center for Data Analysis and Modelling<br/>
  Hermann-Herder-Str. 3a<br/>
  79104 Freiburg, Germany<br/>
  Phone: +49761/203-8442, Fax: +49761/203-7700<br/>
  Email: <a href="mailto:maunza@fdm.uni-freiburg.de">maunza@fdm.uni-freiburg.de</a><br/>
- Web: <a href="http://cs.maunz.de">http://cs.maunz.de</a></p>
+ Web: <a href="http://cs.maunz.de">http://cs.maunz.de</a></b></p>
+<p><b> </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>(c) 2010 by Andreas Maunz, 2010 </dd></dl>
+<p></b></p>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 18 2011 14:50:19 for liblast by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 28 2011 10:09:17 for liblast by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>

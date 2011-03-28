@@ -139,15 +139,18 @@ Environment Variables</h3>
  <b>FMINER_SMARTS</b> : Produce output in SMARTS format (e.g. export FMINER_SMARTS=1).<br/>
  <b>FMINER_LAZAR</b> : Produce output in linfrag format which can be used as input to Lazar (e.g. export FMINER_LAZAR=1).<br/>
  <b>FMINER_PVALUES</b> : Produce p-values instead of chi-square values (e.g. export FMINER_PVALUES=1).<br/>
- <b>FMINER_NO_AROMATIC_WC</b>: Disallow aromatic wildcard bonds on aliphatic bonds, when aromatic perception was switched off ('-a') (e.g. export FMINER_NO_AROMATIC_WC=1).</p>
-<p>Note: The value you set the environment variables to is irrelevant. Use <code>unset</code> to disable the environment variables, e.g. <code>unset FMINER_LAZAR</code>.</p>
+ <b>FMINER_NO_AROMATIC_WC</b>: Disallow aromatic wildcard bonds on aliphatic bonds, when aromatic perception was switched off ('-a') (e.g. export FMINER_NO_AROMATIC_WC=1). <b>FMINER_SILENT : Redirect STDERR (debug output) of fminer to local file 'fminer-bbrc-debug.txt'</b></p>
+<p><b> Note: The value you set the environment variables to is irrelevant. Use <code>unset</code> to disable the environment variables, e.g. <code>unset FMINER_LAZAR</code>.</b></p>
+<p><b> </b></p>
 <h3><a class="anchor" id="sec3"></a>
 Examples using the LibBbrc API</h3>
-<p>LibBbrc uses the 'singleton' design pattern known from software engineering, i.e., class instantiation is restricted to one object. To empty the database after a run to feed new compounds, use the <a class="el" href="classBbrc.html#a372de693ad40b3f42839c8ec6ac845f4" title="Use this to clear the database before feeding new compounds and activities.">Bbrc::Reset()</a> routine.</p>
-<p>The following code demonstrate the use of the <a class="el" href="classBbrc.html">Bbrc</a> API from C++, python, and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a vector of fragments along with statistical relevance and occurrences and prints them out. Every root node corresponds to a single chemical element. The output consists of gSpan graphs.</p>
+<p><b> LibBbrc uses the 'singleton' design pattern known from software engineering, i.e., class instantiation is restricted to one object. To empty the database after a run to feed new compounds, use the <a class="el" href="classBbrc.html#a372de693ad40b3f42839c8ec6ac845f4" title="Use this to clear the database before feeding new compounds and activities.">Bbrc::Reset()</a> routine.</b></p>
+<p><b> The following code demonstrate the use of the <a class="el" href="classBbrc.html">Bbrc</a> API from C++, python, and ruby. It feeds a set of class-labelled molecules in SMILES format (the API currently allows no gSpan input, use the frontend application for that) and calculates a vector of fragments along with statistical relevance and occurrences and prints them out. Every root node corresponds to a single chemical element. The output consists of gSpan graphs.</b></p>
+<p><b> </b></p>
 <h4><a class="anchor" id="CPP"></a>
 C++</h4>
-<p>This example uses libBbrc in a C++ program. The example assumes that you have created the C++ library using <code>make</code>.</p>
+<p><b> This example uses libBbrc in a C++ program. The example assumes that you have created the C++ library using <code>make</code>.</b></p>
+<p><b> </p>
 <div class="fragment"><pre class="fragment"><span class="preprocessor"> #include &quot;<a class="code" href="bbrc_8h.html">bbrc.h</a>&quot;</span>
 <span class="preprocessor"> #include &lt;iostream&gt;</span>
 <span class="preprocessor"> #include &lt;string.h&gt;</span>
@@ -177,9 +180,11 @@ C++</h4>
    }
    <span class="keyword">delete</span> MyFminer;
  }
-</pre></div><h4><a class="anchor" id="Python"></a>
+</pre></div><p></b></p>
+<p><b> </b></p>
+<h4><a class="anchor" id="Python"></a>
 Python</h4>
-<p>This example assumes that you have created python bindings using <code>make python</code>. </p>
+<p><b> This example assumes that you have created python bindings using <code>make python</code>. </p>
 <div class="fragment"><pre class="fragment"> <span class="keyword">import</span> bbrc
  MyFminer = bbrc.Bbrc()
 <span class="preprocessor"> # Toy example: special settings for mining all fragments</span>
@@ -201,9 +206,11 @@ Python</h4>
       result = MyFminer.MineRoot(j);
       <span class="keywordflow">for</span> i in range(0, result.size()-1):
                   print result[i];
-</pre></div><h4><a class="anchor" id="Ruby"></a>
+</pre></div><p></b></p>
+<p><b> </b></p>
+<h4><a class="anchor" id="Ruby"></a>
 Ruby</h4>
-<p>This example assumes that you have created ruby bindings using <code>make ruby</code>. </p>
+<p><b> This example assumes that you have created ruby bindings using <code>make ruby</code>. </p>
 <div class="fragment"><pre class="fragment"> require <span class="stringliteral">&#39;bbrc&#39;</span>
  MyFminer = <a class="code" href="classBbrc.html#a7dc3a2ad35ff8cff98f5f4fd3a8b58f0" title="Constructor for standard settings: 95% significance Bbrclevel, minimum frequency 2, type trees, dynamic upper bound, BBRC.">Bbrc::Bbrc</a>.new()
 <span class="preprocessor"> # Toy example: special settings for mining all fragments</span>
@@ -229,9 +236,12 @@ Ruby</h4>
         puts res
    end
  end
-</pre></div><h4><a class="anchor" id="Const"></a>
+</pre></div><p></b></p>
+<p><b> </b></p>
+<h4><a class="anchor" id="Const"></a>
 Description of Constructors and Options</h4>
-<p>For the purpose of demonstration we used a toy database of two compounds and an unusual parameter configuration. Please note, that in general the defaults set by the standard constructor are sensible for most databases. They switch on BBRC mining with upper bound pruning for 95% significance and a minimum frequency of 2. The complete standard settings are:</p>
+<p><b> For the purpose of demonstration we used a toy database of two compounds and an unusual parameter configuration. Please note, that in general the defaults set by the standard constructor are sensible for most databases. They switch on BBRC mining with upper bound pruning for 95% significance and a minimum frequency of 2. The complete standard settings are:</b></p>
+<p><b> </p>
 <ul>
 <li>
 Minimum frequency: <b>2</b> </li>
@@ -254,28 +264,33 @@ Do Output: <b>true</b> </li>
 <li>
 Separate BBRCs in output by blank line/vector: <b>false</b> </li>
 </ul>
+<p></b></p>
+<p><b> </p>
 <div class="fragment"><pre class="fragment">
   <a class="code" href="classBbrc.html">Bbrc</a> ();
-</pre></div><p>There also exist more flexible constructors: </p>
+</pre></div><p></b></p>
+<p><b> There also exist more flexible constructors: </p>
 <div class="fragment"><pre class="fragment">
  <a class="code" href="classBbrc.html">Bbrc</a> (<span class="keywordtype">int</span> type, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> minfreq);
  <a class="code" href="classBbrc.html">Bbrc</a> (<span class="keywordtype">int</span> type, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> minfreq, <span class="keywordtype">float</span> chisq_val, <span class="keywordtype">bool</span> do_backbone);
-</pre></div><p> It is recommended to increase minimum frequency as a first step when too many features are generated.</p>
-<p><br/>
+</pre></div><p> It is recommended to increase minimum frequency as a first step when too many features are generated.</b></p>
+<p><b> <br/>
 <br/>
- </p>
+ </b></p>
 <h2><a class="anchor" id="Contact"></a>
 Contact</h2>
-<p>Dipl.-Inf. Andreas Maunz<br/>
+<p><b> Dipl.-Inf. Andreas Maunz<br/>
  Freiburg Center for Data Analysis and Modelling<br/>
  Hermann-Herder-Str. 3a<br/>
  79104 Freiburg, Germany<br/>
  Phone: +49761/203-8442, Fax: +49761/203-7700<br/>
  Email: <a href="mailto:maunza@fdm.uni-freiburg.de">maunza@fdm.uni-freiburg.de</a><br/>
- Web: <a href="http://cs.maunz.de">http://cs.maunz.de</a></p>
+ Web: <a href="http://cs.maunz.de">http://cs.maunz.de</a></b></p>
+<p><b> </p>
 <dl class="author"><dt><b>Author:</b></dt><dd>(c) 2010 by Andreas Maunz, 2010 </dd></dl>
+<p></b></p>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Fri Mar 25 2011 14:24:12 for libbbrc by&nbsp;
+<hr class="footer"/><address class="footer"><small>Generated on Mon Mar 28 2011 10:09:06 for libbbrc by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.1 </small></address>
 </body>
