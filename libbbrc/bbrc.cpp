@@ -511,6 +511,8 @@ bool Bbrc::AddDataCanonical() {
       AddActivityCanonical(activity_map[it->second.first], it->second.first); // act, comp_id
     }
     fm::bbrc_db_built=true;
+    inchi_compound_map.clear();
+    inchi_compound_mmap.clear();
 }
 
 bool Bbrc::AddCompoundCanonical(string smiles, unsigned int comp_id) {
