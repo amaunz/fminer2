@@ -2,6 +2,9 @@ require "test/unit"
 require 'digest/md5'
 require 'yaml'
 
+ENV['FMINER_LAZAR'] = '1'
+ENV['FMINER_SMARTS'] = '1'
+ENV['FMINER_SILENT'] = '1'
 
 $fminer_file=File.expand_path(File.dirname(__FILE__)) + "/fminer.rb"
 begin
@@ -11,7 +14,6 @@ rescue Exception
   exit false
 end
 $myFminer=RubyFminer.new()
-
 
 # A Test class for Fminer/BBRC
 class TestFminer < Test::Unit::TestCase
@@ -32,10 +34,9 @@ class TestFminer < Test::Unit::TestCase
       puts File.new(__FILE__).path + ": file '#{@md5_yaml_file}' could not be loaded!"
       exit false
     end
-
   end
 
-  # Tests the default Fminer settings 
+  # Tests default Fminer settings 
   def test_ruby_fminer
     output=$myFminer.run_fminer(@smi_file, @class_file, 2)
     actual_md5=Digest::MD5.hexdigest(output)
