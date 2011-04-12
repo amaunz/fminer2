@@ -36,7 +36,7 @@ Bbrc::Bbrc() : init_mining_done(false) {
       if (getenv("FMINER_PVALUES")) fm::bbrc_pvalues = true;
       if (getenv("FMINER_NO_AROMATIC_WC")) fm::bbrc_aromatic_wc = false;
       if (getenv("FMINER_SILENT")) {
-        FILE* fp = freopen ("fminer_debug.txt","w",stderr);
+        FILE* fp = freopen ("fminer_bbrc_debug.txt","w",stderr);
       }
   }
   else {
@@ -58,7 +58,7 @@ Bbrc::Bbrc(int _type, unsigned int _minfreq) : init_mining_done(false) {
       if (getenv("FMINER_PVALUES")) fm::bbrc_pvalues = true;
       if (getenv("FMINER_NO_AROMATIC_WC")) fm::bbrc_aromatic_wc = false;
       if (getenv("FMINER_SILENT")) {
-        FILE* fp = freopen ("fminer_debug.txt","w",stderr);
+        FILE* fp = freopen ("fminer_bbrc_debug.txt","w",stderr);
       }
 
   }
