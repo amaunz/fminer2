@@ -33,7 +33,7 @@ Last::Last() : init_mining_done(false) {
       fm::last_instance_present=true;
       fm::last_gsp_out = false; 
       if (getenv("FMINER_SILENT")) {
-        FILE* fp = freopen ("fminer_last_debug.txt","w",stderr);
+        FILE* fp = freopen ("fminer_debug.txt","w",stderr);
       }
   }
   else {
@@ -125,7 +125,7 @@ void Last::Reset() {
     
     if (getenv("FMINER_SILENT")) {
         fclose (stderr);
-        FILE* fp = freopen ("fminer_last_debug.txt","w",stderr);
+        FILE* fp = freopen ("fminer_debug.txt","w",stderr);
      }
 }
 
