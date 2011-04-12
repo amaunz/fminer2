@@ -141,6 +141,11 @@ void Bbrc::Reset() {
     comp_runner=0; 
     comp_no=0; 
     init_mining_done = false;
+
+    if (getenv("FMINER_SILENT")) {
+        fclose (stderr);
+        FILE* fp = freopen ("fminer_bbrc_debug.txt","w",stderr);
+    }
 }
 
 void Bbrc::Defaults() {
