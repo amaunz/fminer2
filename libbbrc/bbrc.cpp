@@ -162,6 +162,7 @@ void Bbrc::Defaults() {
 
     // BBRC
     fm::bbrc_chisq->sig = 3.84146;
+    fm::bbrc_ks->sig = 0.95;
     fm::bbrc_do_backbone = true;
     fm::bbrc_adjust_ub = true;
     fm::bbrc_regression=false;
@@ -333,8 +334,13 @@ bool Bbrc::SetChisqActive(bool val) {
 bool Bbrc::SetChisqSig(float _chisq_val) {
     // parameters not regarded in integrity constraints
     if (_chisq_val < 0.0 || _chisq_val > 1.0) { cerr << "Error! Invalid value '" << _chisq_val << "' for parameter chisq." << endl; exit(1); }
-    fm::bbrc_chisq->sig = gsl_cdf_chisq_Pinv(_chisq_val, 1);
-    return 1;
+    if (fm::bbrc_regression) {
+         fm::bbrc_ks->sig = _chisq_val; 
+    }
+    else {
+        fm::bbrc_chisq->sig = gsl_cdf_chisq_Pinv(_chisq_val, 1);
+        return 1;
+    }
 }
 
 bool Bbrc::SetRegression(bool val) {
