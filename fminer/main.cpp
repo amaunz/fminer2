@@ -415,6 +415,7 @@ int main(int argc, char *argv[], char *envp[]) {
 
             if (graph_file && act_file) {
                 fminer = create_lib();
+                if (do_regression != def_do_regression) all_args_good *= fminer->SetRegression(do_regression);
                 if (type != def_type || arg_type) all_args_good *= fminer->SetType(type);
                 if (minfreq != def_minfreq || arg_minfreq) fminer->SetMinfreq(minfreq);
                 if (chisq_sig != def_chisq_sig || arg_chisq_sig) all_args_good *= fminer->SetChisqSig(chisq_sig);
@@ -425,7 +426,6 @@ int main(int argc, char *argv[], char *envp[]) {
                 if (do_backbone != def_do_backbone) all_args_good *= fminer->SetBackbone(do_backbone);
                 if (do_output != def_do_output) fminer->SetDoOutput(do_output);
                 //if (bbrc_sep != def_bbrc_sep) all_args_good *= fminer->SetBbrcSep(bbrc_sep); // Disabled for console output. Set manually to true and disable console output.
-                if (do_regression != def_do_regression) all_args_good *= fminer->SetRegression(do_regression);
                 if (max_hops != def_max_hops || arg_max_hops)  all_args_good *= fminer->SetMaxHops(max_hops);
             }
 
