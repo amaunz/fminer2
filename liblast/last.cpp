@@ -244,14 +244,6 @@ vector<string>* Last::MineRoot(unsigned int j) {
         if (!fm::last_db_built) {
           AddDataCanonical();
         }
-        if (fm::last_chisq->active) {
-            each (fm::last_database->trees) {
-                if (fm::last_database->trees[i]->activity == -1) {
-                    cerr << "Error! ID " << fm::last_database->trees[i]->orig_tid << " is missing activity information." << endl;
-                    exit(1);
-                }
-            }
-        }
         fm::last_database->edgecount (); 
         fm::last_database->reorder (); 
         LastinitLastLegStatics (); 
