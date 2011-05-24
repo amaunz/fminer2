@@ -347,7 +347,6 @@ bool Bbrc::SetRegression(bool val) {
     fm::bbrc_regression = val;
     if (fm::bbrc_regression) {
          if (!GetBackbone()) {
-    
             SetBackbone(true);
          }
          if (GetPruning()) {
@@ -370,14 +369,6 @@ vector<string>* Bbrc::MineRoot(unsigned int j) {
     if (!init_mining_done) {
         if (!fm::bbrc_db_built) {
           AddDataCanonical();
-        }
-        if (fm::bbrc_chisq->active) {
-            each (fm::bbrc_database->trees) {
-                if (fm::bbrc_database->trees[i]->activity == -1) {
-                    cerr << "Error! ID " << fm::bbrc_database->trees[i]->orig_tid << " is missing activity information." << endl;
-                    exit(1);
-                }
-            }
         }
         fm::bbrc_database->edgecount (); 
         fm::bbrc_database->reorder (); 
