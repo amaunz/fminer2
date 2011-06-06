@@ -42,6 +42,7 @@ class ChisqBbrcConstraint : public BbrcConstraint {
     float sig, chisq, p, u;
     bool active;
     set<BbrcTid> fa_set, fi_set;
+    map<BbrcTid,int> fa_map, fi_map; // Store number of occurrences
 
     ChisqBbrcConstraint (float sig) : na(0), ni(0), n(0), fa(0), fi(0), sig(sig), chisq(0.0), p(0.0), u(0.0), active(0) {}
 
@@ -78,15 +79,25 @@ class ChisqBbrcConstraint : public BbrcConstraint {
 
       fa_set.clear();
       fi_set.clear();
+      fa_map.clear();
+      fi_map.clear();
+
+      std::pair< set<BbrcTid>::iterator, bool > insert_ret;
 
       each (legocc) { 
 
+        BbrcTid orig_tid = fm::bbrc_database->trees[legocc[i].tid]->orig_tid;
+
         if (fm::bbrc_database->trees[legocc[i].tid]->activity == 1) {
-            fa_set.insert(fm::bbrc_database->trees[legocc[i].tid]->orig_tid); 
+            fa_map.insert(make_pair(orig_tid,1)); // each occurrence with 1, failure if present
+            insert_ret = fa_set.insert(orig_tid); 
+            if (!insert_ret.second) fa_map[orig_tid]++; // increase if present
         }
 
         else if (fm::bbrc_database->trees[legocc[i].tid]->activity == 0) {
-            fi_set.insert(fm::bbrc_database->trees[legocc[i].tid]->orig_tid); 
+            fi_map.insert(make_pair(orig_tid,1)); // each occurrence with 1, failure if present
+            insert_ret = fi_set.insert(orig_tid); 
+            if (!insert_ret.second) fi_map[orig_tid]++; // increase if present
         }
 
       }
@@ -103,6 +114,7 @@ class KSBbrcConstraint : public BbrcConstraint {
     vector<float> feat;
     float sig, p;
     set<BbrcTid> fa_set, fi_set;
+    map<BbrcTid,int> fa_map, fi_map; // Store number of occurrences
 
     KSBbrcConstraint (float sig) : sig(sig), p(0.0) {}
 
@@ -119,13 +131,20 @@ class KSBbrcConstraint : public BbrcConstraint {
     //!< Stores activities of occurrences of legs
     template <typename OccurrenceType>
     void BbrcLegActivityOccurrence(vector<OccurrenceType>& legocc) {
+
       fa_set.clear();
       fi_set.clear();
-
+      fa_map.clear();
+      fi_map.clear();
       feat.clear();
+
+      std::pair< set<BbrcTid>::iterator, bool > insert_ret;
       each (legocc) {
         feat.push_back(fm::bbrc_database->trees[legocc[i].tid]->activity);
-        fa_set.insert(fm::bbrc_database->trees[legocc[i].tid]->orig_tid); 
+        BbrcTid orig_tid = fm::bbrc_database->trees[legocc[i].tid]->orig_tid;
+        fa_map.insert(make_pair(orig_tid,1)); // each occurrence with 1, failure if present
+        insert_ret = fa_set.insert(orig_tid); 
+        if (!insert_ret.second) fa_map[orig_tid]++; // increase if present
       }
     }
 
