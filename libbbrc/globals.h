@@ -46,6 +46,7 @@ namespace fm {
     bool bbrc_aromatic_wc; // ENV
     bool bbrc_console_out; // set
     bool bbrc_db_built; // set
+    bool bbrc_nr_hits;  // ENV
 
     // controlled by constructurs & destructor
     bool bbrc_instance_present;

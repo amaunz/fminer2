@@ -38,6 +38,7 @@ Bbrc::Bbrc() : init_mining_done(false) {
       if (getenv("FMINER_SILENT")) {
         FILE* fp = freopen ("fminer_debug.txt","w",stderr);
       }
+      if (getenv("FMINER_NR_HITS")) fm::bbrc_nr_hits = true;
   }
   else {
     cerr << "Error! Cannot create more than 1 instance." << endl; 
@@ -60,6 +61,7 @@ Bbrc::Bbrc(int _type, unsigned int _minfreq) : init_mining_done(false) {
       if (getenv("FMINER_SILENT")) {
         FILE* fp = freopen ("fminer_debug.txt","w",stderr);
       }
+      if (getenv("FMINER_NR_HITS")) fm::bbrc_nr_hits = true;
 
   }
   else {
@@ -86,6 +88,7 @@ Bbrc::Bbrc(int _type, unsigned int _minfreq, float _chisq_val, bool _do_backbone
       if (getenv("FMINER_SILENT")) {
         FILE* fp = freopen ("fminer_debug.txt","w",stderr);
       }
+      if (getenv("FMINER_NR_HITS")) fm::bbrc_nr_hits = true;
 
   }
   else {
@@ -131,6 +134,7 @@ void Bbrc::Reset() {
     fm::bbrc_graphstate = new BbrcGraphState();
     fm::bbrc_closelegoccurrences = new CloseBbrcLegOccurrences();
     fm::bbrc_legoccurrences = new BbrcLegOccurrences();
+    fm::bbrc_nr_hits = false;
 
     fm::bbrc_Bbrccandidatelegsoccurrences.clear();
     fm::bbrc_candidatecloselegsoccs.clear();
@@ -159,6 +163,7 @@ void Bbrc::Defaults() {
     fm::bbrc_bbrc_sep=false;
     fm::bbrc_updated = true;
     fm::bbrc_gsp_out=true;
+    fm::bbrc_nr_hits = false;
 
     // BBRC
     fm::bbrc_chisq->sig = 3.84146;
