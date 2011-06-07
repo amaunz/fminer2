@@ -520,6 +520,7 @@ bool Bbrc::AddDataCanonical() {
     fm::bbrc_db_built=true;
     inchi_compound_map.clear();
     inchi_compound_mmap.clear();
+    activity_map.clear();
 }
 
 bool Bbrc::AddCompoundCanonical(string smiles, unsigned int comp_id) {

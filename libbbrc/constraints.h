@@ -37,33 +37,36 @@ class BbrcConstraint {};
 
 class ChisqBbrcConstraint : public BbrcConstraint {
     public:
-    unsigned int na, ni, n;
+    map<float, unsigned int> nr_acts;
+    unsigned int n;
     unsigned int fa, fi;
     float sig, chisq, p, u;
     bool active;
-    set<BbrcTid> fa_set, fi_set;
-    map<BbrcTid,int> fa_map, fi_map; // Store number of occurrences
+    map<float, set<BbrcTid> > f_sets;
+    map<float, map<BbrcTid,int> > f_maps; 
 
-    ChisqBbrcConstraint (float sig) : na(0), ni(0), n(0), fa(0), fi(0), sig(sig), chisq(0.0), p(0.0), u(0.0), active(0) {}
+    ChisqBbrcConstraint (float sig) : n(0), sig(sig), chisq(0.0), p(0.0), u(0.0) {}
 
-    //!< Calculate chi^2 of current and upper bound for chi^2 of more specific features (see Morishita and Sese, 2000)
     template <typename OccurrenceType>
     void Calc(vector<OccurrenceType>& legocc) {
 
         chisq = 0.0; p = 0.0; u = 0.0;
 
         BbrcLegActivityOccurrence(legocc);
-        fa = fa_set.size(); // fa is y(I) in Morishita and Sese
-        fi = fi_set.size(); // fi is x(I)-y(I)  in Morishita and Sese
+        vector<int> f_sizes;
+        int f_sum=0; each(f_sizes) f_sum+=f_sizes[i];
 
         // chisq_p for current feature
-        p = ChiSq(fa+fi, fa);
+        p = ChiSq(f_sum, f_sizes);
 
         // upper bound u for chisq_p of more specific features
-        float u1 = 0.0, u2 = 0.0;
-        u1 = ChiSq(fa,fa);                                    // upper bound at
-        u2 = ChiSq(fi,0);                                     // max{ chisq (y(I), y(I)) ,
-        u = u1; if (u2>u1) u = u2;                            //      chisq (x(I)-y(I),0) }
+        float u=0.0;
+        each(f_sizes) {
+          int remember = f_sizes[i]; f_sizes[i]=0;
+          float current = Chisq(f_sum-remember,f_sizes);
+          if (current > u) u=current;
+          f_sizes[i]=remember;
+        }
     
     }
 

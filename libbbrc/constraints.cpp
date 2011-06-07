@@ -20,15 +20,23 @@
 
 #include "constraints.h"
 
-float ChisqBbrcConstraint::ChiSq(float x, float y) {
+float ChisqBbrcConstraint::ChiSq(int x_val, vector<int> y) {
+        assert(y.size() == nr_acts.size()); // equal class amounts as integrity constraint.
+        int integrity = 0;
+        each(y) integrity+=y[i]; 
+        assert(integrity == x_val);         // equal occurrence amounts as integrity constraint.
 
-        float ea = 0.0, ei = 0.0, impact = 0.0;
-        
-        impact = x/(float)n;
-        ea = na * impact; 
-        ei = ni * impact; 
+        float impact = 0.0;
+        map<float, unsigned int>::iterator it;
+        int i=0;
 
-        if (ea>0 && ei>0) chisq = (y-ea-0.5)*(y-ea-0.5)/ea + (x-y-ei-0.5)*(x-y-ei-0.5)/ei;
+        impact = x_val/(float)n;
+        chisq=0.0;
+        for (it=nr_acts.begin(); it!=nr_acts.end(); it++) {
+          float ev = it->second * impact;
+          if (ev > 0) chisq += (y[i]-ev-0.5)*(y[i]-ev-0.5)/ev;
+          i++;
+        }
 
         return(chisq);
 
