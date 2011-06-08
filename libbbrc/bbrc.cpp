@@ -543,8 +543,7 @@ bool Bbrc::AddActivityCanonical(float act, unsigned int comp_id) {
   }
   else {
     if (!fm::bbrc_regression) {
-      if ((fm::bbrc_database->trees_map[comp_id]->activity = act) == 1.0) AddChiSqNa();
-      else AddChiSqNi();
+      AddChiSq(fm::bbrc_database->trees_map[comp_id]->activity = act);
     }
     else {
       if ((fm::bbrc_database->trees_map[comp_id]->activity = act)) AddKS(act);
