@@ -58,14 +58,11 @@ class ChisqBbrcConstraint : public BbrcConstraint {
         map<float, set<BbrcTid> >::iterator  f_sets_it;
         for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) f_sizes.push_back(f_sets_it->second.size());
         int f_sum=0; each(f_sizes) f_sum+=f_sizes[i];
-
         // chisq_p for current feature
         p = ChiSq(f_sum, f_sizes);
 
         // upper bound u for chisq_p of more specific features
         float u=0.0;
-
-        // generate subsets
         set<int> f_indices;
         for (int i=0; i<f_sizes.size(); i++) f_indices.insert(i);
         set<set<int> > f_subsets;
@@ -73,15 +70,16 @@ class ChisqBbrcConstraint : public BbrcConstraint {
         generateIntSubsets(f_indices, f_subsets);
         for (f_subsets_it = f_subsets.begin(); f_subsets_it!=f_subsets.end(); f_subsets_it++) {
           if (f_subsets_it->size() > 0) {
-            vector<int> f_used (f_subsets_it->begin(), f_subsets_it->end());
-            vector<int> f_sizes_used;
             f_sum=0;
-            for (int i=0; i<f_used.size(); i++) { 
-              int frac = f_sizes[f_used[i]]; // the current f set size
-              f_sizes_used.push_back(frac);
-              f_sum += frac;
+            vector<int> f_selected_sizes;
+            for (int j=0; j<f_sizes.size(); j++) { 
+              if (f_subsets_it->find(j)!=f_subsets_it->end()) {
+                f_selected_sizes.push_back(f_sizes[j]);
+                f_sum+=f_sizes[j];
+              }
+              else f_selected_sizes.push_back(0);
             }
-            float current = ChiSq(f_sum,f_sizes);
+            float current = ChiSq(f_sum,f_selected_sizes);
             if (current > u) u=current;
           }
        }
@@ -104,12 +102,18 @@ class ChisqBbrcConstraint : public BbrcConstraint {
 
       std::pair< set<BbrcTid>::iterator, bool > insert_ret;
 
+      map<float, unsigned int>::iterator nr_acts_it;
+      for (nr_acts_it = nr_acts.begin(); nr_acts_it != nr_acts.end(); nr_acts_it++) {
+        set<BbrcTid> tmp;
+        f_sets[nr_acts_it->first]=tmp;
+      }
+
       each (legocc) { 
         float activity = fm::bbrc_database->trees[legocc[i].tid]->activity;
         BbrcTid orig_tid = fm::bbrc_database->trees[legocc[i].tid]->orig_tid;
 
         f_maps[activity].insert(make_pair(orig_tid,1)); // each occurrence with 1, failure if present
-        insert_ret = f_sets.insert(make_pair(activity,orig_tid)); 
+        insert_ret = f_sets[activity].insert(orig_tid); 
         if (!insert_ret.second) f_maps[activity][orig_tid]++; // increase if present
 
       }
@@ -125,8 +129,8 @@ class KSBbrcConstraint : public BbrcConstraint {
     vector<float> all;
     vector<float> feat;
     float sig, p;
-    set<BbrcTid> fa_set, fi_set;
-    map<BbrcTid,int> fa_map, fi_map; // Store number of occurrences
+    map<float, set<BbrcTid> > f_sets;
+    map<float, map<BbrcTid,int> > f_maps; 
 
     KSBbrcConstraint (float sig) : sig(sig), p(0.0) {}
 
@@ -144,19 +148,16 @@ class KSBbrcConstraint : public BbrcConstraint {
     template <typename OccurrenceType>
     void BbrcLegActivityOccurrence(vector<OccurrenceType>& legocc) {
 
-      fa_set.clear();
-      fi_set.clear();
-      fa_map.clear();
-      fi_map.clear();
-      feat.clear();
+     feat.clear();
 
       std::pair< set<BbrcTid>::iterator, bool > insert_ret;
       each (legocc) {
-        feat.push_back(fm::bbrc_database->trees[legocc[i].tid]->activity);
+        float activity = fm::bbrc_database->trees[legocc[i].tid]->activity;
         BbrcTid orig_tid = fm::bbrc_database->trees[legocc[i].tid]->orig_tid;
-        fa_map.insert(make_pair(orig_tid,1)); // each occurrence with 1, failure if present
-        insert_ret = fa_set.insert(orig_tid); 
-        if (!insert_ret.second) fa_map[orig_tid]++; // increase if present
+        feat.push_back(activity);
+        f_maps[0.0].insert(make_pair(orig_tid,1)); // each occurrence with 1, failure if present (use 0.0 as dummy key for regression)
+        insert_ret = f_sets[0.0].insert(orig_tid); 
+        if (!insert_ret.second) f_maps[0.0][orig_tid]++; // increase if present
       }
     }
 

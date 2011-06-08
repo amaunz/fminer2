@@ -34,7 +34,8 @@ void ChisqBbrcConstraint::generateIntSubsets(set<int>& myset, set<set<int> >&sub
 float ChisqBbrcConstraint::ChiSq(int x_val, vector<int> y) {
         assert(y.size() == nr_acts.size()); // equal class amounts as integrity constraint.
         int integrity = 0;
-        each(y) integrity+=y[i]; 
+        each(y) { integrity+=y[i]; cout << "'" << y[i] << "'" << endl; }
+        cout << "'" << integrity << "' '" << x_val << "'" <<  endl;
         assert(integrity == x_val);         // equal occurrence amounts as integrity constraint.
 
         float impact = 0.0;
