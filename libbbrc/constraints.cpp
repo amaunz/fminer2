@@ -20,6 +20,17 @@
 
 #include "constraints.h"
 
+
+void ChisqBbrcConstraint::generateIntSubsets(set<int>& myset, set<set<int> >&subsets) {
+    set<int>::iterator vi;
+    for(vi = myset.begin(); vi != myset.end(); ++vi) {
+      set<int> subset = myset;
+      subset.erase(*vi);
+      subsets.insert(subset);
+      if(subset.size() > 1) generateIntSubsets(subset, subsets);
+    }
+}
+
 float ChisqBbrcConstraint::ChiSq(int x_val, vector<int> y) {
         assert(y.size() == nr_acts.size()); // equal class amounts as integrity constraint.
         int integrity = 0;

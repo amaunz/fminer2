@@ -28,6 +28,7 @@
 #include <gsl/gsl_statistics.h>
 #include "legoccurrence.h"
 #include "database.h"
+#include <assert.h>
 
 namespace fm {
     extern BbrcDatabase* bbrc_database;
@@ -54,6 +55,8 @@ class ChisqBbrcConstraint : public BbrcConstraint {
 
         BbrcLegActivityOccurrence(legocc);
         vector<int> f_sizes;
+        map<float, set<BbrcTid> >::iterator  f_sets_it;
+        for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) f_sizes.push_back(f_sets_it->second.size());
         int f_sum=0; each(f_sizes) f_sum+=f_sizes[i];
 
         // chisq_p for current feature
@@ -61,47 +64,53 @@ class ChisqBbrcConstraint : public BbrcConstraint {
 
         // upper bound u for chisq_p of more specific features
         float u=0.0;
-        each(f_sizes) {
-          int remember = f_sizes[i]; f_sizes[i]=0;
-          float current = Chisq(f_sum-remember,f_sizes);
-          if (current > u) u=current;
-          f_sizes[i]=remember;
-        }
-    
+
+        // generate subsets
+        set<int> f_indices;
+        for (int i=0; i<f_sizes.size(); i++) f_indices.insert(i);
+        set<set<int> > f_subsets;
+        set<set<int> >::iterator f_subsets_it;
+        generateIntSubsets(f_indices, f_subsets);
+        for (f_subsets_it = f_subsets.begin(); f_subsets_it!=f_subsets.end(); f_subsets_it++) {
+          if (f_subsets_it->size() > 0) {
+            vector<int> f_used (f_subsets_it->begin(), f_subsets_it->end());
+            vector<int> f_sizes_used;
+            f_sum=0;
+            for (int i=0; i<f_used.size(); i++) { 
+              int frac = f_sizes[f_used[i]]; // the current f set size
+              f_sizes_used.push_back(frac);
+              f_sum += frac;
+            }
+            float current = ChiSq(f_sum,f_sizes);
+            if (current > u) u=current;
+          }
+       }
     }
 
 
     private:
 
     //!< Calculates chi^2 and upper bound values
-    float ChiSq(float x, float y);
+    float ChiSq(int x_val, vector<int> y);
+    void generateIntSubsets(set<int>& myset, set<set<int> >&subsets);
+ 
 
     //!< Counts occurrences of legs in active and inactive compounds
     template <typename OccurrenceType>
     void BbrcLegActivityOccurrence(vector<OccurrenceType>& legocc) {
 
-      fa_set.clear();
-      fi_set.clear();
-      fa_map.clear();
-      fi_map.clear();
+      f_sets.clear();
+      f_maps.clear();
 
       std::pair< set<BbrcTid>::iterator, bool > insert_ret;
 
       each (legocc) { 
-
+        float activity = fm::bbrc_database->trees[legocc[i].tid]->activity;
         BbrcTid orig_tid = fm::bbrc_database->trees[legocc[i].tid]->orig_tid;
 
-        if (fm::bbrc_database->trees[legocc[i].tid]->activity == 1) {
-            fa_map.insert(make_pair(orig_tid,1)); // each occurrence with 1, failure if present
-            insert_ret = fa_set.insert(orig_tid); 
-            if (!insert_ret.second) fa_map[orig_tid]++; // increase if present
-        }
-
-        else if (fm::bbrc_database->trees[legocc[i].tid]->activity == 0) {
-            fi_map.insert(make_pair(orig_tid,1)); // each occurrence with 1, failure if present
-            insert_ret = fi_set.insert(orig_tid); 
-            if (!insert_ret.second) fi_map[orig_tid]++; // increase if present
-        }
+        f_maps[activity].insert(make_pair(orig_tid,1)); // each occurrence with 1, failure if present
+        insert_ret = f_sets.insert(make_pair(activity,orig_tid)); 
+        if (!insert_ret.second) f_maps[activity][orig_tid]++; // increase if present
 
       }
 
