@@ -112,8 +112,7 @@ class Bbrc : public Fminer {
     //@}
     
   private:
-    void AddChiSqNa(){fm::bbrc_chisq->na++;fm::bbrc_chisq->n++;}
-    void AddChiSqNi(){fm::bbrc_chisq->ni++;fm::bbrc_chisq->n++;}
+    void AddChiSq(float act){fm::bbrc_chisq->nr_acts[act]++; fm::bbrc_chisq->n++;}
     // KS: Insert value into set of activities
     void AddKS(float val){fm::bbrc_ks->all.push_back(val);}
 

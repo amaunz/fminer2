@@ -20,18 +20,40 @@
 
 #include "constraints.h"
 
-float ChisqBbrcConstraint::ChiSq(float x, float y) {
 
-        float ea = 0.0, ei = 0.0, impact = 0.0;
-        
-        impact = x/(float)n;
-        ea = na * impact; 
-        ei = ni * impact; 
+void ChisqBbrcConstraint::generateIntSubsets(set<int>& myset, set<set<int> >&subsets) {
+    set<int>::iterator vi;
+    for(vi = myset.begin(); vi != myset.end(); ++vi) {
+      set<int> subset = myset;
+      subset.erase(*vi);
+      subsets.insert(subset);
+      if(subset.size() > 1) generateIntSubsets(subset, subsets);
+    }
+}
 
-        if (ea>0 && ei>0) chisq = (y-ea-0.5)*(y-ea-0.5)/ea + (x-y-ei-0.5)*(x-y-ei-0.5)/ei;
+float ChisqBbrcConstraint::ChiSq(int x_val, vector<int> y) {
+        assert(y.size() == nr_acts.size()); // equal class amounts as integrity constraint.
+        int integrity = 0;
+//        cout << endl;
+        each(y) { 
+          integrity+=y[i]; 
+          //cout << "'" << y[i] << "'" << endl; 
+        }
+//        cout << "'" << integrity << "' '" << x_val << "'" <<  endl;
+        assert(integrity == x_val);         // equal occurrence amounts as integrity constraint.
 
+        float impact = 0.0;
+        map<float, unsigned int>::iterator it;
+        int i=0;
+
+        impact = x_val/(float)n;
+        chisq=0.0;
+        for (it=nr_acts.begin(); it!=nr_acts.end(); it++) {
+          float ev = it->second * impact;
+          if (ev > 0) chisq += (y[i]-ev-0.5)*(y[i]-ev-0.5)/ev;
+          i++;
+        }
         return(chisq);
-
 }
 
 float KSBbrcConstraint::KS(vector<float> all_activities, vector<float> feat_activities) {

@@ -456,66 +456,76 @@ void BbrcGraphState::print ( unsigned int frequency ) {
             else putchar('\t');
           }
           // output freq
-          if (fm::bbrc_chisq->active) {
-              if (!fm::bbrc_regression && frequency != (fm::bbrc_chisq->fa+fm::bbrc_chisq->fi)) { cerr << "Error: wrong counts! " << frequency << "!=" << fm::bbrc_chisq->fa + fm::bbrc_chisq->fi << "(" << fm::bbrc_chisq->fa << "+" << fm::bbrc_chisq->fi << ")" << endl; }
-          }
-          else { 
+          if (!fm::bbrc_chisq->active) {
               if (fm::bbrc_do_yaml) { printf("%i", frequency); }
               //else { printf("%i\t", frequency); };
           }
           // output occurrences
           if (fm::bbrc_chisq->active) {
 
-              set<BbrcTid> fa_set, fi_set;
-              map<BbrcTid,int> fa_map, fi_map;
-              if (!fm::bbrc_regression) { fa_set = fm::bbrc_chisq->fa_set; fi_set = fm::bbrc_chisq->fi_set; fa_map = fm::bbrc_chisq->fa_map; fi_map = fm::bbrc_chisq->fi_map; }
-              else { fa_set = fm::bbrc_ks->fa_set; fi_set = fm::bbrc_ks->fi_set; fa_map = fm::bbrc_ks->fa_map; fi_map = fm::bbrc_ks->fi_map; }
+            map<float, set<BbrcTid> > f_sets;
+            map<float, map<BbrcTid,int> > f_maps;
 
-              putchar ('[');
-              set<BbrcTid>::iterator iter;
-              if (fm::bbrc_do_yaml) {
-                  for (iter = fa_set.begin(); iter != fa_set.end(); iter++) {
-                      if (iter != fa_set.begin()) putchar (',');
-                      putchar (' ');
-                      printf("%i", (*iter)); 
-                      if (fm::bbrc_nr_hits) {
-                        printf("=>%i", fa_map[*iter]);
-                      }
-                  }
-                  if (!fm::bbrc_regression) {
-                      putchar (']');
-                      putchar (',');
-                      putchar (' ');
-                      putchar ('[');
-                  }
-              }
-              if (fm::bbrc_do_yaml) {
-                  for (iter = fi_set.begin(); iter != fi_set.end(); iter++) {
-                      if (iter != fi_set.begin()) putchar (',');
-                      printf(" %i", (*iter)); 
-                      if (fm::bbrc_nr_hits) {
-                        printf("=>%i", fi_map[*iter]);
-                      }
-                  }
-              }
-              if (!fm::bbrc_do_yaml) {
-                  set<BbrcTid> ids;
-                  ids.insert(fa_set.begin(), fa_set.end());
-                  ids.insert(fi_set.begin(), fi_set.end());
-                  map<BbrcTid,int> hits;
-                  hits.insert(fa_map.begin(), fa_map.end());
-                  hits.insert(fi_map.begin(), fi_map.end());
+            if (!fm::bbrc_regression) { f_sets = fm::bbrc_chisq->f_sets; f_maps = fm::bbrc_chisq->f_maps; }
+            else { f_sets = fm::bbrc_ks->f_sets; f_maps = fm::bbrc_ks->f_maps; }
 
-                  for (iter = ids.begin(); iter != ids.end(); iter++) {
-                      putchar(' ');
-                      printf("%i", (*iter)); 
-                      if (fm::bbrc_nr_hits) {
-                        printf("=>%i", hits[*iter]);
-                      }
-                  }
-              }
+            map<float, set<BbrcTid> >::iterator f_sets_it;
+            set<BbrcTid> fa_set;
+            map<BbrcTid, int> fa_map;
+                                         
+            set<BbrcTid>::iterator iter;
+
+            if (fm::bbrc_do_yaml) {
+              f_sets_it=f_sets.end();
+              do {
+                f_sets_it--;
+                map<float, set<BbrcTid> >::iterator outer_first = --(f_sets.end());
+                map<float, set<BbrcTid> >::iterator outer_last = f_sets.begin();
+                fa_map = f_maps[f_sets_it->first];
+                fa_set = f_sets_it->second;
+                if (f_sets_it == outer_first) putchar ('[');
+                set<BbrcTid>::iterator begin = fa_set.begin();
+                set<BbrcTid>::iterator end = fa_set.end();
+                set<BbrcTid>::iterator last = end; if (fa_set.size()) last = --(fa_set.end());
+                for (iter = begin; iter != end; iter++) {
+                    if (iter != begin) putchar (',');
+                    putchar (' ');
+                    printf("%i", (*iter)); 
+                    if (fm::bbrc_nr_hits && fm::bbrc_do_yaml) {
+                      printf(": %i", fa_map[*iter]);
+                    }
+                    if ((last != end) && (iter == last)) putchar(' ');
+                }
+                if (f_sets_it != outer_last) {
+                    putchar (']');
+                    putchar (',');
+                    putchar (' ');
+                    putchar ('[');
+                }
+              } while (f_sets_it != f_sets.begin());
+            }
+        
+            else {
+              putchar('[');
               putchar(' ');
-              putchar(']');
+              set<BbrcTid> ids;
+              map<BbrcTid,int> hits;
+              for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) {
+                fa_map = f_maps[f_sets_it->first];
+                fa_set = f_sets_it->second;
+                ids.insert(fa_set.begin(), fa_set.end());
+                hits.insert(fa_map.begin(), fa_map.end());
+              }
+              for (iter = ids.begin(); iter != ids.end(); iter++) {
+                printf("%i", (*iter)); 
+                if (fm::bbrc_nr_hits && fm::bbrc_do_yaml) {
+                  printf(": %i", hits[*iter]);
+                }
+                putchar(' ');
+              }
+            }
+            putchar(']');
+
           }
           if (fm::bbrc_do_yaml) { 
             putchar(' ');
@@ -626,6 +636,7 @@ void BbrcGraphState::DfsOut(int cur_n, string& oss, int from_n) {
 // ENTRY: BRANCH TO GSP (OSS) or PRINT YAML/LAZAR TO OSS
 
 string BbrcGraphState::to_s ( unsigned int frequency ) {
+
     float p, sig;
     if (fm::bbrc_chisq->active) {
         if (!fm::bbrc_regression) {
@@ -670,10 +681,7 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
           }
 
           // output freq
-          if (fm::bbrc_chisq->active) {
-              if (!fm::bbrc_regression && frequency != (fm::bbrc_chisq->fa+fm::bbrc_chisq->fi)) { cerr << "Notice: Wrong counts for frequency " << frequency << " [!=" << fm::bbrc_chisq->fa << "(fa)+" << fm::bbrc_chisq->fi << "(fi)]." << endl; }
-          }
-          else { 
+          if (!fm::bbrc_chisq->active) {
               char x[20]; sprintf(x,"%i", frequency); 
               oss.append(x);
           }
@@ -681,73 +689,68 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
           // output occurrences
           if (fm::bbrc_chisq->active) {
 
-              set<BbrcTid> fa_set, fi_set;
-              map<BbrcTid, int> fa_map, fi_map;
-              if (!fm::bbrc_regression) { fa_set = fm::bbrc_chisq->fa_set; fi_set = fm::bbrc_chisq->fi_set; fa_map = fm::bbrc_chisq->fa_map; fi_map = fm::bbrc_chisq->fi_map; }
-              else { fa_set = fm::bbrc_ks->fa_set; fi_set = fm::bbrc_ks->fi_set; fa_map = fm::bbrc_ks->fa_map; fi_map = fm::bbrc_ks->fi_map; }
+            map<float, set<BbrcTid> > f_sets;
+            map<float, map<BbrcTid,int> > f_maps;
 
+            if (!fm::bbrc_regression) { f_sets = fm::bbrc_chisq->f_sets; f_maps = fm::bbrc_chisq->f_maps; }
+            else { f_sets = fm::bbrc_ks->f_sets; f_maps = fm::bbrc_ks->f_maps; }
 
+            map<float, set<BbrcTid> >::iterator f_sets_it;
+            set<BbrcTid> fa_set;
+            map<BbrcTid, int> fa_map;
+                                         
+            set<BbrcTid>::iterator iter;
+            char x[20];
 
-              oss.append ("[");
+            if (fm::bbrc_do_yaml) {
+              f_sets_it=f_sets.end();
+              do {
+                f_sets_it--;
+//              for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) {
+                map<float, set<BbrcTid> >::iterator outer_first = --(f_sets.end());
+                map<float, set<BbrcTid> >::iterator outer_last = f_sets.begin();
+                fa_map = f_maps[f_sets_it->first];
+                fa_set = f_sets_it->second;
+                if (f_sets_it == outer_first) oss.append ("[");
+                set<BbrcTid>::iterator begin = fa_set.begin();
+                set<BbrcTid>::iterator end = fa_set.end();
+                set<BbrcTid>::iterator last = end; if (fa_set.size()) last = --(fa_set.end());
+                for (iter = begin; iter != end; iter++) {
+                    if (iter != begin) oss.append (",");
+                    oss.append (" ");
+                    sprintf(x,"%i", (*iter)); oss.append (x);
+                    if (fm::bbrc_nr_hits && fm::bbrc_do_yaml) {
+                      sprintf(x, ": %i", fa_map[*iter]); oss.append (x);
+                    }
+                    if ((last != end) && (iter == last)) oss.append (" ");
+                }
+                if (f_sets_it != outer_last) oss.append ("], [");
+              } while (f_sets_it != f_sets.begin());
+            }
 
-              set<BbrcTid>::iterator iter;
-              char x[20];
-
-              if (fm::bbrc_do_yaml) {
-                  set<BbrcTid>::iterator begin = fa_set.begin();
-                  set<BbrcTid>::iterator end = fa_set.end();
-                  set<BbrcTid>::iterator last = end; if (fa_set.size()) last = --(fa_set.end());
-
-                  for (iter = begin; iter != end; iter++) {
-                      if (iter != begin) oss.append (",");
-                      oss.append (" ");
-                      sprintf(x,"%i", (*iter)); oss.append (x);
-                      if (fm::bbrc_nr_hits) {
-                        sprintf(x, "=>%i", fa_map[*iter]); oss.append (x);
-                      }
-                      if ((last != end) && (iter == last)) oss.append (" ");
-                 }
-                  if (!fm::bbrc_regression) oss.append ("], [");
-
-                  begin = fi_set.begin();
-                  end = fi_set.end();
-                  last = end; if (fi_set.size()) last = --(fi_set.end());
-
-                  for (iter = begin; iter != end; iter++) {
-                      if (iter != begin) oss.append (",");
-                      oss.append (" ");
-                      sprintf(x,"%i", (*iter)); oss.append (x);
-                      if (fm::bbrc_nr_hits) {
-                        sprintf(x, "=>%i", fi_map[*iter]); oss.append (x);
-                      }
-                      if ((last != end) && (iter == last)) oss.append (" ");
-                  }
+            else {
+              oss.append ("[ ");
+              set<BbrcTid> ids;
+              map<BbrcTid,int> hits;
+              for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) {
+                fa_map = f_maps[f_sets_it->first];
+                fa_set = f_sets_it->second;
+                ids.insert(fa_set.begin(), fa_set.end());
+                hits.insert(fa_map.begin(), fa_map.end());
               }
-
-              if (!fm::bbrc_do_yaml) {
-                  set<BbrcTid> ids;
-                  ids.insert(fa_set.begin(), fa_set.end());
-                  ids.insert(fi_set.begin(), fi_set.end());
-                  map<BbrcTid, int> hits;
-                  hits.insert(fa_map.begin(), fa_map.end());
-                  hits.insert(fi_map.begin(), fi_map.end());
-                  for (iter = ids.begin(); iter != ids.end(); iter++) {
-                      sprintf(x,"%i", (*iter)); oss.append(x);
-                      if (fm::bbrc_nr_hits) {
-                        sprintf(x, "=>%i", hits[*iter]); oss.append (x);
-                      }
-                      oss.append (" ");
-                  }
+              for (iter = ids.begin(); iter != ids.end(); iter++) {
+                sprintf(x,"%i", (*iter)); oss.append(x);
+                if (fm::bbrc_nr_hits && fm::bbrc_do_yaml) {
+                  sprintf(x, ": %i", hits[*iter]); oss.append (x);
+                }
+                oss.append (" ");
               }
-              if (!fm::bbrc_do_yaml) oss.append (" ]");
-              else oss.append ("]");
+            }
+            oss.append ("]");
           }
 
           if (fm::bbrc_do_yaml) oss.append (" ]");
-
           fm::bbrc_console_out ? oss.append ("\n") : oss.append ("");
-
-
           return oss;
        }
 

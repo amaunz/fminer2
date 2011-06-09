@@ -520,6 +520,7 @@ bool Bbrc::AddDataCanonical() {
     fm::bbrc_db_built=true;
     inchi_compound_map.clear();
     inchi_compound_mmap.clear();
+    activity_map.clear();
 }
 
 bool Bbrc::AddCompoundCanonical(string smiles, unsigned int comp_id) {
@@ -542,8 +543,7 @@ bool Bbrc::AddActivityCanonical(float act, unsigned int comp_id) {
   }
   else {
     if (!fm::bbrc_regression) {
-      if ((fm::bbrc_database->trees_map[comp_id]->activity = act) == 1.0) AddChiSqNa();
-      else AddChiSqNi();
+      AddChiSq(fm::bbrc_database->trees_map[comp_id]->activity = act);
     }
     else {
       if ((fm::bbrc_database->trees_map[comp_id]->activity = act)) AddKS(act);
