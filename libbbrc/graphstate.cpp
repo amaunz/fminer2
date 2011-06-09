@@ -484,21 +484,25 @@ void BbrcGraphState::print ( unsigned int frequency ) {
                 fa_map = f_maps[f_sets_it->first];
                 fa_set = f_sets_it->second;
                 if (f_sets_it == outer_first) putchar ('[');
-                for (iter = fa_set.begin(); iter != fa_set.end(); iter++) {
-                    if (iter != fa_set.begin()) putchar (',');
+                set<BbrcTid>::iterator begin = fa_set.begin();
+                set<BbrcTid>::iterator end = fa_set.end();
+                set<BbrcTid>::iterator last = end; if (fa_set.size()) last = --(fa_set.end());
+                for (iter = begin; iter != end; iter++) {
+                    if (iter != begin) putchar (',');
                     putchar (' ');
                     printf("%i", (*iter)); 
-                    if (fm::bbrc_nr_hits) {
-                      printf("=>%i", fa_map[*iter]);
+                    if (fm::bbrc_nr_hits && fm::bbrc_do_yaml) {
+                      printf(": %i", fa_map[*iter]);
                     }
+                    if ((last != end) && (iter == last)) putchar(' ');
                 }
-                if (f_sets_it == outer_last) {
+                if (f_sets_it != outer_last) {
                     putchar (']');
                     putchar (',');
                     putchar (' ');
                     putchar ('[');
                 }
-              } while (f_sets_it!=f_sets.begin());
+              } while (f_sets_it != f_sets.begin());
             }
         
             else {
@@ -513,11 +517,11 @@ void BbrcGraphState::print ( unsigned int frequency ) {
                 hits.insert(fa_map.begin(), fa_map.end());
               }
               for (iter = ids.begin(); iter != ids.end(); iter++) {
-                putchar(' ');
                 printf("%i", (*iter)); 
-                if (fm::bbrc_nr_hits) {
-                  printf("=>%i", hits[*iter]);
+                if (fm::bbrc_nr_hits && fm::bbrc_do_yaml) {
+                  printf(": %i", hits[*iter]);
                 }
+                putchar(' ');
               }
             }
             putchar(']');
@@ -715,8 +719,8 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
                     if (iter != begin) oss.append (",");
                     oss.append (" ");
                     sprintf(x,"%i", (*iter)); oss.append (x);
-                    if (fm::bbrc_nr_hits) {
-                      sprintf(x, "=>%i", fa_map[*iter]); oss.append (x);
+                    if (fm::bbrc_nr_hits && fm::bbrc_do_yaml) {
+                      sprintf(x, ": %i", fa_map[*iter]); oss.append (x);
                     }
                     if ((last != end) && (iter == last)) oss.append (" ");
                 }
@@ -736,8 +740,8 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
               }
               for (iter = ids.begin(); iter != ids.end(); iter++) {
                 sprintf(x,"%i", (*iter)); oss.append(x);
-                if (fm::bbrc_nr_hits) {
-                  sprintf(x, "=>%i", hits[*iter]); oss.append (x);
+                if (fm::bbrc_nr_hits && fm::bbrc_do_yaml) {
+                  sprintf(x, ": %i", hits[*iter]); oss.append (x);
                 }
                 oss.append (" ");
               }
