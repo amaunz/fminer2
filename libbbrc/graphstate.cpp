@@ -476,9 +476,11 @@ void BbrcGraphState::print ( unsigned int frequency ) {
             set<BbrcTid>::iterator iter;
 
             if (fm::bbrc_do_yaml) {
-              for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) {
-                map<float, set<BbrcTid> >::iterator outer_last = --(f_sets.end());
-                map<float, set<BbrcTid> >::iterator outer_first = f_sets.begin();
+              f_sets_it=f_sets.end();
+              do {
+                f_sets_it--;
+                map<float, set<BbrcTid> >::iterator outer_first = --(f_sets.end());
+                map<float, set<BbrcTid> >::iterator outer_last = f_sets.begin();
                 fa_map = f_maps[f_sets_it->first];
                 fa_set = f_sets_it->second;
                 if (f_sets_it == outer_first) putchar ('[');
@@ -496,7 +498,7 @@ void BbrcGraphState::print ( unsigned int frequency ) {
                     putchar (' ');
                     putchar ('[');
                 }
-              }
+              } while (f_sets_it!=f_sets.begin());
             }
         
             else {
@@ -697,9 +699,12 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
             char x[20];
 
             if (fm::bbrc_do_yaml) {
-              for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) {
-                map<float, set<BbrcTid> >::iterator outer_last = --(f_sets.end());
-                map<float, set<BbrcTid> >::iterator outer_first = f_sets.begin();
+              f_sets_it=f_sets.end();
+              do {
+                f_sets_it--;
+//              for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) {
+                map<float, set<BbrcTid> >::iterator outer_first = --(f_sets.end());
+                map<float, set<BbrcTid> >::iterator outer_last = f_sets.begin();
                 fa_map = f_maps[f_sets_it->first];
                 fa_set = f_sets_it->second;
                 if (f_sets_it == outer_first) oss.append ("[");
@@ -716,7 +721,7 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
                     if ((last != end) && (iter == last)) oss.append (" ");
                 }
                 if (f_sets_it != outer_last) oss.append ("], [");
-              }
+              } while (f_sets_it != f_sets.begin());
             }
 
             else {
