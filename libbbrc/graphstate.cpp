@@ -456,10 +456,7 @@ void BbrcGraphState::print ( unsigned int frequency ) {
             else putchar('\t');
           }
           // output freq
-          if (fm::bbrc_chisq->active) {
-              if (!fm::bbrc_regression && frequency != (fm::bbrc_chisq->fa+fm::bbrc_chisq->fi)) { cerr << "Error: wrong counts! " << frequency << "!=" << fm::bbrc_chisq->fa + fm::bbrc_chisq->fi << "(" << fm::bbrc_chisq->fa << "+" << fm::bbrc_chisq->fi << ")" << endl; }
-          }
-          else { 
+          if (!fm::bbrc_chisq->active) {
               if (fm::bbrc_do_yaml) { printf("%i", frequency); }
               //else { printf("%i\t", frequency); };
           }
@@ -477,11 +474,14 @@ void BbrcGraphState::print ( unsigned int frequency ) {
             map<BbrcTid, int> fa_map;
                                          
             set<BbrcTid>::iterator iter;
-            for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) {
-              fa_map = f_maps[f_sets_it->first];
-              fa_set = f_sets_it->second;
-              putchar ('[');
-              if (fm::bbrc_do_yaml) {
+
+            if (fm::bbrc_do_yaml) {
+              for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) {
+                map<float, set<BbrcTid> >::iterator outer_last = --(f_sets.end());
+                map<float, set<BbrcTid> >::iterator outer_first = f_sets.begin();
+                fa_map = f_maps[f_sets_it->first];
+                fa_set = f_sets_it->second;
+                if (f_sets_it == outer_first) putchar ('[');
                 for (iter = fa_set.begin(); iter != fa_set.end(); iter++) {
                     if (iter != fa_set.begin()) putchar (',');
                     putchar (' ');
@@ -490,7 +490,7 @@ void BbrcGraphState::print ( unsigned int frequency ) {
                       printf("=>%i", fa_map[*iter]);
                     }
                 }
-                if (!fm::bbrc_regression) {
+                if (f_sets_it == outer_last) {
                     putchar (']');
                     putchar (',');
                     putchar (' ');
@@ -499,7 +499,9 @@ void BbrcGraphState::print ( unsigned int frequency ) {
               }
             }
         
-            if (!fm::bbrc_do_yaml) {
+            else {
+              putchar('[');
+              putchar(' ');
               set<BbrcTid> ids;
               map<BbrcTid,int> hits;
               for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) {
@@ -516,7 +518,6 @@ void BbrcGraphState::print ( unsigned int frequency ) {
                 }
               }
             }
-            putchar(' ');
             putchar(']');
 
           }
@@ -629,6 +630,7 @@ void BbrcGraphState::DfsOut(int cur_n, string& oss, int from_n) {
 // ENTRY: BRANCH TO GSP (OSS) or PRINT YAML/LAZAR TO OSS
 
 string BbrcGraphState::to_s ( unsigned int frequency ) {
+
     float p, sig;
     if (fm::bbrc_chisq->active) {
         if (!fm::bbrc_regression) {
@@ -673,10 +675,7 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
           }
 
           // output freq
-          if (fm::bbrc_chisq->active) {
-              if (!fm::bbrc_regression && frequency != (fm::bbrc_chisq->fa+fm::bbrc_chisq->fi)) { cerr << "Notice: Wrong counts for frequency " << frequency << " [!=" << fm::bbrc_chisq->fa << "(fa)+" << fm::bbrc_chisq->fi << "(fi)]." << endl; }
-          }
-          else { 
+          if (!fm::bbrc_chisq->active) {
               char x[20]; sprintf(x,"%i", frequency); 
               oss.append(x);
           }
@@ -697,31 +696,31 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
             set<BbrcTid>::iterator iter;
             char x[20];
 
-            for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) {
-              fa_map = f_maps[f_sets_it->first];
-              fa_set = f_sets_it->second;
-
-              oss.append ("[");
-
-              if (fm::bbrc_do_yaml) {
-                  set<BbrcTid>::iterator begin = fa_set.begin();
-                  set<BbrcTid>::iterator end = fa_set.end();
-                  set<BbrcTid>::iterator last = end; if (fa_set.size()) last = --(fa_set.end());
-
-                  for (iter = begin; iter != end; iter++) {
-                      if (iter != begin) oss.append (",");
-                      oss.append (" ");
-                      sprintf(x,"%i", (*iter)); oss.append (x);
-                      if (fm::bbrc_nr_hits) {
-                        sprintf(x, "=>%i", fa_map[*iter]); oss.append (x);
-                      }
-                      if ((last != end) && (iter == last)) oss.append (" ");
-                 }
-                  if (!fm::bbrc_regression) oss.append ("], [");
+            if (fm::bbrc_do_yaml) {
+              for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) {
+                map<float, set<BbrcTid> >::iterator outer_last = --(f_sets.end());
+                map<float, set<BbrcTid> >::iterator outer_first = f_sets.begin();
+                fa_map = f_maps[f_sets_it->first];
+                fa_set = f_sets_it->second;
+                if (f_sets_it == outer_first) oss.append ("[");
+                set<BbrcTid>::iterator begin = fa_set.begin();
+                set<BbrcTid>::iterator end = fa_set.end();
+                set<BbrcTid>::iterator last = end; if (fa_set.size()) last = --(fa_set.end());
+                for (iter = begin; iter != end; iter++) {
+                    if (iter != begin) oss.append (",");
+                    oss.append (" ");
+                    sprintf(x,"%i", (*iter)); oss.append (x);
+                    if (fm::bbrc_nr_hits) {
+                      sprintf(x, "=>%i", fa_map[*iter]); oss.append (x);
+                    }
+                    if ((last != end) && (iter == last)) oss.append (" ");
+                }
+                if (f_sets_it != outer_last) oss.append ("], [");
               }
             }
 
-            if (!fm::bbrc_do_yaml) {
+            else {
+              oss.append ("[ ");
               set<BbrcTid> ids;
               map<BbrcTid,int> hits;
               for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) {
@@ -738,8 +737,7 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
                 oss.append (" ");
               }
             }
-            if (!fm::bbrc_do_yaml) oss.append (" ]");
-            else oss.append ("]");
+            oss.append ("]");
           }
 
           if (fm::bbrc_do_yaml) oss.append (" ]");
