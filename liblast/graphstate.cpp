@@ -353,7 +353,7 @@ void LastGraphState::print ( FILE *f ) {
 
 // GENERATE VECTOR REPRESENTATIONS FOR LATENT STRUCTURE MINING
 
-void LastGraphState::print ( GSWalk* gsw, map<LastTid, int> weightmap_a, map<LastTid, int> weightmap_i ) {
+void LastGraphState::print ( GSWalk* gsw, map<float, map<LastTid, int> > weightmap ) {
 
   // convert occurrence lists to weight maps
   for ( int i = 0; i < (int) nodes.size (); i++ ) {
@@ -366,7 +366,7 @@ void LastGraphState::print ( GSWalk* gsw, map<LastTid, int> weightmap_a, map<Las
       LastGraphState::GSEdge &edge = nodes[i].edges[j];
       if ( i < edge.tonode ) {
           set<InputLastEdgeLabel> iel; iel.insert((InputLastEdgeLabel) fm::last_database->edgelabels[fm::last_database->edgelabelsindexes[edge.edgelabel]].inputedgelabel);
-          gsw->edgewalk[i][edge.tonode] = (GSWEdge) { edge.tonode , iel, weightmap_a, weightmap_i, 0, 1 } ;
+          gsw->edgewalk[i][edge.tonode] = (GSWEdge) { edge.tonode , iel, weightmap, 0, 1 } ;
       }
     }
   }
@@ -424,7 +424,7 @@ void LastGraphState::DfsOut(int cur_n, int from_n) {
 
 
 // ENTRY: BRANCH TO GSP (STDOUT) or PRINT YAML/LAZAR TO STDOUT
-
+/*
 void LastGraphState::print ( unsigned int frequency ) {
     float p, sig;
     if (fm::last_chisq->active) {
@@ -463,21 +463,43 @@ void LastGraphState::print ( unsigned int frequency ) {
           }
           // output occurrences
           if (fm::last_chisq->active) {
-              putchar ('[');
+
+              map<float, set<LastTid> > f_sets;
+              map<float, map<LastTid,int> > f_maps;
+
+              if (!fm::last_regression) { f_sets = fm::last_chisq->f_sets; f_maps = fm::last_chisq->f_maps; }
+              else { f_sets = fm::last_ks->f_sets; f_maps = fm::last_ks->f_maps; }
+
+              map<float, set<LastTid> >::iterator f_sets_it;
+              set<LastTid> fa_set;
+              map<LastTid, int> fa_map;
               set<LastTid>::iterator iter;
-              for (iter = fm::last_chisq->fa_set.begin(); iter != fm::last_chisq->fa_set.end(); iter++) {
-                  if (iter != fm::last_chisq->fa_set.begin()) putchar (',');
-                  putchar (' ');
-                  printf("%i", (*iter)); 
-              }
-              putchar (']');
-              putchar (',');
-              putchar (' ');
-              putchar ('[');
-              for (iter = fm::last_chisq->fi_set.begin(); iter != fm::last_chisq->fi_set.end(); iter++) {
-                  if (iter != fm::last_chisq->fi_set.begin()) putchar (',');
-                  printf(" %i", (*iter)); 
-              }
+
+              f_sets_it=f_sets.end();
+              do {
+                f_sets_it--;
+                map<float, set<BbrcTid> >::iterator outer_first = --(f_sets.end());
+                map<float, set<BbrcTid> >::iterator outer_last = f_sets.begin();
+                fa_map = f_maps[f_sets_it->first];
+                fa_set = f_sets_it->second;
+                if (f_sets_it == outer_first) putchar ('[');
+                set<BbrcTid>::iterator begin = fa_set.begin();
+                set<BbrcTid>::iterator end = fa_set.end();
+                set<BbrcTid>::iterator last = end; if (fa_set.size()) last = --(fa_set.end());
+                for (iter = begin; iter != end; iter++) {
+                  if (iter != begin) putchar (',');
+                    putchar (' ');
+                    printf("%i", (*iter));
+                    if ((last != end) && (iter == last)) putchar(' ');
+                 }
+                 if (f_sets_it != outer_last) {
+                    putchar (']');
+                    putchar (',');
+                    putchar (' ');
+                    putchar ('[');
+                 }
+              } while (f_sets_it != f_sets.begin());
+
               set<LastTid> ids;
               ids.insert(fm::last_chisq->fa_set.begin(), fm::last_chisq->fa_set.end());
               ids.insert(fm::last_chisq->fi_set.begin(), fm::last_chisq->fi_set.end());
@@ -494,6 +516,7 @@ void LastGraphState::print ( unsigned int frequency ) {
        }
     }
 }
+*/
 
 
 
@@ -583,9 +606,9 @@ void LastGraphState::DfsOut(int cur_n, string& oss, int from_n) {
 
 
 // ENTRY: BRANCH TO GSP (OSS) or PRINT YAML/LAZAR TO OSS
-
 string LastGraphState::to_s ( unsigned int frequency ) {
 
+  /*
     if (!fm::last_chisq->active || fm::last_chisq->p >= fm::last_chisq->sig) {
 
         string oss;
@@ -670,7 +693,9 @@ string LastGraphState::to_s ( unsigned int frequency ) {
        }
 
     }
-    else return "";
+    */
+    //else 
+      return "";
 }
   
 string LastGraphState::sep() {
@@ -1423,12 +1448,11 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
                 map<int, GSWEdge>& e1i = from->second;
                 for (map<int, GSWEdge>::iterator to=e1i.begin(); to!=e1i.end(); to++) {
                     if (to->first <= border) {
-                        map<LastTid, int> weightmap_a; 
-                        map<LastTid, int> weightmap_i; 
+                        map<float, map<LastTid, int> > weightmap; 
                         set<InputLastNodeLabel> inl;
                         set<InputLastEdgeLabel> iel;
                         GSWNode n = { inl };
-                        GSWEdge e = { to->first, iel, weightmap_a, weightmap_i, 0, 0 };
+                        GSWEdge e = { to->first, iel, weightmap, 0, 0 };
                         if (nodewalk_empty) s->add_edge(from->first, e, n, 0, &core_ids, &u12);
                         if (nodewalk_empty || starting) stack_locations[to->first]=from->first;
                     }
@@ -1542,12 +1566,11 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
                                 cout << ">" << endl;
                             }
                             #endif
-                            map<LastTid, int> weightmap_a; 
-                            map<LastTid, int> weightmap_i; 
+                            map<float, map<LastTid, int> >weightmap; 
                             set<InputLastNodeLabel> inl;
                             set<InputLastEdgeLabel> iel;
                             GSWNode n = { inl };
-                            GSWEdge e = { *it, iel, weightmap_a, weightmap_i, 0, 0 };
+                            GSWEdge e = { *it, iel, weightmap, 0, 0 };
                             ninsert21[*it][j]=n;
                             einsert21[*it][j]=e;
                         }
@@ -1578,13 +1601,12 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
                                 cout << ">" << endl;
                             }
                             #endif
-                            map<LastTid, int> weightmap_a; 
-                            map<LastTid, int> weightmap_i; 
+                            map<float, map<LastTid, int> > weightmap; 
                             set<InputLastNodeLabel> inl;
                             set<InputLastEdgeLabel> iel;
 
                             GSWNode n = { inl };
-                            GSWEdge e = { *it, iel, weightmap_a, weightmap_i, 0, 0 };
+                            GSWEdge e = { *it, iel, weightmap, 0, 0 };
 
                             ninsert12[*it][j]=n;
                             einsert12[*it][j]=e;
@@ -1951,11 +1973,10 @@ int GSWNode::stack (GSWNode n) {
 //
 int GSWEdge::stack (GSWEdge e) {
     labs.insert(e.labs.begin(), e.labs.end());
-    for (map<LastTid,int>::iterator it=e.a.begin(); it!=e.a.end(); it++) {
-        a[it->first] = a[it->first] + it->second;
-    }
-    for (map<LastTid,int>::iterator it=e.i.begin(); it!=e.i.end(); it++) {
-        i[it->first] = i[it->first] + it->second;
+    for (map<float, map<LastTid,int> >::iterator it=e.m.begin(); it!=e.m.end(); it++) {
+        for (map<LastTid,int>::iterator it2=it->second.begin(); it2!=it->second.end(); it2++) {
+          m[it->first][it2->first] = m[it->first][it2->first] + it2->second;
+        }
     }
     discrete_weight = discrete_weight + e.discrete_weight;
     return 0;

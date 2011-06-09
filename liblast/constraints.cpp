@@ -21,7 +21,7 @@
 #include "constraints.h"
 #include "stats.h"
 
-void ChisqBbrcConstraint::generateIntSubsets(set<int>& myset, set<set<int> >&subsets) {
+void ChisqLastConstraint::generateIntSubsets(set<int>& myset, set<set<int> >&subsets) {
     set<int>::iterator vi;
     for(vi = myset.begin(); vi != myset.end(); ++vi) {
       set<int> subset = myset;
@@ -29,10 +29,13 @@ void ChisqBbrcConstraint::generateIntSubsets(set<int>& myset, set<set<int> >&sub
       subsets.insert(subset);
       if(subset.size() > 1) generateIntSubsets(subset, subsets);
     }
+}
 
 float ChisqLastConstraint::ChiSqTest(float x, float y, unsigned int n_active, unsigned int n_inactive) {
 
+  float res=0.0;
   // backup
+  /*
   unsigned int na_tmp = na;
   unsigned int ni_tmp = ni;
   unsigned int n_tmp = n;
@@ -41,7 +44,7 @@ float ChisqLastConstraint::ChiSqTest(float x, float y, unsigned int n_active, un
   na=n_active;
   ni=n_inactive;
   n=na+ni;
-  float res = gsl_cdf_chisq_P(ChiSq(x,y,true),1); // Always decide activating in this mode
+  res = gsl_cdf_chisq_P(ChiSq(x,y,true),1); // Always decide activating in this mode
   if (!activating) res*=-1.0;
 
   // restore
@@ -49,6 +52,7 @@ float ChisqLastConstraint::ChiSqTest(float x, float y, unsigned int n_active, un
   ni=ni_tmp;
   n=n_tmp;
   activating=activating_tmp;
+  */
 
   return res;
 }
@@ -80,6 +84,7 @@ float ChisqLastConstraint::ChiSq(int x_val, vector<int> y) {
 }
 
 float ChisqLastConstraint::ChiSq(float x, float y, bool decide_activating) {
+  /*
   float ea = 0.0, ei = 0.0, impact = 0.0;
   impact = x/(float)n;
   ea = na * impact; 
@@ -88,6 +93,7 @@ float ChisqLastConstraint::ChiSq(float x, float y, bool decide_activating) {
     (y>ea) ? activating=1 : activating=0;
   }
   if (ea>0 && ei>0) chisq = (y-ea-0.5)*(y-ea-0.5)/ea + (x-y-ei-0.5)*(x-y-ei-0.5)/ei;
+  */
   return(chisq);
 }
 

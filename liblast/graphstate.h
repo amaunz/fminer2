@@ -111,7 +111,7 @@ class LastGraphState {
     void reinsertEdge (); // reinserts last edge on the stack
     LastNodeId lastNode () const { return nodes.size () - 1; }
 
-    void print ( GSWalk* gsw, map<LastTid, int> weightmap_a, map<LastTid, int> weightmap_i ); 
+    void print ( GSWalk* gsw, map<float, map<LastTid, int> >weightmap); 
 
     void print ( FILE *f );
     void DfsOut(int cur_n, int from_n);
@@ -141,8 +141,7 @@ struct GSWEdge {
     //                                   on this edge
     int to;
     set<InputLastEdgeLabel> labs;
-    map<LastTid, int> a;
-    map<LastTid, int> i;
+    map<float, map<LastTid, int> >m;
     bool deleted;
     int discrete_weight;
 

@@ -531,9 +531,13 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
     #endif
    
     if (fm::last_chisq->active) {
-        map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
-        map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
-        fm::last_graphstate->print(gsw, weightmap_a, weightmap_i);
+        map<float, map<LastTid, int> > weightmap; 
+        for (map<float, LastTid>::iterator it=fm::last_chisq->nr_acts.begin(); it!=fm::last_chisq->nr_acts.end(); it++) {
+          weightmap[it->first].insert(make_pair(it->second, 1)); 
+        }
+//        map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
+//        map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
+        fm::last_graphstate->print(gsw, weightmap);
         if (!fm::last_regression) {
             gsw->activating=fm::last_chisq->activating;
             if (cur_chisq >= fm::last_chisq->sig) {
@@ -687,9 +691,13 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
     #endif
 
     if (fm::last_chisq->active) {
-        map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
-        map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
-        fm::last_graphstate->print(gsw, weightmap_a, weightmap_i);
+        map<float, map<LastTid, int> > weightmap; 
+        for (map<float, LastTid>::iterator it=fm::last_chisq->nr_acts.begin(); it!=fm::last_chisq->nr_acts.end(); it++) {
+          weightmap[it->first].insert(make_pair(it->second, 1)); 
+        }
+     //   map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
+     //   map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
+        fm::last_graphstate->print(gsw, weightmap);
         if (!fm::last_regression) {
             gsw->activating=fm::last_chisq->activating;
             if (cur_chisq >= fm::last_chisq->sig) {
@@ -853,9 +861,13 @@ GSWalk* LastPath::expand2 (pair<float,string> max, const int parent_size) {
           #endif
 
           if (fm::last_chisq->active) {
-              map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
-              map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
-              fm::last_graphstate->print(gsw, weightmap_a, weightmap_i);
+              map<float, map<LastTid, int> > weightmap; 
+              for (map<float, LastTid>::iterator it=fm::last_chisq->nr_acts.begin(); it!=fm::last_chisq->nr_acts.end(); it++) {
+                weightmap[it->first].insert(make_pair(it->second, 1)); 
+              }
+              //map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
+              //map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
+              fm::last_graphstate->print(gsw, weightmap);
 
               if (!fm::last_regression) {
                   gsw->activating=fm::last_chisq->activating;
@@ -1028,9 +1040,13 @@ void LastPath::expand () {
       #endif
 
       if (fm::last_chisq->active) {
-          map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
-          map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
-          fm::last_graphstate->print(gsw, weightmap_a, weightmap_i);
+          map<float, map<LastTid, int> > weightmap; 
+          for (map<float, LastTid>::iterator it=fm::last_chisq->nr_acts.begin(); it!=fm::last_chisq->nr_acts.end(); it++) {
+            weightmap[it->first].insert(make_pair(it->second, 1)); 
+          }
+          //map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
+          //map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
+          fm::last_graphstate->print(gsw, weightmap);
 
           if (!fm::last_regression) {
               gsw->activating=fm::last_chisq->activating;

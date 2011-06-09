@@ -882,9 +882,13 @@ GSWalk* LastPatternTree::expand (pair<float, string> max, const int parent_size)
     #endif
 
     if (fm::last_chisq->active) { 
-        map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
-        map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
-        fm::last_graphstate->print(gsw, weightmap_a, weightmap_i); // print to graphstate walk
+        map<float, map<LastTid, int> > weightmap; 
+        for (map<float, LastTid>::iterator it=fm::last_chisq->nr_acts.begin(); it!=fm::last_chisq->nr_acts.end(); it++) {
+          weightmap[it->first].insert(make_pair(it->second, 1)); 
+        }
+//        map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
+//        map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
+        fm::last_graphstate->print(gsw, weightmap); // print to graphstate walk
 
         if (!fm::last_regression) {
             gsw->activating=fm::last_chisq->activating;
@@ -1170,20 +1174,19 @@ ostream& operator<< (ostream& os, GSWalk* gsw) {
 
 ostream& operator<< (ostream& os, GSWEdge* gswe) {
     typedef map<LastTid,int> mmap;
+    typedef map<float, map<LastTid,int> >mmmap;
     os << "To: " << gswe->to;
     os << " Labs: <";
     each_it(gswe->labs, set<InputLastEdgeLabel>::iterator) {
         os << *it << " ";
     }
     os << "> ";
-    os << "<";
-    each_it(gswe->a, mmap::iterator) {
-        os << it->first << "->" << it->second << " ";
-    }
-    os << "> ";
-    os << "<";
-    each_it(gswe->i, mmap::iterator) {
-        os << it->first << "->" << it->second << " ";
+    for (mmmap::iterator it=gswe->m.begin(); it!=gswe->m.end(); it++) {
+      os << "> ";
+      os << "<";
+      for (mmap::iterator it2=it->second.begin(); it2!=it->second.end(); it2++) {
+        os << it2->first << "->" << it2->second << " ";
+      }
     }
     os << "> ";
 }

@@ -28,6 +28,7 @@
 #include <gsl/gsl_statistics.h>
 #include "legoccurrence.h"
 #include "database.h"
+#include <assert.h>
 
 namespace fm {
   extern LastDatabase* last_database;
@@ -38,17 +39,19 @@ class LastConstraint {};
 class ChisqLastConstraint : public LastConstraint {
   public:
 
-    unsigned int na, ni, n;          // counters for a, i, n
+    map<float, unsigned int> nr_acts;
+    unsigned int n;
     unsigned int fa, fi;             // counters for occurrences of spec feature                      (cand. for making private)
     float sig;                       // significance threshold, not accessed (r,rw) inside this class (only constructor)
     float chisq;                     // chisq is test results, written on every test                  (cand. for making private)
     float p, u;                      // p, u are test results, written on every test                  (cand. for making ro)
     bool active;                     // whether test is active, not accessed (r,rw) inside this class (only constructor)
+    map<float, set<LastTid> > f_sets;
+    map<float, map<LastTid,int> > f_maps; 
 
-    set<LastTid> fa_set, fi_set;     //                                                               (cand. for making private)
     bool activating;                 // defaults to deactivating (0)                                  (cand. for making ro)
 
-    ChisqLastConstraint (float sig) : na(0), ni(0), n(0), fa(0), fi(0), sig(sig), chisq(0.0), p(0.0), u(0.0), active(0), activating(0) {}
+    ChisqLastConstraint (float sig) : n(0), sig(sig), chisq(0.0), p(0.0), u(0.0), activating(0) {}
 
     //!< Calculate chi^2 of current and upper bound for chi^2 of more specific features (see Morishita and Sese, 2000)
     template <typename OccurrenceType>
@@ -95,6 +98,7 @@ class ChisqLastConstraint : public LastConstraint {
 
     //!< Calculates chi^2 and upper bound values
     float ChiSq(int x_val, vector<int> y);
+    float ChiSq(float x, float y, bool decide_activating);
     void generateIntSubsets(set<int>& myset, set<set<int> >&subsets);
  
 
@@ -144,11 +148,10 @@ class KSLastConstraint : public LastConstraint {
     void Calc(vector<OccurrenceType>& legocc) { 
       LastLegActivityOccurrence(legocc); p = KS(all,feat,1); 
     }
+    float KSTest(vector<float> all, vector<float> feat);
 
 private:
     float KS(vector<float> all_activities, vector<float> feat_activities, bool decide_activating);
-    
-    float KSTest(vector<float> all, vector<float> feat);
 
     //!< Stores activities of occurrences of legs
     template <typename OccurrenceType>
