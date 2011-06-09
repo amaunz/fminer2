@@ -429,8 +429,7 @@ bool Last::AddActivityCanonical(float act, unsigned int comp_id) {
   }
   else {
     if (!fm::last_regression) {
-      if ((fm::last_database->trees_map[comp_id]->activity = act) == 1.0) AddChiSqNa();
-      else AddChiSqNi();
+      AddChiSq(fm::last_database->trees_map[comp_id]->activity = act);
     }
     else {
       if ((fm::last_database->trees_map[comp_id]->activity = act)) AddKS(act);

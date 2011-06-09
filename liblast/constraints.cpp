@@ -21,6 +21,15 @@
 #include "constraints.h"
 #include "stats.h"
 
+void ChisqBbrcConstraint::generateIntSubsets(set<int>& myset, set<set<int> >&subsets) {
+    set<int>::iterator vi;
+    for(vi = myset.begin(); vi != myset.end(); ++vi) {
+      set<int> subset = myset;
+      subset.erase(*vi);
+      subsets.insert(subset);
+      if(subset.size() > 1) generateIntSubsets(subset, subsets);
+    }
+
 float ChisqLastConstraint::ChiSqTest(float x, float y, unsigned int n_active, unsigned int n_inactive) {
 
   // backup
@@ -42,6 +51,32 @@ float ChisqLastConstraint::ChiSqTest(float x, float y, unsigned int n_active, un
   activating=activating_tmp;
 
   return res;
+}
+
+
+float ChisqLastConstraint::ChiSq(int x_val, vector<int> y) {
+        assert(y.size() == nr_acts.size()); // equal class amounts as integrity constraint.
+        int integrity = 0;
+//        cout << endl;
+        each(y) { 
+          integrity+=y[i]; 
+          //cout << "'" << y[i] << "'" << endl; 
+        }
+//        cout << "'" << integrity << "' '" << x_val << "'" <<  endl;
+        assert(integrity == x_val);         // equal occurrence amounts as integrity constraint.
+
+        float impact = 0.0;
+        map<float, unsigned int>::iterator it;
+        int i=0;
+
+        impact = x_val/(float)n;
+        chisq=0.0;
+        for (it=nr_acts.begin(); it!=nr_acts.end(); it++) {
+          float ev = it->second * impact;
+          if (ev > 0) chisq += (y[i]-ev-0.5)*(y[i]-ev-0.5)/ev;
+          i++;
+        }
+        return(chisq);
 }
 
 float ChisqLastConstraint::ChiSq(float x, float y, bool decide_activating) {
