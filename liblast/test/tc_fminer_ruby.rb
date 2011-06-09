@@ -24,6 +24,7 @@ class TestFminer < Test::Unit::TestCase
 
   # Determines default configuration, such as paths
   def configure
+    @arch=`uname -m`.chomp
     @smi_file=File.expand_path(File.dirname(__FILE__)) + "/hamster_carcinogenicity.smi"
     @class_file=File.expand_path(File.dirname(__FILE__)) + "/hamster_carcinogenicity.class"
     @md5_yaml_file=File.expand_path(File.dirname(__FILE__)) + "/fminer_md5.yaml"
@@ -40,7 +41,7 @@ class TestFminer < Test::Unit::TestCase
   def test_ruby_fminer
     output=$myFminer.run_fminer(@smi_file, @class_file, 2)
     actual_md5=Digest::MD5.hexdigest(output)
-    expected_md5=@config['default']
+    expected_md5=@config[@arch]['default']
     assert_equal(actual_md5, expected_md5)
   end
 
@@ -48,7 +49,7 @@ class TestFminer < Test::Unit::TestCase
   def test_ruby_fminer_kekule
     output=$myFminer.run_fminer(@smi_file, @class_file, 2, false)
     actual_md5=Digest::MD5.hexdigest(output)
-    expected_md5=@config['kekule']
+    expected_md5=@config[@arch]['kekule']
     assert_equal(actual_md5, expected_md5)
   end
 

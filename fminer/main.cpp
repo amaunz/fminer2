@@ -175,13 +175,6 @@ void read_act (char* act_file, bool regr) {
                 }
                 */
                 // KS: check float for equality
-                //
-                /*
-                if (!regr && (act_value != 0.0) && act_value != 1.0) { 
-                    cerr << "Error! Invalid activity: '" << tmp_field << "' in file '" << act_file << "', line " << line_nr << "." << endl; 
-                    exit(1);
-                }
-                */
 
                 // KS: fminer->AddActivity((bool) act_value, tid);
                 // KS: Do not convert to bool
