@@ -53,9 +53,7 @@ float ChisqBbrcConstraint::ChiSq(int x_val, vector<int> y) {
           if (ev > 0) chisq += (y[i]-ev-0.5)*(y[i]-ev-0.5)/ev;
           i++;
         }
-
         return(chisq);
-
 }
 
 float KSBbrcConstraint::KS(vector<float> all_activities, vector<float> feat_activities) {

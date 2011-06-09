@@ -62,7 +62,7 @@ class ChisqBbrcConstraint : public BbrcConstraint {
         p = ChiSq(f_sum, f_sizes);
 
         // upper bound u for chisq_p of more specific features
-        float u=0.0;
+        u=0.0;
         set<int> f_indices;
         for (int i=0; i<f_sizes.size(); i++) f_indices.insert(i);
         set<set<int> > f_subsets;
@@ -83,6 +83,7 @@ class ChisqBbrcConstraint : public BbrcConstraint {
             if (current > u) u=current;
           }
        }
+//       cout << "U: " << u << " P: " << p << endl;
     }
 
 
