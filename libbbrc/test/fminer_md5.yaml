@@ -1,3 +1,8 @@
-default: 9c013735ec76d12e54d4f30db5e9d60b
-multinomial: 6c340f6eb18c37c487235af6d8af01fd
-kekule: 9c08ad5b55154aa4eec516998098af2f
+i686:
+ default: 0683cd9b848710138e60fecb8be14522
+ multinomial: 74cabf0f1984f1ed91a2d0be8fca3deb
+ kekule: 9c08ad5b55154aa4eec516998098af2f
+x86_64:
+ default: 9c013735ec76d12e54d4f30db5e9d60b
+ multinomial: 6c340f6eb18c37c487235af6d8af01fd
+ kekule: 9c08ad5b55154aa4eec516998098af2f
