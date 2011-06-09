@@ -49,7 +49,7 @@ class ChisqLastConstraint : public LastConstraint {
     map<float, set<LastTid> > f_sets;
     map<float, map<LastTid,int> > f_maps; 
 
-    bool activating;                 // defaults to deactivating (0)                                  (cand. for making ro)
+    float activating;                 // defaults to deactivating (0)                                  (cand. for making ro)
 
     ChisqLastConstraint (float sig) : n(0), sig(sig), chisq(0.0), p(0.0), u(0.0), activating(0) {}
 
@@ -140,7 +140,7 @@ class KSLastConstraint : public LastConstraint {
     float sig, p;
     map<float, set<LastTid> > f_sets;
     map<float, map<LastTid,int> > f_maps; 
-    bool activating;                 // defaults to deactivating (0)                                  (cand. for making ro)
+    float activating;                 // defaults to deactivating (0)                                  (cand. for making ro)
 
     KSLastConstraint (float sig) : sig(sig), p(0.0), activating(0) {}
 

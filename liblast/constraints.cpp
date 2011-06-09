@@ -75,11 +75,20 @@ float ChisqLastConstraint::ChiSq(int x_val, vector<int> y) {
 
         impact = x_val/(float)n;
         chisq=0.0;
+        float max_deviation = 0.0;
+        float max_deviator = 0.0;
         for (it=nr_acts.begin(); it!=nr_acts.end(); it++) {
           float ev = it->second * impact;
-          if (ev > 0) chisq += (y[i]-ev-0.5)*(y[i]-ev-0.5)/ev;
+          if (ev > 0) { 
+            float deviation = y[i]-ev;
+            //cout << "IT: " << it->first << ", YI: " << y[i] << ", EV: " << ev << ", DEV: " << deviation << endl;
+            if (deviation>0.0 && deviation >= max_deviation) { max_deviation=deviation; max_deviator=it->first; }
+            chisq += (y[i]-ev-0.5)*(y[i]-ev-0.5)/ev;
+            cout << it->first << "::: ev: " << ev << " dev: " << deviation << " chisq: "  << chisq << endl;
+          }
           i++;
         }
+        activating=max_deviator;
         return(chisq);
 }
 
