@@ -168,7 +168,7 @@
  * #include <string.h>
  * using namespace std;
  *
- * Bbrc* MyFminer;
+ * Bbrc* MyFminer; // global singleton instance
  * int main(int argc, char *argv[], char *envp) {
  *   MyFminer= new Bbrc();
  *   // Toy example: special settings for mining all fragments
@@ -179,8 +179,8 @@
  *   MyFminer->AddCompound ("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4" , 1);
  *   MyFminer->AddCompound ("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2);
  *      // ... continue adding compounds
- *   MyFminer->AddActivity((bool) true, 1);
- *   MyFminer->AddActivity((bool) false, 2);
+ *   MyFminer->AddActivity((bool) true, 1); // true denotes the 'active'...
+ *   MyFminer->AddActivity((bool) false, 2); // false the 'inactive' class.
  *      // ... continue adding activities (true for active, false for inactive)
  *   cerr << MyFminer->GetNoCompounds() << " compounds" << endl;
   *   // gather results for every root node in vector instead of immediate output
@@ -190,7 +190,7 @@
  *        cout << (*result)[i] << endl;
  *      }
  *   }
- *   delete MyFminer;
+ *   delete MyFminer; // or call Reset() and start over.
  * }
  *  \endcode
  *
@@ -199,7 +199,7 @@
  * This example assumes that you have created python bindings using <code>make python</code>.
  * \code
  * import bbrc
- * MyFminer = bbrc.Bbrc()
+ * MyFminer = bbrc.Bbrc() # global singleton instance
  * # Toy example: special settings for mining all fragments
  * # use no significance constraint
  * MyFminer.SetChisqSig(0) 
@@ -210,8 +210,8 @@
  * MyFminer.AddCompound("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4" , 1)
  * MyFminer.AddCompound("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2)
  * # ... continue adding compounds
- * MyFminer.AddActivity(1.0, 1)
- * MyFminer.AddActivity(0.0, 2)
+ * MyFminer.AddActivity(1.0, 1) # 1.0 denotes the active...
+ * MyFminer.AddActivity(0.0, 2) # 0.0 the inactive class.
  * # ... continue adding activities (true for active, false for inactive)
  * print repr(MyFminer.GetNoCompounds()) + ' compounds.'
  * # gather results for every root node in vector instead of immediate output
@@ -219,6 +219,7 @@
  *      result = MyFminer.MineRoot(j);
  *      for i in range(0, result.size()-1):
  *                  print result[i];
+ * # Call Reset() to start over.
  * \endcode
  *
  * \subsubsection Ruby Ruby
@@ -226,7 +227,7 @@
  * This example assumes that you have created ruby bindings using <code>make ruby</code>.
  * \code
  * require 'bbrc'
- * MyFminer = Bbrc::Bbrc.new()
+ * MyFminer = Bbrc::Bbrc.new() # global singleton instance
  * # Toy example: special settings for mining all fragments
  * # use no significance constraint
  * MyFminer.SetChisqSig(0) 
@@ -238,8 +239,8 @@
  * MyFminer.AddCompound("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4" , 1)
  * MyFminer.AddCompound("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2)
  *    # ... continue adding compounds
- * MyFminer.AddActivity(true, 1)
- * MyFminer.AddActivity(false, 2)
+ * MyFminer.AddActivity(true, 1) # true denotes the active...
+ * MyFminer.AddActivity(false, 2)# false the inactive class.
  *    # ... continue adding activities (true for active, false for inactive)
  * print MyFminer.GetNoCompounds()  
  * puts " compounds"
@@ -250,6 +251,7 @@
  *        puts res
  *   end
  * end
+ * # Call Reset() to start over.
  *  \endcode
  *
  * \subsubsection Const Description of Constructors and Options

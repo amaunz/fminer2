@@ -106,11 +106,10 @@
  * #include <string.h>
  * using namespace std;
  *
- * Last* MyFminer;
+ * Last* MyFminer; // global singleton instance.
  * int main(int argc, char *argv[], char *envp[]) {
  *     MyFminer= new Last();
  *     MyFminer = Last::Last.new();
- *     MyFminer->SetMaxHops(25);
  *     MyFminer->SetConsoleOut(false);
  *     // Add compounds below. IMPORTANT! Do not change settings after adding compounds!
  *     MyFminer->AddCompound ("O=C(C(C(C=C3)=CC=C3O)=CO2)C1=C2C=C(O)C=C1O" , 1);
@@ -143,7 +142,7 @@
  *           cout << (*result)[i] << endl;
  *        }
  *     }
- *     delete MyFminer;
+ *     delete MyFminer; // or call Reset() and start over.
  * }
  *
  * 
@@ -155,8 +154,7 @@
  *
  * \code
  * import liblast
- * MyFminer = liblast.Last()
- * MyFminer.SetMaxHops(25)
+ * MyFminer = liblast.Last() # global singleton instance.
  * MyFminer.SetConsoleOut(0)
  * # Add compounds below. IMPORTANT! Do not change settings after adding compounds!
  * MyFminer.AddCompound("O=C(C(C(C=C3)=CC=C3O)=CO2)C1=C2C=C(O)C=C1O" , 1)
@@ -180,13 +178,14 @@
  * MyFminer.AddActivity(1.0, 8)
  * MyFminer.AddActivity(0.0, 9)
  * MyFminer.AddActivity(0.0, 10)
- * # ... continue adding activities (true for active, false for inactive)
+ * # ... continue adding activities (true (1.0) for active, false (0.0) for inactive)
  * print repr(MyFminer.GetNoCompounds()) + ' compounds'
  * # gather results for every root node in vector instead of immediate output
  * for j in range(0, MyFminer.GetNoRootNodes()-1):
  *    result = MyFminer.MineRoot(j);
  *    for i in range(0, result.size()-1):
  *        print result[i];
+ * # call MyFminer.Reset() to start over.
  * \endcode
  *
  * \subsubsection Ruby Ruby
@@ -196,7 +195,6 @@
  *
  * require 'last'
  * MyFminer = Last::Last.new()
- * MyFminer.SetMaxHops(25)
  * MyFminer.SetConsoleOut(false)
  * # Add compounds below. IMPORTANT! Do not change settings after adding compounds!
  * MyFminer.AddCompound("O=C(C(C(C=C3)=CC=C3O)=CO2)C1=C2C=C(O)C=C1O" , 1)
@@ -220,7 +218,7 @@
  * MyFminer.AddActivity(1.0, 8)
  * MyFminer.AddActivity(0.0, 9)
  * MyFminer.AddActivity(0.0, 10)
- * # ... continue adding activities (true for active, false for inactive)
+ * # ... continue adding activities (true (1.0) for active, false (0.0) for inactive)
  * print MyFminer.GetNoCompounds()  
  * puts " compounds"
  * # gather results for every root node in vector instead of immediate output
@@ -231,7 +229,7 @@
  *        puts res
  *   end
  * end
- *
+ * # call MyFminer.Reset() to start over.
  * \endcode
  *
  * \subsubsection Const Description of Constructors and Options
