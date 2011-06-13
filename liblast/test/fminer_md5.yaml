@@ -1,6 +1,8 @@
 i686:
-  default: f4b077357d6174cc86f97e448214381f
-  kekule: 36f467df3bf846b917efbd7ab9ff4a4b
+ default: f4b077357d6174cc86f97e448214381f
+ multinomial: 74cabf0f1984f1ed91a2d0be8fca3deb
+ kekule: 36f467df3bf846b917efbd7ab9ff4a4b
 x86_64:
-  default: 1e3b16459bb46a1ae3f6068fa70ba149
-  kekule: fb8c5724c870d905d4c342f77712882d
+ default: 1e3b16459bb46a1ae3f6068fa70ba149
+ multinomial: 6c340f6eb18c37c487235af6d8af01fd
+ kekule: fb8c5724c870d905d4c342f77712882d

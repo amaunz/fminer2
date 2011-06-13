@@ -27,6 +27,7 @@ class TestFminer < Test::Unit::TestCase
     @arch=`uname -m`.chomp
     @smi_file=File.expand_path(File.dirname(__FILE__)) + "/hamster_carcinogenicity.smi"
     @class_file=File.expand_path(File.dirname(__FILE__)) + "/hamster_carcinogenicity.class"
+    @class_file_mn=File.expand_path(File.dirname(__FILE__)) + "/hamster_carcinogenicity-multinomial.class"
     @md5_yaml_file=File.expand_path(File.dirname(__FILE__)) + "/fminer_md5.yaml"
     @config=nil
     begin
@@ -42,6 +43,13 @@ class TestFminer < Test::Unit::TestCase
     output=$myFminer.run_fminer(@smi_file, @class_file, 2)
     actual_md5=Digest::MD5.hexdigest(output)
     expected_md5=@config[@arch]['default']
+    assert_equal(actual_md5, expected_md5)
+  end
+
+  def test_ruby_fminer_multinomial
+    output=$myFminer.run_fminer(@smi_file, @class_file_mn, 2)
+    actual_md5=Digest::MD5.hexdigest(output)
+    expected_md5=@config[@arch]['multinomial']
     assert_equal(actual_md5, expected_md5)
   end
 
