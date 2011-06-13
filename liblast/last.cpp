@@ -116,6 +116,8 @@ void Last::Reset() {
     fm::last_legoccurrences = new LastLegOccurrences();
 
     fm::last_candidateLastcloselegsoccsused.clear();
+    fm::last_candidatecloselegsoccs.clear();
+    fm::last_candidateLastcloselegsoccsused.clear();
 
     fm::last_chisq->active=true; 
     fm::last_result = &r;
