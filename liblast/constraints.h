@@ -65,7 +65,7 @@ class ChisqLastConstraint : public LastConstraint {
         for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) f_sizes.push_back(f_sets_it->second.size());
         int f_sum=0; each(f_sizes) f_sum+=f_sizes[i];
         // chisq_p for current feature
-        p = ChiSq(f_sum, f_sizes);
+        p = ChiSq(f_sum, f_sizes, true);
 
         // upper bound u for chisq_p of more specific features
         u=0.0;
@@ -85,11 +85,10 @@ class ChisqLastConstraint : public LastConstraint {
               }
               else f_selected_sizes.push_back(0);
             }
-            float current = ChiSq(f_sum,f_selected_sizes);
+            float current = ChiSq(f_sum,f_selected_sizes,false);
             if (current > u) u=current;
           }
        }
-//       cout << "U: " << u << " P: " << p << endl;
     }
 
     float ChiSqTest(float x, float y, unsigned int n_active, unsigned int n_inactive); // on-the-fly test
@@ -97,7 +96,7 @@ class ChisqLastConstraint : public LastConstraint {
   private:
 
     //!< Calculates chi^2 and upper bound values
-    float ChiSq(int x_val, vector<int> y);
+    float ChiSq(int x_val, vector<int> y, bool decide_ativating);
     float ChiSq(float x, float y, bool decide_activating);
     void generateIntSubsets(set<int>& myset, set<set<int> >&subsets);
  

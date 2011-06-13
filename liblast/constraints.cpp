@@ -58,15 +58,12 @@ float ChisqLastConstraint::ChiSqTest(float x, float y, unsigned int n_active, un
 }
 
 
-float ChisqLastConstraint::ChiSq(int x_val, vector<int> y) {
+float ChisqLastConstraint::ChiSq(int x_val, vector<int> y, bool decide_activating) {
         assert(y.size() == nr_acts.size()); // equal class amounts as integrity constraint.
         int integrity = 0;
-//        cout << endl;
         each(y) { 
           integrity+=y[i]; 
-          //cout << "'" << y[i] << "'" << endl; 
         }
-//        cout << "'" << integrity << "' '" << x_val << "'" <<  endl;
         assert(integrity == x_val);         // equal occurrence amounts as integrity constraint.
 
         float impact = 0.0;
@@ -81,14 +78,12 @@ float ChisqLastConstraint::ChiSq(int x_val, vector<int> y) {
           float ev = it->second * impact;
           if (ev > 0) { 
             float deviation = y[i]-ev;
-            //cout << "IT: " << it->first << ", YI: " << y[i] << ", EV: " << ev << ", DEV: " << deviation << endl;
             if (deviation>0.0 && deviation >= max_deviation) { max_deviation=deviation; max_deviator=it->first; }
             chisq += (y[i]-ev-0.5)*(y[i]-ev-0.5)/ev;
-            cout << it->first << "::: ev: " << ev << " dev: " << deviation << " chisq: "  << chisq << endl;
           }
           i++;
         }
-        activating=max_deviator;
+        if (decide_activating) activating=max_deviator;
         return(chisq);
 }
 
