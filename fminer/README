@@ -20,7 +20,7 @@
     "v M L" means that the Mth vertex in this graph has label L,
     "e P Q L" means that there is an edge connecting the Pth vertex with the Qth vertex. The edge has label L.
 
-- Activity file line format is defined by 
+  Activity file line format is defined by the id, endpoint description, and target class. You can use maximally five different classes. Instead of classes, you can also provide numeric values. Target class or numeric value is collectively referred to as 'activity'. In case of numeric values, use the -g switch to enable regression (no automatic detection).
     "ID\t endpoint\t activity", e.g.:
      1    Salmonella Mutagenicity    1
 
