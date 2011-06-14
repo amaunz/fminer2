@@ -152,6 +152,9 @@
  * <b>FMINER_PVALUES</b>     : Produce p-values instead of chi-square values (e.g. export FMINER_PVALUES=1).<br />
  * <b>FMINER_NO_AROMATIC_WC</b>: Disallow aromatic wildcard bonds on aliphatic bonds, when aromatic perception was switched off ('-a') (e.g. export FMINER_NO_AROMATIC_WC=1).<br />
  * <b>FMINER_SILENT</b>      : Redirect STDERR (debug output) of fminer to local file 'fminer_debug.txt'
+ * <b>FMINER_NR_HITS</b>     : Display number of times each fragment occurs in the output (only when FMINER_LAZAR is not set).
+
+
  *
  * Note: The value you set the environment variables to is irrelevant. Use <code>unset</code> to disable the environment variables, e.g. <code>unset FMINER_LAZAR</code>.
  *
