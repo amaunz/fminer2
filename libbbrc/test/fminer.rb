@@ -46,12 +46,10 @@ class RubyFminer
     end
 
     cla=read_tab_file(class_file)
-    all_hash = Hash.new
     cla.each do |c|
       id=c[0].to_i
       activity=c[2].to_f
       @myFminer.AddActivity(activity , id)
-      all_hash[id]=activity
     end
 
     # gather results for every root node in vector instead of immediate output
