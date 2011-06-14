@@ -46,6 +46,7 @@ class TestFminer < Test::Unit::TestCase
     assert_equal(actual_md5, expected_md5)
   end
 
+  # Tests multinomial Fminer settings 
   def test_ruby_fminer_multinomial
     output=$myFminer.run_fminer(@smi_file, @class_file_mn, 5)
     actual_md5=Digest::MD5.hexdigest(output)
