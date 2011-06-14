@@ -131,7 +131,7 @@
  * @section Guidance Guidance on Using (Lib)Bbrc
  *
  * Bbrc descriptors are a sparse collection of structurally dissimilar, class-correlated descriptors.
- * You must provide input molecules in SMILES format and a target class for every molecule (see examples below).
+ * You must provide input molecules in SMILES format and a target class for every molecule (see examples below), maximally five different classes.
  * You can also provide numeric values instead of target classes. In that case you must use SetRegression(true).<br />
  * <b>Note:</b> Always do SetRegression(true) first, before adding any numeric value.
  *
@@ -183,7 +183,7 @@
  *   MyFminer->AddCompound ("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2);
  *      // ... continue adding compounds
  *   MyFminer->AddActivity((bool) 1.0, 1); // 1.0 denotes one class in this example,
- *   MyFminer->AddActivity((bool) 0.0, 2); // 0.0 denotes the other class.
+ *   MyFminer->AddActivity((bool) 0.0, 2); // 0.0 denotes the other class (you can use more than two classes, max 5).
  *      // ... continue adding activities (true for active, false for inactive)
  *   cerr << MyFminer->GetNoCompounds() << " compounds" << endl;
   *   // gather results for every root node in vector instead of immediate output
@@ -214,7 +214,7 @@
  * MyFminer.AddCompound("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2)
  * # ... continue adding compounds
  * MyFminer.AddActivity(1.0, 1) # 1.0 denotes one class in this example...
- * MyFminer.AddActivity(0.0, 2) # 0.0 denotes the other class.
+ * MyFminer.AddActivity(0.0, 2) # 0.0 denotes the other class (you can use more than two classes, max 5).
  * # ... continue adding activities (true for active, false for inactive)
  * print repr(MyFminer.GetNoCompounds()) + ' compounds.'
  * # gather results for every root node in vector instead of immediate output
@@ -243,7 +243,7 @@
  * MyFminer.AddCompound("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2)
  *    # ... continue adding compounds
  * MyFminer.AddActivity(1,0, 1) # 1.0 denotes one class in this example...
- * MyFminer.AddActivity(0.0, 2) # 0.0 denotes the other class.
+ * MyFminer.AddActivity(0.0, 2) # 0.0 denotes the other class (you can use more than two classes, max 5).
  *    # ... continue adding activities (true for active, false for inactive)
  * print MyFminer.GetNoCompounds()  
  * puts " compounds"

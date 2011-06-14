@@ -80,7 +80,7 @@
  * @section Guidance Guidance on Using (Lib)Last
  *
  * Last-PM descriptors are a sparse collection of latent (hidden), class-correlated motifs in the data.
- * You must provide input molecules in SMILES format and a target class for every molecule (see examples below).
+ * You must provide input molecules in SMILES format and a target class for every molecule (see examples below), maximally five different classes.
  * You can also provide numeric values instead of target classes. In that case you must use SetRegression(true).<br />
  * <b>Note:</b> Always do SetRegression(true) first, before adding any numeric value.
  *
@@ -135,7 +135,7 @@
  *     MyFminer->AddActivity((bool) 1.0, 6);
  *     MyFminer->AddActivity((bool) 1.0, 7);
  *     MyFminer->AddActivity((bool) 1.0, 8);
- *     MyFminer->AddActivity((bool) 0.0, 9); // 0.0 the other class.
+ *     MyFminer->AddActivity((bool) 0.0, 9); // 0.0 the other class (you can use more than two classes, max 5).
  *     MyFminer->AddActivity((bool) 0.0, 10);
  *     //... continue adding activities (1.0 for active, 0.0 for inactive)
  *     cerr << MyFminer->GetNoCompounds() << " compounds" << endl;
@@ -180,7 +180,7 @@
  * MyFminer.AddActivity(1.0, 6)
  * MyFminer.AddActivity(1.0, 7)
  * MyFminer.AddActivity(1.0, 8)
- * MyFminer.AddActivity(0.0, 9) # 0.0 the other class.
+ * MyFminer.AddActivity(0.0, 9) # 0.0 the other class (you can use more than two classes, max 5).
  * MyFminer.AddActivity(0.0, 10)
  * # ... continue adding activities (true (1.0) for active, false (0.0) for inactive)
  * print repr(MyFminer.GetNoCompounds()) + ' compounds'
@@ -220,7 +220,7 @@
  * MyFminer.AddActivity(1.0, 6)
  * MyFminer.AddActivity(1.0, 7)
  * MyFminer.AddActivity(1.0, 8)
- * MyFminer.AddActivity(0.0, 9) # 0.0 the other class.
+ * MyFminer.AddActivity(0.0, 9) # 0.0 the other class (you can use more than two classes, max 5).
  * MyFminer.AddActivity(0.0, 10)
  * # ... continue adding activities (true (1.0) for active, false (0.0) for inactive)
  * print MyFminer.GetNoCompounds()  
