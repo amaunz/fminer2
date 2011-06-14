@@ -1,7 +1,7 @@
 i686:
  default: f4b077357d6174cc86f97e448214381f
- multinomial: 74cabf0f1984f1ed91a2d0be8fca3deb
- kekule: 36f467df3bf846b917efbd7ab9ff4a4b
+ multinomial: d5e9a27731a8b7f29cc8859c9f115f85
+ kekule: cf5a8d1f025aef981dfe9797d2a4bbd0
 x86_64:
  default: 1e3b16459bb46a1ae3f6068fa70ba149
  multinomial: d5b4586027d6ecab3cbf866657a50d94
