@@ -1,6 +1,6 @@
 Welcome to LibBbrc.
 
-This is the Bbrc library, available from http://github.com/amaunz/fminer2/tree/master, subdirectory 'libbbrc'. The official website with API documentation is http://www.maunz.de/libfminer2-bbrc-doc .
+This is the Bbrc library, available from http://github.com/amaunz/fminer2/tree/master, subdirectory 'libbbrc'. The official website with API documentation is http://bbrc.maunz.de .
 The Fminer application that uses this library is available from http://github.com/amaunz/fminer2/tree/master, subdirectory 'fminer'.
 
 For installation and documentation see INSTALL.

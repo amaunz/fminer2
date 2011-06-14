@@ -858,12 +858,22 @@ Public Member Functions</h2></td></tr>
 
 <p>Mine fragments rooted at the j-th root node (element type). </p>
 
-<p>References <a class="el" href="namespacefm.html#a6568285f7fe9aea42d379ed0a56c0c2c">fm::bbrc_bbrc_sep</a>, <a class="el" href="namespacefm.html#a2cb541e14ccf5ec58d5bedc184620635">fm::bbrc_db_built</a>, <a class="el" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a>, <a class="el" href="classBbrc.html#a8c5138a564797432427b6667dd2976b3">GetAromatic()</a>, <a class="el" href="classBbrc.html#a4dd6282e6926b0e7a926036127042030">GetBackbone()</a>, <a class="el" href="classBbrc.html#a84f3001cb532d71e4edce28fc0f83ec2">GetBbrcSep()</a>, <a class="el" href="classBbrc.html#af23472dda234c80fdc244494cd4f09cc">GetChisqActive()</a>, <a class="el" href="classBbrc.html#a5b719d86b406c885f898ea332ec8deaf">GetChisqSig()</a>, <a class="el" href="classBbrc.html#a854663daf425c444db86d80cc862ba9c">GetDoOutput()</a>, <a class="el" href="classBbrc.html#ab0cbbc3a50704734e46986234dbc68ce">GetDynamicUpperBound()</a>, <a class="el" href="classBbrc.html#a6b73a9fcdd27d073f4ba6686c9cca02f">GetMinfreq()</a>, <a class="el" href="classBbrc.html#ae89056d89e3847cce0172baea6a37b26">GetPruning()</a>, <a class="el" href="classBbrc.html#a43b57f5108e2a25ae8b08ab91179dfb5">GetRefineSingles()</a>, <a class="el" href="classBbrc.html#a8471ab39593e52b542e9284a12517f4c">GetRegression()</a>, and <a class="el" href="classBbrc.html#a00c83761de7dca2e16d741650b41f1ef">GetType()</a>.</p>
+<p>References <a class="el" href="namespacefm.html#a6568285f7fe9aea42d379ed0a56c0c2c">fm::bbrc_bbrc_sep</a>, <a class="el" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>, <a class="el" href="namespacefm.html#a2cb541e14ccf5ec58d5bedc184620635">fm::bbrc_db_built</a>, <a class="el" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a>, <a class="el" href="classBbrc.html#a8c5138a564797432427b6667dd2976b3">GetAromatic()</a>, <a class="el" href="classBbrc.html#a4dd6282e6926b0e7a926036127042030">GetBackbone()</a>, <a class="el" href="classBbrc.html#a84f3001cb532d71e4edce28fc0f83ec2">GetBbrcSep()</a>, <a class="el" href="classBbrc.html#af23472dda234c80fdc244494cd4f09cc">GetChisqActive()</a>, <a class="el" href="classBbrc.html#a5b719d86b406c885f898ea332ec8deaf">GetChisqSig()</a>, <a class="el" href="classBbrc.html#a854663daf425c444db86d80cc862ba9c">GetDoOutput()</a>, <a class="el" href="classBbrc.html#ab0cbbc3a50704734e46986234dbc68ce">GetDynamicUpperBound()</a>, <a class="el" href="classBbrc.html#a6b73a9fcdd27d073f4ba6686c9cca02f">GetMinfreq()</a>, <a class="el" href="classBbrc.html#ae89056d89e3847cce0172baea6a37b26">GetPruning()</a>, <a class="el" href="classBbrc.html#a43b57f5108e2a25ae8b08ab91179dfb5">GetRefineSingles()</a>, <a class="el" href="classBbrc.html#a8471ab39593e52b542e9284a12517f4c">GetRegression()</a>, and <a class="el" href="classBbrc.html#a00c83761de7dca2e16d741650b41f1ef">GetType()</a>.</p>
 <div class="fragment"><pre class="fragment">                                             {
     fm::bbrc_result-&gt;clear();
     <span class="keywordflow">if</span> (!init_mining_done) {
         <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#a2cb541e14ccf5ec58d5bedc184620635">fm::bbrc_db_built</a>) {
           AddDataCanonical();
+        }
+        <span class="comment">// Adjust chisq bound</span>
+        <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a>) {
+          <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;nr_acts.size()&gt;1 &amp;&amp; <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;nr_acts.size() &lt; 6) {
+            <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;sig=<a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;df_thresholds[<a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;nr_acts.size()-1];
+          }
+          <span class="keywordflow">else</span> {
+            cerr &lt;&lt; <span class="stringliteral">&quot;Error! Too many classes: &#39;&quot;</span> &lt;&lt; <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;nr_acts.size() &lt;&lt; <span class="stringliteral">&quot;&#39; (Max. 5).&quot;</span> &lt;&lt; endl;
+            exit(1);
+          }
         }
         fm::bbrc_database-&gt;edgecount (); 
         fm::bbrc_database-&gt;reorder (); 
@@ -986,9 +996,15 @@ Public Member Functions</h2></td></tr>
 
     <a class="code" href="classBbrc.html#a3040636e6d4456e59fa925ddad8d4eb4" title="Set this to &amp;#39;true&amp;#39; to enable chi-square filter.">SetChisqActive</a>(<span class="keyword">true</span>); 
     fm::bbrc_result = &amp;r;
+
+    <span class="comment">// clearing privates</span>
+    init_mining_done = <span class="keyword">false</span>;
     comp_runner=0; 
     comp_no=0; 
-    init_mining_done = <span class="keyword">false</span>;
+    r.clear();
+    inchi_compound_map.clear();
+    inchi_compound_mmap.clear();
+    activity_map.clear();
 
     <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_SILENT&quot;</span>)) {
         fclose (stderr);
@@ -1470,7 +1486,7 @@ Public Member Functions</h2></td></tr>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="classBbrc.html">Bbrc</a>      </li>
-      <li class="footer">Generated on Fri Jun 10 2011 07:51:22 for libbbrc by&#160;
+      <li class="footer">Generated on Tue Jun 14 2011 16:35:27 for libbbrc by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

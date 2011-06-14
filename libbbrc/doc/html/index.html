@@ -160,14 +160,14 @@ Language Portability</h3>
 <p><a class="anchor" id="Guidance"></a> </p>
 <h2><a class="anchor" id="Guidance"></a>
 Guidance on Using (Lib)Bbrc</h2>
-<p>Most setting are sensible by default, see description of constructors and objects below.</p>
-<p>I would suggest to manipulate the minimum frequency only at first. The number of fragments output should not be more than a multitude of the number of input graphs. For minimum frequency, LibBbrc does not support percentage values. You will have to calculate absolute numbers.</p>
+<p><a class="el" href="classBbrc.html">Bbrc</a> descriptors are a sparse collection of structurally dissimilar, class-correlated descriptors. You must provide input molecules in SMILES format and a target class for every molecule (see examples below). You can also provide numeric values instead of target classes. In that case you must use SetRegression(true).<br/>
+ <b>Note:</b> Always do SetRegression(true) first, before adding any numeric value.</p>
+<p>Most setting are sensible by default, see description of constructors and objects below. I would suggest to manipulate the minimum frequency only at first. The number of fragments output should not be more than a multitude of the number of input graphs. For minimum frequency, LibBbrc does not support percentage values. You will have to calculate absolute numbers.</p>
 <h3><a class="anchor" id="sec33"></a>
 Environment Variables</h3>
-<p><b>FMINER_SMARTS</b>: Produce output in SMARTS format. In this case, each line is a YAML sequence, containing SMARTS fragment, <em>p</em>-value, and two sequences denoting positive and negative class occurrences (line numbers in Smiles file):</p>
-<div class="fragment"><pre class="fragment">  - [ smarts,    p_chisq,    occ_list_active,    occ_list_inactive ]
+<p><b>FMINER_SMARTS</b>: Produce output in SMARTS format. In this case, each line is a YAML sequence, containing SMARTS fragment, <em>p</em>-value, and sequences denoting class occurrences (line numbers in Smiles file):</p>
+<div class="fragment"><pre class="fragment">  - [ smarts,    p_chisq,    occ_list_class1,    occ_list_class2,    ... ]
 </pre></div><p>Documentation for YAML can be found at: <a href="http://yaml.org/spec/cvs/current.html#">http://yaml.org/spec/cvs/current.html#</a> (e.g. export FMINER_SMARTS=1).<br/>
- <b>FMINER_SMARTS</b> : Produce output in SMARTS format (e.g. export FMINER_SMARTS=1).<br/>
  <b>FMINER_LAZAR</b> : Produce output in linfrag format which can be used as input to Lazar (e.g. export FMINER_LAZAR=1).<br/>
  <b>FMINER_PVALUES</b> : Produce p-values instead of chi-square values (e.g. export FMINER_PVALUES=1).<br/>
  <b>FMINER_NO_AROMATIC_WC</b>: Disallow aromatic wildcard bonds on aliphatic bonds, when aromatic perception was switched off ('-a') (e.g. export FMINER_NO_AROMATIC_WC=1).<br/>
@@ -196,8 +196,8 @@ C++</h4>
    MyFminer-&gt;AddCompound (<span class="stringliteral">&quot;COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4&quot;</span> , 1);
    MyFminer-&gt;AddCompound (<span class="stringliteral">&quot;O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2&quot;</span> , 2);
       <span class="comment">// ... continue adding compounds</span>
-   MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">true</span>, 1); <span class="comment">// true denotes the &#39;active&#39;...</span>
-   MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) <span class="keyword">false</span>, 2); <span class="comment">// false the &#39;inactive&#39; class.</span>
+   MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) 1.0, 1); <span class="comment">// 1.0 denotes one class in this example,</span>
+   MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) 0.0, 2); <span class="comment">// 0.0 denotes the other class.</span>
       <span class="comment">// ... continue adding activities (true for active, false for inactive)</span>
    cerr &lt;&lt; MyFminer-&gt;GetNoCompounds() &lt;&lt; <span class="stringliteral">&quot; compounds&quot;</span> &lt;&lt; endl;
    <span class="comment">// gather results for every root node in vector instead of immediate output</span>
@@ -224,14 +224,14 @@ Python</h4>
 <span class="preprocessor"></span> MyFminer.AddCompound(<span class="stringliteral">&quot;COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4&quot;</span> , 1)
  MyFminer.AddCompound(<span class="stringliteral">&quot;O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2&quot;</span> , 2)
 <span class="preprocessor"> # ... continue adding compounds</span>
-<span class="preprocessor"></span> MyFminer.AddActivity(1.0, 1) # 1.0 denotes the active...
- MyFminer.AddActivity(0.0, 2) # 0.0 the inactive <span class="keyword">class</span>.
- # ... <span class="keywordflow">continue</span> adding activities (<span class="keyword">true</span> <span class="keywordflow">for</span> active, <span class="keyword">false</span> <span class="keywordflow">for</span> inactive)
- print repr(MyFminer.GetNoCompounds()) + <span class="stringliteral">&#39; compounds.&#39;</span>
- # gather results <span class="keywordflow">for</span> every root node in vector instead of immediate output
- <span class="keywordflow">for</span> j in range(0, MyFminer.GetNoRootNodes()-1):
+<span class="preprocessor"></span> MyFminer.AddActivity(1.0, 1) # 1.0 denotes one <span class="keyword">class </span>in this example...
+ MyFminer.AddActivity(0.0, 2) # 0.0 denotes the other class.
+ # ... continue adding activities (true for active, false for inactive)
+ print repr(MyFminer.GetNoCompounds()) + &#39; compounds.&#39;
+ # gather results for every root node in vector instead of immediate output
+ for j in range(0, MyFminer.GetNoRootNodes()-1):
       result = MyFminer.MineRoot(j);
-      <span class="keywordflow">for</span> i in range(0, result.size()-1):
+      for i in range(0, result.size()-1):
                   print result[i];
 <span class="preprocessor"> # Call Reset() to start over.</span>
 </pre></div><h4><a class="anchor" id="Ruby"></a>
@@ -250,12 +250,12 @@ Ruby</h4>
 <span class="preprocessor"></span> MyFminer.AddCompound(<span class="stringliteral">&quot;COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4&quot;</span> , 1)
  MyFminer.AddCompound(<span class="stringliteral">&quot;O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2&quot;</span> , 2)
 <span class="preprocessor">    # ... continue adding compounds</span>
-<span class="preprocessor"></span> MyFminer.AddActivity(<span class="keyword">true</span>, 1) # <span class="keyword">true</span> denotes the active...
- MyFminer.AddActivity(<span class="keyword">false</span>, 2)# <span class="keyword">false</span> the inactive <span class="keyword">class</span>.
-    # ... <span class="keywordflow">continue</span> adding activities (<span class="keyword">true</span> <span class="keywordflow">for</span> active, <span class="keyword">false</span> <span class="keywordflow">for</span> inactive)
+<span class="preprocessor"></span> MyFminer.AddActivity(1,0, 1) # 1.0 denotes one <span class="keyword">class </span>in this example...
+ MyFminer.AddActivity(0.0, 2) # 0.0 denotes the other class.
+    # ... continue adding activities (true for active, false for inactive)
  print MyFminer.GetNoCompounds()  
- puts <span class="stringliteral">&quot; compounds&quot;</span>
- (0 .. MyFminer.GetNoRootNodes()-1).each <span class="keywordflow">do</span> |j|
+ puts &quot; compounds&quot;
+ (0 .. MyFminer.GetNoRootNodes()-1).each do |j|
     result = MyFminer.MineRoot(j)
     puts <span class="stringliteral">&quot;Results&quot;</span>
     result.each <span class="keywordflow">do</span> |res|
@@ -312,7 +312,7 @@ Contact</h2>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
-      <li class="footer">Generated on Fri Jun 10 2011 07:51:22 for libbbrc by&#160;
+      <li class="footer">Generated on Tue Jun 14 2011 16:35:27 for libbbrc by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

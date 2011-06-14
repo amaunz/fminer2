@@ -130,20 +130,23 @@
  *  <a name="Guidance">
  * @section Guidance Guidance on Using (Lib)Bbrc
  *
- * Most setting are sensible by default, see description of constructors and objects below. 
+ * Bbrc descriptors are a sparse collection of structurally dissimilar, class-correlated descriptors.
+ * You must provide input molecules in SMILES format and a target class for every molecule (see examples below).
+ * You can also provide numeric values instead of target classes. In that case you must use SetRegression(true).<br />
+ * <b>Note:</b> Always do SetRegression(true) first, before adding any numeric value.
  *
+ * Most setting are sensible by default, see description of constructors and objects below. 
  * I would suggest to manipulate the minimum frequency only at first. The number of fragments output should not be more than a multitude of the number of input graphs.
  * For minimum frequency, LibBbrc does not support percentage values. You will have to calculate absolute numbers.
  *
  *  @subsection sec33 Environment Variables
- *  <b>FMINER_SMARTS</b>: Produce output in SMARTS format. In this case, each line is a YAML sequence, containing SMARTS fragment, <i>p</i>-value, and two sequences denoting positive and negative class occurrences (line numbers in Smiles file): 
+ *  <b>FMINER_SMARTS</b>: Produce output in SMARTS format. In this case, each line is a YAML sequence, containing SMARTS fragment, <i>p</i>-value, and sequences denoting class occurrences (line numbers in Smiles file): 
  *
  *  \code
- *  - [ smarts,    p_chisq,    occ_list_active,    occ_list_inactive ]
+ *  - [ smarts,    p_chisq,    occ_list_class1,    occ_list_class2,    ... ]
  *  \endcode
  *
  * Documentation for YAML can be found at: http://yaml.org/spec/cvs/current.html# (e.g. export FMINER_SMARTS=1).<br />
- * <b>FMINER_SMARTS</b>      : Produce output in SMARTS format (e.g. export FMINER_SMARTS=1).<br />
  * <b>FMINER_LAZAR</b>       : Produce output in linfrag format which can be used as input to Lazar (e.g. export FMINER_LAZAR=1).<br />
  * <b>FMINER_PVALUES</b>     : Produce p-values instead of chi-square values (e.g. export FMINER_PVALUES=1).<br />
  * <b>FMINER_NO_AROMATIC_WC</b>: Disallow aromatic wildcard bonds on aliphatic bonds, when aromatic perception was switched off ('-a') (e.g. export FMINER_NO_AROMATIC_WC=1).<br />
@@ -179,8 +182,8 @@
  *   MyFminer->AddCompound ("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4" , 1);
  *   MyFminer->AddCompound ("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2);
  *      // ... continue adding compounds
- *   MyFminer->AddActivity((bool) true, 1); // true denotes the 'active'...
- *   MyFminer->AddActivity((bool) false, 2); // false the 'inactive' class.
+ *   MyFminer->AddActivity((bool) 1.0, 1); // 1.0 denotes one class in this example,
+ *   MyFminer->AddActivity((bool) 0.0, 2); // 0.0 denotes the other class.
  *      // ... continue adding activities (true for active, false for inactive)
  *   cerr << MyFminer->GetNoCompounds() << " compounds" << endl;
   *   // gather results for every root node in vector instead of immediate output
@@ -210,8 +213,8 @@
  * MyFminer.AddCompound("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4" , 1)
  * MyFminer.AddCompound("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2)
  * # ... continue adding compounds
- * MyFminer.AddActivity(1.0, 1) # 1.0 denotes the active...
- * MyFminer.AddActivity(0.0, 2) # 0.0 the inactive class.
+ * MyFminer.AddActivity(1.0, 1) # 1.0 denotes one class in this example...
+ * MyFminer.AddActivity(0.0, 2) # 0.0 denotes the other class.
  * # ... continue adding activities (true for active, false for inactive)
  * print repr(MyFminer.GetNoCompounds()) + ' compounds.'
  * # gather results for every root node in vector instead of immediate output
@@ -239,8 +242,8 @@
  * MyFminer.AddCompound("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4" , 1)
  * MyFminer.AddCompound("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2)
  *    # ... continue adding compounds
- * MyFminer.AddActivity(true, 1) # true denotes the active...
- * MyFminer.AddActivity(false, 2)# false the inactive class.
+ * MyFminer.AddActivity(1,0, 1) # 1.0 denotes one class in this example...
+ * MyFminer.AddActivity(0.0, 2) # 0.0 denotes the other class.
  *    # ... continue adding activities (true for active, false for inactive)
  * print MyFminer.GetNoCompounds()  
  * puts " compounds"
