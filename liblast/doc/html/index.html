@@ -133,8 +133,9 @@ Language Portability</h3>
 <p><a class="anchor" id="Guidance"></a> </p>
 <h2><a class="anchor" id="Guidance"></a>
 Guidance on Using (Lib)Last</h2>
-<p>Most setting are sensible by default, see description of constructors and objects below.</p>
-<p>I would suggest to manipulate the minimum frequency only at first. The number of fragments output should not be more than a multitude of the number of input graphs. For minimum frequency, LibLast does not support percentage values. You will have to calculate absolute numbers.</p>
+<p>Last-PM descriptors are a sparse collection of latent (hidden), class-correlated motifs in the data. You must provide input molecules in SMILES format and a target class for every molecule (see examples below). You can also provide numeric values instead of target classes. In that case you must use SetRegression(true).<br/>
+ <b>Note:</b> Always do SetRegression(true) first, before adding any numeric value.</p>
+<p>Most setting are sensible by default, see description of constructors and objects below. I would suggest to manipulate the minimum frequency only at first. The number of fragments output should not be more than a multitude of the number of input graphs. For minimum frequency, LibLast does not support percentage values. You will have to calculate absolute numbers.</p>
 <h3><a class="anchor" id="sec3"></a>
 Examples using the LibLast API</h3>
 <p>LibLast uses the 'singleton' design pattern known from software engineering, i.e., class instantiation is restricted to one object. To empty the database after a run to feed new compounds, use the <a class="el" href="classLast.html#a372de693ad40b3f42839c8ec6ac845f4" title="Use this to clear the database before feeding new compounds and activities.">Last::Reset()</a> routine.</p>
@@ -169,7 +170,7 @@ C++</h4>
      MyFminer-&gt;AddCompound (<span class="stringliteral">&quot;O=C1C2=C(C=C(C=C2O)O)OC(=C1O)C3=CC(=C(C=C3)O)O&quot;</span> , 9);
      MyFminer-&gt;AddCompound (<span class="stringliteral">&quot;C1(=C(C(=O)C2=C(O1)C=C(C=C2)O)O)C3=CC(O)=C(C=C3)O&quot;</span> , 10);
      <span class="comment">//... continue adding compounds</span>
-     MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) 1.0, 1);
+     MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) 1.0, 1); <span class="comment">// 1.0 denotes one class in this example,</span>
      MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) 1.0, 2);
      MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) 1.0, 3);
      MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) 1.0, 4);
@@ -177,7 +178,7 @@ C++</h4>
      MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) 1.0, 6);
      MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) 1.0, 7);
      MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) 1.0, 8);
-     MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) 0.0, 9);
+     MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) 0.0, 9); <span class="comment">// 0.0 the other class.</span>
      MyFminer-&gt;AddActivity((<span class="keywordtype">bool</span>) 0.0, 10);
      <span class="comment">//... continue adding activities (1.0 for active, 0.0 for inactive)</span>
      cerr &lt;&lt; MyFminer-&gt;GetNoCompounds() &lt;&lt; <span class="stringliteral">&quot; compounds&quot;</span> &lt;&lt; endl;
@@ -208,7 +209,7 @@ Python</h4>
  MyFminer.AddCompound(<span class="stringliteral">&quot;O=C1C2=C(C=C(C=C2O)O)OC(=C1O)C3=CC(=C(C=C3)O)O&quot;</span> , 9)
  MyFminer.AddCompound(<span class="stringliteral">&quot;C1(=C(C(=O)C2=C(O1)C=C(C=C2)O)O)C3=CC(O)=C(C=C3)O&quot;</span> , 10)
 <span class="preprocessor"> # ... continue adding compounds</span>
-<span class="preprocessor"></span> MyFminer.AddActivity(1.0, 1)
+<span class="preprocessor"></span> MyFminer.AddActivity(1.0, 1) # 1.0 denotes one <span class="keyword">class </span>in this example,
  MyFminer.AddActivity(1.0, 2)
  MyFminer.AddActivity(1.0, 3)
  MyFminer.AddActivity(1.0, 4)
@@ -216,14 +217,14 @@ Python</h4>
  MyFminer.AddActivity(1.0, 6)
  MyFminer.AddActivity(1.0, 7)
  MyFminer.AddActivity(1.0, 8)
- MyFminer.AddActivity(0.0, 9)
+ MyFminer.AddActivity(0.0, 9) # 0.0 the other class.
  MyFminer.AddActivity(0.0, 10)
-<span class="preprocessor"> # ... continue adding activities (true (1.0) for active, false (0.0) for inactive)</span>
-<span class="preprocessor"></span> print repr(MyFminer.GetNoCompounds()) + <span class="stringliteral">&#39; compounds&#39;</span>
- # gather results <span class="keywordflow">for</span> every root node in vector instead of immediate output
- <span class="keywordflow">for</span> j in range(0, MyFminer.GetNoRootNodes()-1):
+ # ... continue adding activities (true (1.0) for active, false (0.0) for inactive)
+ print repr(MyFminer.GetNoCompounds()) + &#39; compounds&#39;
+ # gather results for every root node in vector instead of immediate output
+ for j in range(0, MyFminer.GetNoRootNodes()-1):
     result = MyFminer.MineRoot(j);
-    <span class="keywordflow">for</span> i in range(0, result.size()-1):
+    for i in range(0, result.size()-1):
         print result[i];
 <span class="preprocessor"> # call MyFminer.Reset() to start over.</span>
 </pre></div><h4><a class="anchor" id="Ruby"></a>
@@ -244,7 +245,7 @@ Ruby</h4>
  MyFminer.AddCompound(<span class="stringliteral">&quot;O=C1C2=C(C=C(C=C2O)O)OC(=C1O)C3=CC(=C(C=C3)O)O&quot;</span> , 9)
  MyFminer.AddCompound(<span class="stringliteral">&quot;C1(=C(C(=O)C2=C(O1)C=C(C=C2)O)O)C3=CC(O)=C(C=C3)O&quot;</span> , 10)
 <span class="preprocessor"> # ... continue adding compounds</span>
-<span class="preprocessor"></span> MyFminer.AddActivity(1.0, 1)
+<span class="preprocessor"></span> MyFminer.AddActivity(1.0, 1) # 1.0 denotes one <span class="keyword">class </span>in this example,
  MyFminer.AddActivity(1.0, 2)
  MyFminer.AddActivity(1.0, 3)
  MyFminer.AddActivity(1.0, 4)
@@ -252,13 +253,13 @@ Ruby</h4>
  MyFminer.AddActivity(1.0, 6)
  MyFminer.AddActivity(1.0, 7)
  MyFminer.AddActivity(1.0, 8)
- MyFminer.AddActivity(0.0, 9)
+ MyFminer.AddActivity(0.0, 9) # 0.0 the other class.
  MyFminer.AddActivity(0.0, 10)
-<span class="preprocessor"> # ... continue adding activities (true (1.0) for active, false (0.0) for inactive)</span>
-<span class="preprocessor"></span> print MyFminer.GetNoCompounds()  
- puts <span class="stringliteral">&quot; compounds&quot;</span>
-<span class="preprocessor"> # gather results for every root node in vector instead of immediate output</span>
-<span class="preprocessor"></span> (0 .. MyFminer.GetNoRootNodes()-1).each <span class="keywordflow">do</span> |j|
+ # ... continue adding activities (true (1.0) for active, false (0.0) for inactive)
+ print MyFminer.GetNoCompounds()  
+ puts &quot; compounds&quot;
+ # gather results for every root node in vector instead of immediate output
+ (0 .. MyFminer.GetNoRootNodes()-1).each do |j|
     result = MyFminer.MineRoot(j)
     puts <span class="stringliteral">&quot;Results&quot;</span>
     result.each <span class="keywordflow">do</span> |res|
@@ -305,7 +306,7 @@ Contact</h2>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
-      <li class="footer">Generated on Mon Jun 13 2011 12:38:23 for liblast by&#160;
+      <li class="footer">Generated on Tue Jun 14 2011 16:39:52 for liblast by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

@@ -79,8 +79,12 @@
  *  <a name="Guidance">
  * @section Guidance Guidance on Using (Lib)Last
  *
- * Most setting are sensible by default, see description of constructors and objects below. 
+ * Last-PM descriptors are a sparse collection of latent (hidden), class-correlated motifs in the data.
+ * You must provide input molecules in SMILES format and a target class for every molecule (see examples below).
+ * You can also provide numeric values instead of target classes. In that case you must use SetRegression(true).<br />
+ * <b>Note:</b> Always do SetRegression(true) first, before adding any numeric value.
  *
+ * Most setting are sensible by default, see description of constructors and objects below. 
  * I would suggest to manipulate the minimum frequency only at first. The number of fragments output should not be more than a multitude of the number of input graphs.
  * For minimum frequency, LibLast does not support percentage values. You will have to calculate absolute numbers.
  *
@@ -123,7 +127,7 @@
  *     MyFminer->AddCompound ("O=C1C2=C(C=C(C=C2O)O)OC(=C1O)C3=CC(=C(C=C3)O)O" , 9);
  *     MyFminer->AddCompound ("C1(=C(C(=O)C2=C(O1)C=C(C=C2)O)O)C3=CC(O)=C(C=C3)O" , 10);
  *     //... continue adding compounds
- *     MyFminer->AddActivity((bool) 1.0, 1);
+ *     MyFminer->AddActivity((bool) 1.0, 1); // 1.0 denotes one class in this example,
  *     MyFminer->AddActivity((bool) 1.0, 2);
  *     MyFminer->AddActivity((bool) 1.0, 3);
  *     MyFminer->AddActivity((bool) 1.0, 4);
@@ -131,7 +135,7 @@
  *     MyFminer->AddActivity((bool) 1.0, 6);
  *     MyFminer->AddActivity((bool) 1.0, 7);
  *     MyFminer->AddActivity((bool) 1.0, 8);
- *     MyFminer->AddActivity((bool) 0.0, 9);
+ *     MyFminer->AddActivity((bool) 0.0, 9); // 0.0 the other class.
  *     MyFminer->AddActivity((bool) 0.0, 10);
  *     //... continue adding activities (1.0 for active, 0.0 for inactive)
  *     cerr << MyFminer->GetNoCompounds() << " compounds" << endl;
@@ -168,7 +172,7 @@
  * MyFminer.AddCompound("O=C1C2=C(C=C(C=C2O)O)OC(=C1O)C3=CC(=C(C=C3)O)O" , 9)
  * MyFminer.AddCompound("C1(=C(C(=O)C2=C(O1)C=C(C=C2)O)O)C3=CC(O)=C(C=C3)O" , 10)
  * # ... continue adding compounds
- * MyFminer.AddActivity(1.0, 1)
+ * MyFminer.AddActivity(1.0, 1) # 1.0 denotes one class in this example,
  * MyFminer.AddActivity(1.0, 2)
  * MyFminer.AddActivity(1.0, 3)
  * MyFminer.AddActivity(1.0, 4)
@@ -176,7 +180,7 @@
  * MyFminer.AddActivity(1.0, 6)
  * MyFminer.AddActivity(1.0, 7)
  * MyFminer.AddActivity(1.0, 8)
- * MyFminer.AddActivity(0.0, 9)
+ * MyFminer.AddActivity(0.0, 9) # 0.0 the other class.
  * MyFminer.AddActivity(0.0, 10)
  * # ... continue adding activities (true (1.0) for active, false (0.0) for inactive)
  * print repr(MyFminer.GetNoCompounds()) + ' compounds'
@@ -208,7 +212,7 @@
  * MyFminer.AddCompound("O=C1C2=C(C=C(C=C2O)O)OC(=C1O)C3=CC(=C(C=C3)O)O" , 9)
  * MyFminer.AddCompound("C1(=C(C(=O)C2=C(O1)C=C(C=C2)O)O)C3=CC(O)=C(C=C3)O" , 10)
  * # ... continue adding compounds
- * MyFminer.AddActivity(1.0, 1)
+ * MyFminer.AddActivity(1.0, 1) # 1.0 denotes one class in this example,
  * MyFminer.AddActivity(1.0, 2)
  * MyFminer.AddActivity(1.0, 3)
  * MyFminer.AddActivity(1.0, 4)
@@ -216,7 +220,7 @@
  * MyFminer.AddActivity(1.0, 6)
  * MyFminer.AddActivity(1.0, 7)
  * MyFminer.AddActivity(1.0, 8)
- * MyFminer.AddActivity(0.0, 9)
+ * MyFminer.AddActivity(0.0, 9) # 0.0 the other class.
  * MyFminer.AddActivity(0.0, 10)
  * # ... continue adding activities (true (1.0) for active, false (0.0) for inactive)
  * print MyFminer.GetNoCompounds()  

@@ -367,24 +367,20 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>.</p>
 <div class="fragment"><pre class="fragment">                                                           {
-  <span class="keywordtype">int</span> x=0; <span class="keywordtype">int</span> y=0; <span class="keywordtype">int</span> m=0; <span class="keywordtype">int</span> n=0;
+  map&lt;float, unsigned int&gt; _nr_acts;
+  map&lt;float, unsigned int&gt; _f_sets;
+
   each(all) {
-    <span class="keywordflow">if</span> ((all[i] != 0.0) &amp;&amp; (all[i] != 1.0)) {
-      cerr &lt;&lt; <span class="stringliteral">&quot;liblast: got invalid values for chi-square test.&quot;</span> &lt;&lt; endl;
-      exit(1);
+    <span class="keywordflow">if</span> (! _nr_acts.insert(make_pair(all[i],1)).second) {
+      _nr_acts[all[i]]++;
     }
-    <span class="keywordflow">if</span> (all[i] == 1.0) m++;
-    n++;
   }
   each(feat) {
-    <span class="keywordflow">if</span> ((feat[i] != 0.0) &amp;&amp; (feat[i] != 1.0)) {
-      cerr &lt;&lt; <span class="stringliteral">&quot;liblast: got invalid values for chi-square test.&quot;</span> &lt;&lt; endl;
-      exit(1);
+    <span class="keywordflow">if</span> (! _f_sets.insert(make_pair(feat[i],1)).second) {
+      _f_sets[feat[i]]++;
     }
-    <span class="keywordflow">if</span> (feat[i] == 1.0) y++;
-    x++;
   }
-  <span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;ChiSqTest(x,y,m,n-m);
+  <span class="keywordflow">return</span> <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;ChiSqTest(_f_sets, _nr_acts);
 }
 </pre></div>
 </div>
@@ -820,12 +816,22 @@ Public Member Functions</h2></td></tr>
 
 <p>Mine fragments rooted at the j-th root node (element type). </p>
 
-<p>References <a class="el" href="classLast.html#a8c5138a564797432427b6667dd2976b3">GetAromatic()</a>, <a class="el" href="classLast.html#af23472dda234c80fdc244494cd4f09cc">GetChisqActive()</a>, <a class="el" href="classLast.html#a5b719d86b406c885f898ea332ec8deaf">GetChisqSig()</a>, <a class="el" href="classLast.html#a854663daf425c444db86d80cc862ba9c">GetDoOutput()</a>, <a class="el" href="classLast.html#aff237771a0a08a2d2f94d46e4eaf6f2e">GetMaxHops()</a>, <a class="el" href="classLast.html#a6b73a9fcdd27d073f4ba6686c9cca02f">GetMinfreq()</a>, <a class="el" href="classLast.html#abc7291463c89c905f4371f3d9ba12f47">GetNoRootNodes()</a>, <a class="el" href="classLast.html#ae89056d89e3847cce0172baea6a37b26">GetPruning()</a>, <a class="el" href="classLast.html#a8471ab39593e52b542e9284a12517f4c">GetRegression()</a>, <a class="el" href="classLast.html#a00c83761de7dca2e16d741650b41f1ef">GetType()</a>, <a class="el" href="namespacefm.html#a000c16be030b42394fdc227420275d47">fm::last_bbrc_sep</a>, <a class="el" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">fm::last_db_built</a>, and <a class="el" href="namespacefm.html#a4495ad5dc6d2104ca73b0c5414ce42ef">fm::last_regression</a>.</p>
+<p>References <a class="el" href="classLast.html#a8c5138a564797432427b6667dd2976b3">GetAromatic()</a>, <a class="el" href="classLast.html#af23472dda234c80fdc244494cd4f09cc">GetChisqActive()</a>, <a class="el" href="classLast.html#a5b719d86b406c885f898ea332ec8deaf">GetChisqSig()</a>, <a class="el" href="classLast.html#a854663daf425c444db86d80cc862ba9c">GetDoOutput()</a>, <a class="el" href="classLast.html#aff237771a0a08a2d2f94d46e4eaf6f2e">GetMaxHops()</a>, <a class="el" href="classLast.html#a6b73a9fcdd27d073f4ba6686c9cca02f">GetMinfreq()</a>, <a class="el" href="classLast.html#abc7291463c89c905f4371f3d9ba12f47">GetNoRootNodes()</a>, <a class="el" href="classLast.html#ae89056d89e3847cce0172baea6a37b26">GetPruning()</a>, <a class="el" href="classLast.html#a8471ab39593e52b542e9284a12517f4c">GetRegression()</a>, <a class="el" href="classLast.html#a00c83761de7dca2e16d741650b41f1ef">GetType()</a>, <a class="el" href="namespacefm.html#a000c16be030b42394fdc227420275d47">fm::last_bbrc_sep</a>, <a class="el" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>, <a class="el" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">fm::last_db_built</a>, and <a class="el" href="namespacefm.html#a4495ad5dc6d2104ca73b0c5414ce42ef">fm::last_regression</a>.</p>
 <div class="fragment"><pre class="fragment">                                             {
     fm::last_result-&gt;clear();
     <span class="keywordflow">if</span> (!init_mining_done) {
         <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">fm::last_db_built</a>) {
           AddDataCanonical();
+        }
+        <span class="comment">// Adjust chisq bound</span>
+        <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#a4495ad5dc6d2104ca73b0c5414ce42ef">fm::last_regression</a>) {
+          <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;nr_acts.size()&gt;1 &amp;&amp; <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;nr_acts.size() &lt; 6) {
+            <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;sig=<a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;df_thresholds[<a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;nr_acts.size()-1];
+          }
+          <span class="keywordflow">else</span> {
+            cerr &lt;&lt; <span class="stringliteral">&quot;Error! Too many classes: &#39;&quot;</span> &lt;&lt; <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;nr_acts.size() &lt;&lt; <span class="stringliteral">&quot;&#39; (Max. 5).&quot;</span> &lt;&lt; endl;
+            exit(1);
+          }
         }
         fm::last_database-&gt;edgecount (); 
         fm::last_database-&gt;reorder (); 
@@ -963,12 +969,20 @@ Public Member Functions</h2></td></tr>
     fm::last_legoccurrences = <span class="keyword">new</span> LastLegOccurrences();
 
     fm::last_candidateLastcloselegsoccsused.clear();
+    fm::last_candidatecloselegsoccs.clear();
+    fm::last_candidateLastcloselegsoccsused.clear();
 
     <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;active=<span class="keyword">true</span>; 
     fm::last_result = &amp;r;
+
+    <span class="comment">// clearing privates</span>
+    init_mining_done = <span class="keyword">false</span>;
     comp_runner=0; 
     comp_no=0; 
-    init_mining_done = <span class="keyword">false</span>;
+    r.clear();
+    inchi_compound_map.clear();
+    inchi_compound_mmap.clear();
+    activity_map.clear();
     
     <span class="keywordflow">if</span> (getenv(<span class="stringliteral">&quot;FMINER_SILENT&quot;</span>)) {
         fclose (stderr);
@@ -1311,7 +1325,7 @@ Public Member Functions</h2></td></tr>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="classLast.html">Last</a>      </li>
-      <li class="footer">Generated on Mon Jun 13 2011 12:38:23 for liblast by&#160;
+      <li class="footer">Generated on Tue Jun 14 2011 16:39:52 for liblast by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

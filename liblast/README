@@ -1,6 +1,6 @@
 Welcome to LibLast.
 
-This is the Last library, available from http://github.com/amaunz/fminer2/tree/master, subdirectory 'liblast'. The official website with API documentation is http://www.maunz.de/libfminer2-last-doc.
+This is the Last library, available from http://github.com/amaunz/fminer2/tree/master, subdirectory 'liblast'. The official website with API documentation is http://last-pm.maunz.de .
 The Fminer application that uses this library is available from http://github.com/amaunz/fminer2/tree/master, subdirectory 'fminer'.
 Utilities for chemical application of LAST-PM descriptors are available from http://github.com/amaunz/last-utils/tree/master.
 
