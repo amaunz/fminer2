@@ -142,9 +142,15 @@ void Bbrc::Reset() {
 
     SetChisqActive(true); 
     fm::bbrc_result = &r;
+
+    // clearing privates
+    init_mining_done = false;
     comp_runner=0; 
     comp_no=0; 
-    init_mining_done = false;
+    r.clear();
+    inchi_compound_map.clear();
+    inchi_compound_mmap.clear();
+    activity_map.clear();
 
     if (getenv("FMINER_SILENT")) {
         fclose (stderr);
@@ -374,6 +380,16 @@ vector<string>* Bbrc::MineRoot(unsigned int j) {
     if (!init_mining_done) {
         if (!fm::bbrc_db_built) {
           AddDataCanonical();
+        }
+        // Adjust chisq bound
+        if (!fm::bbrc_regression) {
+          if (fm::bbrc_chisq->nr_acts.size()>1 && fm::bbrc_chisq->nr_acts.size() < 6) {
+            fm::bbrc_chisq->sig=fm::bbrc_chisq->df_thresholds[fm::bbrc_chisq->nr_acts.size()-1];
+          }
+          else {
+            cerr << "Error! Too many classes: '" << fm::bbrc_chisq->nr_acts.size() << "' (Max. 5)." << endl;
+            exit(1);
+          }
         }
         fm::bbrc_database->edgecount (); 
         fm::bbrc_database->reorder (); 

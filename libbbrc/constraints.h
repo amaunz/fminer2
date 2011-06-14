@@ -45,8 +45,14 @@ class ChisqBbrcConstraint : public BbrcConstraint {
     bool active;
     map<float, set<BbrcTid> > f_sets;
     map<float, map<BbrcTid,int> > f_maps; 
+    map<int, float> df_thresholds;
 
-    ChisqBbrcConstraint (float sig) : n(0), sig(sig), chisq(0.0), p(0.0), u(0.0) {}
+    ChisqBbrcConstraint (float sig) : n(0), sig(sig), chisq(0.0), p(0.0), u(0.0) {
+      df_thresholds[1]=3.84;
+      df_thresholds[2]=5.99;
+      df_thresholds[3]=7.82;
+      df_thresholds[4]=9.49;
+    }
 
     template <typename OccurrenceType>
     void Calc(vector<OccurrenceType>& legocc) {
