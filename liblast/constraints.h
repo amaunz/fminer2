@@ -48,10 +48,16 @@ class ChisqLastConstraint : public LastConstraint {
     bool active;                     // whether test is active, not accessed (r,rw) inside this class (only constructor)
     map<float, set<LastTid> > f_sets;
     map<float, map<LastTid,int> > f_maps; 
+    map<int, float> df_thresholds;
 
     float activating;                 // defaults to deactivating (0)                                  (cand. for making ro)
 
-    ChisqLastConstraint (float sig) : n(0), sig(sig), chisq(0.0), p(0.0), u(0.0), activating(0) {}
+    ChisqLastConstraint (float sig) : n(0), sig(sig), chisq(0.0), p(0.0), u(0.0), activating(0) {
+      df_thresholds[1]=3.84;
+      df_thresholds[2]=5.99;
+      df_thresholds[3]=7.82;
+      df_thresholds[4]=9.49;
+    }
 
     //!< Calculate chi^2 of current and upper bound for chi^2 of more specific features (see Morishita and Sese, 2000)
     template <typename OccurrenceType>
