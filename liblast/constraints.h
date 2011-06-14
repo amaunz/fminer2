@@ -97,7 +97,7 @@ class ChisqLastConstraint : public LastConstraint {
        }
     }
 
-    float ChiSqTest(float x, float y, unsigned int n_active, unsigned int n_inactive); // on-the-fly test
+    float ChiSqTest(map<float, unsigned int> _f_sets, map<float, unsigned int> _nr_acts); // on-the-fly test
 
   private:
 

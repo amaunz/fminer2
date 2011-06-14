@@ -31,34 +31,51 @@ void ChisqLastConstraint::generateIntSubsets(set<int>& myset, set<set<int> >&sub
     }
 }
 
-float ChisqLastConstraint::ChiSqTest(float x, float y, unsigned int n_active, unsigned int n_inactive) {
+float ChisqLastConstraint::ChiSqTest(map<float, unsigned int> _f_sets, map<float, unsigned int> _nr_acts) {
 
   float res=0.0;
-  // backup
-  /*
-  unsigned int na_tmp = na;
-  unsigned int ni_tmp = ni;
+ 
+  // backup 
+  map<float, unsigned int> nr_acts_tmp = nr_acts;
   unsigned int n_tmp = n;
-  bool activating_tmp=activating;
+  float activating_tmp=activating;
+ 
+  nr_acts = _nr_acts;
+  n=0;
 
-  na=n_active;
-  ni=n_inactive;
-  n=na+ni;
-  res = gsl_cdf_chisq_P(ChiSq(x,y,true),1); // Always decide activating in this mode
-  if (!activating) res*=-1.0;
+  map<float, unsigned int>::iterator it;
+  for (it=nr_acts.begin(); it!=nr_acts.end(); it++) {
+    n+=it->second;
+  }
+
+  vector<int> f_sizes;
+  map<float, unsigned int>::iterator  f_sets_it;
+  for (it=nr_acts.begin(); it!=nr_acts.end(); it++) {
+    if (_f_sets.find(it->first) != _f_sets.end()) {
+  //for (f_sets_it=_f_sets.begin(); f_sets_it!=_f_sets.end(); f_sets_it++) {
+      f_sizes.push_back(_f_sets[it->first]);
+    }
+    else {
+      f_sizes.push_back(0);
+    }
+  }
+
+  int f_sum=0; each(f_sizes) {
+    f_sum+=f_sizes[i];
+  }
+  res = gsl_cdf_chisq_P(ChiSq(f_sum, f_sizes, true), f_sizes.size()-1);
 
   // restore
-  na=na_tmp;
-  ni=ni_tmp;
-  n=n_tmp;
-  activating=activating_tmp;
-  */
+  nr_acts = nr_acts_tmp;
+  n = n_tmp;
+  activating = activating_tmp;
 
   return res;
 }
 
 
 float ChisqLastConstraint::ChiSq(int x_val, vector<int> y, bool decide_activating) {
+
         assert(y.size() == nr_acts.size()); // equal class amounts as integrity constraint.
         int integrity = 0;
         each(y) { 
@@ -83,7 +100,9 @@ float ChisqLastConstraint::ChiSq(int x_val, vector<int> y, bool decide_activatin
           }
           i++;
         }
-        if (decide_activating) activating=max_deviator;
+        if (decide_activating) { 
+          activating=max_deviator;
+        }
         return(chisq);
 }
 

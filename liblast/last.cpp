@@ -457,22 +457,18 @@ bool Last::AddActivityCanonical(float act, unsigned int comp_id) {
 }
 
 float Last::ChisqTest(vector<float> all, vector<float> feat) {
-  int x=0; int y=0; int m=0; int n=0;
+  map<float, unsigned int> _nr_acts;
+  map<float, unsigned int> _f_sets;
+
   each(all) {
-    if ((all[i] != 0.0) && (all[i] != 1.0)) {
-      cerr << "liblast: got invalid values for chi-square test." << endl;
-      exit(1);
+    if (! _nr_acts.insert(make_pair(all[i],1)).second) {
+      _nr_acts[all[i]]++;
     }
-    if (all[i] == 1.0) m++;
-    n++;
   }
   each(feat) {
-    if ((feat[i] != 0.0) && (feat[i] != 1.0)) {
-      cerr << "liblast: got invalid values for chi-square test." << endl;
-      exit(1);
+    if (! _f_sets.insert(make_pair(feat[i],1)).second) {
+      _f_sets[feat[i]]++;
     }
-    if (feat[i] == 1.0) y++;
-    x++;
   }
-  return fm::last_chisq->ChiSqTest(x,y,m,n-m);
+  return fm::last_chisq->ChiSqTest(_f_sets, _nr_acts);
 }
