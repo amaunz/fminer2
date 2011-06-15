@@ -134,7 +134,6 @@ void Bbrc::Reset() {
     fm::bbrc_graphstate = new BbrcGraphState();
     fm::bbrc_closelegoccurrences = new CloseBbrcLegOccurrences();
     fm::bbrc_legoccurrences = new BbrcLegOccurrences();
-    fm::bbrc_nr_hits = false;
 
     fm::bbrc_Bbrccandidatelegsoccurrences.clear();
     fm::bbrc_candidatecloselegsoccs.clear();
