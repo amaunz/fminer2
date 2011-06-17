@@ -255,7 +255,9 @@ vector<string>* Last::MineRoot(unsigned int j) {
         // Adjust chisq bound
         if (!fm::last_regression) {
           if (fm::last_chisq->nr_acts.size()>1 && fm::last_chisq->nr_acts.size() < 6) {
-            fm::last_chisq->sig=fm::last_chisq->df_thresholds[fm::last_chisq->nr_acts.size()-1];
+            if (fm::last_chisq->sig == 0.0) { // do not override user-supplied threshold
+              fm::last_chisq->sig=fm::last_chisq->df_thresholds[fm::last_chisq->nr_acts.size()-1];
+            }
           }
           else {
             cerr << "Error! Too many classes: '" << fm::last_chisq->nr_acts.size() << "' (Max. 5)." << endl;
