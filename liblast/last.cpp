@@ -109,7 +109,7 @@ void Last::Reset() {
     fm::last_database = new LastDatabase();
     fm::last_db_built = false;
     fm::last_statistics = new LastStatistics();
-    fm::last_chisq = new ChisqLastConstraint(3.84146);
+    fm::last_chisq = new ChisqLastConstraint(-1.0);
     fm::last_ks = new KSLastConstraint(0.95);
     fm::last_graphstate = new LastGraphState();
     fm::last_closelegoccurrences = new CloseLastLegOccurrences();
@@ -255,7 +255,7 @@ vector<string>* Last::MineRoot(unsigned int j) {
         // Adjust chisq bound
         if (!fm::last_regression) {
           if (fm::last_chisq->nr_acts.size()>1 && fm::last_chisq->nr_acts.size() < 6) {
-            if (fm::last_chisq->sig == 0.0) { // do not override user-supplied threshold
+            if (fm::last_chisq->sig == -1.0) { // do not override user-supplied threshold
               fm::last_chisq->sig=fm::last_chisq->df_thresholds[fm::last_chisq->nr_acts.size()-1];
             }
           }

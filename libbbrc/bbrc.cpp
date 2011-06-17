@@ -129,7 +129,7 @@ void Bbrc::Reset() {
     fm::bbrc_database = new BbrcDatabase();
     fm::bbrc_db_built = false;
     fm::bbrc_statistics = new BbrcStatistics();
-    fm::bbrc_chisq = new ChisqBbrcConstraint(3.84146);
+    fm::bbrc_chisq = new ChisqBbrcConstraint(-1.0);
     fm::bbrc_ks = new KSBbrcConstraint(0.95);
     fm::bbrc_graphstate = new BbrcGraphState();
     fm::bbrc_closelegoccurrences = new CloseBbrcLegOccurrences();
@@ -383,7 +383,7 @@ vector<string>* Bbrc::MineRoot(unsigned int j) {
         // Adjust chisq bound
         if (!fm::bbrc_regression) {
           if (fm::bbrc_chisq->nr_acts.size()>1 && fm::bbrc_chisq->nr_acts.size() < 6) {
-            if (fm::bbrc_chisq->sig == 0.0) { // do not override user-supplied threshold
+            if (fm::bbrc_chisq->sig == -1.0) { // do not override user-supplied threshold, only machine default.
               fm::bbrc_chisq->sig=fm::bbrc_chisq->df_thresholds[fm::bbrc_chisq->nr_acts.size()-1];
             }
           }
