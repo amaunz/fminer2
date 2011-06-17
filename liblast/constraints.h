@@ -162,6 +162,9 @@ private:
     template <typename OccurrenceType>
       void LastLegActivityOccurrence(vector<OccurrenceType>& legocc) {
         feat.clear();
+        f_sets.clear();
+        f_maps.clear();
+
         std::pair< set<LastTid>::iterator, bool > insert_ret;
         each (legocc) {
           float activity = fm::last_database->trees[legocc[i].tid]->activity;
