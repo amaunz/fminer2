@@ -1,0 +1,45 @@
+==============================
+*** Open Babel Warning  in InChI code
+  #0 :Wrong 0D stereo descriptor(s): #2; #8
+==============================
+*** Open Babel Warning  in InChI code
+  #0 :Wrong 0D stereo descriptor(s): #4
+==============================
+*** Open Babel Warning  in InChI code
+  #0 :Wrong 0D stereo descriptor(s): #1; #2
+==============================
+*** Open Babel Warning  in InChI code
+  #0 :Wrong 0D stereo descriptor(s): #3
+==============================
+*** Open Babel Warning  in InChI code
+  #0 :Wrong 0D stereo descriptor(s): #1; #6
+==============================
+*** Open Babel Warning  in InChI code
+  #0 :Wrong 0D stereo descriptor(s): #1; #6
+==============================
+*** Open Babel Warning  in InChI code
+  #0 :Metal was disconnected
+==============================
+*** Open Babel Warning  in InChI code
+  #0 :Wrong 0D stereo descriptor(s): #1
+==============================
+*** Open Babel Warning  in InChI code
+  #0 :Metal was disconnected
+==============================
+*** Open Babel Warning  in InChI code
+  #0 :Wrong 0D stereo descriptor(s): #1
+==============================
+*** Open Babel Warning  in InChI code
+  #0 :Metal was disconnected
+==============================
+*** Open Babel Warning  in InChI code
+  #0 :Wrong 0D stereo descriptor(s): #1; #5
+==============================
+*** Open Babel Warning  in InChI code
+  #0 :Wrong 0D stereo descriptor(s): #1
+==============================
+*** Open Babel Warning  in InChI code
+  #0 :Wrong 0D stereo descriptor(s): #1
+==============================
+*** Open Babel Warning  in InChI code
+  #0 :Accepted unusual valence(s): N,d(3); N-1,d(2)

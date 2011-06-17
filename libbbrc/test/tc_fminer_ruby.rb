@@ -28,6 +28,8 @@ class TestFminer < Test::Unit::TestCase
     @smi_file=File.expand_path(File.dirname(__FILE__)) + "/hamster_carcinogenicity.smi"
     @class_file=File.expand_path(File.dirname(__FILE__)) + "/hamster_carcinogenicity.class"
     @class_file_mn=File.expand_path(File.dirname(__FILE__)) + "/hamster_carcinogenicity-multinomial.class"
+    @smi_regr_file=File.expand_path(File.dirname(__FILE__)) + "/EPAFHM.smi"
+    @class_regr_file=File.expand_path(File.dirname(__FILE__)) + "/EPAFHM.act"
     @md5_yaml_file=File.expand_path(File.dirname(__FILE__)) + "/fminer_md5.yaml"
     @config=nil
     begin
@@ -58,6 +60,14 @@ class TestFminer < Test::Unit::TestCase
     output=$myFminer.run_fminer(@smi_file, @class_file, 2, false)
     actual_md5=Digest::MD5.hexdigest(output)
     expected_md5=@config[@arch]['kekule']
+    assert_equal(actual_md5, expected_md5)
+  end
+
+  # Tests default Fminer regression
+  def test_ruby_fminer_regression
+    output=$myFminer.run_fminer(@smi_regr_file, @class_regr_file, 5, true, true)
+    actual_md5=Digest::MD5.hexdigest(output)
+    expected_md5=@config[@arch]['regression']
     assert_equal(actual_md5, expected_md5)
   end
 
