@@ -30,12 +30,13 @@ class RubyFminer
   # @param[Integer] minimum frequency
   # @param[Boolean] aromatic perception
 
-  def run_fminer(smi_file, class_file, min_freq, arom=true)
+  def run_fminer(smi_file, class_file, min_freq, arom=true, regr=false)
     # Adjust settings
     @myFminer.Reset
     @myFminer.SetConsoleOut(false)
     @myFminer.SetMinfreq(min_freq.to_i)
     @myFminer.SetAromatic(arom)
+    @myFminer.SetRegression(regr)
 
     # Add compounds below. IMPORTANT! DO NOT CHANGE SETTINGS AFTER ADDING COMPOUNDS!
     smi_h = {} 
