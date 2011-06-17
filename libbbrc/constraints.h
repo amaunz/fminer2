@@ -156,6 +156,8 @@ class KSBbrcConstraint : public BbrcConstraint {
     void BbrcLegActivityOccurrence(vector<OccurrenceType>& legocc) {
 
      feat.clear();
+     f_sets.clear();
+     f_maps.clear();
 
       std::pair< set<BbrcTid>::iterator, bool > insert_ret;
       each (legocc) {
