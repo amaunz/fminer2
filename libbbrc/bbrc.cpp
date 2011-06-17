@@ -383,7 +383,9 @@ vector<string>* Bbrc::MineRoot(unsigned int j) {
         // Adjust chisq bound
         if (!fm::bbrc_regression) {
           if (fm::bbrc_chisq->nr_acts.size()>1 && fm::bbrc_chisq->nr_acts.size() < 6) {
-            fm::bbrc_chisq->sig=fm::bbrc_chisq->df_thresholds[fm::bbrc_chisq->nr_acts.size()-1];
+            if (fm::bbrc_chisq->sig == 0.0) { // do not override user-supplied threshold
+              fm::bbrc_chisq->sig=fm::bbrc_chisq->df_thresholds[fm::bbrc_chisq->nr_acts.size()-1];
+            }
           }
           else {
             cerr << "Error! Too many classes: '" << fm::bbrc_chisq->nr_acts.size() << "' (Max. 5)." << endl;
