@@ -17,3 +17,9 @@ Concerns: libbbrc.
 
 1. Aliphatic atoms are annotated with '&A'. This is relevant when matching back the SMARTS fragments- when the annotation is not set, there are match positions with ambiguous cases.
 
+Jun 20, 2011 [3fece70f55008e1764caef7874b2cdd36f6b09a2]
+Concerns: all.
+
+1. Fminer is ready for multiple classes (http://www.maunz.de/wordpress/opentox/2011/multinomial-fminer).
+2. Fminer emits pattern counts (see 'README' -> Environment Variables).
+3. Extensive test suite ready (see 'test' subdirectories).

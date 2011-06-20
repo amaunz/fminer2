@@ -16,4 +16,9 @@ $ ./configure
 $ make
 $ make cpptest
 
+Or use the Ruby-based unit test suite:
+$ cd test
+$ make -C ../ ruby
+$ ruby tc_fminer_ruby.rb
+
 Andreas Maunz, 2010.
