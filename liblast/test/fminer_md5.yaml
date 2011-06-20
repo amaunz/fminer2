@@ -2,7 +2,7 @@ i686:
  default: f4b077357d6174cc86f97e448214381f
  multinomial: d5e9a27731a8b7f29cc8859c9f115f85
  kekule: cf5a8d1f025aef981dfe9797d2a4bbd0
- regression: unknown
+ regression: d6bc3c45aa7f8f20433327a7a6a61eeb
 x86_64:
  default: 1e3b16459bb46a1ae3f6068fa70ba149
  multinomial: d5b4586027d6ecab3cbf866657a50d94
