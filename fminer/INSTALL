@@ -2,7 +2,15 @@ Welcome to Fminer.
 
 You need LibBbrc or LibLast to run this application, see http://github.com/amaunz/fminer2/tree/master, subdirectories libbbrc and liblast, respectively. Please refer to the the files README and INSTALL there (they include links to scientific information).
 
-Please adjust the Makefile. i.e., add your paths to -L and -I flags, or use the provided configure script. Then run
+For this frontend application, Please adjust the Makefile. i.e., add your paths to -L and -I flags, or use the provided configure script. Then run
 $ make
+
+TESTS
+ =====
+
+ To perform unit tests (builds everything) try:
+ $ cd ..; ./build_all.sh; cd -
+ $ ./test.sh
+ 
 
 Andreas Maunz, 2010.
