@@ -1,0 +1,1837 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="graphml.xsd">
+
+<!-- LAtent STructure Mining (LAST) descriptors-->
+
+<key id="act" for="graph" attr.name="activating" attr.type="boolean" />
+<key id="hops" for="graph" attr.name="hops" attr.type="int" />
+<key id="lab_n" for="node" attr.name="node_labels" attr.type="string" />
+<key id="lab_e" for="edge" attr.name="edge_labels" attr.type="string" />
+<key id="weight" for="edge" attr.name="edge_weight" attr.type="int" />
+<key id="del" for="edge" attr.name="edge_deleted" attr.type="boolean" />
+
+
+    <graph id="345" edgedefault="undirected">
+        <data key="act">0</data>
+        <data key="hops">6</data>
+        <node id="0">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="6">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="7">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="8">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="9">
+            <data key="lab_n">156</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">6</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">4</data>
+            <data key="weight">6</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="5">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="1" target="7">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="1" target="9">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">4</data>
+            <data key="weight">6</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="4">
+            <data key="lab_e">4</data>
+            <data key="weight">5</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="4" target="6">
+            <data key="lab_e">4</data>
+            <data key="weight">3</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="6" target="8">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+    </graph>
+
+
+    <graph id="346" edgedefault="undirected">
+        <data key="act">0</data>
+        <data key="hops">1</data>
+        <node id="0">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">156</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="3">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="347" edgedefault="undirected">
+        <data key="act">2</data>
+        <data key="hops">5</data>
+        <node id="0">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">156</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">2</data>
+            <data key="weight">5</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">5</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">4</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="5">
+            <data key="lab_e">4</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="4">
+            <data key="lab_e">4</data>
+            <data key="weight">2</data>
+            <data key="del">1</data>
+        </edge>
+    </graph>
+
+
+    <graph id="348" edgedefault="undirected">
+        <data key="act">2</data>
+        <data key="hops">2</data>
+        <node id="0">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">6</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">2</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="349" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">8</data>
+        <node id="0">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="6">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="7">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="8">
+            <data key="lab_n">6</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">2</data>
+            <data key="weight">8</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">8</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="6">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="8">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">8</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="4">
+            <data key="lab_e">1</data>
+            <data key="weight">8</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="7">
+            <data key="lab_e">1</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="4" target="5">
+            <data key="lab_e">2</data>
+            <data key="weight">4</data>
+            <data key="del">1</data>
+        </edge>
+    </graph>
+
+
+    <graph id="350" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">1</data>
+        <node id="0">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">6</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">2</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="5">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="4">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="351" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">1</data>
+        <node id="0">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">6</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">2</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="4">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="352" edgedefault="undirected">
+        <data key="act">2</data>
+        <data key="hops">1</data>
+        <node id="0">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">6</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">2</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="353" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">1</data>
+        <node id="0">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="6">
+            <data key="lab_n">6</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">2</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="6">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="4">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="4" target="5">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="354" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">20</data>
+        <node id="0">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">6 7 8</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="6">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="7">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="8">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="9">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="10">
+            <data key="lab_n">6 8</data>
+        </node>
+        <node id="11">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="12">
+            <data key="lab_n">6</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">2</data>
+            <data key="weight">20</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">19</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">18</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="5">
+            <data key="lab_e">1</data>
+            <data key="weight">5</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="7">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="11">
+            <data key="lab_e">1</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="4">
+            <data key="lab_e">1 2</data>
+            <data key="weight">16</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="6">
+            <data key="lab_e">1</data>
+            <data key="weight">3</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="4" target="10">
+            <data key="lab_e">1</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="5" target="8">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="7" target="9">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="11" target="12">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">1</data>
+        </edge>
+    </graph>
+
+
+    <graph id="355" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">6</data>
+        <node id="0">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">6 7</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="6">
+            <data key="lab_n">7</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">6</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">6</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">5</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="4">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="2" target="6">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="3" target="5">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">1</data>
+        </edge>
+    </graph>
+
+
+    <graph id="356" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">1</data>
+        <node id="0">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">6</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="4">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="5">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="357" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">6</data>
+        <node id="0">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="6">
+            <data key="lab_n">6</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">2</data>
+            <data key="weight">6</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="0" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">6</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="0" target="5">
+            <data key="lab_e">1</data>
+            <data key="weight">3</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="4">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="2" target="6">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+    </graph>
+
+
+    <graph id="358" edgedefault="undirected">
+        <data key="act">0</data>
+        <data key="hops">4</data>
+        <node id="0">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="6">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="7">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="8">
+            <data key="lab_n">156</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">4</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="6">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="1" target="8">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">4</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="4">
+            <data key="lab_e">4</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="4" target="5">
+            <data key="lab_e">4</data>
+            <data key="weight">3</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="5" target="7">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+    </graph>
+
+
+    <graph id="359" edgedefault="undirected">
+        <data key="act">2</data>
+        <data key="hops">5</data>
+        <node id="0">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="6">
+            <data key="lab_n">156</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">5</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">4</data>
+            <data key="weight">5</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="4">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="1" target="6">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">4</data>
+            <data key="weight">3</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="5">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+    </graph>
+
+
+    <graph id="360" edgedefault="undirected">
+        <data key="act">2</data>
+        <data key="hops">1</data>
+        <node id="0">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">156</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="361" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">2</data>
+        <node id="0">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">8</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">2</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="4">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+    </graph>
+
+
+    <graph id="362" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">4</data>
+        <node id="0">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="6">
+            <data key="lab_n">7</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="0" target="4">
+            <data key="lab_e">2</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="0" target="5">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="6">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="363" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">4</data>
+        <node id="0">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="6">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="7">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="8">
+            <data key="lab_n">8</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="0" target="4">
+            <data key="lab_e">1</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="7">
+            <data key="lab_e">1</data>
+            <data key="weight">3</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="5">
+            <data key="lab_e">1</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="4" target="6">
+            <data key="lab_e">1</data>
+            <data key="weight">3</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="7" target="8">
+            <data key="lab_e">2</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+    </graph>
+
+
+    <graph id="364" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">1</data>
+        <node id="0">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">7</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="0" target="4">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="5">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="365" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">1</data>
+        <node id="0">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">6</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="366" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">3</data>
+        <node id="0">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">6 7</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">6</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">3</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">3</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="367" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">1</data>
+        <node id="0">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">7</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="368" edgedefault="undirected">
+        <data key="act">0</data>
+        <data key="hops">1</data>
+        <node id="0">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">7</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">2</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="369" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">2</data>
+        <node id="0">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">6</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="4">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+    </graph>
+
+
+    <graph id="370" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">1</data>
+        <node id="0">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">7</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="371" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">2</data>
+        <node id="0">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">6</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">6</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="4">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="5">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+    </graph>
+
+
+    <graph id="372" edgedefault="undirected">
+        <data key="act">1</data>
+        <data key="hops">2</data>
+        <node id="0">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="6">
+            <data key="lab_n">156</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">4</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">4</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="4">
+            <data key="lab_e">4</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="4" target="5">
+            <data key="lab_e">1</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="5" target="6">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+    </graph>
+
+
+    <graph id="373" edgedefault="undirected">
+        <data key="act">0</data>
+        <data key="hops">1</data>
+        <node id="0">
+            <data key="lab_n">7</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">156</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="4">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="4" target="5">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="374" edgedefault="undirected">
+        <data key="act">2</data>
+        <data key="hops">4</data>
+        <node id="0">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">157</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="6">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="7">
+            <data key="lab_n">156</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">4</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="0" target="5">
+            <data key="lab_e">4</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">4</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">4</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="4">
+            <data key="lab_e">4</data>
+            <data key="weight">2</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="3" target="6">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="4" target="7">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+    </graph>
+
+
+    <graph id="375" edgedefault="undirected">
+        <data key="act">2</data>
+        <data key="hops">2</data>
+        <node id="0">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">157</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">156</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">4</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="376" edgedefault="undirected">
+        <data key="act">2</data>
+        <data key="hops">1</data>
+        <node id="0">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">157</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="377" edgedefault="undirected">
+        <data key="act">2</data>
+        <data key="hops">1</data>
+        <node id="0">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">157</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="4">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="378" edgedefault="undirected">
+        <data key="act">2</data>
+        <data key="hops">1</data>
+        <node id="0">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">157</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="4">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="4" target="5">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">0</data>
+        </edge>
+    </graph>
+
+
+    <graph id="379" edgedefault="undirected">
+        <data key="act">0</data>
+        <data key="hops">9</data>
+        <node id="0">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="6">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="7">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="8">
+            <data key="lab_n">8</data>
+        </node>
+        <node id="9">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="10">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="11">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="12">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="13">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="14">
+            <data key="lab_n">156</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">4</data>
+            <data key="weight">9</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">4</data>
+            <data key="weight">9</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="7">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">4</data>
+            <data key="weight">9</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="8">
+            <data key="lab_e">1</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="2" target="10">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="3" target="4">
+            <data key="lab_e">4</data>
+            <data key="weight">9</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="11">
+            <data key="lab_e">4</data>
+            <data key="weight">2</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="13">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="4" target="5">
+            <data key="lab_e">4</data>
+            <data key="weight">9</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="5" target="6">
+            <data key="lab_e">4</data>
+            <data key="weight">7</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="6" target="9">
+            <data key="lab_e">4</data>
+            <data key="weight">3</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="9" target="12">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="11" target="14">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+    </graph>
+
+
+    <graph id="380" edgedefault="undirected">
+        <data key="act">0</data>
+        <data key="hops">6</data>
+        <node id="0">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="1">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="2">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="3">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="4">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="5">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="6">
+            <data key="lab_n">6 8 156</data>
+        </node>
+        <node id="7">
+            <data key="lab_n">156</data>
+        </node>
+        <node id="8">
+            <data key="lab_n">156</data>
+        </node>
+        <edge source="0" target="1">
+            <data key="lab_e">4</data>
+            <data key="weight">6</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="2">
+            <data key="lab_e">4</data>
+            <data key="weight">6</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="1" target="7">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+        <edge source="2" target="3">
+            <data key="lab_e">4</data>
+            <data key="weight">6</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="2" target="6">
+            <data key="lab_e">1 4</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="3" target="4">
+            <data key="lab_e">4</data>
+            <data key="weight">6</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="4" target="5">
+            <data key="lab_e">4</data>
+            <data key="weight">4</data>
+            <data key="del">0</data>
+        </edge>
+        <edge source="6" target="8">
+            <data key="lab_e">4</data>
+            <data key="weight">1</data>
+            <data key="del">1</data>
+        </edge>
+    </graph>
+
+
+</graphml>
+
