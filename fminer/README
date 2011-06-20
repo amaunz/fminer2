@@ -113,4 +113,12 @@
  ./fminer ../liblast/liblast.so -f 5 -m 20 <graphs> <activities>
 
 
+ TESTS
+ =====
+
+ To perform unit tests:
+ $ cd ..; ./build_all.sh; cd -
+ $ ./test.sh
+ 
+
  (c) 2010 Andreas Maunz, feb 2010
