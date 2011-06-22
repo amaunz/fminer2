@@ -171,8 +171,8 @@ void Bbrc::Defaults() {
     fm::bbrc_nr_hits = false;
 
     // BBRC
-    fm::bbrc_chisq->sig = 3.84146;
     fm::bbrc_ks->sig = 0.95;
+    fm::bbrc_chisq->sig = -1.0;
     fm::bbrc_do_backbone = true;
     fm::bbrc_adjust_ub = true;
     fm::bbrc_regression=false;
