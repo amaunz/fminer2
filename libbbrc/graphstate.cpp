@@ -492,7 +492,7 @@ void BbrcGraphState::print ( unsigned int frequency ) {
                     putchar (' ');
                     printf("%i", (*iter)); 
                     if (fm::bbrc_nr_hits && fm::bbrc_do_yaml) {
-                      printf("=>%i", fa_map[*iter]);
+                      printf(": %i", fa_map[*iter]);
                     }
                     if ((last != end) && (iter == last)) putchar(' ');
                 }
@@ -519,7 +519,7 @@ void BbrcGraphState::print ( unsigned int frequency ) {
               for (iter = ids.begin(); iter != ids.end(); iter++) {
                 printf("%i", (*iter)); 
                 if (fm::bbrc_nr_hits && fm::bbrc_do_yaml) {
-                  printf("=>%i", hits[*iter]);
+                  printf(": %i", hits[*iter]);
                 }
                 putchar(' ');
               }
@@ -720,7 +720,7 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
                     oss.append (" ");
                     sprintf(x,"%i", (*iter)); oss.append (x);
                     if (fm::bbrc_nr_hits && fm::bbrc_do_yaml) {
-                      sprintf(x, "=>%i", fa_map[*iter]); oss.append (x);
+                      sprintf(x, ": %i", fa_map[*iter]); oss.append (x);
                     }
                     if ((last != end) && (iter == last)) oss.append (" ");
                 }
@@ -741,7 +741,7 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
               for (iter = ids.begin(); iter != ids.end(); iter++) {
                 sprintf(x,"%i", (*iter)); oss.append(x);
                 if (fm::bbrc_nr_hits && fm::bbrc_do_yaml) {
-                  sprintf(x, "=>%i", hits[*iter]); oss.append (x);
+                  sprintf(x, ": %i", hits[*iter]); oss.append (x);
                 }
                 oss.append (" ");
               }
