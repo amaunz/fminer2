@@ -57,14 +57,19 @@ oneTimeSetUp()
 
   md5='md5sum | awk -F " " "{print $1}"'
   testdir="./test/tmp"
-  unset FMINER_LAZAR
-  export FMINER_SMARTS
+  FMINER_LAZAR_TMP=$FMINER_LAZAR
+  FMINER_NR_HITS_TMP=$FMINER_NR_HITS
+  FMINER_SMARTS_TMP=$FMINER_SMARTS
+  unset FMINER_LAZAR_
+  unset FMINER_NR_HITS
+  export FMINER_SMARTS=1
 }
 
 tearDown()
 {
-  echo -n ""
-  #rm -fr "${testdir}"
+  FMINER_LAZAR=$FMINER_LAZAR_TMP
+  FMINER_NR_HITS=$FMINER_NR_HITS_TMP
+  FMINER_SMARTS=$FMINER_SMARTS_TMP
 }
 
 # load and run shUnit2

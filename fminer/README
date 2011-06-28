@@ -113,4 +113,5 @@
  ./fminer ../liblast/liblast.so -f 5 -m 20 <graphs> <activities>
 
 
+ 
  (c) 2010 Andreas Maunz, feb 2010
