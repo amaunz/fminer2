@@ -2686,9 +2686,9 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 /* -------- TYPES TABLE (BEGIN) -------- */
 
 #define SWIGTYPE_p_Bbrc swig_types[0]
-#define SWIGTYPE_p_ChisqConstraint swig_types[1]
+#define SWIGTYPE_p_ChisqBbrcConstraint swig_types[1]
 #define SWIGTYPE_p_FILE swig_types[2]
-#define SWIGTYPE_p_KSConstraint swig_types[3]
+#define SWIGTYPE_p_KSBbrcConstraint swig_types[3]
 #define SWIGTYPE_p_allocator_type swig_types[4]
 #define SWIGTYPE_p_char swig_types[5]
 #define SWIGTYPE_p_difference_type swig_types[6]
@@ -7167,11 +7167,11 @@ SWIGINTERN PyObject *Swig_var_bbrc_aromatic_get(void) {
 SWIGINTERN int Swig_var_bbrc_chisq_set(PyObject *_val) {
   {
     void *argp = 0;
-    int res = SWIG_ConvertPtr(_val, &argp, SWIGTYPE_p_ChisqConstraint,  0 );  
+    int res = SWIG_ConvertPtr(_val, &argp, SWIGTYPE_p_ChisqBbrcConstraint,  0 );  
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::bbrc_chisq""' of type '""ChisqConstraint *""'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::bbrc_chisq""' of type '""ChisqBbrcConstraint *""'");
     }
-    fm::bbrc_chisq = reinterpret_cast< ChisqConstraint * >(argp);
+    fm::bbrc_chisq = reinterpret_cast< ChisqBbrcConstraint * >(argp);
   }
   return 0;
 fail:
@@ -7182,7 +7182,7 @@ fail:
 SWIGINTERN PyObject *Swig_var_bbrc_chisq_get(void) {
   PyObject *pyobj = 0;
   
-  pyobj = SWIG_NewPointerObj(SWIG_as_voidptr(fm::bbrc_chisq), SWIGTYPE_p_ChisqConstraint,  0 );
+  pyobj = SWIG_NewPointerObj(SWIG_as_voidptr(fm::bbrc_chisq), SWIGTYPE_p_ChisqBbrcConstraint,  0 );
   return pyobj;
 }
 
@@ -7190,11 +7190,11 @@ SWIGINTERN PyObject *Swig_var_bbrc_chisq_get(void) {
 SWIGINTERN int Swig_var_bbrc_ks_set(PyObject *_val) {
   {
     void *argp = 0;
-    int res = SWIG_ConvertPtr(_val, &argp, SWIGTYPE_p_KSConstraint,  0 );  
+    int res = SWIG_ConvertPtr(_val, &argp, SWIGTYPE_p_KSBbrcConstraint,  0 );  
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::bbrc_ks""' of type '""KSConstraint *""'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::bbrc_ks""' of type '""KSBbrcConstraint *""'");
     }
-    fm::bbrc_ks = reinterpret_cast< KSConstraint * >(argp);
+    fm::bbrc_ks = reinterpret_cast< KSBbrcConstraint * >(argp);
   }
   return 0;
 fail:
@@ -7205,7 +7205,7 @@ fail:
 SWIGINTERN PyObject *Swig_var_bbrc_ks_get(void) {
   PyObject *pyobj = 0;
   
-  pyobj = SWIG_NewPointerObj(SWIG_as_voidptr(fm::bbrc_ks), SWIGTYPE_p_KSConstraint,  0 );
+  pyobj = SWIG_NewPointerObj(SWIG_as_voidptr(fm::bbrc_ks), SWIGTYPE_p_KSBbrcConstraint,  0 );
   return pyobj;
 }
 
@@ -8559,9 +8559,9 @@ static PyMethodDef SwigMethods[] = {
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
 static swig_type_info _swigt__p_Bbrc = {"_p_Bbrc", "Bbrc *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_ChisqConstraint = {"_p_ChisqConstraint", "ChisqConstraint *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_ChisqBbrcConstraint = {"_p_ChisqBbrcConstraint", "ChisqBbrcConstraint *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_FILE = {"_p_FILE", "FILE *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_KSConstraint = {"_p_KSConstraint", "KSConstraint *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_KSBbrcConstraint = {"_p_KSBbrcConstraint", "KSBbrcConstraint *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_allocator_type = {"_p_allocator_type", "allocator_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_difference_type = {"_p_difference_type", "difference_type *", 0, 0, (void*)0, 0};
@@ -8575,9 +8575,9 @@ static swig_type_info _swigt__p_value_type = {"_p_value_type", "value_type *", 0
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_Bbrc,
-  &_swigt__p_ChisqConstraint,
+  &_swigt__p_ChisqBbrcConstraint,
   &_swigt__p_FILE,
-  &_swigt__p_KSConstraint,
+  &_swigt__p_KSBbrcConstraint,
   &_swigt__p_allocator_type,
   &_swigt__p_char,
   &_swigt__p_difference_type,
@@ -8591,9 +8591,9 @@ static swig_type_info *swig_type_initial[] = {
 };
 
 static swig_cast_info _swigc__p_Bbrc[] = {  {&_swigt__p_Bbrc, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_ChisqConstraint[] = {  {&_swigt__p_ChisqConstraint, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ChisqBbrcConstraint[] = {  {&_swigt__p_ChisqBbrcConstraint, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_FILE[] = {  {&_swigt__p_FILE, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_KSConstraint[] = {  {&_swigt__p_KSConstraint, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_KSBbrcConstraint[] = {  {&_swigt__p_KSBbrcConstraint, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_allocator_type[] = {  {&_swigt__p_allocator_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_difference_type[] = {  {&_swigt__p_difference_type, 0, 0, 0},{0, 0, 0, 0}};
@@ -8607,9 +8607,9 @@ static swig_cast_info _swigc__p_value_type[] = {  {&_swigt__p_value_type, 0, 0, 
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_Bbrc,
-  _swigc__p_ChisqConstraint,
+  _swigc__p_ChisqBbrcConstraint,
   _swigc__p_FILE,
-  _swigc__p_KSConstraint,
+  _swigc__p_KSBbrcConstraint,
   _swigc__p_allocator_type,
   _swigc__p_char,
   _swigc__p_difference_type,
