@@ -21,7 +21,7 @@ INCLUDE_GSL  =
 LDFLAGS_OB  =   
 LDFLAGS_GSL  =   
 INCLUDE_RB  = -I/home/am/opentox-ruby/ruby-enterprise-1.8.7-2011.03/lib/ruby/1.8/x86_64-linux
-INCLUDE_PY = -I/usr/include/python2.5
+INCLUDE_PY = -I/usr/include/python2.7
 RUBY = ruby1.8
 PYTHON = python
 
