@@ -52,7 +52,6 @@ float ChisqLastConstraint::ChiSqTest(map<float, unsigned int> _f_sets, map<float
   map<float, unsigned int>::iterator  f_sets_it;
   for (it=nr_acts.begin(); it!=nr_acts.end(); it++) {
     if (_f_sets.find(it->first) != _f_sets.end()) {
-  //for (f_sets_it=_f_sets.begin(); f_sets_it!=_f_sets.end(); f_sets_it++) {
       f_sizes.push_back(_f_sets[it->first]);
     }
     else {
@@ -60,9 +59,7 @@ float ChisqLastConstraint::ChiSqTest(map<float, unsigned int> _f_sets, map<float
     }
   }
 
-  int f_sum=0; each(f_sizes) {
-    f_sum+=f_sizes[i];
-  }
+  int f_sum=0; each(f_sizes) f_sum+=f_sizes[i];
   res = gsl_cdf_chisq_P(ChiSq(f_sum, f_sizes, true), f_sizes.size()-1);
 
   // restore
@@ -75,17 +72,14 @@ float ChisqLastConstraint::ChiSqTest(map<float, unsigned int> _f_sets, map<float
 
 
 float ChisqLastConstraint::ChiSq(int x_val, vector<int> y, bool decide_activating) {
-
         assert(y.size() == nr_acts.size()); // equal class amounts as integrity constraint.
         int integrity = 0;
-        each(y) { 
-          integrity+=y[i]; 
-        }
+        each(y) integrity+=y[i]; 
         assert(integrity == x_val);         // equal occurrence amounts as integrity constraint.
 
+        int i=0;
         float impact = 0.0;
         map<float, unsigned int>::iterator it;
-        int i=0;
 
         impact = x_val/(float)n;
         chisq=0.0;
@@ -105,22 +99,6 @@ float ChisqLastConstraint::ChiSq(int x_val, vector<int> y, bool decide_activatin
         }
         return(chisq);
 }
-
-float ChisqLastConstraint::ChiSq(float x, float y, bool decide_activating) {
-  /*
-  float ea = 0.0, ei = 0.0, impact = 0.0;
-  impact = x/(float)n;
-  ea = na * impact; 
-  ei = ni * impact; 
-  if (decide_activating) {
-    (y>ea) ? activating=1 : activating=0;
-  }
-  if (ea>0 && ei>0) chisq = (y-ea-0.5)*(y-ea-0.5)/ea + (x-y-ei-0.5)*(x-y-ei-0.5)/ei;
-  */
-  return(chisq);
-}
-
-
 
 float KSLastConstraint::KSTest(vector<float> all, vector<float> feat) {
   bool activating_tmp=activating;
@@ -151,9 +129,11 @@ float KSLastConstraint::KS(vector<float> all_activities, vector<float> feat_acti
     if (famedian > aamedian) activating=1; else activating = 0;
   }
 
-  unsigned int j1=0, j2=0;
-  float d,d1,d2,d_1,d_2,dt1,dt2,en1,en2,en,fn1=0,fn2=0,alam;
-  d1 = d2 = d_1 = d_2 = 0.0;
+  unsigned int j1,j2;
+    j1 = j2 = 0;
+
+  float d,d1,d2,d_1,d_2,dt1,dt2,en1,en2,en,fn1,fn2,alam;
+    d1 = d2 = d_1 = d_2 = dt1 = dt2 = en1 = en2 = en = fn1 = fn2 = alam = 0.0;
 
   en1 = all_activities.size();
   en2 = feat_activities.size();
