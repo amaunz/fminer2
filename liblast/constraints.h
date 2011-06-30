@@ -169,10 +169,14 @@ private:
         each (legocc) {
           float activity = fm::last_database->trees[legocc[i].tid]->activity;
           LastTid orig_tid = fm::last_database->trees[legocc[i].tid]->orig_tid;
-          feat.push_back(activity);
           f_maps[0.0].insert(make_pair(orig_tid,1)); // each occurrence with 1, failure if present (use 0.0 as dummy key for regression)
           insert_ret = f_sets[0.0].insert(orig_tid); 
-          if (!insert_ret.second) f_maps[0.0][orig_tid]++; // increase if present
+          if (!insert_ret.second) {
+            f_maps[0.0][orig_tid]++; // increase if present
+          }
+          else {
+            feat.push_back(activity); // only if not present
+          }
         }
       }
 

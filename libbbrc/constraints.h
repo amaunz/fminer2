@@ -168,7 +168,9 @@ class KSBbrcConstraint : public BbrcConstraint {
         insert_ret = f_sets[0.0].insert(orig_tid); 
         if (!insert_ret.second) { 
           f_maps[0.0][orig_tid]++; // increase if present
-          feat.push_back(activity);
+        }
+        else {
+          feat.push_back(activity); // only if not present
         }
       }
     }
