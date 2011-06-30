@@ -121,6 +121,9 @@ void Last::Reset() {
 
     fm::last_chisq->active=true; 
     fm::last_result = &r;
+    fm::last_gsw_counter=0;
+
+
 
     // clearing privates
     init_mining_done = false;
@@ -433,7 +436,7 @@ bool Last::AddCompoundCanonical(string smiles, unsigned int comp_id) {
   bool insert_done=false;
   if (comp_id<=0) { cerr << "Error! IDs must be of type: Int > 0." << endl;}
   else {
-    if (activity_map[comp_id] == NULL) {
+    if (activity_map.find(comp_id) == activity_map.end()) {
       cerr << "Error on compound '" << comp_runner << "', id '" << comp_id << "': no activity found." << endl;
       return false;
     }
@@ -450,7 +453,7 @@ bool Last::AddCompoundCanonical(string smiles, unsigned int comp_id) {
 }
 
 bool Last::AddActivityCanonical(float act, unsigned int comp_id) {
-  if (fm::last_database->trees_map[comp_id] == NULL) { 
+  if (fm::last_database->trees_map.find(comp_id) == fm::last_database->trees_map.end()) { 
     cerr << "No structure for ID " << comp_id << " when adding activity. Ignoring entry!" << endl; return false; 
   }
   else {

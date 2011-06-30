@@ -544,7 +544,7 @@ bool Bbrc::AddCompoundCanonical(string smiles, unsigned int comp_id) {
   bool insert_done=false;
   if (comp_id<=0) { cerr << "Error! IDs must be of type: Int > 0." << endl;}
   else {
-    if (activity_map[comp_id] == NULL) {
+    if (activity_map.find(comp_id) == activity_map.end()) {
       cerr << "Error on compound '" << comp_runner << "', id '" << comp_id << "': no activity found." << endl;
       return false;
     }
@@ -561,7 +561,7 @@ bool Bbrc::AddCompoundCanonical(string smiles, unsigned int comp_id) {
 }
 
 bool Bbrc::AddActivityCanonical(float act, unsigned int comp_id) {
-  if (fm::bbrc_database->trees_map[comp_id] == NULL) { 
+  if (fm::bbrc_database->trees_map.find(comp_id) == fm::bbrc_database->trees_map.end()) { 
     cerr << "No structure for ID " << comp_id << " when adding activity. Ignoring entry!" << endl; return false; 
   }
   else {

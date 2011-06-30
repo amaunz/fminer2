@@ -74,8 +74,7 @@ namespace fm {
     int last_die;
     bool last_do_last;
     unsigned int last_hops;
-
-
+    unsigned int last_gsw_counter;
 
 }
 

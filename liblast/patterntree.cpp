@@ -45,6 +45,7 @@ namespace fm {
 
     extern vector<LastLegOccurrences> last_Lastcandidatelegsoccurrences; 
     extern int last_max_hops;
+    extern unsigned int last_gsw_counter;
 }
 
 int maxsize = ( 1 << ( sizeof(LastNodeId)*8 ) ) - 1; // safe default for the largest allowed pattern
@@ -1068,12 +1069,11 @@ void LastPatternTree::checkIfIndeedNormal () {
 }
 
 ostream& operator<< (ostream& os, GSWalk* gsw) {
-    static int gsw_counter=0;
 
     #ifndef DEBUG
     if (gsw->edgewalk.size()) {
-        gsw_counter++;
-        os << "    <graph id=\"" << gsw_counter << "\" edgedefault=\"undirected\">" << endl;
+        fm::last_gsw_counter++;
+        os << "    <graph id=\"" << fm::last_gsw_counter << "\" edgedefault=\"undirected\">" << endl;
         os << "        <data key=\"act\">" << gsw->activating << "</data>" << endl;
         os << "        <data key=\"hops\">" << gsw->hops << "</data>" << endl;
     }
@@ -1115,8 +1115,8 @@ ostream& operator<< (ostream& os, GSWalk* gsw) {
     
     #ifdef DEBUG
     if (gsw->edgewalk.size()) {
-        gsw_counter++;
-        //os << "t # " << gsw_counter << " " << gsw->activating << " " << gsw->hops << endl;
+        fm::last_gsw_counter++;
+        os << "t # " << fm::last_gsw_counter << " " << gsw->activating << " " << gsw->hops << endl;
     }
 
     for(vector<GSWNode>::iterator it=gsw->nodewalk.begin(); it!=gsw->nodewalk.end(); it++) {
