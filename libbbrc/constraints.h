@@ -163,10 +163,13 @@ class KSBbrcConstraint : public BbrcConstraint {
       each (legocc) {
         float activity = fm::bbrc_database->trees[legocc[i].tid]->activity;
         BbrcTid orig_tid = fm::bbrc_database->trees[legocc[i].tid]->orig_tid;
-        feat.push_back(activity);
+
         f_maps[0.0].insert(make_pair(orig_tid,1)); // each occurrence with 1, failure if present (use 0.0 as dummy key for regression)
         insert_ret = f_sets[0.0].insert(orig_tid); 
-        if (!insert_ret.second) f_maps[0.0][orig_tid]++; // increase if present
+        if (!insert_ret.second) { 
+          f_maps[0.0][orig_tid]++; // increase if present
+          feat.push_back(activity);
+        }
       }
     }
 
