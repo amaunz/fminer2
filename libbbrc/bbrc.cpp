@@ -563,7 +563,7 @@ bool Bbrc::AddActivityCanonical(float act, unsigned int comp_id) {
       AddChiSq(fm::bbrc_database->trees_map[comp_id]->activity = act);
     }
     else {
-      if ((fm::bbrc_database->trees_map[comp_id]->activity = act)) AddKS(act);
+      AddKS(fm::bbrc_database->trees_map[comp_id]->activity = act);
     }
     return true;
   }
