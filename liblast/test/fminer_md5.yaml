@@ -5,6 +5,6 @@ i686:
  regression: d6bc3c45aa7f8f20433327a7a6a61eeb
 x86_64:
  default: 1e3b16459bb46a1ae3f6068fa70ba149
- multinomial: d5b4586027d6ecab3cbf866657a50d94
- kekule: d2e64a886bdbc7c3feb6453275cd3705
+ multinomial: 1875a7f8081f3a5d7441dfc6beffe747
+ kekule: 62c54a4699217fc5d8d07b04e5de6dc9
  regression: c087c8a26f8f83cfc86a2faf759b025d
