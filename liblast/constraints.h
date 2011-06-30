@@ -98,7 +98,6 @@ class ChisqLastConstraint : public LastConstraint {
 
     //!< Calculates chi^2 and upper bound values
     float ChiSq(int x_val, vector<int> y, bool decide_ativating);
-    float ChiSq(float x, float y, bool decide_activating);
     void generateIntSubsets(set<int>& myset, set<set<int> >&subsets);
  
 
