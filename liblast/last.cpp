@@ -433,11 +433,17 @@ bool Last::AddCompoundCanonical(string smiles, unsigned int comp_id) {
   bool insert_done=false;
   if (comp_id<=0) { cerr << "Error! IDs must be of type: Int > 0." << endl;}
   else {
-    if (fm::last_database->readTreeSmi (smiles, comp_no, comp_id, comp_runner)) {
-      insert_done=true;
-      comp_no++;
+    if (activity_map[comp_id] == NULL) {
+      cerr << "Error on compound '" << comp_runner << "', id '" << comp_id << "': no activity found." << endl;
+      return false;
     }
-    else { cerr << "Error on compound " << comp_runner << ", id " << comp_id << "." << endl; }
+    else {
+      if (fm::last_database->readTreeSmi (smiles, comp_no, comp_id, comp_runner)) {
+        insert_done=true;
+        comp_no++;
+      }
+      else { cerr << "Error on compound '" << comp_runner << "', id '" << comp_id << "'." << endl; }
+    }
     comp_runner++;
   }
   return insert_done;
@@ -445,7 +451,7 @@ bool Last::AddCompoundCanonical(string smiles, unsigned int comp_id) {
 
 bool Last::AddActivityCanonical(float act, unsigned int comp_id) {
   if (fm::last_database->trees_map[comp_id] == NULL) { 
-    cerr << "No structure for ID " << comp_id << ". Ignoring entry!" << endl; return false; 
+    cerr << "No structure for ID " << comp_id << " when adding activity. Ignoring entry!" << endl; return false; 
   }
   else {
     if (!fm::last_regression) {
