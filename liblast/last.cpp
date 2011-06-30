@@ -452,7 +452,7 @@ bool Last::AddActivityCanonical(float act, unsigned int comp_id) {
       AddChiSq(fm::last_database->trees_map[comp_id]->activity = act);
     }
     else {
-      if ((fm::last_database->trees_map[comp_id]->activity = act)) AddKS(act);
+      AddKS(fm::last_database->trees_map[comp_id]->activity = act);
     }
     return true;
   }
