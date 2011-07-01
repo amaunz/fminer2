@@ -28,7 +28,6 @@
 #include "misc.h"
 
 namespace fm {
-    extern ChisqLastConstraint* last_chisq;
     extern bool last_console_out;
     extern bool last_gsp_out;
     extern LastDatabase* last_database;
@@ -422,105 +421,6 @@ void LastGraphState::DfsOut(int cur_n, int from_n) {
 }
 
 
-
-// ENTRY: BRANCH TO GSP (STDOUT) or PRINT YAML/LAZAR TO STDOUT
-/*
-void LastGraphState::print ( unsigned int frequency ) {
-    float p, sig;
-    if (fm::last_chisq->active) {
-        p = fm::last_chisq->p;
-        sig = fm::last_chisq->sig;
-    }
-    if (!fm::last_chisq->active || p >= sig) {
-        if (fm::last_gsp_out) { 
-            print(stdout); 
-        }
-        else {
-          putchar('-');
-          putchar(' ');
-          putchar('[');
-          putchar(' ');
-          putchar('"');
-          // output smarts 
-          int i;
-          for ( i = nodes.size()-1; i >= 0; i-- ) {   // edges
-              if (nodes[i].edges.size()==1) break;
-          }
-          DfsOut(i, i);
-          putchar('"');
-          putchar(',');
-          putchar(' ');
-          // output chisq
-          if (fm::last_chisq->active) {
-            printf("%.4f, ", fm::last_chisq->p);
-          }
-          // output freq
-          if (fm::last_chisq->active) {
-              if (frequency != (fm::last_chisq->fa+fm::last_chisq->fi)) { cerr << "Error: wrong counts! " << frequency << "!=" << fm::last_chisq->fa + fm::last_chisq->fi << "(" << fm::last_chisq->fa << "+" << fm::last_chisq->fi << ")" << endl; }
-          }
-          else { 
-              printf("%i", frequency);
-          }
-          // output occurrences
-          if (fm::last_chisq->active) {
-
-              map<float, set<LastTid> > f_sets;
-              map<float, map<LastTid,int> > f_maps;
-
-              if (!fm::last_regression) { f_sets = fm::last_chisq->f_sets; f_maps = fm::last_chisq->f_maps; }
-              else { f_sets = fm::last_ks->f_sets; f_maps = fm::last_ks->f_maps; }
-
-              map<float, set<LastTid> >::iterator f_sets_it;
-              set<LastTid> fa_set;
-              map<LastTid, int> fa_map;
-              set<LastTid>::iterator iter;
-
-              f_sets_it=f_sets.end();
-              do {
-                f_sets_it--;
-                map<float, set<BbrcTid> >::iterator outer_first = --(f_sets.end());
-                map<float, set<BbrcTid> >::iterator outer_last = f_sets.begin();
-                fa_map = f_maps[f_sets_it->first];
-                fa_set = f_sets_it->second;
-                if (f_sets_it == outer_first) putchar ('[');
-                set<BbrcTid>::iterator begin = fa_set.begin();
-                set<BbrcTid>::iterator end = fa_set.end();
-                set<BbrcTid>::iterator last = end; if (fa_set.size()) last = --(fa_set.end());
-                for (iter = begin; iter != end; iter++) {
-                  if (iter != begin) putchar (',');
-                    putchar (' ');
-                    printf("%i", (*iter));
-                    if ((last != end) && (iter == last)) putchar(' ');
-                 }
-                 if (f_sets_it != outer_last) {
-                    putchar (']');
-                    putchar (',');
-                    putchar (' ');
-                    putchar ('[');
-                 }
-              } while (f_sets_it != f_sets.begin());
-
-              set<LastTid> ids;
-              ids.insert(fm::last_chisq->fa_set.begin(), fm::last_chisq->fa_set.end());
-              ids.insert(fm::last_chisq->fi_set.begin(), fm::last_chisq->fi_set.end());
-              for (iter = ids.begin(); iter != ids.end(); iter++) {
-                  putchar(' ');
-                  printf("%i", (*iter)); 
-              }
-              putchar(' ');
-              putchar(']');
-          }
-          putchar(' ');
-          putchar(']');
-          if(fm::last_console_out) putchar('\n');
-       }
-    }
-}
-*/
-
-
-
-
 // PRINT GSP TO OSS
 
 void LastGraphState::to_s ( string& oss ) {
@@ -607,94 +507,6 @@ void LastGraphState::DfsOut(int cur_n, string& oss, int from_n) {
 
 // ENTRY: BRANCH TO GSP (OSS) or PRINT YAML/LAZAR TO OSS
 string LastGraphState::to_s ( unsigned int frequency ) {
-
-  /*
-    if (!fm::last_chisq->active || fm::last_chisq->p >= fm::last_chisq->sig) {
-
-        string oss;
-
-        if (fm::last_gsp_out) { 
-            to_s(oss); 
-            return oss;
-        }
-
-        else {
-          oss.append ("- [ ");
-
-          // output smarts 
-          oss.append ("\"");
-          int i;
-          for ( i = nodes.size()-1; i >= 0; i-- ) {   // edges
-              if (nodes[i].edges.size()==1) break;
-          }
-          DfsOut(i, oss, i);
-          oss.append ("\", ");
-
-          // output chisq
-          if (fm::last_chisq->active) {
-            char x[20]; sprintf(x,"%.4f", fm::last_chisq->p); (oss.append(x)).append(", ");
-          }
-
-          // output freq
-          if (fm::last_chisq->active) {
-              if (frequency != (fm::last_chisq->fa+fm::last_chisq->fi)) { cerr << "Notice: Wrong counts for frequency " << frequency << " [!=" << fm::last_chisq->fa << "(fa)+" << fm::last_chisq->fi << "(fi)]." << endl; }
-          }
-          else { 
-              char x[20]; sprintf(x,"%i", frequency); 
-              oss.append(x);
-          }
-
-          // output occurrences
-          if (fm::last_chisq->active) {
-              oss.append ("[");
-
-              set<LastTid>::iterator iter;
-              char x[20];
-
-              set<LastTid>::iterator begin = fm::last_chisq->fa_set.begin();
-              set<LastTid>::iterator end = fm::last_chisq->fa_set.end();
-              set<LastTid>::iterator last = end; if (fm::last_chisq->fa_set.size()) last = --(fm::last_chisq->fa_set.end());
-
-              for (iter = begin; iter != end; iter++) {
-                  if (iter != begin) oss.append (",");
-                  oss.append (" ");
-                  sprintf(x,"%i", (*iter)); oss.append (x);
-                  if ((last != end) && (iter == last)) oss.append (" ");
-              }
-              oss.append ("], [");
-
-              begin = fm::last_chisq->fi_set.begin();
-              end = fm::last_chisq->fi_set.end();
-              last = end; if (fm::last_chisq->fi_set.size()) last = --(fm::last_chisq->fi_set.end());
-
-              for (iter = begin; iter != end; iter++) {
-                  if (iter != begin) oss.append (",");
-                  oss.append (" ");
-                  sprintf(x,"%i", (*iter)); oss.append (x);
-                  if ((last != end) && (iter == last)) oss.append (" ");
-              }
-
-              set<LastTid> ids;
-              ids.insert(fm::last_chisq->fa_set.begin(), fm::last_chisq->fa_set.end());
-              ids.insert(fm::last_chisq->fi_set.begin(), fm::last_chisq->fi_set.end());
-              for (iter = ids.begin(); iter != ids.end(); iter++) {
-                  sprintf(x,"%i", (*iter)); 
-                  (oss.append (" ")).append(x);
-              }
-              oss.append (" ]");
-          }
-
-          oss.append (" ]");
-
-          fm::last_console_out ? oss.append ("\n") : oss.append ("");
-
-
-          return oss;
-       }
-
-    }
-    */
-    //else 
       return "";
 }
   

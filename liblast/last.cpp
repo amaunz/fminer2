@@ -28,7 +28,7 @@
 
 Last::Last() : init_mining_done(false) {
   if (!fm::last_instance_present) {
-      fm::last_database = NULL; fm::last_statistics = NULL; fm::last_chisq = NULL; fm::last_result = NULL;
+      fm::last_database = NULL; fm::last_statistics = NULL; fm::last_result = NULL;
       Reset();
       Defaults();
       fm::last_instance_present=true;
@@ -42,42 +42,6 @@ Last::Last() : init_mining_done(false) {
     exit(1);
   }
 }
-
-/*
-Last::Last(int _type, unsigned int _minfreq) : init_mining_done(false) {
-  if (!fm::last_instance_present) {
-      fm::last_database = NULL; fm::last_statistics = NULL; fm::last_chisq = NULL; fm::last_result = NULL;
-      Reset();
-      Defaults();
-      SetType(_type);
-      SetMinfreq(_minfreq);
-      fm::last_instance_present=true;
-      fm::last_gsp_out = false; 
-  }
-  else {
-    cerr << "Error! Cannot create more than 1 instance." << endl; 
-    exit(1);
-  }
-}
-
-Last::Last(int _type, unsigned int _minfreq, float _chisq_val, bool _do_backbone) : init_mining_done(false) {
-  if (!fm::last_instance_present) {
-      fm::last_database = NULL; fm::last_statistics = NULL; fm::last_chisq = NULL; fm::last_result = NULL;
-      Reset();
-      Defaults();
-      SetType(_type);
-      SetMinfreq(_minfreq);
-      SetChisqSig(_chisq_val);
-      fm::last_instance_present=true;
-      fm::last_gsp_out = false; 
-
-  }
-  else {
-    cerr << "Error! Cannot create more than 1 instance." << endl; 
-    exit(1);
-  }
-}
-*/
 
 Last::~Last() {
     if (fm::last_instance_present) {

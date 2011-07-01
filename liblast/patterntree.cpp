@@ -887,8 +887,6 @@ GSWalk* LastPatternTree::expand (pair<float, string> max, const int parent_size)
         for (map<float, LastTid>::iterator it=fm::last_chisq->nr_acts.begin(); it!=fm::last_chisq->nr_acts.end(); it++) {
           weightmap[it->first].insert(make_pair(it->second, 1)); 
         }
-//        map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
-//        map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
         fm::last_graphstate->print(gsw, weightmap); // print to graphstate walk
 
         if (!fm::last_regression) {
@@ -1142,17 +1140,6 @@ ostream& operator<< (ostream& os, GSWalk* gsw) {
                 os << *it3 << " ";
             }
             os << ">";
-
-            /*
-            int count=0;
-            for (map<LastTid, int>::iterator it3=it2->second.a.begin(); it3!=it2->second.a.end(); it3++) {
-                count = count + it3->second;
-            }
-            for (map<LastTid, int>::iterator it3=it2->second.i.begin(); it3!=it2->second.i.end(); it3++) {
-                count = count + it3->second;
-            }
-            os << " " << count;
-            */
             os << " " << it2->second.discrete_weight;
 
             if (it2->second.deleted) os << " [";
