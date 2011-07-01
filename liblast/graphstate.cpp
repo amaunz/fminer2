@@ -1311,7 +1311,7 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
             // Gather candidate edges for all core ids!
             for (int index = 0; index<core_ids.size(); index++) {
 
-                int j = core_ids[index];
+                int j = core_ids.at(index);
 
                 //s->nodewalk[j].stack(nodewalk[j]);
  
@@ -1518,7 +1518,7 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
                                 add_edge(
                                     it21->second.begin()->first,  // begin() jumps to first of always only one element.
                                     it21->second.begin()->second, 
-                                    ninsert21[it21->first][it21->second.begin()->first],
+                                    ninsert21.find(it21->first)->second.find(it21->second.begin()->first)->second,
                                     1,
                                     &core_ids,
                                     &u12
@@ -1549,7 +1549,7 @@ int GSWalk::conflict_resolution (vector<int> core_ids, GSWalk* s, bool starting,
                                 s->add_edge(
                                     it12->second.begin()->first, 
                                     it12->second.begin()->second, 
-                                    ninsert12[it12->first][it12->second.begin()->first],
+                                    ninsert12.find(it12->first)->second.find(it12->second.begin()->first)->second,
                                     1,
                                     &core_ids,
                                     &u12
@@ -1724,7 +1724,7 @@ int GSWalk::stack (GSWalk* w, map<int,int> stack_locations) {
         nodewalk[*it].stack(w->nodewalk[*it]); // can do multiple times since only labels affected for nodes.
     }
     each_it(to_ids, vector<int>::iterator) {
-        nodewalk[*it].stack(w->nodewalk[*it]);
+        nodewalk.at(*it).stack(w->nodewalk.at(*it));
     }
 
 
@@ -1787,7 +1787,7 @@ int GSWEdge::stack (GSWEdge e) {
     labs.insert(e.labs.begin(), e.labs.end());
     for (map<float, map<LastTid,int> >::iterator it=e.m.begin(); it!=e.m.end(); it++) {
         for (map<LastTid,int>::iterator it2=it->second.begin(); it2!=it->second.end(); it2++) {
-          m[it->first][it2->first] = m[it->first][it2->first] + it2->second;
+          m[it->first][it2->first] = m.find(it->first)->second.find(it2->first)->second + it2->second;
         }
     }
     discrete_weight = discrete_weight + e.discrete_weight;
@@ -1855,7 +1855,7 @@ void GSWalk::add_edge (int f, GSWEdge e, GSWNode n, bool reorder, vector<int>* c
                     if ((to->first >= e.to) && ((find(core_ids->begin(), core_ids->end(), to->first) == core_ids->end()) || to_core_range)) {
                         GSWEdge val = to->second; val.to++; // correct the data ...
                         pair<map<int, GSWEdge>::reverse_iterator, bool> p = to_map.insert(make_pair(val.to,val)); // ... and insert new value
-                        if (!p.second) { cerr << "Error! Replaced a value while moving down. This should never happen." << endl; exit(1); }
+                       if (!p.second) { cerr << "Error! Replaced a value while moving down. This should never happen." << endl; exit(1); }
                         #ifdef DEBUG
                         if (fm::last_die) cout << "    " << val.to-1 << "->" << val.to << endl;
                         #endif
@@ -1883,7 +1883,7 @@ void GSWalk::add_edge (int f, GSWEdge e, GSWNode n, bool reorder, vector<int>* c
             for (edgemap::reverse_iterator from = edgewalk.rbegin(); from != edgewalk.rend(); from++) {
                 if (from->first >= e.to) {
                     int i = from->first;
-                    edgewalk[i+1]=edgewalk[i];
+                    edgewalk[i+1]=edgewalk.find(i)->second;
                     edgewalk.erase(i);
                 }
             }
@@ -1891,6 +1891,7 @@ void GSWalk::add_edge (int f, GSWEdge e, GSWNode n, bool reorder, vector<int>* c
     }
 
     // insert the edge from-to into edgewalk
+    //pair<map<int, GSWEdge>::iterator, bool> from = edgewalk.find(f)->second.insert(make_pair(e.to,e));
     pair<map<int, GSWEdge>::iterator, bool> from = edgewalk[f].insert(make_pair(e.to,e));
     if (!from.second) { cerr << "Error! Key exists while adding an edge. " << endl; exit(1); }
 
@@ -1931,8 +1932,8 @@ void GSWalk::svd () {
     for (int i=0; i<adj_m_size; i++) { // init upper right
         if (edgewalk.find(i)!=edgewalk.end()) {
             for(int j=i+1; j<adj_m_size; j++) {
-                map<int,GSWEdge>::iterator it2 = edgewalk[i].find(j);
-                if (it2!=edgewalk[i].end()) {
+                map<int,GSWEdge>::iterator it2 = edgewalk.find(i)->second.find(j);
+                if (it2!=edgewalk.find(i)->second.end()) {
                     double count=0.0;
                     count = count + it2->second.discrete_weight;
                     /*
@@ -2024,8 +2025,8 @@ void GSWalk::svd () {
     for (int i=0; i<adj_m_size; i++) { // init upper right
         if (edgewalk.find(i)!=edgewalk.end()) {
             for(int j=i+1; j<adj_m_size; j++) {
-                map<int,GSWEdge>::iterator it2 = edgewalk[i].find(j);
-                if (it2!=edgewalk[i].end()) {
+                map<int,GSWEdge>::iterator it2 = edgewalk.find(i)->second.find(j);
+                if (it2!=edgewalk.find(i)->second.end()) {
                     float v=gsl_matrix_get(A,i,j);
                     if (v<1) {
                         it2->second.deleted = 1;
