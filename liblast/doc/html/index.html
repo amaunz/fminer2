@@ -127,7 +127,7 @@ Language Portability</h3>
 <p>The Makefile features a target that creates <b>python</b> bindings. On Ubuntu, you can e.g. do this:</p>
 <ul>
 <li>Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_PY = ...</code> so that the directory contains file <code>Python.h</code>. Also, let <code>PYTHON = ...</code> point to the right executable.</li>
-<li>Run <code>make python</code>. Use <code>make pytest</code> to test. The configuration was tested with swig 1.3.40 and Python 2.5.</li>
+<li>Run <code>make python</code>. Use <code>make pytest</code> to test. The configuration was tested with Python 2.7.</li>
 </ul>
 <p><b>Important:</b> There are swig interface files (<code>*.i</code>) and pre-configured swig output files (<code>*.cxx</code>). You need to re-create those output files if you are deploying for newer versions of the target languages, and you can find the necessary swig calls in the Makefile (commented out).</p>
 <p><a class="anchor" id="Guidance"></a> </p>
@@ -306,7 +306,7 @@ Contact</h2>
 </div>
   <div id="nav-path" class="navpath">
     <ul>
-      <li class="footer">Generated on Tue Jun 14 2011 16:56:13 for liblast by&#160;
+      <li class="footer">Generated on Wed Jun 29 2011 14:39:36 for liblast by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

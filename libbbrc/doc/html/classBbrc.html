@@ -502,8 +502,8 @@ Public Member Functions</h2></td></tr>
     fm::bbrc_nr_hits = <span class="keyword">false</span>;
 
     <span class="comment">// BBRC</span>
-    <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;sig = 3.84146;
     <a class="code" href="namespacefm.html#a9b68c84f7d4ae031114cbc2e3d9a9000">fm::bbrc_ks</a>-&gt;sig = 0.95;
+    <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;sig = -1.0;
     fm::bbrc_do_backbone = <span class="keyword">true</span>;
     <a class="code" href="namespacefm.html#a21a0641580cd5298ca5de10a4d49fa55">fm::bbrc_adjust_ub</a> = <span class="keyword">true</span>;
     <a class="code" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a>=<span class="keyword">false</span>;
@@ -868,7 +868,9 @@ Public Member Functions</h2></td></tr>
         <span class="comment">// Adjust chisq bound</span>
         <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#a2ad5142de755c255e8ff5f58618c122a">fm::bbrc_regression</a>) {
           <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;nr_acts.size()&gt;1 &amp;&amp; <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;nr_acts.size() &lt; 6) {
-            <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;sig=<a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;df_thresholds[<a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;nr_acts.size()-1];
+            <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;sig == -1.0) { <span class="comment">// do not override user-supplied threshold, only machine default.</span>
+              <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;sig=<a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;df_thresholds[<a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;nr_acts.size()-1];
+            }
           }
           <span class="keywordflow">else</span> {
             cerr &lt;&lt; <span class="stringliteral">&quot;Error! Too many classes: &#39;&quot;</span> &lt;&lt; <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a>-&gt;nr_acts.size() &lt;&lt; <span class="stringliteral">&quot;&#39; (Max. 5).&quot;</span> &lt;&lt; endl;
@@ -983,12 +985,11 @@ Public Member Functions</h2></td></tr>
     fm::bbrc_database = <span class="keyword">new</span> BbrcDatabase();
     <a class="code" href="namespacefm.html#a2cb541e14ccf5ec58d5bedc184620635">fm::bbrc_db_built</a> = <span class="keyword">false</span>;
     fm::bbrc_statistics = <span class="keyword">new</span> BbrcStatistics();
-    <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a> = <span class="keyword">new</span> ChisqBbrcConstraint(3.84146);
+    <a class="code" href="namespacefm.html#ae214935ee2ad7dfa4e4c863943b5b4fc">fm::bbrc_chisq</a> = <span class="keyword">new</span> ChisqBbrcConstraint(-1.0);
     <a class="code" href="namespacefm.html#a9b68c84f7d4ae031114cbc2e3d9a9000">fm::bbrc_ks</a> = <span class="keyword">new</span> KSBbrcConstraint(0.95);
     fm::bbrc_graphstate = <span class="keyword">new</span> BbrcGraphState();
     fm::bbrc_closelegoccurrences = <span class="keyword">new</span> CloseBbrcLegOccurrences();
     fm::bbrc_legoccurrences = <span class="keyword">new</span> BbrcLegOccurrences();
-    fm::bbrc_nr_hits = <span class="keyword">false</span>;
 
     fm::bbrc_Bbrccandidatelegsoccurrences.clear();
     fm::bbrc_candidatecloselegsoccs.clear();
@@ -1486,7 +1487,7 @@ Public Member Functions</h2></td></tr>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="classBbrc.html">Bbrc</a>      </li>
-      <li class="footer">Generated on Tue Jun 14 2011 17:04:17 for libbbrc by&#160;
+      <li class="footer">Generated on Wed Jun 29 2011 14:38:24 for libbbrc by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

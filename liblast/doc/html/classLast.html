@@ -826,7 +826,9 @@ Public Member Functions</h2></td></tr>
         <span class="comment">// Adjust chisq bound</span>
         <span class="keywordflow">if</span> (!<a class="code" href="namespacefm.html#a4495ad5dc6d2104ca73b0c5414ce42ef">fm::last_regression</a>) {
           <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;nr_acts.size()&gt;1 &amp;&amp; <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;nr_acts.size() &lt; 6) {
-            <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;sig=<a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;df_thresholds[<a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;nr_acts.size()-1];
+            <span class="keywordflow">if</span> (<a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;sig == -1.0) { <span class="comment">// do not override user-supplied threshold</span>
+              <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;sig=<a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;df_thresholds[<a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;nr_acts.size()-1];
+            }
           }
           <span class="keywordflow">else</span> {
             cerr &lt;&lt; <span class="stringliteral">&quot;Error! Too many classes: &#39;&quot;</span> &lt;&lt; <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a>-&gt;nr_acts.size() &lt;&lt; <span class="stringliteral">&quot;&#39; (Max. 5).&quot;</span> &lt;&lt; endl;
@@ -962,7 +964,7 @@ Public Member Functions</h2></td></tr>
     fm::last_database = <span class="keyword">new</span> LastDatabase();
     <a class="code" href="namespacefm.html#a5e4f265a38611276ce982929f63e011d">fm::last_db_built</a> = <span class="keyword">false</span>;
     fm::last_statistics = <span class="keyword">new</span> LastStatistics();
-    <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a> = <span class="keyword">new</span> ChisqLastConstraint(3.84146);
+    <a class="code" href="namespacefm.html#a0d7e7446f35ee8a8823582b0eadb3bb0">fm::last_chisq</a> = <span class="keyword">new</span> ChisqLastConstraint(-1.0);
     <a class="code" href="namespacefm.html#a9045169d260713cb913fcfbf7811089a">fm::last_ks</a> = <span class="keyword">new</span> KSLastConstraint(0.95);
     fm::last_graphstate = <span class="keyword">new</span> LastGraphState();
     fm::last_closelegoccurrences = <span class="keyword">new</span> CloseLastLegOccurrences();
@@ -1325,7 +1327,7 @@ Public Member Functions</h2></td></tr>
   <div id="nav-path" class="navpath">
     <ul>
       <li class="navelem"><a class="el" href="classLast.html">Last</a>      </li>
-      <li class="footer">Generated on Tue Jun 14 2011 16:56:13 for liblast by&#160;
+      <li class="footer">Generated on Wed Jun 29 2011 14:39:36 for liblast by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </li>
     </ul>

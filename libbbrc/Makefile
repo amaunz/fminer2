@@ -20,8 +20,8 @@ INCLUDE_OB = -I/home/am/opentox-ruby/openbabel-2.2.3/include/openbabel-2.0
 INCLUDE_GSL  =   
 LDFLAGS_OB = -L/home/am/opentox-ruby/openbabel-2.2.3/lib
 LDFLAGS_GSL  =   
-INCLUDE_RB = -I/home/am/opentox-ruby/ruby-enterprise-1.8.7-2011.03/lib/ruby/1.8/i686-linux
-INCLUDE_PY = -I/usr/include/python2.5
+INCLUDE_RB  = -I/home/am/opentox-ruby/ruby-enterprise-1.8.7-2011.03/lib/ruby/1.8/x86_64-linux
+INCLUDE_PY = -I/usr/include/python2.7
 RUBY = ruby1.8
 PYTHON = python
 
