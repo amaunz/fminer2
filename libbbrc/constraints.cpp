@@ -34,17 +34,12 @@ void ChisqBbrcConstraint::generateIntSubsets(set<int>& myset, set<set<int> >&sub
 float ChisqBbrcConstraint::ChiSq(int x_val, vector<int> y) {
         assert(y.size() == nr_acts.size()); // equal class amounts as integrity constraint.
         int integrity = 0;
-//        cout << endl;
-        each(y) { 
-          integrity+=y[i]; 
-          //cout << "'" << y[i] << "'" << endl; 
-        }
-//        cout << "'" << integrity << "' '" << x_val << "'" <<  endl;
+        each(y) integrity+=y[i]; 
         assert(integrity == x_val);         // equal occurrence amounts as integrity constraint.
 
+        int i=0;
         float impact = 0.0;
         map<float, unsigned int>::iterator it;
-        int i=0;
 
         impact = x_val/(float)n;
         chisq=0.0;
@@ -64,9 +59,11 @@ float KSBbrcConstraint::KS(vector<float> all_activities, vector<float> feat_acti
     sort(feat_activities.begin(),feat_activities.end());
     sort(all_activities.begin(), all_activities.end());
 
-    unsigned int j1=0, j2=0;
-    float d,d1,d2,d_1,d_2,dt1,dt2,en1,en2,en,fn1=0,fn2=0,alam;
-    d1 = d2 = d_1 = d_2 = 0.0;
+    unsigned int j1,j2;
+    j1 = j2 = 0;
+
+    float d,d1,d2,d_1,d_2,dt1,dt2,en1,en2,en,fn1,fn2,alam;
+    d1 = d2 = d_1 = d_2 = dt1 = dt2 = en1 = en2 = en = fn1 = fn2 = alam = 0.0;
 
     en1 = all_activities.size();
     en2 = feat_activities.size();

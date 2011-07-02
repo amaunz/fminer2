@@ -37,16 +37,17 @@ namespace fm {
 class BbrcConstraint {};
 
 class ChisqBbrcConstraint : public BbrcConstraint {
-    public:
+
+  public:
     map<float, unsigned int> nr_acts;
     unsigned int n;
-    unsigned int fa, fi;
     float sig, chisq, p, u;
     bool active;
-    map<float, set<BbrcTid> > f_sets;
-    map<float, map<BbrcTid,int> > f_maps; 
+    map<float, set<BbrcTid> > f_sets;     // gather unique Tids per class
+    map<float, map<BbrcTid,int> > f_maps; // count hits in <*,int>
     map<int, float> df_thresholds;
 
+    // Constructor
     ChisqBbrcConstraint (float sig) : n(0), sig(sig), chisq(0.0), p(0.0), u(0.0) {
       df_thresholds[1]=3.84;
       df_thresholds[2]=5.99;
@@ -54,21 +55,19 @@ class ChisqBbrcConstraint : public BbrcConstraint {
       df_thresholds[4]=9.49;
     }
 
+    // Calculate chisq and upper bound
     template <typename OccurrenceType>
     void Calc(vector<OccurrenceType>& legocc) {
-
-        chisq = 0.0; p = 0.0; u = 0.0;
+        u = p = chisq = 0.0;
+        int f_sum = 0; // f_sum
+        vector<int> f_sizes;
 
         BbrcLegActivityOccurrence(legocc);
-        vector<int> f_sizes;
         map<float, set<BbrcTid> >::iterator  f_sets_it;
-        for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) f_sizes.push_back(f_sets_it->second.size());
-        int f_sum=0; each(f_sizes) f_sum+=f_sizes[i];
-        // chisq_p for current feature
-        p = ChiSq(f_sum, f_sizes);
+        for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) f_sizes.push_back(f_sets_it->second.size()); // f_sizes
+        each(f_sizes) f_sum+=f_sizes[i]; // f_sum
+        p = ChiSq(f_sum, f_sizes); // chisq
 
-        // upper bound u for chisq_p of more specific features
-        u=0.0;
         set<int> f_indices;
         for (int i=0; i<f_sizes.size(); i++) f_indices.insert(i);
         set<set<int> > f_subsets;
@@ -76,20 +75,19 @@ class ChisqBbrcConstraint : public BbrcConstraint {
         generateIntSubsets(f_indices, f_subsets);
         for (f_subsets_it = f_subsets.begin(); f_subsets_it!=f_subsets.end(); f_subsets_it++) {
           if (f_subsets_it->size() > 0) {
-            f_sum=0;
+            f_sum=0; // f_sum
             vector<int> f_selected_sizes;
             for (int j=0; j<f_sizes.size(); j++) { 
               if (f_subsets_it->find(j)!=f_subsets_it->end()) {
                 f_selected_sizes.push_back(f_sizes[j]);
-                f_sum+=f_sizes[j];
+                f_sum+=f_sizes[j]; // f_sum
               }
               else f_selected_sizes.push_back(0);
             }
             float current = ChiSq(f_sum,f_selected_sizes);
-            if (current > u) u=current;
+            if (current > u) u=current; // u
           }
        }
-//       cout << "U: " << u << " P: " << p << endl;
     }
 
 
@@ -147,8 +145,7 @@ class KSBbrcConstraint : public BbrcConstraint {
         p = KS(all,feat);
     }
 
-    private:
-    //!< Calculates KS values
+  private:
     float KS(vector<float> all_activities, vector<float> feat_activities);
 
     //!< Stores activities of occurrences of legs
@@ -163,10 +160,15 @@ class KSBbrcConstraint : public BbrcConstraint {
       each (legocc) {
         float activity = fm::bbrc_database->trees[legocc[i].tid]->activity;
         BbrcTid orig_tid = fm::bbrc_database->trees[legocc[i].tid]->orig_tid;
-        feat.push_back(activity);
+
         f_maps[0.0].insert(make_pair(orig_tid,1)); // each occurrence with 1, failure if present (use 0.0 as dummy key for regression)
         insert_ret = f_sets[0.0].insert(orig_tid); 
-        if (!insert_ret.second) f_maps[0.0][orig_tid]++; // increase if present
+        if (!insert_ret.second) { 
+          f_maps[0.0][orig_tid]++; // increase if present
+        }
+        else {
+          feat.push_back(activity); // only if not present
+        }
       }
     }
 

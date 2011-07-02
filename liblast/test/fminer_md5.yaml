@@ -1,10 +1,10 @@
 i686:
  default: f4b077357d6174cc86f97e448214381f
- multinomial: d5e9a27731a8b7f29cc8859c9f115f85
- kekule: cf5a8d1f025aef981dfe9797d2a4bbd0
- regression: d6bc3c45aa7f8f20433327a7a6a61eeb
+ multinomial: 22feed6adf4954c34ae80dd9e05fc05c
+ kekule: 0399785729a3991bd71b9be3fa0c2939
+ regression: 9d81285257e0c5d9cdef86b7aef7feea
 x86_64:
  default: 1e3b16459bb46a1ae3f6068fa70ba149
- multinomial: d5b4586027d6ecab3cbf866657a50d94
- kekule: d2e64a886bdbc7c3feb6453275cd3705
- regression: db0e7d5b80c5d93cd327a008e2e4b49a
+ multinomial: 1875a7f8081f3a5d7441dfc6beffe747
+ kekule: 62c54a4699217fc5d8d07b04e5de6dc9
+ regression: ea7592b3055fb46b704e0d0ce7323564

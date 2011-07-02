@@ -92,8 +92,8 @@ class LastGraphState {
     void deleteNode2 ();
     vector<GSNode> nodes;
     int edgessize;
-    short unsigned int getNodeDegree ( int i ) const { return nodes[i].edges.size (); }
-    short unsigned int getNodeMaxDegree ( int i ) const { return nodes[i].maxdegree; }
+    short unsigned int getNodeDegree ( int i ) const { return nodes.at(i).edges.size (); }
+    short unsigned int getNodeMaxDegree ( int i ) const { return nodes.at(i).maxdegree; }
     LastGraphState  ();
     void determineCycles ( unsigned int usedbit );
     int enumerateSpanning ();

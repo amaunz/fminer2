@@ -37,11 +37,10 @@ namespace fm {
 class LastConstraint {};
 
 class ChisqLastConstraint : public LastConstraint {
-  public:
 
+  public:
     map<float, unsigned int> nr_acts;
     unsigned int n;
-    unsigned int fa, fi;             // counters for occurrences of spec feature                      (cand. for making private)
     float sig;                       // significance threshold, not accessed (r,rw) inside this class (only constructor)
     float chisq;                     // chisq is test results, written on every test                  (cand. for making private)
     float p, u;                      // p, u are test results, written on every test                  (cand. for making ro)
@@ -49,7 +48,6 @@ class ChisqLastConstraint : public LastConstraint {
     map<float, set<LastTid> > f_sets;
     map<float, map<LastTid,int> > f_maps; 
     map<int, float> df_thresholds;
-
     float activating;                 // defaults to deactivating (0)                                  (cand. for making ro)
 
     ChisqLastConstraint (float sig) : n(0), sig(sig), chisq(0.0), p(0.0), u(0.0), activating(0) {
@@ -62,19 +60,16 @@ class ChisqLastConstraint : public LastConstraint {
     //!< Calculate chi^2 of current and upper bound for chi^2 of more specific features (see Morishita and Sese, 2000)
     template <typename OccurrenceType>
     void Calc(vector<OccurrenceType>& legocc) {
-
-        chisq = 0.0; p = 0.0; u = 0.0;
+        u = p = chisq = 0.0;
+        int f_sum=0; 
+        vector<int> f_sizes;
 
         LastLegActivityOccurrence(legocc);
-        vector<int> f_sizes;
         map<float, set<LastTid> >::iterator  f_sets_it;
         for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) f_sizes.push_back(f_sets_it->second.size());
-        int f_sum=0; each(f_sizes) f_sum+=f_sizes[i];
-        // chisq_p for current feature
+        each(f_sizes) f_sum+=f_sizes[i];
         p = ChiSq(f_sum, f_sizes, true);
 
-        // upper bound u for chisq_p of more specific features
-        u=0.0;
         set<int> f_indices;
         for (int i=0; i<f_sizes.size(); i++) f_indices.insert(i);
         set<set<int> > f_subsets;
@@ -103,7 +98,6 @@ class ChisqLastConstraint : public LastConstraint {
 
     //!< Calculates chi^2 and upper bound values
     float ChiSq(int x_val, vector<int> y, bool decide_ativating);
-    float ChiSq(float x, float y, bool decide_activating);
     void generateIntSubsets(set<int>& myset, set<set<int> >&subsets);
  
 
@@ -151,16 +145,18 @@ class KSLastConstraint : public LastConstraint {
 
     template <typename OccurrenceType>
     void Calc(vector<OccurrenceType>& legocc) { 
-      LastLegActivityOccurrence(legocc); p = KS(all,feat,1); 
+      LastLegActivityOccurrence(legocc); 
+      p = KS(all,feat,1); 
     }
     float KSTest(vector<float> all, vector<float> feat);
 
-private:
+  private:
     float KS(vector<float> all_activities, vector<float> feat_activities, bool decide_activating);
 
     //!< Stores activities of occurrences of legs
     template <typename OccurrenceType>
       void LastLegActivityOccurrence(vector<OccurrenceType>& legocc) {
+
         feat.clear();
         f_sets.clear();
         f_maps.clear();
@@ -169,10 +165,15 @@ private:
         each (legocc) {
           float activity = fm::last_database->trees[legocc[i].tid]->activity;
           LastTid orig_tid = fm::last_database->trees[legocc[i].tid]->orig_tid;
-          feat.push_back(activity);
+
           f_maps[0.0].insert(make_pair(orig_tid,1)); // each occurrence with 1, failure if present (use 0.0 as dummy key for regression)
           insert_ret = f_sets[0.0].insert(orig_tid); 
-          if (!insert_ret.second) f_maps[0.0][orig_tid]++; // increase if present
+          if (!insert_ret.second) {
+            f_maps[0.0][orig_tid]++; // increase if present
+          }
+          else {
+            feat.push_back(activity); // only if not present
+          }
         }
       }
 

@@ -21,6 +21,7 @@
 
 #include "bbrc.h"
 #include "globals.h"
+#include "ranker.h"
 
 
 // 1. Constructors and Initializers
@@ -529,11 +530,42 @@ bool Bbrc::AddDataCanonical() {
     // AM: now insert all structures into the database
     // in canonical ordering according to inchis
     comp_runner=0;
-    for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_mmap.begin(); it != inchi_compound_mmap.end(); it++) {
-      //cerr << it->second.first << "\t" << it->second.second << endl;
-      AddCompoundCanonical(it->second.second, it->second.first); // smiles, comp_id
-      AddActivityCanonical(activity_map[it->second.first], it->second.first); // act, comp_id
+    if (fm::bbrc_regression) {
+      vector<float> activity_values;
+      for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_mmap.begin(); it != inchi_compound_mmap.end(); it++) {
+        if (activity_map.find(it->second.first) != activity_map.end()) { // need this for reading value in the next line!
+          activity_values.push_back(activity_map.find(it->second.first)->second); // 0 gets push w/o previous check line!
+        }
+      }
+      // add log transform: move above +1.0, take log 10, cut quantiles.
+      vector<float> ranks;
+      rank(activity_values, ranks, "min");
+      int min_pos = find(ranks.begin(),ranks.end(),1.0)-ranks.begin(); // find index of lowest rank
+      float min_value = activity_values.at(min_pos);
+
+      float neg_offset=min_value-1.0; // get negative distance to 1.0
+      if (neg_offset>0.0) neg_offset = 0.0;
+
+      float min_thr, max_thr = 0.0;
+      min_thr = log10(quantile(activity_values,0.0125) - neg_offset); // find 1.25% quantile
+      max_thr = log10(quantile(activity_values,0.9875) - neg_offset); // find 98.75% quantile
+
+      for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_mmap.begin(); it != inchi_compound_mmap.end(); it++) {
+        if (activity_map.find(it->second.first) != activity_map.end()) {
+          activity_map[it->second.first]-=neg_offset;
+          activity_map[it->second.first]=log10(activity_map[it->second.first]);
+          if (activity_map[it->second.first] < min_thr) activity_map[it->second.first]=min_thr;
+          if (activity_map[it->second.first] > max_thr) activity_map[it->second.first]=max_thr;
+        }
+      }
     }
+
+    for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_mmap.begin(); it != inchi_compound_mmap.end(); it++) {
+      AddCompoundCanonical(it->second.second, it->second.first); // smiles, comp_id
+      float activity = activity_map.find(it->second.first)->second;
+      AddActivityCanonical(activity, it->second.first); // act, comp_id
+    }
+
     fm::bbrc_db_built=true;
     inchi_compound_map.clear();
     inchi_compound_mmap.clear();
@@ -544,26 +576,32 @@ bool Bbrc::AddCompoundCanonical(string smiles, unsigned int comp_id) {
   bool insert_done=false;
   if (comp_id<=0) { cerr << "Error! IDs must be of type: Int > 0." << endl;}
   else {
-    if (fm::bbrc_database->readTreeSmi (smiles, comp_no, comp_id, comp_runner)) {
-      insert_done=true;
-      comp_no++;
+    if (activity_map.find(comp_id) == activity_map.end()) {
+      cerr << "Error on compound '" << comp_runner << "', id '" << comp_id << "': no activity found." << endl;
+      return false;
     }
-    else { cerr << "Error on compound " << comp_runner << ", id " << comp_id << "." << endl; }
+    else {
+      if (fm::bbrc_database->readTreeSmi (smiles, comp_no, comp_id, comp_runner)) {
+        insert_done=true;
+        comp_no++;
+      }
+      else { cerr << "Error on compound '" << comp_runner << "', id '" << comp_id << "'." << endl; }
+    }
     comp_runner++;
   }
   return insert_done;
 }
 
 bool Bbrc::AddActivityCanonical(float act, unsigned int comp_id) {
-  if (fm::bbrc_database->trees_map[comp_id] == NULL) { 
-    cerr << "No structure for ID " << comp_id << ". Ignoring entry!" << endl; return false; 
+  if (fm::bbrc_database->trees_map.find(comp_id) == fm::bbrc_database->trees_map.end()) { 
+    cerr << "No structure for ID " << comp_id << " when adding activity. Ignoring entry!" << endl; return false; 
   }
   else {
     if (!fm::bbrc_regression) {
       AddChiSq(fm::bbrc_database->trees_map[comp_id]->activity = act);
     }
     else {
-      if ((fm::bbrc_database->trees_map[comp_id]->activity = act)) AddKS(act);
+      AddKS(fm::bbrc_database->trees_map[comp_id]->activity = act);
     }
     return true;
   }

@@ -45,6 +45,7 @@ namespace fm {
 
     extern vector<LastLegOccurrences> last_Lastcandidatelegsoccurrences; 
     extern int last_max_hops;
+    extern unsigned int last_gsw_counter;
 }
 
 int maxsize = ( 1 << ( sizeof(LastNodeId)*8 ) ) - 1; // safe default for the largest allowed pattern
@@ -886,8 +887,6 @@ GSWalk* LastPatternTree::expand (pair<float, string> max, const int parent_size)
         for (map<float, LastTid>::iterator it=fm::last_chisq->nr_acts.begin(); it!=fm::last_chisq->nr_acts.end(); it++) {
           weightmap[it->first].insert(make_pair(it->second, 1)); 
         }
-//        map<LastTid, int> weightmap_a; each_it(fm::last_chisq->fa_set, set<LastTid>::iterator) { weightmap_a.insert(make_pair((*it),1)); }
-//        map<LastTid, int> weightmap_i; each_it(fm::last_chisq->fi_set, set<LastTid>::iterator) { weightmap_i.insert(make_pair((*it),1)); }
         fm::last_graphstate->print(gsw, weightmap); // print to graphstate walk
 
         if (!fm::last_regression) {
@@ -1068,12 +1067,11 @@ void LastPatternTree::checkIfIndeedNormal () {
 }
 
 ostream& operator<< (ostream& os, GSWalk* gsw) {
-    static int gsw_counter=0;
 
     #ifndef DEBUG
     if (gsw->edgewalk.size()) {
-        gsw_counter++;
-        os << "    <graph id=\"" << gsw_counter << "\" edgedefault=\"undirected\">" << endl;
+        fm::last_gsw_counter++;
+        os << "    <graph id=\"" << fm::last_gsw_counter << "\" edgedefault=\"undirected\">" << endl;
         os << "        <data key=\"act\">" << gsw->activating << "</data>" << endl;
         os << "        <data key=\"hops\">" << gsw->hops << "</data>" << endl;
     }
@@ -1115,8 +1113,8 @@ ostream& operator<< (ostream& os, GSWalk* gsw) {
     
     #ifdef DEBUG
     if (gsw->edgewalk.size()) {
-        gsw_counter++;
-        //os << "t # " << gsw_counter << " " << gsw->activating << " " << gsw->hops << endl;
+        fm::last_gsw_counter++;
+        os << "t # " << fm::last_gsw_counter << " " << gsw->activating << " " << gsw->hops << endl;
     }
 
     for(vector<GSWNode>::iterator it=gsw->nodewalk.begin(); it!=gsw->nodewalk.end(); it++) {
@@ -1142,17 +1140,6 @@ ostream& operator<< (ostream& os, GSWalk* gsw) {
                 os << *it3 << " ";
             }
             os << ">";
-
-            /*
-            int count=0;
-            for (map<LastTid, int>::iterator it3=it2->second.a.begin(); it3!=it2->second.a.end(); it3++) {
-                count = count + it3->second;
-            }
-            for (map<LastTid, int>::iterator it3=it2->second.i.begin(); it3!=it2->second.i.end(); it3++) {
-                count = count + it3->second;
-            }
-            os << " " << count;
-            */
             os << " " << it2->second.discrete_weight;
 
             if (it2->second.deleted) os << " [";
