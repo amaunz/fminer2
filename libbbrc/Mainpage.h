@@ -151,8 +151,8 @@
  * <b>FMINER_LAZAR</b>       : Produce output in linfrag format which can be used as input to Lazar (e.g. export FMINER_LAZAR=1).<br />
  * <b>FMINER_PVALUES</b>     : Produce p-values instead of chi-square values (e.g. export FMINER_PVALUES=1).<br />
  * <b>FMINER_NO_AROMATIC_WC</b>: Disallow aromatic wildcard bonds on aliphatic bonds, when aromatic perception was switched off ('-a') (e.g. export FMINER_NO_AROMATIC_WC=1).<br />
- * <b>FMINER_SILENT</b>      : Redirect STDERR (debug output) of fminer to local file 'fminer_debug.txt'
- * <b>FMINER_NR_HITS</b>     : Display number of times each fragment occurs in the output (only when FMINER_LAZAR is not set).
+ * <b>FMINER_SILENT</b>      : Redirect STDERR (debug output) of fminer to local file 'fminer_debug.txt'<br />
+ * <b>FMINER_NR_HITS</b>     : Display (in the occurrence lists) the number of times each fragment occurs in a molecule.
 
 
  *
