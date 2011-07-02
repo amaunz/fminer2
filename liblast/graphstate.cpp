@@ -1891,7 +1891,6 @@ void GSWalk::add_edge (int f, GSWEdge e, GSWNode n, bool reorder, vector<int>* c
     }
 
     // insert the edge from-to into edgewalk
-    //pair<map<int, GSWEdge>::iterator, bool> from = edgewalk.find(f)->second.insert(make_pair(e.to,e));
     pair<map<int, GSWEdge>::iterator, bool> from = edgewalk[f].insert(make_pair(e.to,e));
     if (!from.second) { cerr << "Error! Key exists while adding an edge. " << endl; exit(1); }
 
