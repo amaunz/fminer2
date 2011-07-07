@@ -510,8 +510,31 @@ class BbrcEdgeLabelsIndexesSort:public std::binary_function<int,int,bool> {
     const vector<BbrcDatabaseBbrcEdgeLabel> &edgelabels;
   public:
     BbrcEdgeLabelsIndexesSort ( const vector<BbrcDatabaseBbrcEdgeLabel> &edgelabels ) : edgelabels ( edgelabels ) { }
+    // AM: Critical patch! Compare also labels in case of equal frequency.
     bool operator () ( int a, int b ) const {
-      return edgelabels[a].frequency < edgelabels[b].frequency;
+     if (edgelabels[a].frequency < edgelabels[b].frequency) return true;
+      else {
+       if (edgelabels[a].frequency > edgelabels[b].frequency) return false;
+        else {
+          if (edgelabels[a].fromnodelabel < edgelabels[b].fromnodelabel) return true;
+          else {
+            if (edgelabels[a].fromnodelabel > edgelabels[b].fromnodelabel) return false;
+            else {
+              if (edgelabels[a].inputedgelabel < edgelabels[b].inputedgelabel) return true;
+              else {
+                if (edgelabels[a].inputedgelabel < edgelabels[b].inputedgelabel) return false;
+                else {
+                  if (edgelabels[a].tonodelabel < edgelabels[b].tonodelabel) return true;
+                  else {
+                    if (edgelabels[a].tonodelabel < edgelabels[b].tonodelabel) return false;
+                    else return false;
+                  }  
+                }
+              }
+            }
+          }
+        }
+      }
     }
 };
 

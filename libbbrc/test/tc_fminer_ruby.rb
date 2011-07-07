@@ -43,6 +43,7 @@ class TestFminer < Test::Unit::TestCase
   # Tests default Fminer settings 
   def test_ruby_fminer
     output=$myFminer.run_fminer(@smi_file, @class_file, 2)
+    File.open("default","w"){|f|f.puts output}
     actual_md5=Digest::MD5.hexdigest(output)
     expected_md5=@config[@arch]['default']
     assert_equal(actual_md5, expected_md5)
@@ -50,6 +51,7 @@ class TestFminer < Test::Unit::TestCase
 
   def test_ruby_fminer_multinomial
     output=$myFminer.run_fminer(@smi_file, @class_file_mn, 2)
+    File.open("multinomial","w"){|f|f.puts output}
     actual_md5=Digest::MD5.hexdigest(output)
     expected_md5=@config[@arch]['multinomial']
     assert_equal(actual_md5, expected_md5)
@@ -58,6 +60,7 @@ class TestFminer < Test::Unit::TestCase
   # Tests Kekule representation
   def test_ruby_fminer_kekule
     output=$myFminer.run_fminer(@smi_file, @class_file, 2, false)
+    File.open("kekule","w"){|f|f.puts output}
     actual_md5=Digest::MD5.hexdigest(output)
     expected_md5=@config[@arch]['kekule']
     assert_equal(actual_md5, expected_md5)
@@ -66,6 +69,7 @@ class TestFminer < Test::Unit::TestCase
   # Tests default Fminer regression
   def test_ruby_fminer_regression
     output=$myFminer.run_fminer(@smi_regr_file, @class_regr_file, 5, true, true)
+    File.open("regression","w"){|f|f.puts output}
     actual_md5=Digest::MD5.hexdigest(output)
     expected_md5=@config[@arch]['regression']
     assert_equal(actual_md5, expected_md5)
