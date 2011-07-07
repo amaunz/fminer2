@@ -1,6 +1,6 @@
 i686:
- default: 0683cd9b848710138e60fecb8be14522
- multinomial: b43d4a7182dc5dc62af18bf36436fee2
+ default: 9c013735ec76d12e54d4f30db5e9d60b
+ multinomial: ce0c80e146d9d2f172ff5b5bf25e064f
  kekule: 9c08ad5b55154aa4eec516998098af2f
  regression: 9cfc684d995ff6c8981fc2b98a6188a6
 x86_64:
