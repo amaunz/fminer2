@@ -537,23 +537,14 @@ bool Bbrc::AddDataCanonical() {
           activity_values.push_back(activity_map.find(it->second.first)->second); // 0 gets push w/o previous check line!
         }
       }
-      // add log transform: move above +1.0, take log 10, cut quantiles.
-      vector<float> ranks;
-      rank(activity_values, ranks, "min");
-      int min_pos = find(ranks.begin(),ranks.end(),1.0)-ranks.begin(); // find index of lowest rank
-      float min_value = activity_values.at(min_pos);
-
-      float neg_offset=min_value-1.0; // get negative distance to 1.0
-      if (neg_offset>0.0) neg_offset = 0.0;
-
+      // cut quantiles
       float min_thr, max_thr = 0.0;
-      min_thr = log10(quantile(activity_values,0.0125) - neg_offset); // find 1.25% quantile
-      max_thr = log10(quantile(activity_values,0.9875) - neg_offset); // find 98.75% quantile
+      min_thr = quantile(activity_values,0.0125); // find 1.25% quantile
+      max_thr = quantile(activity_values,0.9875); // find 98.75% quantile
 
       for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_mmap.begin(); it != inchi_compound_mmap.end(); it++) {
         if (activity_map.find(it->second.first) != activity_map.end()) {
-          activity_map[it->second.first]-=neg_offset;
-          activity_map[it->second.first]=log10(activity_map[it->second.first]);
+          activity_map[it->second.first]=activity_map[it->second.first];
           if (activity_map[it->second.first] < min_thr) activity_map[it->second.first]=min_thr;
           if (activity_map[it->second.first] > max_thr) activity_map[it->second.first]=max_thr;
         }
