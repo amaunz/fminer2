@@ -323,6 +323,7 @@ bool Last::AddCompound(string smiles, unsigned int comp_id) {
   OBMol mol;
   if (!conv.Read(&mol)) {
     cerr << "Could not convert '" << smiles << "' (leaving out)." << endl;
+    return false;
   }
   conv.SetOptions("w",OBConversion::OUTOPTIONS);
   string inchi = conv.WriteString(&mol);
