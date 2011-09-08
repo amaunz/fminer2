@@ -388,6 +388,9 @@ vector<string>* Bbrc::MineRoot(unsigned int j) {
               fm::bbrc_chisq->sig=fm::bbrc_chisq->df_thresholds[fm::bbrc_chisq->nr_acts.size()-1];
             }
           }
+          else if (fm::bbrc_chisq->nr_acts.size()==1) {
+            cout << "";
+          }
           else {
             cerr << "Error! Too many classes: '" << fm::bbrc_chisq->nr_acts.size() << "' (Max. 5)." << endl;
             exit(1);
@@ -568,7 +571,7 @@ bool Bbrc::AddCompoundCanonical(string smiles, unsigned int comp_id) {
   bool insert_done=false;
   if (comp_id<=0) { cerr << "Error! IDs must be of type: Int > 0." << endl;}
   else {
-    if (activity_map.find(comp_id) == activity_map.end()) {
+    if (activity_map.find(comp_id) == activity_map.end() && GetChisqActive()) {
       cerr << "Error on compound '" << comp_runner << "', id '" << comp_id << "': no activity found." << endl;
       return false;
     }
