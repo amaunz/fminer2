@@ -8,17 +8,11 @@
  *
  *  @section Contents
  *  <ul>
- *      <li><a href="#News">News</a></li>
  *      <li><a href="#Abstract">Abstract</a></li>
  *      <li><a href="#Installation">Installation</a></li>
  *      <li><a href="#Guidance">Guidance on Using (Lib)Last</a></li>
  *  </ul>
  * Contact details are located at the end of this page.
- *
- * <br><br>
- *  <a name="News">
- *  @section sec0 News
- * <i>22 Jun 2010</i>: The LAST-PM paper (co-authored by Christoph Helma, Tobias Cramer and Stefan Kramer) has been accepted for the <b><a href="http://www.ecmlpkdd2010.org" target="_blank">ECML/PKDD 2010</a></b> conference (Sep 20 - Sep 24 2010 in Barcelona) for a presentation at the conference and inclusion in the conference proceedings.<p />
  *
  * <br><br>
  *  <a name="Abstract">
