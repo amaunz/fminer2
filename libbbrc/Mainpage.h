@@ -14,23 +14,11 @@
  *
  *  @section Contents
  *  <ul>
- *      <li><a href="#News">News</a></li>
  *      <li><a href="#Abstract">Abstract</a></li>
  *      <li><a href="#Installation">Installation</a></li>
  *      <li><a href="#Guidance">Guidance on Using (Lib)Bbrc</a></li>
  *  </ul>
  * Contact details are located at the end of this page.
- *
- * <br><br>
- *  <a name="News">
- *  @section sec0 News
- *
- * <i>29 Apr 2009</i>: The Backbone Refinement Class paper (co-authored by Christoph Helma and Stefan Kramer) has been accepted for the <b><a href="http://www.sigkdd.org/kdd/2009/papers.html">KDD 2009</a></b> conference on Data Mining and Knowledge Discovery (Jun 28 - Jul 1 2009 in Paris) for a presentation at the conference and inclusion in the conference proceedings.<p />
- * <i>30 Apr 2009</i>: The paper has been selected for oral presentation at <b><a href="http://www.cs.kuleuven.be/~dtai/ilp-mlg-srl/index.php?CONF=mlg&CONT=accepted">MLG 2009</a></b>.<p />
- * <i>10 Jul 2009</i>: <a href="http://doi.acm.org/10.1145/1557019.1557089" target="_blank">KDD conference proceedings are online</a>.<p />
- * <i>29 Nov 2009</i>: Added configure script and bugfixes.<p />
- * <i>05 May 2010</i>: <a href="http://www.springerlink.com/content/c6m4w84794645213/">Machine Learning Journal article</a> is available.<p />
- * <i>22 Sep 2010</i>: <a href="http://github.com/amaunz/fminer2-transition">Transition package for fminer2</a> is available. You can use it to reproduce without much effort the crossvalidation results for BBRC descriptors in the paper, using ver 2 of the fminer software. 
  *
  * <br><br>
  *  <a name="Abstract">
