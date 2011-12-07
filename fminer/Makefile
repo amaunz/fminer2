@@ -47,16 +47,13 @@ CC            = g++
 INCLUDE       = $(INCLUDE_OB) $(INCLUDE_GSL)
 LDFLAGS       = $(LDFLAGS_OB) $(LDFLAGS_GSL)
 CXXFLAGS      = -Wall -O2 -g
-LIBS	      = -lopenbabel -lgsl -lgslcblas
+LIBS	        = -lopenbabel -lgsl -lgslcblas -ldl
 
 # TARGETS
 all: $(PROGRAM) 
 $(PROGRAM): main.cpp
-	$(CC) $(CXXFLAGS) $(INCLUDE) \
-	      $(LIBS) \
-	      $(LDFLAGS) \
-	      -o $@ $<
-
+	$(CC) $(CXXFLAGS) $(INCLUDE) -c -o main.o $<
+	$(CC) $(CXXFLAGS) $(INCLUDE) main.o $(LIBS) $(LDFLAGS) -o $@ 
 .PHONY:
 clean:
 	-rm -rf $(PROGRAM)
