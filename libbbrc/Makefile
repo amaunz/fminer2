@@ -64,7 +64,7 @@ LIB4          = _$(NAME).so
 
 # FILES
 $(LIB1_REALNAME): $(OBJ)
-	$(CC) $(LDFLAGS) $(LIBS) -shared -Wl,-soname,$@ -o $@ $^
+	$(CC) $^ $(LDFLAGS) $(LIBS) -shared -Wl,-soname,$@ -o $@
 	-ln -sf $@ $(LIB1_SONAME)
 	-ln -sf $@ $(LIB1)
 
