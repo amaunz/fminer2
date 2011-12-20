@@ -180,9 +180,9 @@
  * # ... continue adding activities (true (1.0) for active, false (0.0) for inactive)
  * print repr(MyFminer.GetNoCompounds()) + ' compounds'
  * # gather results for every root node in vector instead of immediate output
- * for j in range(0, MyFminer.GetNoRootNodes()-1):
+ * for j in range(0, MyFminer.GetNoRootNodes()):
  *    result = MyFminer.MineRoot(j);
- *    for i in range(0, result.size()-1):
+ *    for i in range(0, result.size()):
  *        print result[i];
  * # call MyFminer.Reset() to start over.
  * \endcode

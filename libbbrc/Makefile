@@ -16,11 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with LibFminer.  If not, see <http://www.gnu.org/licenses/>.
 
-INCLUDE_OB  =  -I/usr/local/include/openbabel-2.0  
-INCLUDE_GSL  =  -I/usr/local/include  
-LDFLAGS_OB  =  -L/usr/local/lib  
-LDFLAGS_GSL  =  -L/usr/local/lib  
-INCLUDE_RB  = -I/home/am/opentox-ruby/ruby-enterprise-1.8.7-2011.03/lib/ruby/1.8/i686-linux
+INCLUDE_OB  =  -I/usr/include/openbabel-2.0  
+INCLUDE_GSL  =   
+LDFLAGS_OB  =   
+LDFLAGS_GSL  =   
+INCLUDE_RB  = -I/usr/lib/ruby/1.8/x86_64-linux
 INCLUDE_PY = -I/usr/include/python2.7
 RUBY = ruby1.8
 PYTHON = python
@@ -77,11 +77,11 @@ $(LIB2): $(OBJ) r$(NAME)_wrap.cxx
 $(LIB3): $(OBJ) j$(NAME)_wrap.cxx
 	$(CC) -c $(CXXFLAGS) $(INCLUDE_JAVA) j$(NAME)_wrap.cxx -o $(NAME)_wrap.o
 	$(CC) $(LDFLAGS) -shared $(CXXFLAGS) $(OBJ) $(NAME)_wrap.o $(LIBS_LIB2) -o $@
+
 #swig -c++ -python -o pbbrc_wrap.cxx pbbrc_wrap.i
 $(LIB4): $(OBJ) p$(NAME)_wrap.cxx
 	$(CC) -c $(CXXFLAGS) $(INCLUDE_PY) p$(NAME)_wrap.cxx -o $(NAME)_wrap.o
 	$(CC) $(LDFLAGS) -shared $(CXXFLAGS) $(OBJ) $(NAME)_wrap.o $(LIBS) -o $@
-
 
 .o: .cpp.h
 	$(CC) -Wall $(CXXFLAGS) $(LIBS) $@
@@ -105,6 +105,7 @@ java: $(LIB3)
 .PHONY:
 python: $(LIB4)
 # PYTHON library does not need special variables.
+
 
 # TESTS + HELPERS
 .PHONY:
