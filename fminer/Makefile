@@ -22,7 +22,7 @@ INCLUDE_OB  =  -I/usr/include/openbabel-2.0
 INCLUDE_GSL  =   
 LDFLAGS_OB  =   
 LDFLAGS_GSL  =   
-INCLUDE_RB  = -I/home/am/opentox-ruby/ruby-enterprise-1.8.7-2011.03/lib/ruby/1.8/x86_64-linux
+INCLUDE_RB  = -I/usr/lib/ruby/1.8/x86_64-linux
 
 # EXAMPLES:
 # ADJUST COMPILER PATH TO OPENBABEL INCLUDE FILES (1st line Linux, 2nd line Windows):
