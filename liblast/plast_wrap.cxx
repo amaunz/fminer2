@@ -147,6 +147,7 @@ template <typename T> T SwigValueInit() {
 
 /* Python.h has to appear first */
 #include <Python.h>
+#include <stddef.h>
 
 /* -----------------------------------------------------------------------------
  * swigrun.swg
@@ -2685,9 +2686,9 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 
 /* -------- TYPES TABLE (BEGIN) -------- */
 
-#define SWIGTYPE_p_ChisqConstraint swig_types[0]
+#define SWIGTYPE_p_ChisqLastConstraint swig_types[0]
 #define SWIGTYPE_p_FILE swig_types[1]
-#define SWIGTYPE_p_KSConstraint swig_types[2]
+#define SWIGTYPE_p_KSLastConstraint swig_types[2]
 #define SWIGTYPE_p_Last swig_types[3]
 #define SWIGTYPE_p_allocator_type swig_types[4]
 #define SWIGTYPE_p_char swig_types[5]
@@ -2695,12 +2696,13 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 #define SWIGTYPE_p_p_PyObject swig_types[7]
 #define SWIGTYPE_p_size_type swig_types[8]
 #define SWIGTYPE_p_std__invalid_argument swig_types[9]
-#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[10]
-#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t__allocator_type swig_types[11]
-#define SWIGTYPE_p_swig__SwigPyIterator swig_types[12]
-#define SWIGTYPE_p_value_type swig_types[13]
-static swig_type_info *swig_types[15];
-static swig_module_info swig_module = {swig_types, 14, 0, 0, 0, 0};
+#define SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t swig_types[10]
+#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t swig_types[11]
+#define SWIGTYPE_p_std__vectorT_std__string_std__allocatorT_std__string_t_t__allocator_type swig_types[12]
+#define SWIGTYPE_p_swig__SwigPyIterator swig_types[13]
+#define SWIGTYPE_p_value_type swig_types[14]
+static swig_type_info *swig_types[16];
+static swig_module_info swig_module = {swig_types, 15, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -7144,11 +7146,11 @@ SWIGINTERN PyObject *Swig_var_last_aromatic_get(void) {
 SWIGINTERN int Swig_var_last_chisq_set(PyObject *_val) {
   {
     void *argp = 0;
-    int res = SWIG_ConvertPtr(_val, &argp, SWIGTYPE_p_ChisqConstraint,  0 );  
+    int res = SWIG_ConvertPtr(_val, &argp, SWIGTYPE_p_ChisqLastConstraint,  0 );  
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_chisq""' of type '""ChisqConstraint *""'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_chisq""' of type '""ChisqLastConstraint *""'");
     }
-    fm::last_chisq = reinterpret_cast< ChisqConstraint * >(argp);
+    fm::last_chisq = reinterpret_cast< ChisqLastConstraint * >(argp);
   }
   return 0;
 fail:
@@ -7159,7 +7161,7 @@ fail:
 SWIGINTERN PyObject *Swig_var_last_chisq_get(void) {
   PyObject *pyobj = 0;
   
-  pyobj = SWIG_NewPointerObj(SWIG_as_voidptr(fm::last_chisq), SWIGTYPE_p_ChisqConstraint,  0 );
+  pyobj = SWIG_NewPointerObj(SWIG_as_voidptr(fm::last_chisq), SWIGTYPE_p_ChisqLastConstraint,  0 );
   return pyobj;
 }
 
@@ -7167,11 +7169,11 @@ SWIGINTERN PyObject *Swig_var_last_chisq_get(void) {
 SWIGINTERN int Swig_var_last_ks_set(PyObject *_val) {
   {
     void *argp = 0;
-    int res = SWIG_ConvertPtr(_val, &argp, SWIGTYPE_p_KSConstraint,  0 );  
+    int res = SWIG_ConvertPtr(_val, &argp, SWIGTYPE_p_KSLastConstraint,  0 );  
     if (!SWIG_IsOK(res)) {
-      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_ks""' of type '""KSConstraint *""'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in variable '""fm::last_ks""' of type '""KSLastConstraint *""'");
     }
-    fm::last_ks = reinterpret_cast< KSConstraint * >(argp);
+    fm::last_ks = reinterpret_cast< KSLastConstraint * >(argp);
   }
   return 0;
 fail:
@@ -7182,7 +7184,7 @@ fail:
 SWIGINTERN PyObject *Swig_var_last_ks_get(void) {
   PyObject *pyobj = 0;
   
-  pyobj = SWIG_NewPointerObj(SWIG_as_voidptr(fm::last_ks), SWIGTYPE_p_KSConstraint,  0 );
+  pyobj = SWIG_NewPointerObj(SWIG_as_voidptr(fm::last_ks), SWIGTYPE_p_KSLastConstraint,  0 );
   return pyobj;
 }
 
@@ -8304,6 +8306,118 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Last_ChisqTest(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Last *arg1 = (Last *) 0 ;
+  SwigValueWrapper< std::vector< float > > arg2 ;
+  SwigValueWrapper< std::vector< float > > arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  void *argp3 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  float result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:Last_ChisqTest",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Last, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Last_ChisqTest" "', argument " "1"" of type '" "Last *""'"); 
+  }
+  arg1 = reinterpret_cast< Last * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Last_ChisqTest" "', argument " "2"" of type '" "std::vector< float >""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Last_ChisqTest" "', argument " "2"" of type '" "std::vector< float >""'");
+    } else {
+      std::vector< float > * temp = reinterpret_cast< std::vector< float > * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  {
+    res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t,  0  | 0);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Last_ChisqTest" "', argument " "3"" of type '" "std::vector< float >""'"); 
+    }  
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Last_ChisqTest" "', argument " "3"" of type '" "std::vector< float >""'");
+    } else {
+      std::vector< float > * temp = reinterpret_cast< std::vector< float > * >(argp3);
+      arg3 = *temp;
+      if (SWIG_IsNewObj(res3)) delete temp;
+    }
+  }
+  result = (float)(arg1)->ChisqTest(arg2,arg3);
+  resultobj = SWIG_From_float(static_cast< float >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Last_KSTest(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  Last *arg1 = (Last *) 0 ;
+  SwigValueWrapper< std::vector< float > > arg2 ;
+  SwigValueWrapper< std::vector< float > > arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  void *argp3 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  float result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:Last_KSTest",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_Last, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Last_KSTest" "', argument " "1"" of type '" "Last *""'"); 
+  }
+  arg1 = reinterpret_cast< Last * >(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t,  0  | 0);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Last_KSTest" "', argument " "2"" of type '" "std::vector< float >""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Last_KSTest" "', argument " "2"" of type '" "std::vector< float >""'");
+    } else {
+      std::vector< float > * temp = reinterpret_cast< std::vector< float > * >(argp2);
+      arg2 = *temp;
+      if (SWIG_IsNewObj(res2)) delete temp;
+    }
+  }
+  {
+    res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_std__vectorT_float_std__allocatorT_float_t_t,  0  | 0);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Last_KSTest" "', argument " "3"" of type '" "std::vector< float >""'"); 
+    }  
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Last_KSTest" "', argument " "3"" of type '" "std::vector< float >""'");
+    } else {
+      std::vector< float > * temp = reinterpret_cast< std::vector< float > * >(argp3);
+      arg3 = *temp;
+      if (SWIG_IsNewObj(res3)) delete temp;
+    }
+  }
+  result = (float)(arg1)->KSTest(arg2,arg3);
+  resultobj = SWIG_From_float(static_cast< float >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *Last_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
@@ -8403,6 +8517,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Last_AddActivity", _wrap_Last_AddActivity, METH_VARARGS, NULL},
 	 { (char *)"Last_GetNoRootNodes", _wrap_Last_GetNoRootNodes, METH_VARARGS, NULL},
 	 { (char *)"Last_GetNoCompounds", _wrap_Last_GetNoCompounds, METH_VARARGS, NULL},
+	 { (char *)"Last_ChisqTest", _wrap_Last_ChisqTest, METH_VARARGS, NULL},
+	 { (char *)"Last_KSTest", _wrap_Last_KSTest, METH_VARARGS, NULL},
 	 { (char *)"Last_swigregister", Last_swigregister, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
@@ -8410,9 +8526,9 @@ static PyMethodDef SwigMethods[] = {
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
-static swig_type_info _swigt__p_ChisqConstraint = {"_p_ChisqConstraint", "ChisqConstraint *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_ChisqLastConstraint = {"_p_ChisqLastConstraint", "ChisqLastConstraint *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_FILE = {"_p_FILE", "FILE *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_KSConstraint = {"_p_KSConstraint", "KSConstraint *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_KSLastConstraint = {"_p_KSLastConstraint", "KSLastConstraint *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_Last = {"_p_Last", "Last *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_allocator_type = {"_p_allocator_type", "allocator_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
@@ -8420,15 +8536,16 @@ static swig_type_info _swigt__p_difference_type = {"_p_difference_type", "differ
 static swig_type_info _swigt__p_p_PyObject = {"_p_p_PyObject", "PyObject **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_size_type = {"_p_size_type", "size_type *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__invalid_argument = {"_p_std__invalid_argument", "std::invalid_argument *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorT_float_std__allocatorT_float_t_t = {"_p_std__vectorT_float_std__allocatorT_float_t_t", "std::vector< float > *|std::vector< float,std::allocator< float > > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t = {"_p_std__vectorT_std__string_std__allocatorT_std__string_t_t", "std::vector< std::string,std::allocator< std::string > > *|std::vector< std::string > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t__allocator_type = {"_p_std__vectorT_std__string_std__allocatorT_std__string_t_t__allocator_type", "std::vector< std::string >::allocator_type *|std::allocator< std::string > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_swig__SwigPyIterator = {"_p_swig__SwigPyIterator", "swig::SwigPyIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_value_type = {"_p_value_type", "value_type *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
-  &_swigt__p_ChisqConstraint,
+  &_swigt__p_ChisqLastConstraint,
   &_swigt__p_FILE,
-  &_swigt__p_KSConstraint,
+  &_swigt__p_KSLastConstraint,
   &_swigt__p_Last,
   &_swigt__p_allocator_type,
   &_swigt__p_char,
@@ -8436,15 +8553,16 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_p_PyObject,
   &_swigt__p_size_type,
   &_swigt__p_std__invalid_argument,
+  &_swigt__p_std__vectorT_float_std__allocatorT_float_t_t,
   &_swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t,
   &_swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t__allocator_type,
   &_swigt__p_swig__SwigPyIterator,
   &_swigt__p_value_type,
 };
 
-static swig_cast_info _swigc__p_ChisqConstraint[] = {  {&_swigt__p_ChisqConstraint, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ChisqLastConstraint[] = {  {&_swigt__p_ChisqLastConstraint, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_FILE[] = {  {&_swigt__p_FILE, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_KSConstraint[] = {  {&_swigt__p_KSConstraint, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_KSLastConstraint[] = {  {&_swigt__p_KSLastConstraint, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_Last[] = {  {&_swigt__p_Last, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_allocator_type[] = {  {&_swigt__p_allocator_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
@@ -8452,15 +8570,16 @@ static swig_cast_info _swigc__p_difference_type[] = {  {&_swigt__p_difference_ty
 static swig_cast_info _swigc__p_p_PyObject[] = {  {&_swigt__p_p_PyObject, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_size_type[] = {  {&_swigt__p_size_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__invalid_argument[] = {  {&_swigt__p_std__invalid_argument, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__vectorT_float_std__allocatorT_float_t_t[] = {  {&_swigt__p_std__vectorT_float_std__allocatorT_float_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_std__string_std__allocatorT_std__string_t_t[] = {  {&_swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_std__string_std__allocatorT_std__string_t_t__allocator_type[] = {  {&_swigt__p_std__vectorT_std__string_std__allocatorT_std__string_t_t__allocator_type, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_swig__SwigPyIterator[] = {  {&_swigt__p_swig__SwigPyIterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_value_type[] = {  {&_swigt__p_value_type, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
-  _swigc__p_ChisqConstraint,
+  _swigc__p_ChisqLastConstraint,
   _swigc__p_FILE,
-  _swigc__p_KSConstraint,
+  _swigc__p_KSLastConstraint,
   _swigc__p_Last,
   _swigc__p_allocator_type,
   _swigc__p_char,
@@ -8468,6 +8587,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_p_PyObject,
   _swigc__p_size_type,
   _swigc__p_std__invalid_argument,
+  _swigc__p_std__vectorT_float_std__allocatorT_float_t_t,
   _swigc__p_std__vectorT_std__string_std__allocatorT_std__string_t_t,
   _swigc__p_std__vectorT_std__string_std__allocatorT_std__string_t_t__allocator_type,
   _swigc__p_swig__SwigPyIterator,

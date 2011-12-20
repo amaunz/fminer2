@@ -28,7 +28,7 @@ MyFminer.AddActivity(0.0, 10)
 # ... continue adding activities (true for active, false for inactive)
 print repr(MyFminer.GetNoCompounds()) + ' compounds'
 # gather results for every root node in vector instead of immediate output
-for j in range(0, MyFminer.GetNoRootNodes()-1):
+for j in range(0, MyFminer.GetNoRootNodes()):
    result = MyFminer.MineRoot(j);
-   for i in range(0, result.size()-1):
+   for i in range(0, result.size()):
        print result[i];
