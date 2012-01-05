@@ -42,7 +42,7 @@ PYTHON = python
 #PYTHON = python
 
 # FOR JAVA TARGET: ADJUST COMPILER PATH TO JAVA HEADERS (LINUX)
-#INCLUDE_JAVA  = -I /usr/lib/jvm/jdk1.6.0_20/include/ -I /usr/lib/jvm/jdk1.6.0_20/include/linux/
+#INCLUDE_JAVA  = -I /usr/lib/jvm/java-7-openjdk-amd64/include/
 
 # NORMALLY NO ADJUSTMENT NECESSARY BELOW THIS LINE. Exit and try 'make' now.
 # WHAT
@@ -119,7 +119,7 @@ rbtest: test.rb
 	$(RUBY) $<
 .PHONY:
 jtest: test.class
-	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):`pwd` LD_PRELOAD=/usr/local/lib/libopenbabel.so java -cp . test	
+	LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):`pwd` LD_PRELOAD=/usr/lib/libopenbabel.so java -cp . test	
 .PHONY:
 doc: Doxyfile Mainpage.h *.h
 	-doxygen $<

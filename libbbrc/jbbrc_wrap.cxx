@@ -489,45 +489,45 @@ SWIGEXPORT jboolean JNICALL Java_libbbrcJNI_bbrc_1aromatic_1get(JNIEnv *jenv, jc
 
 
 SWIGEXPORT void JNICALL Java_libbbrcJNI_bbrc_1chisq_1set(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-  ChisqConstraint *arg1 = (ChisqConstraint *) 0 ;
+  ChisqBbrcConstraint *arg1 = (ChisqBbrcConstraint *) 0 ;
   
   (void)jenv;
   (void)jcls;
-  arg1 = *(ChisqConstraint **)&jarg1; 
+  arg1 = *(ChisqBbrcConstraint **)&jarg1; 
   fm::bbrc_chisq = arg1;
 }
 
 
 SWIGEXPORT jlong JNICALL Java_libbbrcJNI_bbrc_1chisq_1get(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
-  ChisqConstraint *result = 0 ;
+  ChisqBbrcConstraint *result = 0 ;
   
   (void)jenv;
   (void)jcls;
-  result = (ChisqConstraint *)fm::bbrc_chisq;
-  *(ChisqConstraint **)&jresult = result; 
+  result = (ChisqBbrcConstraint *)fm::bbrc_chisq;
+  *(ChisqBbrcConstraint **)&jresult = result; 
   return jresult;
 }
 
 
 SWIGEXPORT void JNICALL Java_libbbrcJNI_bbrc_1ks_1set(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-  KSConstraint *arg1 = (KSConstraint *) 0 ;
+  KSBbrcConstraint *arg1 = (KSBbrcConstraint *) 0 ;
   
   (void)jenv;
   (void)jcls;
-  arg1 = *(KSConstraint **)&jarg1; 
+  arg1 = *(KSBbrcConstraint **)&jarg1; 
   fm::bbrc_ks = arg1;
 }
 
 
 SWIGEXPORT jlong JNICALL Java_libbbrcJNI_bbrc_1ks_1get(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
-  KSConstraint *result = 0 ;
+  KSBbrcConstraint *result = 0 ;
   
   (void)jenv;
   (void)jcls;
-  result = (KSConstraint *)fm::bbrc_ks;
-  *(KSConstraint **)&jresult = result; 
+  result = (KSBbrcConstraint *)fm::bbrc_ks;
+  *(KSBbrcConstraint **)&jresult = result; 
   return jresult;
 }
 

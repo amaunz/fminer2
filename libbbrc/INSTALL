@@ -1,24 +1,30 @@
 Welcome to LibBbrc.
 
+
 Please choose:
-a) Refer to http://www.maunz.de/libfminer2-bbrc-doc/ for installation instructions on various platforms. 
-b) Build the documentation yourself with doxygen: type 'make doc'.
+a) Refer to http://www.maunz.de/libfminer2-bbrc-doc/ for installation instructions on C++ and other platforms. 
+b) Build the documentation yourself with doxygen: type 'make doc' (you need 'doxygen' and 'graphviz' packages).
+
 
 Contents of the above documentation:
+- Installation (several platforms)
+- Example programs using the LibBbrc API (several platforms)
+- API (Description of Constructors and Options)
 - Links to scientific paper and abstract
-- Installation (several OS and languages)
-- Example program using the LibBbrc API
-- Description of Constructors and Options
 - Official contact information
 
-For a quickstart try:
+
+Build quickstart (see above documentation how to build):
+
+For C++ try:
 $ ./configure
 $ make
 $ make cpptest
 
-Or use the Ruby-based unit test suite:
-$ cd test
-$ make -C ../ ruby
-$ ruby tc_fminer_ruby.rb
+For other platforms try:
+$ ./configure
+$ make <target> # <target> one of ruby, python, java
+$ make <t>test  # <t> one of rb, py, j
+
 
 Andreas Maunz, 2010.

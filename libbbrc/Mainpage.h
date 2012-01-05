@@ -106,13 +106,19 @@
  *  The API can be made available to other languages.
  *
  *  The Makefile features a target that creates <b>ruby</b> bindings. On Ubuntu, you can e.g. do this:
+ *  - <code>sudo apt-get install ruby1.8-dev</code>
  *  - Use <code>./configure <version></code> to configure the Makefile automatically or, adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_RB = ...</code> so that the directory contains file <code>ruby.h</code>. Also, let <code>RUBY = ...</code> point to the right executable.
  *  - Run <code>make ruby</code>. Use <code>make rbtest</code> to test. The configuration was tested with swig 1.3.40 and Ruby 1.8.<br />
- *  <b>Note:</b>Please have a look into the 'test' subdirectory. It includes unit tests for ruby, which may be useful as examples, also for non-ruby users.
  *
  *  The Makefile features a target that creates <b>python</b> bindings. On Ubuntu, you can e.g. do this:
+ *  - <code>sudo apt-get install python2.7-dev</code>
  *  - Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_PY = ...</code> so that the directory contains file <code>Python.h</code>. Also, let <code>PYTHON = ...</code> point to the right executable.
  *  - Run <code>make python</code>. Use <code>make pytest</code> to test. The configuration was tested with Python 2.7.
+ *
+ *  The Makefile features a target that creates <b>java</b> bindings. On Ubuntu, you can e.g. do this:
+ *  - <code>sudo apt-get install openjdk-6-jdk</code>
+ *  - Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_JAVA = ...</code> so that the directory contains file <code>jni.h</code>. Also, make sure that the paths in <code>LD_PRELOAD=...</code> in the <code>jtest</code> line are correct.
+ *  - Run <code>make java</code>. Use <code>make jtest</code> to test. The configuration was tested with OpenJDK 1.6.
  *
  * <b>Important:</b> There are swig interface files (<code>*.i</code>) and pre-configured swig output files (<code>*.cxx</code>). You need to re-create those output files if you are deploying for newer versions of the target languages, and you can find the necessary swig calls in the Makefile (commented out).
  *
@@ -189,34 +195,6 @@
  * }
  *  \endcode
  *
- * \subsubsection Python Python
- *
- * This example assumes that you have created python bindings using <code>make python</code>.
- * \code
- * import bbrc
- * MyFminer = bbrc.Bbrc() # global singleton instance
- * # Toy example: special settings for mining all fragments
- * # use no significance constraint
- * MyFminer.SetChisqSig(0) 
- * # refine structures with support 1
- * MyFminer.SetRefineSingles(1) 
- * MyFminer.SetConsoleOut(0)
-   # Add compounds below. IMPORTANT! Do not change settings after adding compounds!
- * MyFminer.AddCompound("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4" , 1)
- * MyFminer.AddCompound("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2)
- * # ... continue adding compounds
- * MyFminer.AddActivity(1.0, 1) # 1.0 denotes one class in this example...
- * MyFminer.AddActivity(0.0, 2) # 0.0 denotes the other class (you can use more than two classes, max 5).
- * # ... continue adding activities (true for active, false for inactive)
- * print repr(MyFminer.GetNoCompounds()) + ' compounds.'
- * # gather results for every root node in vector instead of immediate output
- * for j in range(0, MyFminer.GetNoRootNodes()):
- *      result = MyFminer.MineRoot(j);
- *      for i in range(0, result.size()):
- *                  print result[i];
- * # Call Reset() to start over.
- * \endcode
- *
  * \subsubsection Ruby Ruby
  *
  * This example assumes that you have created ruby bindings using <code>make ruby</code>.
@@ -248,6 +226,69 @@
  * end
  * # Call Reset() to start over.
  *  \endcode
+ *
+ * \subsubsection Python Python
+ *
+ * This example assumes that you have created python bindings using <code>make python</code>.
+ * \code
+ * import bbrc
+ * MyFminer = bbrc.Bbrc() # global singleton instance
+ * # Toy example: special settings for mining all fragments
+ * # use no significance constraint
+ * MyFminer.SetChisqSig(0) 
+ * # refine structures with support 1
+ * MyFminer.SetRefineSingles(1) 
+ * MyFminer.SetConsoleOut(0)
+   # Add compounds below. IMPORTANT! Do not change settings after adding compounds!
+ * MyFminer.AddCompound("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4" , 1)
+ * MyFminer.AddCompound("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2" , 2)
+ * # ... continue adding compounds
+ * MyFminer.AddActivity(1.0, 1) # 1.0 denotes one class in this example...
+ * MyFminer.AddActivity(0.0, 2) # 0.0 denotes the other class (you can use more than two classes, max 5).
+ * # ... continue adding activities (true for active, false for inactive)
+ * print repr(MyFminer.GetNoCompounds()) + ' compounds.'
+ * # gather results for every root node in vector instead of immediate output
+ * for j in range(0, MyFminer.GetNoRootNodes()):
+ *      result = MyFminer.MineRoot(j);
+ *      for i in range(0, result.size()):
+ *                  print result[i];
+ * # Call Reset() to start over.
+ * \endcode
+ *
+ * \subsubsection Java Java
+ *
+ * This example assumes that you have created java bindings using <code>make java</code>.
+ * \code
+ * public class test {
+ *     public static void main(String args[]) {
+ *        System.loadLibrary("bbrc");
+ *        Bbrc MyFminer;
+ *        MyFminer = new Bbrc();
+ *        // Toy example: special settings for mining all fragments
+ *        MyFminer.SetChisqSig(0); // use no significance constraint
+ *        MyFminer.SetRefineSingles(true); // refine structures with support 1
+ *        MyFminer.SetConsoleOut(false);
+ *        // Add compounds below. IMPORTANT! DO NOT CHANGE SETTINGS AFTER ADDING COMPOUNDS!
+ *        MyFminer.AddCompound ("COC1=CC=C(C=C1)C2=NC(=C([NH]2)C3=CC=CC=C3)C4=CC=CC=C4", 1);
+ *        MyFminer.AddCompound ("O=C1NC(=S)NC(=O)C1C(=O)NC2=CC=CC=C2", 2);
+ *        // ... continue adding compounds
+ *        MyFminer.AddActivity(1.0F, 1);
+ *        MyFminer.AddActivity(0.0F, 2);
+ *        // ... continue adding activities (1.0F for active, 0.0F for inactive)
+ *        System.out.println(MyFminer.GetNoCompounds() + " compounds");
+ *        // gather results for every root node in vector instead of immediate output
+ *        for (int j = 0; j < (int) MyFminer.GetNoRootNodes(); j++)
+ *        {
+ *           SVector result = MyFminer.MineRoot(j);
+ *           for(int i = 0; i < result.size(); i++)
+ *           {
+ *             System.out.println(result.get(i));
+ *           }
+ *        }
+ *        MyFminer = null;
+ *     }
+ * }
+ * \endcode
  *
  * \subsubsection Const Description of Constructors and Options
  * 
@@ -283,13 +324,12 @@
  * <br><br>
  * @section Contact Contact
  * Dipl.-Inf. Andreas Maunz<br>
- * Freiburg Center for Data Analysis and Modelling<br>
- * Hermann-Herder-Str. 3a<br>
+ * Institute for Physics<br>
+ * Hermann-Herder-Str. 3<br>
  * 79104 Freiburg, Germany<br>
-  Phone: +49761/203-8442, Fax: +49761/203-7700<br>
  * Email: maunza@fdm.uni-freiburg.de<br>
  * Web: http://cs.maunz.de
  *
- *  \author (c) 2010 by Andreas Maunz, 2010
+ *  \author Andreas Maunz, 2010
  *
  **/

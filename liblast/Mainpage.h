@@ -61,13 +61,19 @@
  *  The API can be made available to other languages.
  *
  *  The Makefile features a target that creates <b>ruby</b> bindings. On Ubuntu, you can e.g. do this:
+ *  - <code>sudo apt-get install ruby1.8-dev</code>
  *  - Use <code>./configure <version></code> to configure the Makefile automatically or, adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_RB = ...</code> so that the directory contains file <code>ruby.h</code>. Also, let <code>RUBY = ...</code> point to the right executable.
- *  - Run <code>make ruby</code>. Use <code>make rbtest</code> to test. The configuration was tested with swig 1.3.40 and Ruby 1.8.
- *  <b>Note:</b>Please have a look into the 'test' subdirectory. It includes unit tests for ruby, which may be useful as examples, also for non-ruby users.
+ *  - Run <code>make ruby</code>. Use <code>make rbtest</code> to test. The configuration was tested with Ruby 1.8.
  *
  *  The Makefile features a target that creates <b>python</b> bindings. On Ubuntu, you can e.g. do this:
+ *  - <code>sudo apt-get install python2.7-dev</code>
  *  - Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_PY = ...</code> so that the directory contains file <code>Python.h</code>. Also, let <code>PYTHON = ...</code> point to the right executable.
  *  - Run <code>make python</code>. Use <code>make pytest</code> to test. The configuration was tested with Python 2.7.
+ *
+ *  The Makefile features a target that creates <b>java</b> bindings. On Ubuntu, you can e.g. do this:
+ *  - <code>sudo apt-get install openjdk-6-jdk</code>
+ *  - Adjust the include flags (-I) in the Makefile in the line <code>INCLUDE_JAVA = ...</code> so that the directory contains file <code>jni.h</code>. Also, make sure that the paths in <code>LD_PRELOAD=...</code> in the <code>jtest</code> line are correct.
+ *  - Run <code>make java</code>. Use <code>make jtest</code> to test. The configuration was tested with OpenJDK 1.6.
  *
  * <b>Important:</b> There are swig interface files (<code>*.i</code>) and pre-configured swig output files (<code>*.cxx</code>). You need to re-create those output files if you are deploying for newer versions of the target languages, and you can find the necessary swig calls in the Makefile (commented out).
  *
@@ -147,46 +153,6 @@
  * 
  * \endcode
  *
- * \subsubsection Python Python
- *
- * This example assumes that you have created python bindings using <code>make python</code>.
- *
- * \code
- * import liblast
- * MyFminer = liblast.Last() # global singleton instance.
- * MyFminer.SetConsoleOut(0)
- * # Add compounds below. IMPORTANT! Do not change settings after adding compounds!
- * MyFminer.AddCompound("O=C(C(C(C=C3)=CC=C3O)=CO2)C1=C2C=C(O)C=C1O" , 1)
- * MyFminer.AddCompound("Oc1ccc(cc1)[C@@H]2Cc3ccc(O)cc3OC2" , 2)
- * MyFminer.AddCompound("O=C1C(C3=CC=C(O)C=C3)=COC2=C1C=CC(O)=C2" , 3)
- * MyFminer.AddCompound("O=C1C(C3=CC=C(OC)C=C3)=COC2=C1C=CC(O)=C2" , 4)
- * MyFminer.AddCompound("OC1=CC=C(CCCCCCCC)C=C1" , 5)
- * MyFminer.AddCompound("C1(C=CC=CC=1C(=C(Cl)Cl)C2=CC=C(C=C2)Cl)Cl" , 6)
- * MyFminer.AddCompound("O=C(C1=C(C=CC=C1)C(=O)OCC(CCCC)CC)OCC(CCCC)CC" , 7)
- * MyFminer.AddCompound("Oc1cc(O)cc2CCCCC[C@@H](O)CCC[C@H](C)OC(=O)c12" , 8)
- * MyFminer.AddCompound("O=C1C2=C(C=C(C=C2O)O)OC(=C1O)C3=CC(=C(C=C3)O)O" , 9)
- * MyFminer.AddCompound("C1(=C(C(=O)C2=C(O1)C=C(C=C2)O)O)C3=CC(O)=C(C=C3)O" , 10)
- * # ... continue adding compounds
- * MyFminer.AddActivity(1.0, 1) # 1.0 denotes one class in this example,
- * MyFminer.AddActivity(1.0, 2)
- * MyFminer.AddActivity(1.0, 3)
- * MyFminer.AddActivity(1.0, 4)
- * MyFminer.AddActivity(1.0, 5)
- * MyFminer.AddActivity(1.0, 6)
- * MyFminer.AddActivity(1.0, 7)
- * MyFminer.AddActivity(1.0, 8)
- * MyFminer.AddActivity(0.0, 9) # 0.0 the other class (you can use more than two classes, max 5).
- * MyFminer.AddActivity(0.0, 10)
- * # ... continue adding activities (true (1.0) for active, false (0.0) for inactive)
- * print repr(MyFminer.GetNoCompounds()) + ' compounds'
- * # gather results for every root node in vector instead of immediate output
- * for j in range(0, MyFminer.GetNoRootNodes()):
- *    result = MyFminer.MineRoot(j);
- *    for i in range(0, result.size()):
- *        print result[i];
- * # call MyFminer.Reset() to start over.
- * \endcode
- *
  * \subsubsection Ruby Ruby
  *
  * This example assumes that you have created ruby bindings using <code>make ruby</code>.
@@ -231,6 +197,97 @@
  * # call MyFminer.Reset() to start over.
  * \endcode
  *
+ * \subsubsection Python Python
+ *
+ * This example assumes that you have created python bindings using <code>make python</code>.
+ *
+ * \code
+ * import liblast
+ * MyFminer = liblast.Last() # global singleton instance.
+ * MyFminer.SetConsoleOut(0)
+ * # Add compounds below. IMPORTANT! Do not change settings after adding compounds!
+ * MyFminer.AddCompound("O=C(C(C(C=C3)=CC=C3O)=CO2)C1=C2C=C(O)C=C1O" , 1)
+ * MyFminer.AddCompound("Oc1ccc(cc1)[C@@H]2Cc3ccc(O)cc3OC2" , 2)
+ * MyFminer.AddCompound("O=C1C(C3=CC=C(O)C=C3)=COC2=C1C=CC(O)=C2" , 3)
+ * MyFminer.AddCompound("O=C1C(C3=CC=C(OC)C=C3)=COC2=C1C=CC(O)=C2" , 4)
+ * MyFminer.AddCompound("OC1=CC=C(CCCCCCCC)C=C1" , 5)
+ * MyFminer.AddCompound("C1(C=CC=CC=1C(=C(Cl)Cl)C2=CC=C(C=C2)Cl)Cl" , 6)
+ * MyFminer.AddCompound("O=C(C1=C(C=CC=C1)C(=O)OCC(CCCC)CC)OCC(CCCC)CC" , 7)
+ * MyFminer.AddCompound("Oc1cc(O)cc2CCCCC[C@@H](O)CCC[C@H](C)OC(=O)c12" , 8)
+ * MyFminer.AddCompound("O=C1C2=C(C=C(C=C2O)O)OC(=C1O)C3=CC(=C(C=C3)O)O" , 9)
+ * MyFminer.AddCompound("C1(=C(C(=O)C2=C(O1)C=C(C=C2)O)O)C3=CC(O)=C(C=C3)O" , 10)
+ * # ... continue adding compounds
+ * MyFminer.AddActivity(1.0, 1) # 1.0 denotes one class in this example,
+ * MyFminer.AddActivity(1.0, 2)
+ * MyFminer.AddActivity(1.0, 3)
+ * MyFminer.AddActivity(1.0, 4)
+ * MyFminer.AddActivity(1.0, 5)
+ * MyFminer.AddActivity(1.0, 6)
+ * MyFminer.AddActivity(1.0, 7)
+ * MyFminer.AddActivity(1.0, 8)
+ * MyFminer.AddActivity(0.0, 9) # 0.0 the other class (you can use more than two classes, max 5).
+ * MyFminer.AddActivity(0.0, 10)
+ * # ... continue adding activities (true (1.0) for active, false (0.0) for inactive)
+ * print repr(MyFminer.GetNoCompounds()) + ' compounds'
+ * # gather results for every root node in vector instead of immediate output
+ * for j in range(0, MyFminer.GetNoRootNodes()):
+ *    result = MyFminer.MineRoot(j);
+ *    for i in range(0, result.size()):
+ *        print result[i];
+ * # call MyFminer.Reset() to start over.
+ * \endcode
+ *
+ * \subsubsection Java Java
+ *
+ * This example assumes that you have created java bindings using <code>make java</code>.
+ *
+ * \code
+ * public class test {
+ *     public static void main(String args[]) {
+ *        System.loadLibrary("last");
+ *        Last MyFminer;
+ *        MyFminer = new Last();
+ *        // Toy example: special settings for mining all fragments
+ *        MyFminer.SetMaxHops(25);
+ *        MyFminer.SetConsoleOut(false);
+ *        // Add compounds below. IMPORTANT! DO NOT CHANGE SETTINGS AFTER ADDING COMPOUNDS!
+ *        MyFminer.AddCompound("O=C(C(C(C=C3)=CC=C3O)=CO2)C1=C2C=C(O)C=C1O" , 1);
+ *        MyFminer.AddCompound("Oc1ccc(cc1)[C@@H]2Cc3ccc(O)cc3OC2" , 2);
+ *        MyFminer.AddCompound("O=C1C(C3=CC=C(O)C=C3)=COC2=C1C=CC(O)=C2" , 3);
+ *        MyFminer.AddCompound("O=C1C(C3=CC=C(OC)C=C3)=COC2=C1C=CC(O)=C2" , 4);
+ *        MyFminer.AddCompound("OC1=CC=C(CCCCCCCC)C=C1" , 5);
+ *        MyFminer.AddCompound("C1(C=CC=CC=1C(=C(Cl)Cl)C2=CC=C(C=C2)Cl)Cl" , 6);
+ *        MyFminer.AddCompound("O=C(C1=C(C=CC=C1)C(=O)OCC(CCCC)CC)OCC(CCCC)CC" , 7);
+ *        MyFminer.AddCompound("Oc1cc(O)cc2CCCCC[C@@H](O)CCC[C@H](C)OC(=O)c12" , 8);
+ *        MyFminer.AddCompound("O=C1C2=C(C=C(C=C2O)O)OC(=C1O)C3=CC(=C(C=C3)O)O" , 9);
+ *        MyFminer.AddCompound("C1(=C(C(=O)C2=C(O1)C=C(C=C2)O)O)C3=CC(O)=C(C=C3)O" , 10);
+ *        // ... continue adding compounds
+ *        MyFminer.AddActivity(1.0F, 1);
+ *        MyFminer.AddActivity(1.0F, 2);
+ *        MyFminer.AddActivity(1.0F, 3);
+ *        MyFminer.AddActivity(1.0F, 4);
+ *        MyFminer.AddActivity(1.0F, 5);
+ *        MyFminer.AddActivity(1.0F, 6);
+ *        MyFminer.AddActivity(1.0F, 7);
+ *        MyFminer.AddActivity(1.0F, 8);
+ *        MyFminer.AddActivity(0.0F, 9);
+ *        MyFminer.AddActivity(0.0F, 10);
+ *        // ... continue adding activities (1.0F for active, 0.0F for inactive)
+ *        System.out.println(MyFminer.GetNoCompounds() + " compounds");
+ *        // gather results for every root node in vector instead of immediate output
+ *        for (int j = 0; j < (int) MyFminer.GetNoRootNodes(); j++)
+ *        {
+ *           SVector result = MyFminer.MineRoot(j);
+ *           for(int i = 0; i < result.size(); i++)
+ *           {
+ *             System.out.println(result.get(i));
+ *           }
+ *        }
+ *        MyFminer = null;
+ *     }
+ * }
+ * \endcode
+ *
  * \subsubsection Const Description of Constructors and Options
  * 
  * For the purpose of demonstration we used a toy database of two compounds and an unusual parameter configuration. Please note, that in general the defaults set by the standard constructor are sensible for most databases. They switch on LAST-PM for 95% significance and a minimum frequency of 2. The complete standard settings are:
@@ -255,12 +312,11 @@
  * <br><br>
  * @section Contact Contact
  * Dipl.-Inf. Andreas Maunz<br>
- * Freiburg Center for Data Analysis and Modelling<br>
- * Hermann-Herder-Str. 3a<br>
+ * Institute for Physics<br>
+ * Hermann-Herder-Str. 3<br>
  * 79104 Freiburg, Germany<br>
-  Phone: +49761/203-8442, Fax: +49761/203-7700<br>
  * Email: maunza@fdm.uni-freiburg.de<br>
  * Web: http://cs.maunz.de
  *
- *  \author (c) 2010 by Andreas Maunz, 2010
+ *  \author Andreas Maunz, 2010
  **/
