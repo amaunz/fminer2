@@ -32,22 +32,22 @@ public class libbbrc {
     return libbbrcJNI.bbrc_aromatic_get();
   }
 
-  public static void setBbrc_chisq(SWIGTYPE_p_ChisqConstraint value) {
-    libbbrcJNI.bbrc_chisq_set(SWIGTYPE_p_ChisqConstraint.getCPtr(value));
+  public static void setBbrc_chisq(SWIGTYPE_p_ChisqBbrcConstraint value) {
+    libbbrcJNI.bbrc_chisq_set(SWIGTYPE_p_ChisqBbrcConstraint.getCPtr(value));
   }
 
-  public static SWIGTYPE_p_ChisqConstraint getBbrc_chisq() {
+  public static SWIGTYPE_p_ChisqBbrcConstraint getBbrc_chisq() {
     long cPtr = libbbrcJNI.bbrc_chisq_get();
-    return (cPtr == 0) ? null : new SWIGTYPE_p_ChisqConstraint(cPtr, false);
+    return (cPtr == 0) ? null : new SWIGTYPE_p_ChisqBbrcConstraint(cPtr, false);
   }
 
-  public static void setBbrc_ks(SWIGTYPE_p_KSConstraint value) {
-    libbbrcJNI.bbrc_ks_set(SWIGTYPE_p_KSConstraint.getCPtr(value));
+  public static void setBbrc_ks(SWIGTYPE_p_KSBbrcConstraint value) {
+    libbbrcJNI.bbrc_ks_set(SWIGTYPE_p_KSBbrcConstraint.getCPtr(value));
   }
 
-  public static SWIGTYPE_p_KSConstraint getBbrc_ks() {
+  public static SWIGTYPE_p_KSBbrcConstraint getBbrc_ks() {
     long cPtr = libbbrcJNI.bbrc_ks_get();
-    return (cPtr == 0) ? null : new SWIGTYPE_p_KSConstraint(cPtr, false);
+    return (cPtr == 0) ? null : new SWIGTYPE_p_KSBbrcConstraint(cPtr, false);
   }
 
   public static void setBbrc_do_yaml(boolean value) {

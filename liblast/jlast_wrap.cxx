@@ -467,45 +467,45 @@ SWIGEXPORT jboolean JNICALL Java_liblastJNI_last_1aromatic_1get(JNIEnv *jenv, jc
 
 
 SWIGEXPORT void JNICALL Java_liblastJNI_last_1chisq_1set(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-  ChisqConstraint *arg1 = (ChisqConstraint *) 0 ;
+  ChisqLastConstraint *arg1 = (ChisqLastConstraint *) 0 ;
   
   (void)jenv;
   (void)jcls;
-  arg1 = *(ChisqConstraint **)&jarg1; 
+  arg1 = *(ChisqLastConstraint **)&jarg1; 
   fm::last_chisq = arg1;
 }
 
 
 SWIGEXPORT jlong JNICALL Java_liblastJNI_last_1chisq_1get(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
-  ChisqConstraint *result = 0 ;
+  ChisqLastConstraint *result = 0 ;
   
   (void)jenv;
   (void)jcls;
-  result = (ChisqConstraint *)fm::last_chisq;
-  *(ChisqConstraint **)&jresult = result; 
+  result = (ChisqLastConstraint *)fm::last_chisq;
+  *(ChisqLastConstraint **)&jresult = result; 
   return jresult;
 }
 
 
 SWIGEXPORT void JNICALL Java_liblastJNI_last_1ks_1set(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-  KSConstraint *arg1 = (KSConstraint *) 0 ;
+  KSLastConstraint *arg1 = (KSLastConstraint *) 0 ;
   
   (void)jenv;
   (void)jcls;
-  arg1 = *(KSConstraint **)&jarg1; 
+  arg1 = *(KSLastConstraint **)&jarg1; 
   fm::last_ks = arg1;
 }
 
 
 SWIGEXPORT jlong JNICALL Java_liblastJNI_last_1ks_1get(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
-  KSConstraint *result = 0 ;
+  KSLastConstraint *result = 0 ;
   
   (void)jenv;
   (void)jcls;
-  result = (KSConstraint *)fm::last_ks;
-  *(KSConstraint **)&jresult = result; 
+  result = (KSLastConstraint *)fm::last_ks;
+  *(KSLastConstraint **)&jresult = result; 
   return jresult;
 }
 
@@ -1201,6 +1201,68 @@ SWIGEXPORT jint JNICALL Java_liblastJNI_Last_1GetNoCompounds(JNIEnv *jenv, jclas
   arg1 = *(Last **)&jarg1; 
   result = (int)(arg1)->GetNoCompounds();
   jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jfloat JNICALL Java_liblastJNI_Last_1ChisqTest(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jlong jarg3) {
+  jfloat jresult = 0 ;
+  Last *arg1 = (Last *) 0 ;
+  SwigValueWrapper< std::vector< float > > arg2 ;
+  SwigValueWrapper< std::vector< float > > arg3 ;
+  std::vector< float > *argp2 ;
+  std::vector< float > *argp3 ;
+  float result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(Last **)&jarg1; 
+  argp2 = *(std::vector< float > **)&jarg2; 
+  if (!argp2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null std::vector< float >");
+    return 0;
+  }
+  arg2 = *argp2; 
+  argp3 = *(std::vector< float > **)&jarg3; 
+  if (!argp3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null std::vector< float >");
+    return 0;
+  }
+  arg3 = *argp3; 
+  result = (float)(arg1)->ChisqTest(arg2,arg3);
+  jresult = (jfloat)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT jfloat JNICALL Java_liblastJNI_Last_1KSTest(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jlong jarg3) {
+  jfloat jresult = 0 ;
+  Last *arg1 = (Last *) 0 ;
+  SwigValueWrapper< std::vector< float > > arg2 ;
+  SwigValueWrapper< std::vector< float > > arg3 ;
+  std::vector< float > *argp2 ;
+  std::vector< float > *argp3 ;
+  float result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(Last **)&jarg1; 
+  argp2 = *(std::vector< float > **)&jarg2; 
+  if (!argp2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null std::vector< float >");
+    return 0;
+  }
+  arg2 = *argp2; 
+  argp3 = *(std::vector< float > **)&jarg3; 
+  if (!argp3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "Attempt to dereference null std::vector< float >");
+    return 0;
+  }
+  arg3 = *argp3; 
+  result = (float)(arg1)->KSTest(arg2,arg3);
+  jresult = (jfloat)result; 
   return jresult;
 }
 

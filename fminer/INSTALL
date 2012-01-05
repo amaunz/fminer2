@@ -6,11 +6,10 @@ For this frontend application, Please adjust the Makefile. i.e., add your paths 
 $ make
 
 TESTS
- =====
+=====
 
- To perform unit tests (builds everything) try:
- $ cd ..; ./build_all.sh; cd -
- $ ./test.sh
- 
+To perform unit tests (builds everything) try:
+$ cd ..; ./build_all.sh; cd -
+$ ./test.sh
 
 Andreas Maunz, 2010.

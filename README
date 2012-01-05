@@ -1,5 +1,6 @@
 Welcome to Fminer2!
 
+
 This repository includes graph mining software based on Gaston (see http://www.liacs.nl/~snijssen/gaston ). The following packages are included:
 
 1) BBRC: Backbone Refinement Class mining
@@ -13,8 +14,10 @@ Go here: http://last-pm.maunz.de
 3) Frontend App for 1) and 2).
 Subdirectory fminer/
 
-Try 'build_all.sh' or refer to the individual subdirectories for building.
+
+Platforms supported: C++ (native), Ruby, Python, Java.
+Try 'build_all.sh' (for C++) or refer to INSTALL in the individual subdirectories for building (all).
+
 
 http://cs.maunz.de
 Andreas Maunz, 2010.
-
