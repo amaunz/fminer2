@@ -14,7 +14,7 @@ Contents of the above documentation:
 - Official contact information
 
 
-Build quickstart (see above documentation how to build):
+Build quickstart (*** NOTE: see above documentation how to build!! ***):
 
 For C++ try:
 $ ./configure
