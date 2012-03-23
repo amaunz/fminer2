@@ -1,4 +1,4 @@
- require 'last'
+ require './last'
  MyFminer = Last::Last.new()
  # Adjust settings
  MyFminer.SetMaxHops(25)

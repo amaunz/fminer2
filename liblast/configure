@@ -25,12 +25,12 @@ packs=( "openbabel-2.0" "gsl" )
 cflags_k=( "INCLUDE_OB" "INCLUDE_GSL" )
 # ADJUST LINKER PATH:
 libs_k=( "LDFLAGS_OB" "LDFLAGS_GSL" )
-ruby_ver="1.9"
+ruby_ver="1.9.1"
 
 echo 
 echo "HOW TO CONFIGURE RUBY:"
 echo "Usage:      $0 [RUBY_VER]"
-echo "Default is: $0 1.9"
+echo "Default is: $0 1.9.1"
 echo "If 'ruby.h' is not found, run updatedb as root and try again!"
 echo
 
