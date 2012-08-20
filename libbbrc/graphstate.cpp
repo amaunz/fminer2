@@ -450,8 +450,8 @@ void BbrcGraphState::print ( unsigned int frequency ) {
           // output chisq
           if (fm::bbrc_chisq->active) {
             if (fm::bbrc_do_yaml) { 
-                if (!fm::bbrc_pvalues || fm::bbrc_regression) printf("%.4f, ", p); 
-                else printf("%.4f, ", gsl_cdf_chisq_P(p,1)); 
+                if (!fm::bbrc_pvalues || fm::bbrc_regression) printf("%.12f, ", p); 
+                else printf("%.12f, ", gsl_cdf_chisq_P(p,1)); 
             }
             else putchar('\t');
           }
@@ -674,8 +674,8 @@ string BbrcGraphState::to_s ( unsigned int frequency ) {
           // output chisq
           if (fm::bbrc_chisq->active) {
             if (fm::bbrc_do_yaml) { 
-                if (!fm::bbrc_pvalues || fm::bbrc_regression) { char x[20]; sprintf(x,"%.4f", p); (oss.append(x)).append(", "); }
-                else { char x[20]; sprintf(x,"%.4f", gsl_cdf_chisq_P(p, 1)); (oss.append(x)).append(", "); }
+                if (!fm::bbrc_pvalues || fm::bbrc_regression) { char x[20]; sprintf(x,"%.12f", p); (oss.append(x)).append(", "); }
+                else { char x[20]; sprintf(x,"%.12f", gsl_cdf_chisq_P(p, 1)); (oss.append(x)).append(", "); }
             }
 
           }
