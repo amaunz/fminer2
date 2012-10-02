@@ -1,4 +1,4 @@
-require 'bbrc'
+require './bbrc'
  MyFminer = Bbrc::Bbrc.new()
  # Toy example: special settings for mining all fragments
  # use no significance constraint

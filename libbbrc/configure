@@ -25,12 +25,12 @@ packs=( "openbabel-2.0" "gsl" )
 cflags_k=( "INCLUDE_OB" "INCLUDE_GSL" )
 # ADJUST LINKER PATH:
 libs_k=( "LDFLAGS_OB" "LDFLAGS_GSL" )
-ruby_ver="1.8"
+ruby_ver="1.9.1"
 
 echo 
 echo "HOW TO CONFIGURE RUBY:"
 echo "Usage:      $0 [RUBY_VER]"
-echo "Default is: $0 1.8"
+echo "Default is: $0 1.9.1"
 echo "If 'ruby.h' is not found, run updatedb as root and try again!"
 echo
 
@@ -65,7 +65,9 @@ if [ -z $cflags_ruby ]; then
   cflags_ruby="$ruby_ver NOT FOUND"
   rb_status=1
 else
-  cflags_ruby="-I`dirname $cflags_ruby`"
+  dir1="`dirname $cflags_ruby`"
+  dir2="`dirname $dir1/*-linux/ruby`"
+  cflags_ruby="-I$dir1 -I$dir2"
 fi
 
 sed -i "s,^INCLUDE_RB.*,INCLUDE_RB  = $cflags_ruby,g" Makefile
