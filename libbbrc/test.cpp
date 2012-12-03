@@ -17,8 +17,8 @@ int main(int argc, char *argv[], char *envp[]) {
     MyFminer->AddActivity((bool) 1.0, 1);
     MyFminer->AddActivity((bool) 0.0, 2);
     // ... continue adding activities (true for active, false for inactive)
-    MyFminer->AddWeight(1.0, 1);
-    MyFminer->AddWeight(1.0, 2);
+    MyFminer->AddWeight(11.0, 1);
+    MyFminer->AddWeight(10.0, 2);
     // ... continue adding weights (float)
     cerr << MyFminer->GetNoCompounds() << " compounds" << endl;
     // gather results for every root node in vector instead of immediate output
