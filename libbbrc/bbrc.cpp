@@ -643,7 +643,6 @@ bool Bbrc::AddActivityCanonical(float act, unsigned int comp_id) {
 bool Bbrc::CheckWeight(float weight, unsigned int comp_id) {
   if (fm::bbrc_database->trees_map.find(comp_id) == fm::bbrc_database->trees_map.end()) { 
     weight_map.erase(comp_id);
-    cout << "FPP" << endl;
     return false;
   }
   return true;
@@ -653,9 +652,6 @@ bool Bbrc::NormalizeWeights(map<unsigned int, float> weight_map) {
   map<unsigned int, float>::iterator weight_map_it;
   float weight_sum = 0.0;
   for (weight_map_it = weight_map.begin(); weight_map_it != weight_map.end(); weight_map_it++) {
-    cout << "AM: w " << weight_map_it->second << endl;
-  }
-  for (weight_map_it = weight_map.begin(); weight_map_it != weight_map.end(); weight_map_it++) {
     weight_sum += weight_map_it->second;
   }
   int nr_weights = weight_map.size();
@@ -663,11 +659,6 @@ bool Bbrc::NormalizeWeights(map<unsigned int, float> weight_map) {
     weight_map_it->second = weight_map_it->second * nr_weights;
     weight_map_it->second = weight_map_it->second / weight_sum;
   }
-  cout << endl;
-  for (weight_map_it = weight_map.begin(); weight_map_it != weight_map.end(); weight_map_it++) {
-    cout << "AM: w " << weight_map_it->second << endl;
-  }
-  cout << endl;
 }
 
 bool Bbrc::AddWeightCanonical(float weight, unsigned int comp_id) {
