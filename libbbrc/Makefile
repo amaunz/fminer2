@@ -20,9 +20,9 @@ INCLUDE_OB  =  -I/usr/include/openbabel-2.0
 INCLUDE_GSL  =   
 LDFLAGS_OB  =   
 LDFLAGS_GSL  =   
-INCLUDE_RB  = -I/usr/lib/ruby/1.8/x86_64-linux
+INCLUDE_RB  = -I/home/am/.rbenv/versions/1.9.3-p125/include/ruby-1.9.1 -I/home/am/.rbenv/versions/1.9.3-p125/include/ruby-1.9.1/x86_64-linux
 INCLUDE_PY = -I/usr/include/python2.7
-RUBY = ruby1.8
+RUBY = ruby1.9.1
 PYTHON = python
 
 # ADJUST COMPILER PATH TO OPENBABEL INCLUDE FILES:

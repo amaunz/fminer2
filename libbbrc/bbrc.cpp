@@ -565,10 +565,10 @@ bool Bbrc::AddDataCanonical() {
       }
     }
 
-    // AM: weight map initialization to 1/n
+    // AM: weight map initialization to 1 for all instances
     if (weight_map.size() == 0) { // when user has done nothing
       for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_mmap.begin(); it != inchi_compound_mmap.end(); it++) {
-        weight_map.insert(make_pair(it->second.first, 1));
+        weight_map.insert(make_pair(it->second.first, 1.0));
       }
     }
 
@@ -592,6 +592,11 @@ bool Bbrc::AddCompoundCanonical(string smiles, unsigned int comp_id) {
   else {
     if (activity_map.find(comp_id) == activity_map.end() && GetChisqActive()) {
       cerr << "Error on compound '" << comp_runner << "', id '" << comp_id << "': no activity found." << endl;
+      return false;
+    }
+    cout << "AM: " << weight_map.size() << " " << endl;
+    if (weight_map.find(comp_id) == weight_map.end() && GetChisqActive()) {
+      cerr << "Error on compound '" << comp_runner << "', id '" << comp_id << "': no weight found." << endl;
       return false;
     }
     else {
