@@ -107,6 +107,7 @@ class Bbrc : public Fminer {
     // KS: bool AddActivity(bool act, unsigned int comp_id); //!< Add an activity to the database.
     // KS: recognize regr field
     bool AddActivity(float act, unsigned int comp_id); //!< Add an activity to the database.
+    bool AddWeight(float weight, unsigned int comp_id); //!< Add a weight to the database.
     int GetNoRootNodes() {if (!fm::bbrc_db_built) AddDataCanonical() ; return fm::bbrc_database->nodelabels.size();} //!< Get number of root nodes (different element types).
     int GetNoCompounds() {if (!fm::bbrc_db_built) AddDataCanonical() ; return fm::bbrc_database->trees.size();} //!< Get number of compounds in the database.
     //@}
@@ -124,10 +125,15 @@ class Bbrc : public Fminer {
     // ONLY FOR INTERNAL USE. DO NOT MAKE PUBLIC!
     map<string, pair<unsigned int, string> > inchi_compound_map;    // AM: structure inchi => (id, smi) for canonical input to check for double structures
     map<string, pair<unsigned int, string> > inchi_compound_mmap;   // AM: structure inchi => (id, smi) for canonical input to use for actual storage
-    map<unsigned int, float> activity_map;                          // AM: structure inchi => (id, smi) for canonical input
+    map<unsigned int, float> activity_map;                          // AM: structure id => act for canonical input
+    map<unsigned int, float> weight_map;                            // AM: structure id => weight for canonical input
+
     bool AddDataCanonical();                                        //!< Only to be called by MineRoot!
     bool AddCompoundCanonical(string smiles, unsigned int comp_id); //!< Only to be called by AddDataCanonical!
     bool AddActivityCanonical(float act, unsigned int comp_id);     //!< Only to be called by AddDataCanonical!
+    bool CheckWeight(float weight, unsigned int comp_id);           //!< Only to be called by AddDataCanonical!
+    bool NormalizeWeights(map<unsigned int, float> weight_map);     //!< Only to be called by AddDataCanonical!
+    bool AddWeightCanonical(float weight, unsigned int comp_id);    //!< Only to be called by AddDataCanonical!
 
 };
 
