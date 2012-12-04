@@ -510,8 +510,8 @@ bool Bbrc::AddWeight(float weight, unsigned int comp_id) {
     cerr << "BbrcDatabase has been already processed! Please reset() and insert a new dataset." << endl;
     return false;
   }
-  if (weight < 0.0) {
-    cerr << "Weight '" << weight << "' for id '" << comp_id << "' is negative." << endl;
+  if (weight <= 0.0) {
+    cerr << "Weight '" << weight << "' for id '" << comp_id << "' is not positive." << endl;
     return false;
   }
   weight_map.insert(make_pair(comp_id, weight));
