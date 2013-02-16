@@ -129,7 +129,10 @@ bool BbrcDatabase::readTreeSmi (string smi, BbrcTid tid, BbrcTid orig_tid, int l
         // if node has been present, increase frequency
         else {
           BbrcDatabaseBbrcNodeLabel &nodelabel = nodelabels[p.first->second];
-          if ( nodelabel.lasttid != tid ) nodelabel.frequency++;
+          if ( nodelabel.lasttid != tid ) 
+            // nodelabel.frequency++;
+            nodelabel.frequency += 
+            fm::bbrc_database->trees_map[tid]->weight;
           nodelabel.lasttid = tid;
           //cerr << "Updated node label " << nodelabel.inputlabel << " (freq " << nodelabel.frequency << ")" << endl;
         }
@@ -216,7 +219,9 @@ bool BbrcDatabase::readTreeSmi (string smi, BbrcTid tid, BbrcTid orig_tid, int l
             else {
               BbrcDatabaseBbrcEdgeLabel &edgelabel = edgelabels[p.first->second];
               if ( edgelabel.lasttid != tid )
-                edgelabel.frequency++;
+                // edgelabel.frequency++;
+                edgelabel.frequency += 
+                fm::bbrc_database->trees_map[tid]->weight;
                 edgelabel.lasttid = tid;
                 //cerr << "Updated edge " << edgelabel.inputedgelabel << " (" << (int) edgelabel.fromnodelabel << "-->" << (int) edgelabel.tonodelabel << ")" << ":" << edgelabel.frequency << endl;
             }
@@ -361,7 +366,9 @@ void BbrcDatabase::readTreeGsp ( FILE *input, BbrcTid tid , BbrcTid orig_tid) {
     else {
       BbrcDatabaseBbrcNodeLabel &nodelabel = nodelabels[p.first->second];
       if ( nodelabel.lasttid != tid )
-        nodelabel.frequency++;
+        // nodelabel.frequency++;
+        nodelabel.frequency += 
+        fm::bbrc_database->trees_map[tid]->weight;
       nodelabel.lasttid = tid;
     }
     
@@ -408,7 +415,9 @@ void BbrcDatabase::readTreeGsp ( FILE *input, BbrcTid tid , BbrcTid orig_tid) {
     else {
       BbrcDatabaseBbrcEdgeLabel &edgelabel = edgelabels[p.first->second];
       if ( edgelabel.lasttid != tid )
-        edgelabel.frequency++;
+        // edgelabel.frequency++;
+        edgelabel.frequency +=
+        fm::bbrc_database->trees_map[tid]->weight;
       edgelabel.lasttid = tid;
     }
 

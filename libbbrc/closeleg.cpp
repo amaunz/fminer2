@@ -22,8 +22,10 @@
 #include <vector>
 #include "misc.h"
 #include "closeleg.h"
+#include "database.h"
 
 namespace fm {
+    extern BbrcDatabase* bbrc_database;
     extern unsigned int bbrc_minfreq;
     extern CloseBbrcLegOccurrences* bbrc_closelegoccurrences;
     extern BbrcLegOccurrences* bbrc_legoccurrences;
@@ -87,7 +89,9 @@ CloseBbrcLegOccurrencesPtr bbrc_join ( BbrcLegOccurrences &legoccsdata, CloseBbr
         fm::bbrc_closelegoccurrences->elements.push_back ( CloseBbrcLegOccurrence ( legoccs[j].tid, j ) );
         if ( legoccs[j].tid != lasttid ) {
           lasttid = legoccs[j].tid;
-          frequency++;
+          //frequency++;
+          frequency += 
+          fm::bbrc_database->trees_map[legoccs[j].tid]->weight;
         }
         j++;
         if ( j == legoccssize )
@@ -132,7 +136,9 @@ CloseBbrcLegOccurrencesPtr bbrc_join ( CloseBbrcLegOccurrences &closelegoccsdata
         fm::bbrc_closelegoccurrences->elements.push_back ( CloseBbrcLegOccurrence ( closelegoccs1[j].tid, closelegoccs1[j].occurrenceid )  );
         if ( closelegoccs1[j].tid != lasttid ) {
           lasttid = closelegoccs1[j].tid;
-          frequency++;
+          // frequency++;
+          frequency += 
+          fm::bbrc_database->trees_map[closelegoccs1[j].tid]->weight;
         }
         j++;
         if ( j == closelegoccs1size )

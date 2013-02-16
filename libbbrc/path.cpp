@@ -115,7 +115,9 @@ BbrcPath::BbrcPath ( BbrcNodeLabel startnodelabel ) {
             if ( !leg.occurrences.elements.empty () &&
                   leg.occurrences.elements.back ().occurrenceid == i &&
                   lastself[edgelabel] != tree.tid ) {
-                leg.occurrences.selfjoin++;
+                //leg.occurrences.selfjoin++;
+                leg.occurrences.selfjoin += 
+                fm::bbrc_database->trees_map[tree.tid]->weight;
                 lastself[edgelabel] = tree.tid;
             }
             vector_push_back ( BbrcLegOccurrence, leg.occurrences.elements, legoccurrence );
