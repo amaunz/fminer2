@@ -119,7 +119,9 @@ bool BbrcDatabase::readTreeSmi (string smi, BbrcTid tid, BbrcTid orig_tid, int l
         // Store direction internal label -> node
         // if node has NOT been present, label it and set frequency to 1
         if ( p.second ) {
-          vector_push_back ( BbrcDatabaseBbrcNodeLabel, nodelabels, nodelabel );
+          //vector_push_back ( BbrcDatabaseBbrcNodeLabel, nodelabels, nodelabel;
+          BbrcFrequency freq = fm::bbrc_database->trees_map[tid]->weight;
+          vector_push_back_warg ( BbrcDatabaseBbrcNodeLabel, freq, nodelabels, nodelabel );
           nodelabel.inputlabel = inputnodelabel;
           nodelabel.occurrences.parent = NULL;
           nodelabel.occurrences.number = 1;
@@ -209,7 +211,9 @@ bool BbrcDatabase::readTreeSmi (string smi, BbrcTid tid, BbrcTid orig_tid, int l
      
             // Direction internal label -> edge
             if ( p.second ) {
-              vector_push_back ( BbrcDatabaseBbrcEdgeLabel, edgelabels, edgelabel );
+              //vector_push_back ( BbrcDatabaseBbrcEdgeLabel, edgelabels, edgelabel );
+              BbrcFrequency freq = fm::bbrc_database->trees_map[tid]->weight;
+              vector_push_back_warg ( BbrcDatabaseBbrcEdgeLabel, freq, edgelabels, edgelabel );
               edgelabel.fromnodelabel = node1label;	// directed edges
               edgelabel.tonodelabel = node2label;
               edgelabel.inputedgelabel = inputedgelabel;
@@ -357,7 +361,9 @@ void BbrcDatabase::readTreeGsp ( FILE *input, BbrcTid tid , BbrcTid orig_tid) {
 
     map_insert_pair ( nodelabelmap ) p = nodelabelmap.insert ( make_pair ( inputnodelabel, nodelabels.size () ) );
     if ( p.second ) {
-      vector_push_back ( BbrcDatabaseBbrcNodeLabel, nodelabels, nodelabel );
+      //vector_push_back ( BbrcDatabaseBbrcNodeLabel, nodelabels, nodelabel );
+      BbrcFrequency freq = fm::bbrc_database->trees_map[tid]->weight;
+      vector_push_back_warg ( BbrcDatabaseBbrcNodeLabel, freq, nodelabels, nodelabel );
       nodelabel.inputlabel = inputnodelabel;
       nodelabel.occurrences.parent = NULL;
       nodelabel.occurrences.number = 1;
@@ -406,7 +412,9 @@ void BbrcDatabase::readTreeGsp ( FILE *input, BbrcTid tid , BbrcTid orig_tid) {
 
     map_insert_pair ( edgelabelmap ) p = edgelabelmap.insert ( make_pair ( combinedinputlabel, edgelabels.size () ) );
     if ( p.second ) {
-      vector_push_back ( BbrcDatabaseBbrcEdgeLabel, edgelabels, edgelabel );
+      //vector_push_back ( BbrcDatabaseBbrcEdgeLabel, edgelabels, edgelabel );
+      BbrcFrequency freq = fm::bbrc_database->trees_map[tid]->weight;
+      vector_push_back_warg ( BbrcDatabaseBbrcEdgeLabel, freq, edgelabels, edgelabel );
       edgelabel.fromnodelabel = node1label;
       edgelabel.tonodelabel = node2label;
       edgelabel.inputedgelabel = inputedgelabel;

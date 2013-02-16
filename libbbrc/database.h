@@ -114,7 +114,7 @@ struct BbrcDatabaseBbrcNodeLabel {
   BbrcLegOccurrences occurrences;
   vector<BbrcEdgeLabel> frequentedgelabels;
 
-  BbrcDatabaseBbrcNodeLabel (): frequency ( 1 ) { }
+  BbrcDatabaseBbrcNodeLabel (BbrcFrequency freq): frequency ( freq ) { }
 };
 
 struct BbrcDatabaseBbrcEdgeLabel {
@@ -124,7 +124,7 @@ struct BbrcDatabaseBbrcEdgeLabel {
   BbrcFrequency frequency;
   BbrcTid lasttid;
 
-  BbrcDatabaseBbrcEdgeLabel (): frequency ( 1 ) { }
+  BbrcDatabaseBbrcEdgeLabel (BbrcFrequency freq): frequency ( freq ) { }
 };
 
 class BbrcDatabase {

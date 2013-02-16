@@ -49,6 +49,7 @@ typedef unsigned int BbrcFrequency;
 // variable and pushing this, one first pushes and defines a reference to the space in the vector.
 // This avoids re-allocation.
 #define vector_push_back(_type,_vector,_var) (_vector).push_back ( _type () ); _type &_var = (_vector).back ();
+#define vector_push_back_warg(_type,_arg,_vector,_var) (_vector).push_back ( _type (_arg) ); _type &_var = (_vector).back ();
 
 // can be used to obtain a type when inserting into a map
 #define map_insert_pair(_type) typedef typeof(_type) T##_type; pair<T##_type::iterator,bool>
