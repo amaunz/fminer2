@@ -587,7 +587,7 @@ bool Bbrc::AddDataCanonical() {
       unsigned int comp_id = it->first;
       CheckWeight(weight, comp_id); // weight, comp_id: remove weights of non-existing structures from map
     }
-    NormalizeWeights(weight_map);
+    NormalizeWeights();
 
     for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_mmap.begin(); it != inchi_compound_mmap.end(); it++) {
       float weight = weight_map.find(it->second.first)->second;
@@ -648,7 +648,7 @@ bool Bbrc::CheckWeight(float weight, unsigned int comp_id) {
   return true;
 }
 
-bool Bbrc::NormalizeWeights(map<unsigned int, float> weight_map) {
+bool Bbrc::NormalizeWeights() {
   map<unsigned int, float>::iterator weight_map_it;
   float weight_sum = 0.0;
   for (weight_map_it = weight_map.begin(); weight_map_it != weight_map.end(); weight_map_it++) {
