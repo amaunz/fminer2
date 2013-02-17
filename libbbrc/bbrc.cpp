@@ -510,11 +510,11 @@ bool Bbrc::AddWeight(float weight, unsigned int comp_id) {
     cerr << "BbrcDatabase has been already processed! Please reset() and insert a new dataset." << endl;
     return false;
   }
-  if (weight <= 0.0) {
-    cerr << "Weight '" << weight << "' for id '" << comp_id << "' is not positive." << endl;
+  if (weight < 1.0) {
+    cerr << "Weight '" << (BbrcFrequency) weight << "' for id '" << comp_id << "' is not positive." << endl;
     return false;
   }
-  weight_map.insert(make_pair(comp_id, weight));
+  weight_map.insert(make_pair(comp_id, (BbrcFrequency) weight)); // insert coerced to unsigned int!
   return true;
 }
 
@@ -582,12 +582,13 @@ bool Bbrc::AddDataCanonical() {
       AddActivityCanonical(activity, it->second.first); // act, comp_id
     }
 
-    for (map<unsigned int, float>::iterator it = weight_map.begin(); it != weight_map.end(); it++) {
-      float weight = it->second;
-      unsigned int comp_id = it->first;
-      CheckWeight(weight, comp_id); // weight, comp_id: remove weights of non-existing structures from map
-    }
-    NormalizeWeights();
+    //for (map<unsigned int, float>::iterator it = weight_map.begin(); it != weight_map.end(); it++) {
+    //  float weight = it->second;
+    //  unsigned int comp_id = it->first;
+    //  CheckWeight(weight, comp_id); // weight, comp_id: remove weights of non-existing structures from map
+    //}
+    //cerr << "H5" << endl;
+    // NormalizeWeights(); // no normalization on weights
 
     for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_mmap.begin(); it != inchi_compound_mmap.end(); it++) {
       float weight = weight_map.find(it->second.first)->second;
@@ -614,7 +615,8 @@ bool Bbrc::AddCompoundCanonical(string smiles, unsigned int comp_id) {
       return false;
     }
     else {
-      if (fm::bbrc_database->readTreeSmi (smiles, comp_no, comp_id, comp_runner)) {
+      BbrcFrequency weight = weight_map.find(comp_id)->second;
+      if (fm::bbrc_database->readTreeSmi (smiles, comp_no, comp_id, comp_runner, weight)) {
         insert_done=true;
         comp_no++;
       }
@@ -640,26 +642,26 @@ bool Bbrc::AddActivityCanonical(float act, unsigned int comp_id) {
   }
 }
 
-bool Bbrc::CheckWeight(float weight, unsigned int comp_id) {
-  if (fm::bbrc_database->trees_map.find(comp_id) == fm::bbrc_database->trees_map.end()) { 
-    weight_map.erase(comp_id);
-    return false;
-  }
-  return true;
-}
+//bool Bbrc::CheckWeight(float weight, unsigned int comp_id) {
+//  if (fm::bbrc_database->trees_map.find(comp_id) == fm::bbrc_database->trees_map.end()) { 
+//    weight_map.erase(comp_id);
+//    return false;
+//  }
+//  return true;
+//}
 
-bool Bbrc::NormalizeWeights() {
-  map<unsigned int, float>::iterator weight_map_it;
-  float weight_sum = 0.0;
-  for (weight_map_it = weight_map.begin(); weight_map_it != weight_map.end(); weight_map_it++) {
-    weight_sum += weight_map_it->second;
-  }
-  int nr_weights = weight_map.size();
-  for (weight_map_it = weight_map.begin(); weight_map_it != weight_map.end(); weight_map_it++) {
-    weight_map_it->second = weight_map_it->second * nr_weights;
-    weight_map_it->second = weight_map_it->second / weight_sum;
-  }
-}
+// bool Bbrc::NormalizeWeights() {
+//   map<unsigned int, float>::iterator weight_map_it;
+//   float weight_sum = 0.0;
+//   for (weight_map_it = weight_map.begin(); weight_map_it != weight_map.end(); weight_map_it++) {
+//     weight_sum += weight_map_it->second;
+//   }
+//   int nr_weights = weight_map.size();
+//   for (weight_map_it = weight_map.begin(); weight_map_it != weight_map.end(); weight_map_it++) {
+//     weight_map_it->second = weight_map_it->second * nr_weights;
+//     weight_map_it->second = weight_map_it->second / weight_sum;
+//   }
+// }
 
 bool Bbrc::AddWeightCanonical(float weight, unsigned int comp_id) {
   if (fm::bbrc_database->trees_map.find(comp_id) == fm::bbrc_database->trees_map.end()) { 

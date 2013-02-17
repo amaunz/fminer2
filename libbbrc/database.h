@@ -156,7 +156,7 @@ class BbrcDatabase {
 
     void printTrees ();
     ~BbrcDatabase ();
-    bool readTreeSmi (string smi, BbrcTid tid , BbrcTid orig_tid, int line_nr);
+    bool readTreeSmi (string smi, BbrcTid tid , BbrcTid orig_tid, int line_nr, BbrcFrequency weight);
     void readGsp (FILE* input);
     void readTreeGsp (FILE *input, BbrcTid orig_tid, BbrcTid tid);
   
