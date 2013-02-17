@@ -120,8 +120,7 @@ bool BbrcDatabase::readTreeSmi (string smi, BbrcTid tid, BbrcTid orig_tid, int l
         // if node has NOT been present, label it and set frequency to 1
         if ( p.second ) {
           //vector_push_back ( BbrcDatabaseBbrcNodeLabel, nodelabels, nodelabel;
-          BbrcFrequency freq = weight;
-          vector_push_back_warg ( BbrcDatabaseBbrcNodeLabel, freq, nodelabels, nodelabel );
+          vector_push_back_warg ( BbrcDatabaseBbrcNodeLabel, weight, nodelabels, nodelabel );
           nodelabel.inputlabel = inputnodelabel;
           nodelabel.occurrences.parent = NULL;
           nodelabel.occurrences.number = 1;
@@ -211,8 +210,7 @@ bool BbrcDatabase::readTreeSmi (string smi, BbrcTid tid, BbrcTid orig_tid, int l
             // Direction internal label -> edge
             if ( p.second ) {
               //vector_push_back ( BbrcDatabaseBbrcEdgeLabel, edgelabels, edgelabel );
-              BbrcFrequency freq = weight;
-              vector_push_back_warg ( BbrcDatabaseBbrcEdgeLabel, freq, edgelabels, edgelabel );
+              vector_push_back_warg ( BbrcDatabaseBbrcEdgeLabel, weight, edgelabels, edgelabel );
               edgelabel.fromnodelabel = node1label;	// directed edges
               edgelabel.tonodelabel = node2label;
               edgelabel.inputedgelabel = inputedgelabel;

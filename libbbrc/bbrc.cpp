@@ -582,13 +582,6 @@ bool Bbrc::AddDataCanonical() {
       AddActivityCanonical(activity, it->second.first); // act, comp_id
     }
 
-    //for (map<unsigned int, float>::iterator it = weight_map.begin(); it != weight_map.end(); it++) {
-    //  float weight = it->second;
-    //  unsigned int comp_id = it->first;
-    //  CheckWeight(weight, comp_id); // weight, comp_id: remove weights of non-existing structures from map
-    //}
-    //cerr << "H5" << endl;
-    // NormalizeWeights(); // no normalization on weights
 
     for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_mmap.begin(); it != inchi_compound_mmap.end(); it++) {
       float weight = weight_map.find(it->second.first)->second;
@@ -642,27 +635,6 @@ bool Bbrc::AddActivityCanonical(float act, unsigned int comp_id) {
   }
 }
 
-//bool Bbrc::CheckWeight(float weight, unsigned int comp_id) {
-//  if (fm::bbrc_database->trees_map.find(comp_id) == fm::bbrc_database->trees_map.end()) { 
-//    weight_map.erase(comp_id);
-//    return false;
-//  }
-//  return true;
-//}
-
-// bool Bbrc::NormalizeWeights() {
-//   map<unsigned int, float>::iterator weight_map_it;
-//   float weight_sum = 0.0;
-//   for (weight_map_it = weight_map.begin(); weight_map_it != weight_map.end(); weight_map_it++) {
-//     weight_sum += weight_map_it->second;
-//   }
-//   int nr_weights = weight_map.size();
-//   for (weight_map_it = weight_map.begin(); weight_map_it != weight_map.end(); weight_map_it++) {
-//     weight_map_it->second = weight_map_it->second * nr_weights;
-//     weight_map_it->second = weight_map_it->second / weight_sum;
-//   }
-// }
-
 bool Bbrc::AddWeightCanonical(float weight, unsigned int comp_id) {
   if (fm::bbrc_database->trees_map.find(comp_id) == fm::bbrc_database->trees_map.end()) { 
     cerr << "No structure for ID " << comp_id << " when adding weight. Ignoring entry!" << endl; return false; 
@@ -670,6 +642,7 @@ bool Bbrc::AddWeightCanonical(float weight, unsigned int comp_id) {
   else {
     if (!fm::bbrc_regression) {
       fm::bbrc_database->trees_map[comp_id]->weight = weight;
+      cerr << "AM bbrc.cpp: Adding Weight '" << weight << "' for tree '" << comp_id << "'" << endl;
     }
     return true;
   }

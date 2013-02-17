@@ -58,7 +58,7 @@ ostream &operator<< ( ostream &stream, vector<BbrcLegOccurrence> &occs ) {
       lasttid = occs[i].tid;
       //frequency++;
       frequency += 
-      fm::bbrc_database->trees_map[occs[i].tid]->weight;
+      fm::bbrc_database->trees[occs[i].tid]->weight;
 
     }
   }
@@ -120,7 +120,7 @@ BbrcLegOccurrencesPtr bbrc_join ( BbrcLegOccurrences &legoccsdata1, BbrcNodeId c
 	      lastself = jlegocc.tid;
 	      //fm::bbrc_legoccurrences->selfjoin++;
         fm::bbrc_legoccurrences->selfjoin += 
-        fm::bbrc_database->trees_map[jlegocc.tid]->weight;
+        fm::bbrc_database->trees[jlegocc.tid]->weight;
 	    }
 	  }
 	  	  
@@ -128,7 +128,7 @@ BbrcLegOccurrencesPtr bbrc_join ( BbrcLegOccurrences &legoccsdata1, BbrcNodeId c
         lasttid = jlegocc.tid;
 	    //frequency++;
       frequency += 
-      fm::bbrc_database->trees_map[jlegocc.tid]->weight;
+      fm::bbrc_database->trees[jlegocc.tid]->weight;
 	  }
 
           if ( k == legoccs2size )
@@ -181,7 +181,7 @@ BbrcLegOccurrencesPtr bbrc_join ( BbrcLegOccurrences &legoccsdata ) {
       lastself = legocc.tid;
       //fm::bbrc_legoccurrences->selfjoin++;
       fm::bbrc_legoccurrences->selfjoin += 
-      fm::bbrc_database->trees_map[legocc.tid]->weight;
+      fm::bbrc_database->trees[legocc.tid]->weight;
     }
   }
   while ( j < legoccs.size () );
@@ -277,20 +277,20 @@ void bbrc_extend ( BbrcLegOccurrences &legoccurrencesdata ) {
           if ( candidatelegsoccs.empty () )  
             //fm::bbrc_Bbrccandidatelegsoccurrences[edgelabel].frequency++;
             fm::bbrc_Bbrccandidatelegsoccurrences[edgelabel].frequency +=
-            fm::bbrc_database->trees_map[legocc.tid]->weight;
+            fm::bbrc_database->trees[legocc.tid]->weight;
           else {
 
 	            if ( candidatelegsoccs.back ().tid != legocc.tid )
         	        //fm::bbrc_Bbrccandidatelegsoccurrences[edgelabel].frequency++;
         	        fm::bbrc_Bbrccandidatelegsoccurrences[edgelabel].frequency +=
-                  fm::bbrc_database->trees_map[legocc.tid]->weight;
+                  fm::bbrc_database->trees[legocc.tid]->weight;
 
 	            if ( candidatelegsoccs.back ().occurrenceid == i &&
 	                lastself[edgelabel] != legocc.tid ) {
                     lastself[edgelabel] = legocc.tid;
 	                //fm::bbrc_Bbrccandidatelegsoccurrences[edgelabel].selfjoin++;
                   fm::bbrc_Bbrccandidatelegsoccurrences[edgelabel].selfjoin +=
-                  fm::bbrc_database->trees_map[legocc.tid]->weight;
+                  fm::bbrc_database->trees[legocc.tid]->weight;
 
 	            }
 
@@ -305,7 +305,7 @@ void bbrc_extend ( BbrcLegOccurrences &legoccurrencesdata ) {
             if ( !candidatelegsoccs.size () || candidatelegsoccs.back ().tid != legocc.tid )
 	            //fm::bbrc_candidatecloselegsoccs[number][edgelabel].frequency++;
 	            fm::bbrc_candidatecloselegsoccs[number][edgelabel].frequency +=
-              fm::bbrc_database->trees_map[legocc.tid]->weight;
+              fm::bbrc_database->trees[legocc.tid]->weight;
             candidatelegsoccs.push_back ( CloseBbrcLegOccurrence ( legocc.tid, i ) );
             Bbrcsetmax ( fm::bbrc_Bbrccandidatelegsoccurrences[edgelabel].maxdegree, fm::bbrc_database->trees[legocc.tid]->nodes[node.edges[j].tonode].edges.size () );
         }
@@ -363,18 +363,18 @@ void bbrc_extend ( BbrcLegOccurrences &legoccurrencesdata, BbrcEdgeLabel minlabe
             if ( candidatelegsoccs.empty () )
   	      // fm::bbrc_Bbrccandidatelegsoccurrences[edgelabel].frequency++;
   	      fm::bbrc_Bbrccandidatelegsoccurrences[edgelabel].frequency +=
-          fm::bbrc_database->trees_map[legocc.tid]->weight;
+          fm::bbrc_database->trees[legocc.tid]->weight;
 	    else {
 	      if ( candidatelegsoccs.back ().tid != legocc.tid )
   	        //fm::bbrc_Bbrccandidatelegsoccurrences[edgelabel].frequency++;
   	        fm::bbrc_Bbrccandidatelegsoccurrences[edgelabel].frequency +=
-            fm::bbrc_database->trees_map[legocc.tid]->weight;
+            fm::bbrc_database->trees[legocc.tid]->weight;
 	      if ( candidatelegsoccs.back ().occurrenceid == i &&
                 lastself[edgelabel] != (int) legocc.tid ) {
                 lastself[edgelabel] = legocc.tid;
                 //fm::bbrc_Bbrccandidatelegsoccurrences[edgelabel].selfjoin++;
                 fm::bbrc_Bbrccandidatelegsoccurrences[edgelabel].selfjoin += 
-                fm::bbrc_database->trees_map[legocc.tid]->weight;
+                fm::bbrc_database->trees[legocc.tid]->weight;
               }
             }
             candidatelegsoccs.push_back ( BbrcLegOccurrence ( legocc.tid, i, node.edges[j].tonode, legocc.tonodeid ) );
@@ -388,7 +388,7 @@ void bbrc_extend ( BbrcLegOccurrences &legoccurrencesdata, BbrcEdgeLabel minlabe
           if ( !candidatelegsoccs.size () || candidatelegsoccs.back ().tid != legocc.tid )
 	    //fm::bbrc_candidatecloselegsoccs[number][edgelabel].frequency++;
 	    fm::bbrc_candidatecloselegsoccs[number][edgelabel].frequency += 
-      fm::bbrc_database->trees_map[legocc.tid]->weight;
+      fm::bbrc_database->trees[legocc.tid]->weight;
           candidatelegsoccs.push_back ( CloseBbrcLegOccurrence ( legocc.tid, i ) );
           Bbrcsetmax ( fm::bbrc_Bbrccandidatelegsoccurrences[edgelabel].maxdegree, fm::bbrc_database->trees[legocc.tid]->nodes[node.edges[j].tonode].edges.size () );
         }

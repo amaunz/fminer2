@@ -91,7 +91,7 @@ CloseBbrcLegOccurrencesPtr bbrc_join ( BbrcLegOccurrences &legoccsdata, CloseBbr
           lasttid = legoccs[j].tid;
           //frequency++;
           frequency += 
-          fm::bbrc_database->trees_map[legoccs[j].tid]->weight;
+          fm::bbrc_database->trees[legoccs[j].tid]->weight;
         }
         j++;
         if ( j == legoccssize )
@@ -138,7 +138,7 @@ CloseBbrcLegOccurrencesPtr bbrc_join ( CloseBbrcLegOccurrences &closelegoccsdata
           lasttid = closelegoccs1[j].tid;
           // frequency++;
           frequency += 
-          fm::bbrc_database->trees_map[closelegoccs1[j].tid]->weight;
+          fm::bbrc_database->trees[closelegoccs1[j].tid]->weight;
         }
         j++;
         if ( j == closelegoccs1size )
