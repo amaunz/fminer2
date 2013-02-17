@@ -642,7 +642,6 @@ bool Bbrc::AddWeightCanonical(float weight, unsigned int comp_id) {
   else {
     if (!fm::bbrc_regression) {
       fm::bbrc_database->trees_map[comp_id]->weight = weight;
-      cerr << "AM bbrc.cpp: Adding Weight '" << weight << "' for tree '" << comp_id << "'" << endl;
     }
     return true;
   }
