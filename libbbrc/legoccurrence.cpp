@@ -59,7 +59,6 @@ ostream &operator<< ( ostream &stream, vector<BbrcLegOccurrence> &occs ) {
       //frequency++;
       frequency += 
       fm::bbrc_database->trees[occs[i].tid]->weight;
-
     }
   }
   stream << endl << " (" << frequency << ")" << endl;
