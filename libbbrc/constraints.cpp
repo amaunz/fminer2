@@ -48,7 +48,6 @@ float ChisqBbrcConstraint::ChiSq(int x_val, vector<int> y) {
           if (ev > 0) chisq += (y[i]-ev-0.5)*(y[i]-ev-0.5)/ev;
           i++;
         }
-        chisq=chisq/1000; // AM: Quick hack dividing chisq/1000 - remove when weights have been converted to floats
         return(chisq);
 }
 

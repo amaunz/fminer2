@@ -28,7 +28,7 @@ namespace fm {
     extern BbrcDatabase* bbrc_database;
     extern BbrcGraphState* bbrc_graphstate;
     extern BbrcLegOccurrences* bbrc_legoccurrences;
-    extern unsigned int bbrc_minfreq;
+    extern float bbrc_minfreq;
     extern vector<BbrcLegOccurrences> bbrc_Bbrccandidatelegsoccurrences; 
     extern vector<vector< CloseBbrcLegOccurrences> > bbrc_candidatecloselegsoccs;
     extern vector<bool> bbrc_candidateBbrccloselegsoccsused;

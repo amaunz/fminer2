@@ -12,7 +12,11 @@ require './bbrc'
 
  # Refine structures with support according to weights!
  # Try values between 2.0 and 8.0
- MyFminer.SetMinfreq(7) # IMPORTANT! TRY DIFFERENT VALUES!
+ MyFminer.SetMinfreq(3.1) # IMPORTANT! TRY DIFFERENT VALUES!
+ # Try 0.9, 1.0, 1.1
+ # Try 2.9, 3.0, 3.1
+ # Try 6.9, 7.0, 7.1
+ # for weights of 4.0, 2.0, 1.0, as below
 
  # ---- ADD DATA BELOW. DO NOT USE "Set*" METHODS BELOW THIS LINE ----
 

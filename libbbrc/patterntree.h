@@ -35,7 +35,7 @@
 using namespace std;
 
 extern bool updated;
-extern unsigned int minfreq;
+extern float minfreq;
 
 struct BbrcTuple {
   BbrcDepth depth;

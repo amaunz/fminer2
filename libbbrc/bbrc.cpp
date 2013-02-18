@@ -47,7 +47,7 @@ Bbrc::Bbrc() : init_mining_done(false) {
   }
 }
 
-Bbrc::Bbrc(int _type, unsigned int _minfreq) : init_mining_done(false) {
+Bbrc::Bbrc(int _type, float _minfreq) : init_mining_done(false) {
   if (!fm::bbrc_instance_present) {
       fm::bbrc_database = NULL; fm::bbrc_statistics = NULL; fm::bbrc_chisq = NULL; fm::bbrc_result = NULL;
       Reset();
@@ -72,7 +72,7 @@ Bbrc::Bbrc(int _type, unsigned int _minfreq) : init_mining_done(false) {
 
 }
 
-Bbrc::Bbrc(int _type, unsigned int _minfreq, float _chisq_val, bool _do_backbone) : init_mining_done(false) {
+Bbrc::Bbrc(int _type, float _minfreq, float _chisq_val, bool _do_backbone) : init_mining_done(false) {
   if (!fm::bbrc_instance_present) {
       fm::bbrc_database = NULL; fm::bbrc_statistics = NULL; fm::bbrc_chisq = NULL; fm::bbrc_result = NULL;
       Reset();
@@ -186,7 +186,7 @@ void Bbrc::Defaults() {
 
 // 2. Getter methods
 
-int Bbrc::GetMinfreq(){return fm::bbrc_minfreq;}
+float Bbrc::GetMinfreq(){return fm::bbrc_minfreq;}
 int Bbrc::GetType(){return fm::bbrc_type;}
 bool Bbrc::GetBackbone(){return fm::bbrc_do_backbone;}
 bool Bbrc::GetDynamicUpperBound(){return fm::bbrc_adjust_ub;}
@@ -204,9 +204,9 @@ bool Bbrc::GetRegression() {return fm::bbrc_regression;}
 
 // 3. Setter methods
 
-void Bbrc::SetMinfreq(int val) {
+void Bbrc::SetMinfreq(float val) {
     // parameters not regarded in integrity constraints
-    if (val < 1) { cerr << "Error! Invalid value '" << val << "' for parameter minfreq." << endl; exit(1); }
+    if (val < 0) { cerr << "Error! Invalid value '" << val << "' for parameter minfreq." << endl; exit(1); }
     if (val > 1 && GetRefineSingles()) { cerr << "Warning! Minimum frequency of '" << val << "' could not be set due to activated single refinement." << endl;}
     fm::bbrc_minfreq = val;
 }
@@ -510,11 +510,11 @@ bool Bbrc::AddWeight(float weight, unsigned int comp_id) {
     cerr << "BbrcDatabase has been already processed! Please reset() and insert a new dataset." << endl;
     return false;
   }
-  if (weight < 1.0) {
+  if (weight < 0.0) {
     cerr << "Weight '" << (BbrcFrequency) weight << "' for id '" << comp_id << "' is not positive." << endl;
     return false;
   }
-  weight_map.insert(make_pair(comp_id, (BbrcFrequency) weight)); // insert coerced to unsigned int!
+  weight_map.insert(make_pair(comp_id, (BbrcFrequency) weight)); 
   return true;
 }
 
@@ -524,10 +524,10 @@ bool Bbrc::AddWeight(float weight, unsigned int comp_id) {
 extern "C" Fminer* create0() {
     return new Bbrc();
 }
-extern "C" Fminer* create2(int _type, unsigned int _minfreq) {
+extern "C" Fminer* create2(int _type, float _minfreq) {
     return new Bbrc(_type, _minfreq);
 }
-extern "C" Fminer* create4(int _type, unsigned int _minfreq, float _chisq_val, bool _do_backbone) {
+extern "C" Fminer* create4(int _type, float _minfreq, float _chisq_val, bool _do_backbone) {
     return new Bbrc(_type, _minfreq, _chisq_val, _do_backbone);
 }
 extern "C" void destroy(Fminer* f) {
@@ -641,6 +641,7 @@ bool Bbrc::AddWeightCanonical(float weight, unsigned int comp_id) {
   }
   else {
     if (!fm::bbrc_regression) {
+      cerr << "AM bbrc.cpp: Adding Weight '" << weight << "' for tree '" << comp_id << "'" << endl;
       fm::bbrc_database->trees_map[comp_id]->weight = weight;
     }
     return true;

@@ -41,22 +41,21 @@ typedef unsigned char NodeLabel;
 typedef unsigned short NodeId;
 typedef unsigned int Depth; // unsigned int is more efficient than short, but requires more memory...
 typedef unsigned int Tid;
-typedef unsigned int Frequency;
 
 class Fminer {
 
 public:
 
     Fminer () {}
-    Fminer (int _type, unsigned int _minfreq) {}
-    Fminer (int _type, unsigned int _minfreq, float chisq_val, bool _do_backbone) {}
+    Fminer (int _type, float _minfreq) {}
+    Fminer (int _type, float _minfreq, float chisq_val, bool _do_backbone) {}
     virtual ~Fminer() {}
 
     virtual bool GetBackbone() = 0;
     virtual bool GetConsoleOut() = 0;
     virtual bool GetRegression() = 0;
     virtual bool SetType(int val) = 0;
-    virtual void SetMinfreq(int val) = 0;
+    virtual void SetMinfreq(float val) = 0;
     virtual bool SetBackbone(bool val) = 0;
     virtual bool SetDynamicUpperBound(bool val) = 0;
     virtual bool SetPruning(bool val) = 0;
@@ -80,8 +79,8 @@ public:
 
 // the types of the class factories
 typedef Fminer* create0_t();
-typedef Fminer* create2_t(int _type, unsigned int _minfreq);
-typedef Fminer* create4_t(int _type, unsigned int _minfreq, float _chisq_val, bool _do_backbone);
+typedef Fminer* create2_t(int _type, float _minfreq);
+typedef Fminer* create4_t(int _type, float _minfreq, float _chisq_val, bool _do_backbone);
 typedef void destroy_t(Fminer*);
 typedef void usage_f();
 

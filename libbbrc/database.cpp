@@ -26,7 +26,7 @@
 
 namespace fm {
     extern bool bbrc_aromatic;
-    extern unsigned int bbrc_minfreq;
+    extern float bbrc_minfreq;
 }
 
 ostream &operator<< ( ostream &stream, BbrcDatabaseTreeEdge &databasetreeedge ) {

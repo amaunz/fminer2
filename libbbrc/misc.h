@@ -33,7 +33,7 @@ typedef unsigned char BbrcNodeLabel;
 typedef unsigned short BbrcNodeId;
 typedef unsigned int BbrcDepth; // unsigned int is more efficient than short, but requires more memory...
 typedef unsigned int BbrcTid;
-typedef unsigned int BbrcFrequency;
+typedef float BbrcFrequency;
 
 //extern BbrcFrequency minfreq;
 

@@ -26,7 +26,7 @@
 
 namespace fm {
     // switched by fminer binary
-    unsigned int bbrc_minfreq; // fminer, set
+    float bbrc_minfreq; // fminer, set
     int bbrc_type;             // fminer, set
     ChisqBbrcConstraint* bbrc_chisq=NULL; // fminer, set (sig).
     bool bbrc_do_backbone; // fminer, set

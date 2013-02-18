@@ -27,7 +27,7 @@
 #include "misc.h"
 
 namespace fm {
-    extern unsigned int bbrc_minfreq;
+    extern float bbrc_minfreq;
     extern bool bbrc_adjust_ub;
     extern bool bbrc_do_pruning;
     extern bool bbrc_do_backbone;

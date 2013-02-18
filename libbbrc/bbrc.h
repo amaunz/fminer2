@@ -51,8 +51,8 @@ class Bbrc : public Fminer {
      */
     //@{
     Bbrc (); //!< Constructor for standard settings: 95% significance Bbrclevel, minimum frequency 2, type trees, dynamic upper bound, BBRC.
-    Bbrc (int _type, unsigned int _minfreq); //!< Like standard constructor, but type and minimum frequency configurable.
-    Bbrc (int _type, unsigned int _minfreq, float chisq_val, bool _do_backbone); //!< Like standard constructor, but type, minimum frequency, significance Bbrclevel and BBRC configurable.
+    Bbrc (int _type, float _minfreq); //!< Like standard constructor, but type and minimum frequency configurable.
+    Bbrc (int _type, float _minfreq, float chisq_val, bool _do_backbone); //!< Like standard constructor, but type, minimum frequency, significance Bbrclevel and BBRC configurable.
 
     ~Bbrc();
     void Reset(); //!< Use this to clear the database before feeding new compounds and activities.
@@ -63,7 +63,7 @@ class Bbrc : public Fminer {
      *  Getter functions.
      */
     //@{
-    int GetMinfreq(); //!< Get minimum frequency.
+    float GetMinfreq(); //!< Get minimum frequency.
     int GetType(); //!< Get type.
     bool GetBackbone(); //!< Get whether BBRC representatives should be mined.
     bool GetDynamicUpperBound(); //!< Get whether dynamic upper bound pruning is used.
@@ -82,7 +82,7 @@ class Bbrc : public Fminer {
      *  Setter functions.
      */
     //@{
-    void SetMinfreq(int val); //!< Set minimum frequency (>=1 here). Same as '-f'.
+    void SetMinfreq(float val); //!< Set minimum frequency (>=1 here). Same as '-f'.
     bool SetType(int val); //!< Set type 1 (paths) or 2 (trees) here. Same as '-l'.
     bool SetBackbone(bool val); //!< Pass 'false' here to switch off mining for BBRC representatives. Same as '-b'.
     bool SetDynamicUpperBound(bool val); //!< Pass 'false' here to disable dynamic upper bound pruning (e.g. for performance measures). Same as '-d'.

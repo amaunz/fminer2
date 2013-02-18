@@ -23,7 +23,7 @@
 #include "graphstate.h"
 
 namespace fm {
-    extern unsigned int bbrc_minfreq;
+    extern float bbrc_minfreq;
     extern bool bbrc_do_backbone;
     extern bool bbrc_updated;
     extern bool bbrc_adjust_ub;
