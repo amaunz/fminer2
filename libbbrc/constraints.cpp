@@ -34,7 +34,7 @@ void ChisqBbrcConstraint::generateIntSubsets(set<int>& myset, set<set<int> >&sub
 float ChisqBbrcConstraint::ChiSq(int x_val, vector<int> y) {
         assert(y.size() == nr_acts.size()); // equal class amounts as integrity constraint.
         int integrity = 0;
-        each(y) integrity+=y[i]; 
+        each(y) integrity+=y[i];
         assert(integrity == x_val);         // equal occurrence amounts as integrity constraint.
 
         int i=0;
@@ -48,6 +48,7 @@ float ChisqBbrcConstraint::ChiSq(int x_val, vector<int> y) {
           if (ev > 0) chisq += (y[i]-ev-0.5)*(y[i]-ev-0.5)/ev;
           i++;
         }
+        chisq=chisq/1000; // AM: Quick hack dividing chisq/1000 - remove when weights have been converted to floats
         return(chisq);
 }
 
@@ -55,7 +56,7 @@ float KSBbrcConstraint::KS(vector<float> all_activities, vector<float> feat_acti
 
     // Kolmogorov-Smirnov Test
     // numerical recipies in C pp 626, bbrc_extended version with better sensitivity at the ends
-    
+
     sort(feat_activities.begin(),feat_activities.end());
     sort(all_activities.begin(), all_activities.end());
 
