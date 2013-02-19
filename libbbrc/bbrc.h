@@ -132,7 +132,7 @@ class Bbrc : public Fminer {
     bool AddCompoundCanonical(string smiles, unsigned int comp_id); //!< Only to be called by AddDataCanonical!
     bool AddActivityCanonical(float act, unsigned int comp_id);     //!< Only to be called by AddDataCanonical!
     bool CheckWeight(float weight, unsigned int comp_id);           //!< Only to be called by AddDataCanonical!
-    bool NormalizeWeights();                                        //!< Only to be called by AddDataCanonical!
+    bool NormalizeWeights(map<unsigned int, float> weight_map);     //!< Only to be called by AddDataCanonical!
     bool AddWeightCanonical(float weight, unsigned int comp_id);    //!< Only to be called by AddDataCanonical!
 
 };
