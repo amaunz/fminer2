@@ -94,11 +94,10 @@ struct BbrcDatabaseTree {
   // KS: int activity;
   // KS: float
   float activity;
-  float weight;
 
   // KS: BbrcDatabaseTree ( BbrcTid tid , BbrcTid orig_tid , int line_nr ): tid ( tid ), orig_tid (orig_tid ), line_nr (line_nr), activity ( -1 ) { }
   // KS: initialize to 0.0
-  BbrcDatabaseTree ( BbrcTid tid , BbrcTid orig_tid , int line_nr ): tid ( tid ), orig_tid (orig_tid ), line_nr (line_nr), activity ( 0.0 ), weight (0.0) { }
+  BbrcDatabaseTree ( BbrcTid tid , BbrcTid orig_tid , int line_nr ): tid ( tid ), orig_tid (orig_tid ), line_nr (line_nr), activity ( 0.0 ) { }
   BbrcDatabaseTree () { }
   
   friend ostream &operator<< ( ostream &stream, BbrcDatabaseTree &databasetree );

@@ -64,14 +64,7 @@ class ChisqBbrcConstraint : public BbrcConstraint {
 
         BbrcLegActivityOccurrence(legocc);
         map<float, set<BbrcTid> >::iterator  f_sets_it;
-        for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) {
-          set<BbrcTid>::iterator f_class_set_it;
-          float f_weights=0.0;
-          for (f_class_set_it=f_sets_it->second.begin(); f_class_set_it!=f_sets_it->second.end(); f_class_set_it++) {
-            f_weights += fm::bbrc_database->trees_map[*f_class_set_it]->weight;
-          }
-          f_sizes.push_back(f_weights);
-        }
+        for (f_sets_it=f_sets.begin(); f_sets_it!=f_sets.end(); f_sets_it++) f_sizes.push_back(f_sets_it->second.size()); // f_sizes
         each(f_sizes) f_sum+=f_sizes[i]; // f_sum
         p = ChiSq(f_sum, f_sizes); // chisq
 
@@ -114,7 +107,6 @@ class ChisqBbrcConstraint : public BbrcConstraint {
 
       std::pair< set<BbrcTid>::iterator, bool > insert_ret;
 
-      // initialize f_sets with empty Sets per class
       map<float, unsigned int>::iterator nr_acts_it;
       for (nr_acts_it = nr_acts.begin(); nr_acts_it != nr_acts.end(); nr_acts_it++) {
         set<BbrcTid> tmp;

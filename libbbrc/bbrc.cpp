@@ -151,7 +151,6 @@ void Bbrc::Reset() {
     inchi_compound_map.clear();
     inchi_compound_mmap.clear();
     activity_map.clear();
-    weight_map.clear();
 
     if (getenv("FMINER_SILENT")) {
         fclose (stderr);
@@ -505,15 +504,6 @@ bool Bbrc::AddActivity(float act, unsigned int comp_id) {
   return true;
 }
 
-bool Bbrc::AddWeight(float weight, unsigned int comp_id) {
-  if (fm::bbrc_db_built) {
-    cerr << "BbrcDatabase has been already processed! Please reset() and insert a new dataset." << endl;
-    return false;
-  }
-  weight_map.insert(make_pair(comp_id, weight));
-  return true;
-}
-
 
 
 // the class factories
@@ -565,19 +555,10 @@ bool Bbrc::AddDataCanonical() {
       }
     }
 
-    // AM: weight map initialization to 1/n
-    if (weight_map.size() == 0) { // when user has done nothing
-      for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_mmap.begin(); it != inchi_compound_mmap.end(); it++) {
-        weight_map.insert(make_pair(it->second.first, 1));
-      }
-    }
-
     for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_mmap.begin(); it != inchi_compound_mmap.end(); it++) {
       AddCompoundCanonical(it->second.second, it->second.first); // smiles, comp_id
       float activity = activity_map.find(it->second.first)->second;
       AddActivityCanonical(activity, it->second.first); // act, comp_id
-      float weight = weight_map.find(it->second.first)->second;
-      AddWeightCanonical(weight, it->second.first); // weight, comp_id
     }
 
     fm::bbrc_db_built=true;
@@ -621,14 +602,3 @@ bool Bbrc::AddActivityCanonical(float act, unsigned int comp_id) {
   }
 }
 
-bool Bbrc::AddWeightCanonical(float weight, unsigned int comp_id) {
-  if (fm::bbrc_database->trees_map.find(comp_id) == fm::bbrc_database->trees_map.end()) { 
-    cerr << "No structure for ID " << comp_id << " when adding weight. Ignoring entry!" << endl; return false; 
-  }
-  else {
-    if (!fm::bbrc_regression) {
-      fm::bbrc_database->trees_map[comp_id]->weight = weight;
-    }
-    return true;
-  }
-}
