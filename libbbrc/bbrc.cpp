@@ -510,10 +510,6 @@ bool Bbrc::AddWeight(float weight, unsigned int comp_id) {
     cerr << "BbrcDatabase has been already processed! Please reset() and insert a new dataset." << endl;
     return false;
   }
-  if (weight < 0.0) {
-    cerr << "Weight '" << weight << "' for id '" << comp_id << "' is negative." << endl;
-    return false;
-  }
   weight_map.insert(make_pair(comp_id, weight));
   return true;
 }
@@ -580,16 +576,6 @@ bool Bbrc::AddDataCanonical() {
       AddCompoundCanonical(it->second.second, it->second.first); // smiles, comp_id
       float activity = activity_map.find(it->second.first)->second;
       AddActivityCanonical(activity, it->second.first); // act, comp_id
-    }
-
-    for (map<unsigned int, float>::iterator it = weight_map.begin(); it != weight_map.end(); it++) {
-      float weight = it->second;
-      unsigned int comp_id = it->first;
-      CheckWeight(weight, comp_id); // weight, comp_id: remove weights of non-existing structures from map
-    }
-    NormalizeWeights(weight_map);
-
-    for (map<string, pair<unsigned int, string> >::iterator it = inchi_compound_mmap.begin(); it != inchi_compound_mmap.end(); it++) {
       float weight = weight_map.find(it->second.first)->second;
       AddWeightCanonical(weight, it->second.first); // weight, comp_id
     }
@@ -598,7 +584,6 @@ bool Bbrc::AddDataCanonical() {
     inchi_compound_map.clear();
     inchi_compound_mmap.clear();
     activity_map.clear();
-    weight_map.clear();
 }
 
 bool Bbrc::AddCompoundCanonical(string smiles, unsigned int comp_id) {
@@ -609,6 +594,7 @@ bool Bbrc::AddCompoundCanonical(string smiles, unsigned int comp_id) {
       cerr << "Error on compound '" << comp_runner << "', id '" << comp_id << "': no activity found." << endl;
       return false;
     }
+    cout << "AM: " << weight_map.size() << " " << endl;
     if (weight_map.find(comp_id) == weight_map.end() && GetChisqActive()) {
       cerr << "Error on compound '" << comp_runner << "', id '" << comp_id << "': no weight found." << endl;
       return false;
@@ -638,36 +624,6 @@ bool Bbrc::AddActivityCanonical(float act, unsigned int comp_id) {
     }
     return true;
   }
-}
-
-bool Bbrc::CheckWeight(float weight, unsigned int comp_id) {
-  if (fm::bbrc_database->trees_map.find(comp_id) == fm::bbrc_database->trees_map.end()) { 
-    weight_map.erase(comp_id);
-    cout << "FPP" << endl;
-    return false;
-  }
-  return true;
-}
-
-bool Bbrc::NormalizeWeights(map<unsigned int, float> weight_map) {
-  map<unsigned int, float>::iterator weight_map_it;
-  float weight_sum = 0.0;
-  for (weight_map_it = weight_map.begin(); weight_map_it != weight_map.end(); weight_map_it++) {
-    cout << "AM: w " << weight_map_it->second << endl;
-  }
-  for (weight_map_it = weight_map.begin(); weight_map_it != weight_map.end(); weight_map_it++) {
-    weight_sum += weight_map_it->second;
-  }
-  int nr_weights = weight_map.size();
-  for (weight_map_it = weight_map.begin(); weight_map_it != weight_map.end(); weight_map_it++) {
-    weight_map_it->second = weight_map_it->second * nr_weights;
-    weight_map_it->second = weight_map_it->second / weight_sum;
-  }
-  cout << endl;
-  for (weight_map_it = weight_map.begin(); weight_map_it != weight_map.end(); weight_map_it++) {
-    cout << "AM: w " << weight_map_it->second << endl;
-  }
-  cout << endl;
 }
 
 bool Bbrc::AddWeightCanonical(float weight, unsigned int comp_id) {
