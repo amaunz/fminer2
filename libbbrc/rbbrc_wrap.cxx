@@ -9407,46 +9407,6 @@ fail:
 
 
 SWIGINTERN VALUE
-_wrap_Bbrc_AddWeight(int argc, VALUE *argv, VALUE self) {
-  Bbrc *arg1 = (Bbrc *) 0 ;
-  float arg2 ;
-  unsigned int arg3 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  float val2 ;
-  int ecode2 = 0 ;
-  unsigned int val3 ;
-  int ecode3 = 0 ;
-  bool result;
-  VALUE vresult = Qnil;
-  
-  if ((argc < 2) || (argc > 2)) {
-    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
-  }
-  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_Bbrc, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "Bbrc *","AddWeight", 1, self )); 
-  }
-  arg1 = reinterpret_cast< Bbrc * >(argp1);
-  ecode2 = SWIG_AsVal_float(argv[0], &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "float","AddWeight", 2, argv[0] ));
-  } 
-  arg2 = static_cast< float >(val2);
-  ecode3 = SWIG_AsVal_unsigned_SS_int(argv[1], &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), Ruby_Format_TypeError( "", "unsigned int","AddWeight", 3, argv[1] ));
-  } 
-  arg3 = static_cast< unsigned int >(val3);
-  result = (bool)(arg1)->AddWeight(arg2,arg3);
-  vresult = SWIG_From_bool(static_cast< bool >(result));
-  return vresult;
-fail:
-  return Qnil;
-}
-
-
-SWIGINTERN VALUE
 _wrap_Bbrc_GetNoRootNodes(int argc, VALUE *argv, VALUE self) {
   Bbrc *arg1 = (Bbrc *) 0 ;
   void *argp1 = 0 ;
@@ -9983,7 +9943,6 @@ SWIGEXPORT void Init_bbrc(void) {
   rb_define_method(SwigClassBbrc.klass, "ReadGsp", VALUEFUNC(_wrap_Bbrc_ReadGsp), -1);
   rb_define_method(SwigClassBbrc.klass, "AddCompound", VALUEFUNC(_wrap_Bbrc_AddCompound), -1);
   rb_define_method(SwigClassBbrc.klass, "AddActivity", VALUEFUNC(_wrap_Bbrc_AddActivity), -1);
-  rb_define_method(SwigClassBbrc.klass, "AddWeight", VALUEFUNC(_wrap_Bbrc_AddWeight), -1);
   rb_define_method(SwigClassBbrc.klass, "GetNoRootNodes", VALUEFUNC(_wrap_Bbrc_GetNoRootNodes), -1);
   rb_define_method(SwigClassBbrc.klass, "GetNoCompounds", VALUEFUNC(_wrap_Bbrc_GetNoCompounds), -1);
   SwigClassBbrc.mark = 0;
