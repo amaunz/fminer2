@@ -128,7 +128,7 @@ void Last::Defaults() {
 
 // 2. Getter methods
 
-int Last::GetMinfreq(){return fm::last_minfreq;}
+float Last::GetMinfreq(){return fm::last_minfreq;}
 int Last::GetType(){return fm::last_type;}
 bool Last::GetBackbone(){return false;}
 bool Last::GetDynamicUpperBound(){return false;}
@@ -146,7 +146,7 @@ int Last::GetMaxHops() {return fm::last_max_hops;}
 
 // 3. Setter methods
 
-void Last::SetMinfreq(int val) {
+void Last::SetMinfreq(float val) {
     if (val < 1) { cerr << "Error! Invalid value '" << val << "' for parameter minfreq." << endl; exit(1); }
     if (val > 1 && GetRefineSingles()) { cerr << "Warning! Minimum frequency of '" << val << "' could not be set due to activated single refinement." << endl;}
     fm::last_minfreq = val;
@@ -365,14 +365,7 @@ bool Last::AddActivity(float act, unsigned int comp_id) {
 extern "C" Fminer* create0() {
     return new Last();
 }
-/*
-extern "C" Fminer* create2(int _type, unsigned int _minfreq) {
-    return new Last(_type, _minfreq);
-}
-extern "C" Fminer* create4(int _type, unsigned int _minfreq, float _chisq_val, bool _do_backbone) {
-    return new Last(_type, _minfreq, _chisq_val, _do_backbone);
-}
-*/
+
 extern "C" void destroy(Fminer* l) {
     delete l;
 }

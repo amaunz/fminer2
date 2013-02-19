@@ -63,7 +63,7 @@ class Last : public Fminer {
      *  Getter functions.
      */
     //@{
-    int GetMinfreq(); //!< Get minimum frequency.
+    float GetMinfreq(); //!< Get minimum frequency.
     int GetType(); //!< Get type.
     bool GetBackbone(); //!< Get whether BBRC representatives should be mined.
     bool GetDynamicUpperBound(); //!< Get whether dynamic upper bound pruning is used.
@@ -84,7 +84,7 @@ class Last : public Fminer {
      *  Setter functions.
      */
     //@{
-    void SetMinfreq(int val); //!< Set minimum frequency (>=1 here). Same as '-f'.
+    void SetMinfreq(float val); //!< Set minimum frequency (>=1 here). Same as '-f'.
     bool SetType(int val); //!< Set type 1 (paths) or 2 (trees) here. Same as '-l'.
     bool SetBackbone(bool val); //!< Pass 'false' here to switch off mining for BBRC representatives. Same as '-b'.
     bool SetDynamicUpperBound(bool val); //!< Pass 'false' here to disable dynamic upper bound pruning (e.g. for performance measures). Same as '-d'.

@@ -28,7 +28,7 @@ namespace fm {
     extern LastDatabase* last_database;
     extern LastGraphState* last_graphstate;
     extern LastLegOccurrences* last_legoccurrences;
-    extern unsigned int last_minfreq;
+    extern float last_minfreq;
     extern vector<LastLegOccurrences> last_Lastcandidatelegsoccurrences; 
     extern vector<vector< CloseLastLegOccurrences> > last_candidatecloselegsoccs;
     extern vector<bool> last_candidateLastcloselegsoccsused;

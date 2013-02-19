@@ -23,7 +23,7 @@
 #include "graphstate.h"
 
 namespace fm {
-    extern unsigned int last_minfreq;
+    extern float last_minfreq;
     extern bool last_updated;
     extern bool last_do_pruning;
     extern bool last_console_out;

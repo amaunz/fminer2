@@ -104,8 +104,6 @@ class Bbrc : public Fminer {
     vector<string>* MineRoot(unsigned int j); //!< Mine fragments rooted at the j-th root node (element type).
     void ReadGsp(FILE* gsp); //!< Read in a gSpan file
     bool AddCompound(string smiles, unsigned int comp_id); //!< Add a compound to the database.
-    // KS: bool AddActivity(bool act, unsigned int comp_id); //!< Add an activity to the database.
-    // KS: recognize regr field
     bool AddActivity(float act, unsigned int comp_id); //!< Add an activity to the database.
     bool AddWeight(float weight, unsigned int comp_id); //!< Add a weight to the database.
     int GetNoRootNodes() {if (!fm::bbrc_db_built) AddDataCanonical() ; return fm::bbrc_database->nodelabels.size();} //!< Get number of root nodes (different element types).

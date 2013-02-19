@@ -26,7 +26,7 @@
 
 namespace fm {
     extern bool last_aromatic;
-    extern unsigned int last_minfreq;
+    extern float last_minfreq;
 }
 
 ostream &operator<< ( ostream &stream, LastDatabaseTreeEdge &databasetreeedge ) {

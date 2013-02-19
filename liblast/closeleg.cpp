@@ -24,7 +24,7 @@
 #include "closeleg.h"
 
 namespace fm {
-    extern unsigned int last_minfreq;
+    extern float last_minfreq;
     extern CloseLastLegOccurrences* last_closelegoccurrences;
     extern LastLegOccurrences* last_legoccurrences;
     extern vector<vector< CloseLastLegOccurrences> > last_candidatecloselegsoccs;

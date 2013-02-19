@@ -206,8 +206,8 @@ void read_act (char* act_file, bool regr) {
 int main(int argc, char *argv[], char *envp[]) {
 
 
-    Frequency def_minfreq = 2;
-    Frequency minfreq = def_minfreq;
+    float def_minfreq = 2;
+    float minfreq = def_minfreq;
     bool arg_minfreq = 0;
 
     int def_type = 2;

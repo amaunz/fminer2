@@ -46,16 +46,28 @@ class Fminer {
 
 public:
 
+    /** @name Inits
+     *  Initializer functions.
+     */
+    //@{
     Fminer () {}
     Fminer (int _type, float _minfreq) {}
     Fminer (int _type, float _minfreq, float chisq_val, bool _do_backbone) {}
     virtual ~Fminer() {}
-
-    virtual bool GetBackbone() = 0;
+    //@}
+    /** @name Getters
+     *  Getter functions.
+     */
+    //@{
     virtual bool GetConsoleOut() = 0;
     virtual bool GetRegression() = 0;
-    virtual bool SetType(int val) = 0;
+    //@}
+    /** @name Setters
+     *  Setter functions.
+     */
+    //@{
     virtual void SetMinfreq(float val) = 0;
+    virtual bool SetType(int val) = 0;
     virtual bool SetBackbone(bool val) = 0;
     virtual bool SetDynamicUpperBound(bool val) = 0;
     virtual bool SetPruning(bool val) = 0;
@@ -68,12 +80,18 @@ public:
     virtual bool SetChisqSig(float _chisq_val) = 0;
     virtual bool SetRegression(bool val) = 0;
     virtual bool SetMaxHops(int val) = 0;
+    //@}
+    /** @name Others
+     *  Other functions.
+     */
+    //@{
     virtual std::vector<std::string>* MineRoot(unsigned int j) = 0;
     virtual void ReadGsp(FILE* gsp) = 0;
     virtual bool AddCompound(std::string smiles, unsigned int comp_id) = 0;
     virtual bool AddActivity(float act, unsigned int comp_id) = 0;
     virtual int GetNoRootNodes() = 0;
     virtual int GetNoCompounds() = 0;
+    //@}
 
 };
 

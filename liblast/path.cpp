@@ -27,7 +27,7 @@
 #include "misc.h"
 
 namespace fm {
-    extern unsigned int last_minfreq;
+    extern float last_minfreq;
     extern bool last_do_pruning;
     extern bool last_updated;
     extern int last_type;
