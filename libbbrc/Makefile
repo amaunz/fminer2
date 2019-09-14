@@ -52,7 +52,7 @@ CC            = g++
 INCLUDE       = $(INCLUDE_OB) $(INCLUDE_GSL) 
 LDFLAGS       = $(LDFLAGS_OB) $(LDFLAGS_GSL)
 OBJ           = closeleg.o constraints.o database.o graphstate.o legoccurrence.o path.o patterntree.o bbrc.o
-CXXFLAGS      = -O2 -g $(INCLUDE) -fPIC
+CXXFLAGS      = -O2 -g $(INCLUDE) -fPIC -std=gnu++98
 LIBS_LIB2     = -lopenbabel -lgsl
 LIBS          = $(LIBS_LIB2) -ldl -lm -lgslcblas
 LIB1          = lib$(NAME).so

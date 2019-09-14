@@ -16,13 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with LibFminer.  If not, see <http://www.gnu.org/licenses/>.
 
-INCLUDE_OB  =  -I/usr/include/openbabel-2.0  
-INCLUDE_GSL  =   
-LDFLAGS_OB  =   
-LDFLAGS_GSL  =   
-INCLUDE_RB  = -I/usr/lib/ruby/1.8/x86_64-linux
+INCLUDE_OB  =  -I/usr/include/openbabel-2.0
+INCLUDE_GSL  =  
+LDFLAGS_OB  =  
+LDFLAGS_GSL  =  
+INCLUDE_RB  = 1.9.1 NOT FOUND
 INCLUDE_PY = -I/usr/include/python2.7
-RUBY = ruby1.8
+RUBY = ruby1.9.1
 PYTHON = python
 
 # ADJUST COMPILER PATH TO OPENBABEL INCLUDE FILES:
@@ -52,7 +52,7 @@ CC            = g++
 INCLUDE       = $(INCLUDE_OB) $(INCLUDE_GSL) 
 LDFLAGS       = $(LDFLAGS_OB) $(LDFLAGS_GSL)
 OBJ           = closeleg.o constraints.o database.o graphstate.o legoccurrence.o path.o patterntree.o last.o
-CXXFLAGS      = -O2 -g $(INCLUDE) -fPIC
+CXXFLAGS      = -O2 -g $(INCLUDE) -fPIC -std=gnu++98
 LIBS_LIB2     = -lopenbabel -lgsl
 LIBS          = $(LIBS_LIB2) -ldl -lm -lgslcblas
 LIB1          = lib$(NAME).so

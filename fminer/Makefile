@@ -46,7 +46,7 @@ PROGRAM = fminer
 CC            = g++
 INCLUDE       = $(INCLUDE_OB) $(INCLUDE_GSL)
 LDFLAGS       = $(LDFLAGS_OB) $(LDFLAGS_GSL)
-CXXFLAGS      = -Wall -O2 -g
+CXXFLAGS      = -Wall -O2 -g -std=gnu++98
 LIBS	        = -lopenbabel -lgsl -lgslcblas -ldl
 
 # TARGETS
